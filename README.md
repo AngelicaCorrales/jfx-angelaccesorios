@@ -21,4 +21,4 @@ We use [GitHub](http://github.com/) for versioning. For all available versions s
 * **Keren López Córdoba** - [KerenLopez](https://github.com/KerenLopez).
 
 ## More information 📖
-You can find more information about this project at [Angelaccesorios system: problem statement, functional requirements and interface mockups]().
+You can find more information about this project at [Angelaccesorios system: problem statement, functional requirements and interface mockups](https://drive.google.com/file/d/1Q67dY-4iycG8jGBXyyDgOihuf_WUEY7I/view?usp=sharing).
