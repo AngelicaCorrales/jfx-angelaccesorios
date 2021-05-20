@@ -183,10 +183,10 @@
                      <children>
                         <TableView fx:id="tvOfTypeOfProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfTypeOfProducts" prefHeight="488.0" prefWidth="673.0">
                           <columns>
+                              <TableColumn fx:id="colCategoryTypeOfProduct" prefWidth="167.0" sortable="false" text="Categoria" />
+                              <TableColumn fx:id="colCodeTypeOfProduct" prefWidth="167.0" sortable="false" text="Codigo" />
                             <TableColumn fx:id="colNameTypeOfProduct" prefWidth="158.481689453125" sortable="false" text="Nombre" />
                               <TableColumn fx:id="colStatusTypeOfProduct" prefWidth="162.639892578125" sortable="false" text="Estado" />
-                              <TableColumn fx:id="colCreatorTypeOfProduct" prefWidth="167.0" sortable="false" text="Creado por" />
-                              <TableColumn fx:id="colModifierTypeOfProduct" prefWidth="167.0" sortable="false" text="Modificado por" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -184,11 +184,8 @@
                            <children>
                               <TableView fx:id="tvOfIngredients" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfIngredients" prefHeight="448.0" prefWidth="673.0">
                                 <columns>
-                                  <TableColumn fx:id="colIdIngredient" maxWidth="1000.0" prefWidth="79.35198974609375" text="ID" visible="false" />
-                                  <TableColumn fx:id="colNameIngredient" prefWidth="158.481689453125" sortable="false" text="Nombre" />
-                                    <TableColumn fx:id="colStatusIngredient" prefWidth="162.639892578125" sortable="false" text="Estado" />
-                                    <TableColumn fx:id="colCreatorIngredient" prefWidth="167.0" sortable="false" text="Creado por" />
-                                    <TableColumn fx:id="colModifierIngredient" prefWidth="167.0" sortable="false" text="Modificado por" />
+                                  <TableColumn fx:id="colNameBrand" prefWidth="158.481689453125" sortable="false" text="Nombre" />
+                                    <TableColumn fx:id="colStatusBrand" prefWidth="162.639892578125" sortable="false" text="Estado" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
