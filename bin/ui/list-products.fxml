@@ -50,9 +50,9 @@
                   <Font name="System Bold Italic" size="12.0" />
                </font>
             </Button>
-            <Label text="Tipo de producto: " />
+            <Label text="Tipo de producto: " textFill="WHITE" />
             <TextField fx:id="txtTypeOfProduct" promptText="Tipo" />
-            <Label text="Marca: ">
+            <Label text="Marca: " textFill="WHITE">
                <padding>
                   <Insets left="20.0" />
                </padding>
@@ -69,10 +69,10 @@
           <TableColumn fx:id="colTypeProduct" prefWidth="75.0" text="Tipo de producto" />
             <TableColumn fx:id="colBrandProduct" prefWidth="75.0" text="Marca" />
             <TableColumn fx:id="colModelProduct" prefWidth="75.0" text="Modelo" />
-            <TableColumn prefWidth="75.0" text="Estado" />
-            <TableColumn prefWidth="75.0" text="Cant. de unidades" />
-            <TableColumn prefWidth="75.0" text="Precio" />
-            <TableColumn prefWidth="75.0" text="Garantia" />
+            <TableColumn fx:id="colStatusProduct" prefWidth="75.0" text="Estado" />
+            <TableColumn fx:id="colUnitsProduct" prefWidth="75.0" text="Cant. de unidades" />
+            <TableColumn fx:id="colPriceProduct" prefWidth="75.0" text="Precio" />
+            <TableColumn fx:id="colWarrantyProduct" prefWidth="75.0" text="Garantia" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
