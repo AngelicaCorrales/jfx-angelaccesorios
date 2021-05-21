@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane alignment="CENTER" maxHeight="170.0" maxWidth="450.0" minHeight="170.0" minWidth="416.0" prefHeight="170.0" prefWidth="450.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -80,8 +80,8 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Exportar">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#exportOrdersReport" text="Reporte de ordenes" />
-                              <MenuItem mnemonicParsing="false" onAction="#exportEmployeesReport" text="Reporte de Empleados" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportInvoiceReport" text="Reporte de facturas" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportUsersReport" text="Reporte de usuarios" />
                               <MenuItem mnemonicParsing="false" onAction="#exportProductsReport" text="Reporte de Productos" />
                            </items>
                         </Menu>

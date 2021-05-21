@@ -33,7 +33,7 @@ public class Main extends Application{
 		primaryStage.setTitle("Angelaccesorios");
 		primaryStage.show();
 		
-		angelaccesoriosgui.loadLogIn(null);
+		angelaccesoriosgui.loadRegisterAdmin();
 	}
 
 }

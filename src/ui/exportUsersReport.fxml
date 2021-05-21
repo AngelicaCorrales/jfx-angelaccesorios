@@ -49,7 +49,7 @@
                   <Insets left="830.0" top="40.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="lbExportTitle" alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de usuarios a partir de las facturas generadas" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de usuarios a partir de las facturas generadas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -142,7 +142,7 @@
             </GridPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#generateEmployeesReport" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Generar reporte">
+                  <Button mnemonicParsing="false" onAction="#generateUsersReport" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Generar reporte">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>

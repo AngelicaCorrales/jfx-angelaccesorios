@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -34,19 +34,19 @@
                <children>
                   <Label text="Fecha inicial del reporte:" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font></Label>
                   <Label text="Hora inicial del reporte:" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font></Label>
                   <Label text="Fecha final del reporte:" textFill="WHITE" GridPane.rowIndex="2">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font></Label>
                   <Label text="Hora final del reporte:" textFill="WHITE" GridPane.rowIndex="3">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font></Label>
                   <DatePicker fx:id="dtPickerInitialDate" editable="false" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" />
                   <DatePicker fx:id="dtPickerFinalDate" editable="false" layoutX="231.0" layoutY="14.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -106,6 +106,9 @@
                      </font>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>
@@ -123,7 +126,7 @@
                         <Insets left="800.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" textFill="WHITE">
+                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Pepito Pérez" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -134,10 +137,18 @@
                   <Label fx:id="lbUserId" visible="false" />
                </children>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="lbExportTitle" alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de productos a partir de las ordenes entregadas" textFill="WHITE">
+            <Label text="12:30:00" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="830.0" top="40.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de productos a partir de las facturas generadas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -145,7 +156,7 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="120.0" />
+                  <Insets top="100.0" />
                </VBox.margin>
             </Label>
          </children>
