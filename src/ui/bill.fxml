@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
+         <children>
+            <HBox>
+               <children>
+                  <Label text="Usuario: " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="800.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbUserName" text="-" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbUserId" text="id" visible="false">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="6.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="44.0" prefWidth="1019.0">
+               <children>
+                  <Label text="Orden" textAlignment="CENTER" textFill="WHITE">
+                     <padding>
+                        <Insets left="160.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbManageOrder" text="Lista de ordenes creadas" textFill="WHITE">
+                     <padding>
+                        <Insets left="390.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <left>
+      <GridPane alignment="CENTER" prefHeight="448.0" prefWidth="1083.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="579.0" minWidth="10.0" prefWidth="362.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="790.0" minWidth="10.0" prefWidth="657.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox fx:id="createOrderForm" prefHeight="448.0" prefWidth="320.0" visible="false">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="312.0" text="*Para actualizar una determinada orden seleccionela de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="20.0" right="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="30.0" prefHeight="45.0" prefWidth="323.0" text="*Para cambiar el estado de una orden o agregarle productos, seleccionela de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <GridPane maxHeight="342.0" minHeight="200.0" prefHeight="310.0" prefWidth="323.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="135.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="165.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints />
+                        <RowConstraints />
+                      <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="btAddProductsOrder" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Button>
+                        <Label text="Productos:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="65.0" right="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Cliente:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="80.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="cmbxClients" prefHeight="29.0" prefWidth="163.0" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label layoutX="70.0" layoutY="62.0" prefHeight="40.0" prefWidth="139.0" text="Empleado: (Quien entrega la orden)" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="cbEmployee" prefHeight="29.0" prefWidth="161.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label layoutX="70.0" layoutY="53.0" text="Observaciones:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextArea fx:id="txtAreaObservations" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </TextArea>
+                        <Label text="Estado:" textFill="WHITE" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="85.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Button fx:id="btChangeState" disable="true" mnemonicParsing="false" onAction="#showFormStateOfAnOrder" prefHeight="34.0" prefWidth="139.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Cambiar estado" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Button>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <TextField fx:id="txtClientSearchedName" promptText="Nombres">
+                                 <VBox.margin>
+                                    <Insets right="10.0" top="3.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="txtClientSearchedLastName" promptText="Apellidos">
+                                 <VBox.margin>
+                                    <Insets right="10.0" top="5.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <Button mnemonicParsing="false" onAction="#searchClientByName" prefHeight="50.0" prefWidth="58.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Buscar cliente" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="70.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </GridPane>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Actualizar">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Button>
+                        <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                     <VBox.margin>
+                        <Insets left="150.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </VBox>
+            <ScrollPane maxWidth="650.0" minWidth="614.0" prefHeight="480.0" prefWidth="642.0" GridPane.columnIndex="1">
+              <content>
+                <AnchorPane prefHeight="478.0" prefWidth="1483.0">
+                     <children>
+                        <TableView fx:id="tvOfOrders" onMouseClicked="#clickOnTableViewOfOrders" prefHeight="476.0" prefWidth="1500.0" visible="false">
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <columns>
+                              <TableColumn fx:id="colCodeOrder" maxWidth="1000.0" prefWidth="133.0" sortable="false" text="Código" />
+                              <TableColumn fx:id="colStateOrder" prefWidth="93.0" sortable="false" text="Estado" />
+                              <TableColumn fx:id="colDateandTimeOrder" prefWidth="200.0" sortable="false" text="Fecha y hora" />
+                              <TableColumn fx:id="colClientOrder" prefWidth="200.0" sortable="false" text="Cliente" />
+                              <TableColumn fx:id="colEmployeeOrder" prefWidth="200.0" sortable="false" text="Empleado encargado" />
+                              <TableColumn fx:id="colProductsInOrder" prefWidth="75.0" sortable="false" text="Productos" />
+                              <TableColumn fx:id="colOrderTotalPrice" prefWidth="75.0" sortable="false" text="Valor total" />
+                              <TableColumn fx:id="colObservationsOrder" prefWidth="200.0" sortable="false" text="Observaciones" />
+                              <TableColumn fx:id="colCreatorOrder" prefWidth="75.0" sortable="false" text="Creada por" />
+                              <TableColumn fx:id="colModifierOrder" prefWidth="75.0" sortable="false" text="Modificada por" />
+                           </columns>
+                        </TableView>
+                        <TableView fx:id="tvOfAddedProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedProducts" prefHeight="478.0" prefWidth="211.0" visible="false">
+                           <columns>
+                              <TableColumn fx:id="colNameAddedProduct" prefWidth="158.481689453125" sortable="false" text="Lista de productos" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="tvOfOrderProductsN" blendMode="DARKEN" layoutX="211.0" onMouseClicked="#clickOnTableViewOfOrderProducts" prefHeight="478.0" prefWidth="151.0" visible="false">
+                           <columns>
+                              <TableColumn fx:id="colNameOrderProduct" prefWidth="158.481689453125" sortable="false" text="Productos de la orden" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="tvOfOrderProductsS" blendMode="DARKEN" layoutX="362.0" mouseTransparent="true" onMouseClicked="#clickOnTableViewOfOrderProducts" prefHeight="475.0" prefWidth="145.0" visible="false">
+                           <columns>
+                              <TableColumn fx:id="colSizeOrderProduct" prefWidth="162.639892578125" sortable="false" text="Tamaño" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="tvOfOrderProductsQ" blendMode="DARKEN" layoutX="507.0" mouseTransparent="true" prefHeight="474.0" prefWidth="145.0" visible="false">
+                           <columns>
+                              <TableColumn fx:id="colQuantityOrderProduct" prefWidth="158.481689453125" sortable="false" text="Cantidad" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+               <GridPane.margin>
+                  <Insets bottom="25.0" left="10.0" right="15.0" />
+               </GridPane.margin>
+            </ScrollPane>
+            <VBox fx:id="addIngredientsToAnOrderForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="360.0" text="*Para añadir o eliminar un producto de la orden debe seleccionarlo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="80.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="131.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="162.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="51.0" prefWidth="140.0" text="Producto:" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="60.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="txtNameProductOrder" editable="false" prefHeight="25.0" prefWidth="157.0" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Label layoutX="10.0" layoutY="10.0" maxWidth="200.0" minWidth="100.0" prefHeight="51.0" prefWidth="140.0" text="Tamaño:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="60.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="cmbxProductSizes" prefHeight="25.0" prefWidth="157.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </ComboBox>
+                        <Label layoutX="10.0" layoutY="40.0" maxWidth="200.0" minWidth="100.0" prefHeight="51.0" prefWidth="140.0" text="Cantidad:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="60.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="txtProductQuantity" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="10.0" />
+                     </VBox.margin>
+                  </GridPane>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btDeleteProduct" disable="true" mnemonicParsing="false" onAction="#deleteProductOfAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Button>
+                        <Button fx:id="btAddProduct" disable="true" mnemonicParsing="false" onAction="#addProductToAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#returnToManageAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                     <VBox.margin>
+                        <Insets left="155.0" top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox fx:id="updateStateForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="276.0" text="*Seleccione el nuevo estado de la orden." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="50.0" top="80.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
+                     <children>
+                        <RadioButton fx:id="rbInProcess" disable="true" mnemonicParsing="false" text="En proceso" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="rbStateOrder" />
+                           </toggleGroup>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rbSent" disable="true" mnemonicParsing="false" text="Enviado" textFill="WHITE" toggleGroup="$rbStateOrder">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></RadioButton>
+                        <RadioButton fx:id="rbDelivered" disable="true" mnemonicParsing="false" text="Entregado" textFill="WHITE" toggleGroup="$rbStateOrder">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rbCancelled" disable="true" mnemonicParsing="false" text="Cancelado" textFill="WHITE" toggleGroup="$rbStateOrder">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#changeStateOfAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Cambiar">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#returnToManageAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Atrás">
+                     <VBox.margin>
+                        <Insets left="160.0" top="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
