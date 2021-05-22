@@ -7,6 +7,9 @@ public class User extends Person{
 	private double sumTotalOrders;
 	private int cont;
 	
+	private User next;
+	private User prev;
+	
 	public User(String name, String lastName, String id, String userName, String password) {
 		super(name, lastName, id);
 		this.userName=userName;
@@ -55,6 +58,22 @@ public class User extends Person{
 
 	public void setCont(int cont) {
 		this.cont = cont;
+	}
+
+	public User getNext() {
+		return next;
+	}
+
+	public void setNext(User next) {
+		this.next = next;
+	}
+
+	public User getPrev() {
+		return prev;
+	}
+
+	public void setPrev(User prev) {
+		this.prev = prev;
 	}
 
 }
