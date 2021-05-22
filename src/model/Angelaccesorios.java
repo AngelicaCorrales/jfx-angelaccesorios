@@ -2,6 +2,9 @@ package model;
 
 import java.io.IOException;
 
+import exceptions.EmailException;
+import exceptions.SpaceException;
+
 public class Angelaccesorios {
 	private User firstUser;
 	private User lastUser;
@@ -29,10 +32,14 @@ public class Angelaccesorios {
 	
 	
 	
-	public boolean createUser(String id, String name, String lastName,String userName, String password) throws IOException {
+	public boolean createUser(String id, String name, String lastName,String userName, String password) throws IOException, SpaceException {
 
 		boolean created=false;
-
+		userName=userName.trim();
+		String parts[]=userName.split(" ");
+		if(parts.length>1) {
+			throw new SpaceException();
+		}
 		User user= searchUser(id);
 		
 		if(user==null) {
@@ -51,11 +58,25 @@ public class Angelaccesorios {
 	}
 	
 	
-	public boolean createUserAdmin(String id, String name, String lastName,String userName, String password,String email) throws IOException {
+	public boolean createUserAdmin(String id, String name, String lastName,String userName, String password,String email) throws IOException, EmailException, SpaceException {
 
 		boolean created=false;
-		//emailexception
-		//spaceexception
+		email=email.trim();
+		String parts[]=email.split("@");
+		if(parts.length>2 ||parts.length<=1) {
+			throw new EmailException();
+		}
+		
+		parts=email.split(" ");
+		if(parts.length>1) {
+			throw new SpaceException();
+		}
+		
+		userName=userName.trim();
+		parts=userName.split(" ");
+		if(parts.length>1) {
+			throw new SpaceException();
+		}
 
 		Admin admin= new Admin(name,lastName,id, userName,password, email);
 
