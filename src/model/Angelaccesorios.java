@@ -3,6 +3,8 @@ package model;
 import java.io.IOException;
 
 import exceptions.EmailException;
+import exceptions.SameIDException;
+import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 
 public class Angelaccesorios {
@@ -32,7 +34,7 @@ public class Angelaccesorios {
 	
 	
 	
-	public boolean createUser(String id, String name, String lastName,String userName, String password) throws IOException, SpaceException {
+	public boolean createUser(String id, String name, String lastName,String userName, String password) throws IOException, SpaceException, SameIDException, SameUserNameException {
 
 		boolean created=false;
 		userName=userName.trim();
@@ -40,9 +42,17 @@ public class Angelaccesorios {
 		if(parts.length>1) {
 			throw new SpaceException();
 		}
-		User user= searchUser(id);
 		
-		if(user==null) {
+		User user= searchUser(id);
+		if(user!=null) {
+			throw new SameIDException();
+		}
+		User user2=searchUserName(userName);
+		if(user2!=null) {
+			throw new SameUserNameException();
+		}
+		
+		if(user==null && user2==null) {
 						
 			user= new User(name,lastName,id, userName,password);
 
@@ -83,6 +93,7 @@ public class Angelaccesorios {
 		firstUser=admin;
 
 		lastUser=admin;
+		
 
 		created=true;
 		//saveDataUsers();
@@ -107,6 +118,79 @@ public class Angelaccesorios {
 			}
 		}
 		return u;
+	}
+	
+	public User searchUserName(String userName) {
+
+		return searchUserName( firstUser, userName);
+	}
+	
+	private User searchUserName(User current, String userName) {
+		User u=null;
+		if(current!=null && u==null) {
+			if(current.getUserName().equals(userName)) {
+				 u=current;
+			}else {
+				current=current.getNext();
+				u=searchUserName(current, userName);
+			}
+		}
+		return u;
+	}
+	
+	public boolean deleteUser(User user) {
+		boolean deleted=false;
+		
+		if(firstUser.getId()!=user.getId()) {
+			User prev=user.getPrev();
+			User next=user.getNext();
+			
+			user.setNext(null);
+			user.setPrev(null);
+			prev.setNext(next);
+			if(next!=null) {
+				next.setPrev(prev);
+			}
+			deleted=true;
+		}
+		//saveDataUsers();
+		return deleted;
+
+	}
+	
+	public boolean updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled) throws IOException, SameIDException, SameUserNameException, SpaceException {
+		//CORREOOO
+		boolean updated=false;
+		userName=userName.trim();
+		String[] parts=userName.split(" ");
+		if(parts.length>1) {
+			throw new SpaceException();
+		}		
+		
+		User u1=searchUserName(userName);
+		if(user!=u1) {
+			if(u1!=null) {
+				throw new SameUserNameException();
+			}
+		}
+		
+		User u=searchUser(id);
+		if(user!=u) {
+			if(u!=null) {
+				throw new SameIDException();
+			}
+		}
+		
+		user.setName(name);
+		user.setLastName(lastName);
+		user.setUserName(userName);
+		user.setPassword(password);
+		user.setEnabled(enabled);
+		user.setId(id);
+		
+		updated=true;
+		//saveDataUsers();
+		return updated;
 	}
 
 }
