@@ -3,6 +3,7 @@ package model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +16,13 @@ public class AngelaccesoriosTest {
 	Angelaccesorios angelaccesorios;
 
 	//Scenarios
+
 	public void setupScenary1() {
 		angelaccesorios=new Angelaccesorios();
-
 	}
 
+	//All the scenarios related with User
+	
 	public void setupScenary2() throws IOException, EmailException, SpaceException {
 		angelaccesorios=new Angelaccesorios();
 
@@ -33,7 +36,28 @@ public class AngelaccesoriosTest {
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createUser("16348023", "PARK", "JIMIN", "jimin", "lachim0lala");
 	}
-
+	
+	//All the scenarios related with Brand
+	
+	public void setupScenary4() throws IOException {
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.addBrand("Samsung");
+		angelaccesorios.addBrand("Motorola");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addBrand("Xiaomi");
+	}
+	
+	public void setupScenary5() throws IOException {
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.addBrand("Samsung");
+		angelaccesorios.addBrand("Motorola");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addBrand("Xiaomi");
+		angelaccesorios.addBrand("Alcatel");
+		angelaccesorios.updateBrand(angelaccesorios.getBrands().get(0), "Samsung", false);
+		angelaccesorios.updateBrand(angelaccesorios.getBrands().get(3), "Xiaomi", false);
+	}
+	
 	//Method: CreateUserAdmin
 	@Test
 	public void testCreateUserAdmin1() throws IOException, EmailException, SpaceException {
@@ -55,9 +79,6 @@ public class AngelaccesoriosTest {
 		assertFalse(angelaccesorios.getLastUser()==null);
 		assertTrue(angelaccesorios.getLastUser()==angelaccesorios.getFirstUser());
 		assertTrue(angelaccesorios.getFirstUser().getNext()==null);
-
-
-
 	}
 
 	@Test
@@ -376,5 +397,146 @@ public class AngelaccesoriosTest {
 		}
 	}
 
-
+	//All the test cases related with Brand
+	
+	//Method: addBrand
+	
+	@Test
+	public void testAddBrand1() throws IOException{
+		setupScenary1();
+		String nameBrand = "Samsung";
+		boolean added = angelaccesorios.addBrand(nameBrand);
+		assertTrue(added);
+		assertEquals(1, angelaccesorios.getBrands().size());
+		assertEquals(nameBrand, angelaccesorios.getBrands().get(0).getName());
+		assertTrue(angelaccesorios.getBrands().get(0).isEnabled());
+	}
+	
+	@Test
+	public void testAddBrand2() throws IOException {
+		setupScenary4();
+		String nameBrand = "Huawei";
+		boolean added = angelaccesorios.addBrand(nameBrand);
+		assertTrue(added);
+		assertEquals(5, angelaccesorios.getBrands().size());
+		assertEquals(nameBrand, angelaccesorios.getBrands().get(4).getName());
+		assertTrue(angelaccesorios.getBrands().get(4).isEnabled());
+	}
+	
+	@Test
+	public void testAddBrand3() throws IOException {
+		setupScenary4();
+		String nameBrand = "Samsung";
+		boolean added = angelaccesorios.addBrand(nameBrand);
+		assertFalse(added);
+		assertEquals(4, angelaccesorios.getBrands().size());
+	}
+	
+	@Test
+	public void testAddBrand4() throws IOException {
+		setupScenary4();
+		String nameBrand = "SAMSUNG";
+		boolean added = angelaccesorios.addBrand(nameBrand);
+		assertFalse(added);
+		assertEquals(4, angelaccesorios.getBrands().size());
+	}
+	
+	//Method: updateBrand
+	
+	@Test
+	public void testUpdateBrand1() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.getBrands().get(0);
+		String newName = "Motorolaa";
+		boolean updated = angelaccesorios.updateBrand(b, newName, false);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getBrands().get(0).getName());
+		assertFalse(angelaccesorios.getBrands().get(0).isEnabled());
+	}
+	
+	@Test
+	public void testUpdateBrand2() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.getBrands().get(2);
+		String newName = "Apple";
+		boolean updated = angelaccesorios.updateBrand(b, newName, false);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getBrands().get(2).getName());
+		assertFalse(angelaccesorios.getBrands().get(2).isEnabled());
+	}
+	
+	@Test
+	public void testUpdateBrand3() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.getBrands().get(2);
+		String newName = "Applee";
+		boolean updated = angelaccesorios.updateBrand(b, newName, true);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getBrands().get(2).getName());
+		assertTrue(angelaccesorios.getBrands().get(2).isEnabled());
+	}
+	
+	@Test
+	public void testUpdateBrand4() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.getBrands().get(3);
+		String newName = "Motorola";
+		boolean updated = angelaccesorios.updateBrand(b, newName, false);
+		assertFalse(updated);
+		assertEquals("Xiaomi", angelaccesorios.getBrands().get(3).getName());
+		assertTrue(angelaccesorios.getBrands().get(3).isEnabled());
+	}
+	
+	//Method: searchBrand
+	
+	@Test
+	public void testSearchBrand1() throws IOException {
+		setupScenary1();
+		Brand b = angelaccesorios.searchBrand("Motorola");
+		assertEquals(b, null);
+	}
+	
+	@Test
+	public void testSearchBrand2() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.searchBrand("Samsung");
+		assertEquals("Samsung", b.getName());
+	}
+	
+	@Test
+	public void testSearchBrand3() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.searchBrand("XIAOMI");
+		assertEquals("Xiaomi", b.getName());
+	}
+	
+	@Test
+	public void testSearchBrand4() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.searchBrand("Alcatel");
+		assertEquals(b, null);
+	}
+	
+	//Method: returnEnabledBrands
+	
+	@Test
+	public void testReturnEnabledBrands1() {
+		setupScenary1();
+		ArrayList<Brand> list = angelaccesorios.returnEnabledBrands();
+		assertTrue(list.isEmpty());
+	}
+	
+	@Test
+	public void testReturnEnabledBrands2() throws IOException {
+		setupScenary4();
+		ArrayList<Brand> list = angelaccesorios.returnEnabledBrands();
+		assertEquals(4, list.size());
+	}
+	
+	@Test
+	public void testReturnEnabledBrands3() throws IOException {
+		setupScenary5();
+		ArrayList<Brand> list = angelaccesorios.returnEnabledBrands();
+		assertEquals(3, list.size());
+	}
 }

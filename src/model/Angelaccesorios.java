@@ -318,7 +318,7 @@ public class Angelaccesorios {
 	
 	
 
-	//Todo lo relacionado con marca
+	//All related with Brand
 
 	public boolean addBrand(String name) throws IOException {
 		Brand b = searchBrand(name);
@@ -342,6 +342,24 @@ public class Angelaccesorios {
 			saveDataBrands();
 		}
 		return deleted;
+	}
+	
+	public boolean updateBrand(Brand b, String newName, boolean enabled) throws IOException {
+		Brand brand = searchBrand(newName);
+		boolean updated=false;
+		boolean findBrand = false;
+		if(b!=brand) {
+			if(brand!=null) {
+				findBrand =true;
+			}
+		}
+		if(!findBrand) {
+			b.setName(newName);
+			b.setEnabled(enabled);
+			saveDataBrands();
+			updated=true;
+		}
+		return updated;
 	}
 	
 	public boolean searchBrandInProducts(Brand b) {
@@ -400,10 +418,8 @@ public class Angelaccesorios {
 		}
 		return loaded;
 	}
-
 	
-	
-	//Todo lo relacionado con producto
+	//All related with product
 	
 	public ArrayList<Product> getProducts() {
 		return products;

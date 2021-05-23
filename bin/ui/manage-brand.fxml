@@ -194,7 +194,7 @@
                               <TableView fx:id="tvOfBrands" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfBrands" prefHeight="469.0" prefWidth="660.0">
                                 <columns>
                                   <TableColumn fx:id="colNameBrand" prefWidth="158.481689453125" sortable="false" text="Nombre" />
-                                    <TableColumn fx:id="colStatusBrand" prefWidth="162.639892578125" sortable="false" text="Estado" />
+                                    <TableColumn fx:id="colStateBrand" prefWidth="162.639892578125" sortable="false" text="Estado" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

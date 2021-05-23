@@ -250,7 +250,7 @@ public class AngelaccesoriosGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
-		//initializeTableViewOfBrands();
+		initializeTableViewOfBrands();
 		//lbUserName.setText(lbUserNameMenu.getText());
 		//lbUserId.setText(lbUserIdMenu.getText());  
 	}
@@ -258,7 +258,7 @@ public class AngelaccesoriosGUI {
 	@FXML
 	private void initializeTableViewOfBrands() {
 		ObservableList<Brand> observableList;
-		observableList = FXCollections.observableArrayList(angelaccesorios.returnEnabledBrands());
+		observableList = FXCollections.observableArrayList(angelaccesorios.getBrands());
 		tvOfBrands.setItems(observableList);
 		colNameBrand.setCellValueFactory(new PropertyValueFactory<Brand, String>("Name"));
 		colStateBrand.setCellValueFactory(new PropertyValueFactory<Brand, String>("State"));
@@ -268,12 +268,13 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void clickOnTableViewOfBrands(MouseEvent event) {
-		if (tvOfBrands.getSelectionModel().getSelectedItem()!=null) {
+		Brand selectedBrand= tvOfBrands.getSelectionModel().getSelectedItem();
+		if (selectedBrand!=null) {
 			btDelete.setDisable(false);
 			btAdd.setDisable(true);
 			btUpdate.setDisable(false);
-			Brand selectedBrand= tvOfBrands.getSelectionModel().getSelectedItem();
 			txtBrandName.setText(selectedBrand.getName());
+			ckbxDisable.setDisable(false);
 			ckbxDisable.setSelected(!selectedBrand.isEnabled());
 		}
 	}
@@ -297,7 +298,8 @@ public class AngelaccesoriosGUI {
 				alert2.showAndWait();
 			}
 			txtBrandName.clear();
-			tvOfBrands.refresh();
+			tvOfBrands.getItems().clear();
+    		initializeTableViewOfBrands();
 		}else {
 			showValidationErrorAlert();
 		}
@@ -324,14 +326,41 @@ public class AngelaccesoriosGUI {
 			}
 			txtBrandName.clear();
 			ckbxDisable.setSelected(false);
-			tvOfBrands.refresh();
+			tvOfBrands.getItems().clear();
+    		initializeTableViewOfBrands();
 			disableButtons();
 		} 
 	}
 
 	@FXML
-	public void updateBrand(ActionEvent event) {
-
+	public void updateBrand(ActionEvent event) throws IOException {
+		if (!txtBrandName.getText().equals("")) {
+    		String newName = txtBrandName.getText();
+    		boolean enabled = true;
+    		if(ckbxDisable.isSelected()) {
+    			enabled = false;
+    		}
+    		boolean updated = angelaccesorios.updateBrand(tvOfBrands.getSelectionModel().getSelectedItem(), newName, enabled);
+    		if(updated==false) {
+    			Alert alert1 = new Alert(AlertType.ERROR);
+    			alert1.setTitle("Error de validacion");
+    			alert1.setHeaderText(null);
+    			alert1.setContentText("Ya existe una marca agregada con dicho nombre, intentelo nuevamente");
+    			alert1.showAndWait();
+    		}else {
+    			Alert alert2 = new Alert(AlertType.INFORMATION);
+        		alert2.setTitle("Informacion");
+        		alert2.setHeaderText(null);
+        		alert2.setContentText("La marca elegida ha sido actualizada exitosamente");
+        		alert2.showAndWait();
+    		}
+    		txtBrandName.clear();
+    		ckbxDisable.setSelected(false);
+    		tvOfBrands.getItems().clear();
+    		initializeTableViewOfBrands();
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
 	
 	@FXML
