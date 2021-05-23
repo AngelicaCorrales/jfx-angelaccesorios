@@ -103,6 +103,10 @@ public class Product {
 		return state;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}

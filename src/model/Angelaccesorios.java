@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import exceptions.EmailException;
 import exceptions.SameIDException;
@@ -19,14 +20,18 @@ public class Angelaccesorios {
 	private User loggedUser;
 
 	public final static String BRANDS_SAVE_PATH_FILE = "data/brands.ackl";
+	public final static String TYPESOFPRODUCTS_SAVE_PATH_FILE = "data/typesOfProducts.ackl";
+	public final static String PRODUCTS_SAVE_PATH_FILE = "data/products.ackl";
 
 	public final static String SEPARATOR = ";";
 	private ArrayList<Brand> brands;
 	private ArrayList<Product> products;
+	private ArrayList<TypeOfProduct> typesOfProducts;
 
 	public Angelaccesorios() {
 		brands = new ArrayList<Brand>();
 		products = new ArrayList<Product>();
+		typesOfProducts = new ArrayList<TypeOfProduct>();
 	}
 
 	public User getLoggedUser() {
@@ -334,10 +339,8 @@ public class Angelaccesorios {
 
 	public boolean deleteBrand(Brand brand) throws IOException {
 		boolean deleted = false;
-		Brand b = searchBrand(brand.getName());
-		if(!searchBrandInProducts(b)){
-			int i = brands.indexOf(b);
-			brands.remove(i);
+		if(!searchBrandInProducts(brand)){
+			brands.remove(brands.indexOf(brand));
 			deleted = true;
 			saveDataBrands();
 		}
@@ -419,7 +422,157 @@ public class Angelaccesorios {
 		return loaded;
 	}
 	
-	//All related with product
+	//All related with TypeOfProduct
+	
+	public boolean addTypeOfProduct(String name, String category) throws IOException {
+		TypeOfProduct ty = searchTypeOfProduct(name);
+		boolean added = false;
+		if(ty==null) {
+			if(category.equals("Accesorio")) {
+				ty = new Accessory(name);
+			}else {
+				ty = new ElectronicEquipment(name);
+			}
+			typesOfProducts.add(ty);
+			added = true;
+			saveDataTypesOfProducts();
+		}
+		return added;
+	}
+	
+	public boolean deleteTypeOfProduct(TypeOfProduct type) throws IOException {
+		boolean deleted = false;
+		if(!searchTypeOfProductInProducts(type)){
+			typesOfProducts.remove(typesOfProducts.indexOf(type));
+			deleted = true;
+			saveDataTypesOfProducts();
+		}
+		return deleted;
+	}
+	
+	public boolean updateTypeOfProduct(TypeOfProduct ty, String newName, String category, boolean enabled) throws IOException {
+		TypeOfProduct type = searchTypeOfProduct(newName);
+		boolean updated=false;
+		boolean findType = false;
+		if(ty!= type) {
+			if(type!=null) {
+				findType =true;
+			}
+		}
+		if(!findType) {
+			b.setName(newName);
+			b.setEnabled(enabled);
+			saveDataBrands();
+			updated=true;
+		}
+		return updated;
+	}
+	
+	public boolean searchTypeOfProductInProducts(TypeOfProduct ty) {
+		boolean found = false;
+		for(int i=0; i<typesOfProducts.size() && !found;i++) {
+			found = products.get(i).getType().getName().equals(ty.getName());	
+		}
+		return found;
+	}
+	
+	public TypeOfProduct searchTypeOfProduct(String name) {
+		boolean found = false;
+		TypeOfProduct ty = null;
+		for(int i=0; i<typesOfProducts.size() && !found;i++ ) {
+			if(typesOfProducts.get(i).getName().equalsIgnoreCase(name)) {
+				ty = typesOfProducts.get(i);
+				found = true;						
+			}
+		}
+		return ty;
+	}
+	
+	public ArrayList<TypeOfProduct> getTypesOfProducts() {
+		return typesOfProducts;
+	}
+
+	public void setTypesOfProducts(ArrayList<TypeOfProduct> typesOfProducts) {
+		this.typesOfProducts = typesOfProducts;
+	}
+	
+	public void saveDataTypesOfProducts() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TYPESOFPRODUCTS_SAVE_PATH_FILE));
+		oos.writeObject(typesOfProducts);
+		oos.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean loadDataTypesOfProducts() throws IOException, ClassNotFoundException{
+		File f = new File(TYPESOFPRODUCTS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			typesOfProducts = (ArrayList<TypeOfProduct>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	//All related with Product
+	
+	public boolean addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException {
+		Product p = searchProduct(type, b, model);
+		boolean added = false;
+		if(p==null) {
+			p = new Product(type, b, units, guarantee, model, price);
+			products.add(p);
+			added = true;
+			saveDataProducts();
+		}
+		return added;
+	}
+	
+	public boolean deleteProduct(Product p) throws IOException {
+		boolean deleted = false;
+		if(!searchProductInReceipts(p)){
+			products.remove(products.indexOf(p));
+			deleted = true;
+			saveDataProducts();
+		}
+		return deleted;
+	}
+	
+	public boolean updateProduct(Product p, TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException {
+		Product product = searchProduct(type, b, model);
+		boolean updated=false;
+		boolean findProduct = false;
+		if(p!= product) {
+			if(product!=null) {
+				findProduct =true;
+			}
+		}
+		if(!findProduct) {
+			p.setBrand(b);
+			p.setGuarantee(guarantee);
+			p.setModel(model);
+			p.setPrice(price);
+			p.setType(type);
+			p.setUnits(units);
+			p.setEnabled(enabled);
+			saveDataProducts();
+			updated=true;
+		}
+		return updated;
+	}
+	
+	public Product searchProduct(TypeOfProduct ty, Brand b, String model) {
+		boolean found = false;
+		Product p = null;
+		for(int i=0; i<products.size() && !found;i++ ) {
+			if(products.get(i).getType().getName().equals(ty.getName()) && products.get(i).getBrand().getName().equals(b.getName()) && products.get(i).getModel().equalsIgnoreCase(model)) {
+				p = products.get(i);
+				found = true;						
+			}
+		}
+		return p;
+	}
 	
 	public ArrayList<Product> getProducts() {
 		return products;
@@ -427,6 +580,28 @@ public class Angelaccesorios {
 
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
-	}	
+	}
+	
+	public void saveDataProducts() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_SAVE_PATH_FILE));
+		oos.writeObject(products);
+		oos.close();
+	}
 
+	@SuppressWarnings("unchecked")
+	public boolean loadDataProducts() throws IOException, ClassNotFoundException{
+		File f = new File(PRODUCTS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			products = (ArrayList<Product>)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+	
+	//All related with Receipt
+
+	
 }

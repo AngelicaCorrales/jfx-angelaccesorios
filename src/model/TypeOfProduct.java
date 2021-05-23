@@ -21,6 +21,10 @@ public class TypeOfProduct implements Serializable{
 		this.name = name;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
