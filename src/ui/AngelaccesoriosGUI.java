@@ -2,25 +2,32 @@ package ui;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import model.Angelaccesorios;
+import model.Brand;
 
 public class AngelaccesoriosGUI {
 
@@ -68,13 +75,13 @@ public class AngelaccesoriosGUI {
 	private Button btAdd;
 
 	@FXML
-	private TableView<?> tvOfBrands;
+	private TableView<Brand> tvOfBrands;
 
 	@FXML
-	private TableColumn<?, ?> colNameBrand;
+	private TableColumn<Brand, String> colNameBrand;
 
 	@FXML
-	private TableColumn<?, ?> colStatusBrand;
+	private TableColumn<Brand, String> colStateBrand;
 
 	//Type of product -------
 	@FXML
@@ -102,7 +109,6 @@ public class AngelaccesoriosGUI {
 	@FXML
 	private TextField txtName;
 
-
 	@FXML
 	private Button btReturnToMenu;
 
@@ -111,7 +117,6 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TextField txtId;
-
 
 	@FXML
 	private TextField txtAddress;
@@ -251,28 +256,86 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void addBrand(ActionEvent event) {
-
+	private void initializeTableViewOfBrands() {
+		ObservableList<Brand> observableList;
+		observableList = FXCollections.observableArrayList(angelaccesorios.returnEnabledBrands());
+		tvOfBrands.setItems(observableList);
+		colNameBrand.setCellValueFactory(new PropertyValueFactory<Brand, String>("Name"));
+		colStateBrand.setCellValueFactory(new PropertyValueFactory<Brand, String>("State"));
+		tvOfBrands.setVisible(true);
+		tvOfBrands.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@FXML
 	public void clickOnTableViewOfBrands(MouseEvent event) {
-
+		if (tvOfBrands.getSelectionModel().getSelectedItem()!=null) {
+			btDelete.setDisable(false);
+			btAdd.setDisable(true);
+			btUpdate.setDisable(false);
+			Brand selectedBrand= tvOfBrands.getSelectionModel().getSelectedItem();
+			txtBrandName.setText(selectedBrand.getName());
+			ckbxDisable.setSelected(!selectedBrand.isEnabled());
+		}
 	}
 
 	@FXML
-	public void deleteBrand(ActionEvent event) {
-
+	public void addBrand(ActionEvent event) throws IOException {
+		if (!txtBrandName.getText().equals("")) {
+			String newBrand = txtBrandName.getText();
+			boolean added = angelaccesorios.addBrand(newBrand);
+			if(added==false) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Ya existe una marca agregada con dicho nombre, intentelo nuevamente");
+				alert1.showAndWait();
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("La marca ha sido agregada exitosamente");
+				alert2.showAndWait();
+			}
+			txtBrandName.clear();
+			tvOfBrands.refresh();
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
-
 	@FXML
-	public void sortListBrands(ActionEvent event) {
-
+	public void deleteBrand(ActionEvent event) throws IOException {
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar esta marca?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK){
+			boolean deleted = angelaccesorios.deleteBrand(tvOfBrands.getSelectionModel().getSelectedItem());
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
+			if(deleted==true) {
+				alert2.setContentText("La marca ha sida eliminada exitosamente");
+				alert2.showAndWait();
+			}else {
+				alert2.setContentText("La marca no pudo ser eliminada debido a que se encuentra relacionada con un producto");
+				alert2.showAndWait();
+			}
+			txtBrandName.clear();
+			ckbxDisable.setSelected(false);
+			tvOfBrands.refresh();
+			disableButtons();
+		} 
 	}
 
 	@FXML
 	public void updateBrand(ActionEvent event) {
+
+	}
+	
+	@FXML
+	public void sortListBrands(ActionEvent event) {
 
 	}
 
@@ -465,7 +528,7 @@ public class AngelaccesoriosGUI {
 		//lbUserName.setText(lbUserNameMenu.getText());
 		//lbUserId.setText(lbUserIdMenu.getText()); 
 	}
-	
+
 
 	@FXML
 	void generateUsersReport(ActionEvent event) {
@@ -487,7 +550,7 @@ public class AngelaccesoriosGUI {
 		//lbUserName.setText(lbUserNameMenu.getText());
 		//lbUserId.setText(lbUserIdMenu.getText()); 
 	}
-	
+
 	@FXML
 	void generateInvoicesReport(ActionEvent event) {
 
@@ -514,10 +577,20 @@ public class AngelaccesoriosGUI {
 
 	}
 
+	public void showValidationErrorAlert() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error de validacion");
+		alert.setHeaderText(null);
+		alert.setContentText("Recuerde diligenciar cada uno de los campos");
+		alert.showAndWait();
+	}
 
-
-
-
+	public void disableButtons() {
+    	btDelete.setDisable(true);
+		btUpdate.setDisable(true);
+		ckbxDisable.setDisable(true);
+		btAdd.setDisable(false);
+    }
 
 
 
