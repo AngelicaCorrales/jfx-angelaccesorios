@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import exceptions.EmailException;
@@ -22,11 +23,13 @@ public class Angelaccesorios {
 	public final static String BRANDS_SAVE_PATH_FILE = "data/brands.ackl";
 	public final static String TYPESOFPRODUCTS_SAVE_PATH_FILE = "data/typesOfProducts.ackl";
 	public final static String PRODUCTS_SAVE_PATH_FILE = "data/products.ackl";
+	public final static String SUPPLIERS_SAVE_PATH_FILE = "data/suppliers.ackl";
 
 	public final static String SEPARATOR = ";";
 	private ArrayList<Brand> brands;
 	private ArrayList<Product> products;
 	private ArrayList<TypeOfProduct> typesOfProducts;
+	private Supplier supplierRoot;
 
 	public Angelaccesorios() {
 		brands = new ArrayList<Brand>();
@@ -256,72 +259,72 @@ public class Angelaccesorios {
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//All related with Brand
 
@@ -346,7 +349,7 @@ public class Angelaccesorios {
 		}
 		return deleted;
 	}
-	
+
 	public boolean updateBrand(Brand b, String newName, boolean enabled) throws IOException {
 		Brand brand = searchBrand(newName);
 		boolean updated=false;
@@ -364,8 +367,8 @@ public class Angelaccesorios {
 		}
 		return updated;
 	}
-	
-	public boolean searchBrandInProducts(Brand b) {
+
+	private boolean searchBrandInProducts(Brand b) {
 		boolean found = false;
 		for(int i=0; i<products.size() && !found;i++) {
 			found = products.get(i).getBrand().getName().equals(b.getName());	
@@ -373,7 +376,7 @@ public class Angelaccesorios {
 		return found;
 	}
 
-	public Brand searchBrand(String brandName) {
+	private Brand searchBrand(String brandName) {
 		boolean found = false;
 		Brand b = null;
 		for(int i=0; i<brands.size() && !found;i++ ) {
@@ -421,25 +424,198 @@ public class Angelaccesorios {
 		}
 		return loaded;
 	}
+
+	//All related with Supplier
+
+	public boolean addSupplier(String name, String phoneN) throws IOException {
+		Supplier s = searchSupplier(supplierRoot, name);
+		boolean added = false;
+		if(s==null) {
+			s = new Supplier(name, phoneN);
+			if(supplierRoot==null) {
+				setSupplierRoot(s);
+				saveDataSuppliers();
+			}else {
+				addSupplier(supplierRoot, s);
+				saveDataSuppliers();
+			}
+			added = true;
+		}
+		return added;
+	}
+
+	private void addSupplier(Supplier current, Supplier newSupplier) {
+		if(newSupplier.getName().compareTo(current.getName())<0){
+			if(current.getRight()==null){
+				current.setRight(newSupplier);
+				newSupplier.setParent(current);
+			}else{
+				addSupplier(current.getRight(),newSupplier);
+			}
+		}else{
+			if(current.getLeft()==null){
+				current.setLeft(newSupplier);
+				newSupplier.setParent(current);
+			}else{
+				addSupplier(current.getLeft(),newSupplier);
+			}	
+
+		}	
+	}
+
+	public boolean deleteSupplier(Supplier s) throws IOException {
+		boolean deleted = false;
+		if(!searchSuppliersInTypesOfProducts(s)){
+			removeSupplier(s);
+			deleted = true;
+			saveDataSuppliers();
+		}
+		return deleted;
+	}
+
+	private void removeSupplier(Supplier s) {
+		if(s.getLeft()==null && s.getRight()==null){
+			if(s==supplierRoot){
+				supplierRoot=null;
+			}else if(s == s.getParent().getLeft()){
+				s.getParent().setLeft(null);
+
+			}else{
+				s.getParent().setRight(null);
+			}
+			s.setParent(null);
+
+		}else if(s.getLeft()==null || s.getRight()==null){
+			Supplier onlyChild;
+			if(s.getLeft()!=null){
+				onlyChild = s.getLeft();
+				s.setLeft(null);
+			}else{
+				onlyChild = s.getRight();
+				s.setRight(null);
+			}
+			onlyChild.setParent(s.getParent());
+			if(s==supplierRoot){
+				supplierRoot=onlyChild;
+			}else if(s==s.getParent().getLeft()){
+				s.getParent().setLeft(onlyChild);
+
+			}else{
+				s.getParent().setRight(onlyChild);
+			}
+			s.setParent(null);
+
+		}else{ 
+			Supplier successor =min(s.getRight());
+			s.setName(successor.getName());
+			removeSupplier(successor);	
+		}
+	}
+
+	private Supplier min(Supplier current){
+		if(current.getLeft()!=null){
+			return min(current.getLeft());
+		}else{
+			return current;
+		}
+	}
+
+	public boolean updateSupplier(Supplier s, String newName, String phone) throws IOException {
+		Supplier supplier = searchSupplier(supplierRoot, newName);
+		boolean updated=false;
+		boolean findSupplier = false;
+		if(s!=supplier) {
+			if(supplier!=null) {
+				findSupplier =true;
+			}
+		}
+		if(!findSupplier) {
+			s.setName(newName);
+			s.setPhoneNumber(phone);
+			saveDataSuppliers();
+			updated=true;
+		}
+		return updated;
+	}
+
+	private Supplier searchSupplier(Supplier current, String name) {
+		if(current==null || current.getName().equalsIgnoreCase(name)) {
+			return current;
+		}else {
+			if(name.compareTo(current.getName())<0) {
+				return searchSupplier(current.getLeft(), name);
+			}else {
+				return searchSupplier(current.getRight(), name);
+			}
+		}
+	}
+
+	public boolean searchSuppliersInTypesOfProducts(Supplier s) {
+		boolean found = false;
+		for(int i=0; i<typesOfProducts.size() && !found;i++) {
+			TypeOfProduct type = typesOfProducts.get(i);
+			if(type instanceof ElectronicEquipment) {
+				if(((ElectronicEquipment)type).getSupplier().getName().equals(s.getName())){
+					found = true;
+				}
+			}
+		}
+		return found;
+	}
+
+	public Supplier getSupplierRoot() {
+		return supplierRoot;
+	}
+
+	public void setSupplierRoot(Supplier supplierRoot) {
+		this.supplierRoot = supplierRoot;
+	}
 	
+	public void saveDataSuppliers() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SUPPLIERS_SAVE_PATH_FILE));
+		oos.writeObject(supplierRoot);
+		oos.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean loadDataSuppliers() throws IOException, ClassNotFoundException{
+		File f = new File(SUPPLIERS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			supplierRoot = (Supplier)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
+
 	//All related with TypeOfProduct
-	
-	public boolean addTypeOfProduct(String name, String category) throws IOException {
+
+	public boolean addTypeOfProduct(String name) throws IOException {
 		TypeOfProduct ty = searchTypeOfProduct(name);
 		boolean added = false;
 		if(ty==null) {
-			if(category.equals("Accesorio")) {
-				ty = new Accessory(name);
-			}else {
-				ty = new ElectronicEquipment(name);
-			}
+			ty = new Accessory(name);
 			typesOfProducts.add(ty);
 			added = true;
 			saveDataTypesOfProducts();
 		}
 		return added;
 	}
-	
+
+	public boolean addTypeOfProduct(String name, Supplier supplier) throws IOException {
+		TypeOfProduct ty = searchTypeOfProduct(name);
+		boolean added = false;
+		if(ty==null) {
+			ty = new ElectronicEquipment(name);
+			typesOfProducts.add(ty);
+			added = true;
+			saveDataTypesOfProducts();
+		}
+		return added;
+	}
+
 	public boolean deleteTypeOfProduct(TypeOfProduct type) throws IOException {
 		boolean deleted = false;
 		if(!searchTypeOfProductInProducts(type)){
@@ -449,7 +625,7 @@ public class Angelaccesorios {
 		}
 		return deleted;
 	}
-	
+
 	public boolean updateTypeOfProduct(TypeOfProduct ty, String newName, String category, boolean enabled) throws IOException {
 		TypeOfProduct type = searchTypeOfProduct(newName);
 		boolean updated=false;
@@ -467,7 +643,7 @@ public class Angelaccesorios {
 		}
 		return updated;
 	}
-	
+
 	public boolean searchTypeOfProductInProducts(TypeOfProduct ty) {
 		boolean found = false;
 		for(int i=0; i<typesOfProducts.size() && !found;i++) {
@@ -475,7 +651,7 @@ public class Angelaccesorios {
 		}
 		return found;
 	}
-	
+
 	public TypeOfProduct searchTypeOfProduct(String name) {
 		boolean found = false;
 		TypeOfProduct ty = null;
@@ -487,7 +663,7 @@ public class Angelaccesorios {
 		}
 		return ty;
 	}
-	
+
 	public ArrayList<TypeOfProduct> getTypesOfProducts() {
 		return typesOfProducts;
 	}
@@ -495,7 +671,7 @@ public class Angelaccesorios {
 	public void setTypesOfProducts(ArrayList<TypeOfProduct> typesOfProducts) {
 		this.typesOfProducts = typesOfProducts;
 	}
-	
+
 	public void saveDataTypesOfProducts() throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TYPESOFPRODUCTS_SAVE_PATH_FILE));
 		oos.writeObject(typesOfProducts);
@@ -514,9 +690,9 @@ public class Angelaccesorios {
 		}
 		return loaded;
 	}
-	
+
 	//All related with Product
-	
+
 	public boolean addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException {
 		Product p = searchProduct(type, b, model);
 		boolean added = false;
@@ -528,9 +704,17 @@ public class Angelaccesorios {
 		}
 		return added;
 	}
-	
+
 	public boolean deleteProduct(Product p) throws IOException {
 		boolean deleted = false;
+		boolean stop = false; 
+		boolean find = false;
+		for(int k=0; k<orders.size() && !stop;k++) {
+			find = orders.get(k).findProduct(product.getId());
+			if(find==true) {
+				stop = true;
+			}
+		}
 		if(!searchProductInReceipts(p)){
 			products.remove(products.indexOf(p));
 			deleted = true;
@@ -538,7 +722,7 @@ public class Angelaccesorios {
 		}
 		return deleted;
 	}
-	
+
 	public boolean updateProduct(Product p, TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException {
 		Product product = searchProduct(type, b, model);
 		boolean updated=false;
@@ -561,7 +745,7 @@ public class Angelaccesorios {
 		}
 		return updated;
 	}
-	
+
 	public Product searchProduct(TypeOfProduct ty, Brand b, String model) {
 		boolean found = false;
 		Product p = null;
@@ -573,7 +757,7 @@ public class Angelaccesorios {
 		}
 		return p;
 	}
-	
+
 	public ArrayList<Product> getProducts() {
 		return products;
 	}
@@ -581,7 +765,7 @@ public class Angelaccesorios {
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
 	}
-	
+
 	public void saveDataProducts() throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_SAVE_PATH_FILE));
 		oos.writeObject(products);
@@ -600,8 +784,8 @@ public class Angelaccesorios {
 		}
 		return loaded;
 	}
-	
+
 	//All related with Receipt
 
-	
+
 }

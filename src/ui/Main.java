@@ -22,6 +22,9 @@ public class Main extends Application{
 		boolean loadData;
 		try {
 			loadData = angelaccesorios.loadDataBrands();
+			loadData = angelaccesorios.loadDataProducts();
+			loadData = angelaccesorios.loadDataTypesOfProducts();
+			loadData = angelaccesorios.loadDataSuppliers();
 
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
