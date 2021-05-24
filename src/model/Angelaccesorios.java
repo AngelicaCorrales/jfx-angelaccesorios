@@ -41,10 +41,6 @@ public class Angelaccesorios {
 		return loggedUser;
 	}
 
-	public void setLoggedUser(User loggedUser) {
-		this.loggedUser = loggedUser;
-	}
-
 	public User getFirstUser() {
 		return firstUser;
 	}
@@ -55,9 +51,8 @@ public class Angelaccesorios {
 
 
 
-	public boolean createUser(String id, String name, String lastName,String userName, String password) throws IOException, SpaceException, SameIDException, SameUserNameException {
+	public void createUser(String id, String name, String lastName,String userName, String password) throws SpaceException, SameIDException, SameUserNameException {
 
-		boolean created=false;
 		userName=userName.trim();
 		String parts[]=userName.split(" ");
 		if(parts.length>1) {
@@ -73,25 +68,23 @@ public class Angelaccesorios {
 			throw new SameUserNameException();
 		}
 
-		if(user==null && user2==null) {
 
-			user= new User(name,lastName,id, userName,password);
 
-			lastUser.setNext(user);
-			user.setPrev(lastUser);
-			lastUser=user;
+		user= new User(name,lastName,id, userName,password);
 
-			created=true;
-			//saveDataUsers();
+		lastUser.setNext(user);
+		user.setPrev(lastUser);
+		lastUser=user;
 
-		}
-		return created;
+
+		//saveDataUsers();
+
+
 	}
 
 
-	public boolean createUserAdmin(String id, String name, String lastName,String userName, String password,String email) throws IOException, EmailException, SpaceException {
+	public void createUserAdmin(String id, String name, String lastName,String userName, String password,String email) throws EmailException, SpaceException {
 
-		boolean created=false;
 		email=email.trim();
 		String parts[]=email.split("@");
 		if(parts.length>2 ||parts.length<=1) {
@@ -115,12 +108,9 @@ public class Angelaccesorios {
 
 		lastUser=admin;
 
-
-		created=true;
+		
 		//saveDataUsers();
 
-
-		return created;
 	}
 
 	public User searchUser(String id) {
@@ -179,9 +169,9 @@ public class Angelaccesorios {
 
 	}
 
-	public boolean updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled) throws IOException, SameIDException, SameUserNameException, SpaceException {
+	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled) throws SameIDException, SameUserNameException, SpaceException {
 		//CORREOOO
-		boolean updated=false;
+		
 		userName=userName.trim();
 		String[] parts=userName.split(" ");
 		if(parts.length>1) {
@@ -209,9 +199,33 @@ public class Angelaccesorios {
 		user.setEnabled(enabled);
 		user.setId(id);
 
-		updated=true;
+
 		//saveDataUsers();
-		return updated;
+		
+	}
+
+	public boolean logInUser(String userName, String password) {
+		boolean logIn=false;
+		String parts[]=userName.split("@");
+		if(parts.length==2) {
+			if(((Admin)firstUser).getEmail().equals(userName)) {
+				if(firstUser.getPassword().equals(password)) {
+					loggedUser=firstUser;
+					logIn=true;
+				}
+			}
+		}else {
+			User user=searchUserName(userName);
+			if(user!=null) { 
+				
+				if(user.getPassword().equals(password)) {
+					loggedUser=firstUser;
+					logIn=true;
+				}
+			}
+		}
+				
+		return logIn;
 	}
 
 
@@ -324,6 +338,75 @@ public class Angelaccesorios {
 
 
 
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 	//All related with Brand
@@ -376,7 +459,7 @@ public class Angelaccesorios {
 		return found;
 	}
 
-	private Brand searchBrand(String brandName) {
+	public Brand searchBrand(String brandName) {
 		boolean found = false;
 		Brand b = null;
 		for(int i=0; i<brands.size() && !found;i++ ) {

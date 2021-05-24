@@ -35,12 +35,10 @@
                   <Label fx:id="lbUserName" text="-" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
-                     </font></Label>
-                  <Label fx:id="lbUserId" text="id" visible="false">
+                     </font>
                      <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Label>
+                        <Insets right="25.0" />
+                     </HBox.margin></Label>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" top="6.0" />

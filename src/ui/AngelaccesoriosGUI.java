@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import exceptions.EmailException;
+import exceptions.SpaceException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,16 +45,7 @@ public class AngelaccesoriosGUI {
 	private PasswordField passwordField;
 
 	@FXML
-	private Label lbUserNameMenu;
-
-	@FXML
-	private Label lbUserIdMenu;
-
-	@FXML
 	private Label lbUserName;
-
-	@FXML
-	private Label lbUserId;
 
 	@FXML
 	private TextField txtEmail;
@@ -192,21 +185,37 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void logIn(ActionEvent event) throws IOException {
-		showMenu();
+			
+		 Alert alert = new Alert(AlertType.ERROR);
+		alert.setHeaderText(null);
+
+		if(txtUserName.getText().isEmpty() && passwordField.getText().isEmpty()) {
+    		showValidationErrorAlert();
+
+		}
+		else {
+			boolean logIn=angelaccesorios.logInUser(txtUserName.getText(), passwordField.getText());
+			if(logIn){
+				returnToMenu(null);	
+
+			}
+			else {
+				alert.setTitle("No se pudo iniciar sesión");
+				alert.setContentText("El usuario o la contraseña son incorrectos. Intente nuevamente");
+
+				alert.showAndWait();
+			}
+		}
+		
+		txtUserName.clear();
+    	passwordField.clear();
+		 
 	}
 
 	public AngelaccesoriosGUI(Angelaccesorios ac) {
 		angelaccesorios=ac;
 	}
 
-	public void showMenu() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
-		mainPane.setCenter(menuPane);
-		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
-	}
 
 	@FXML
 	public void manageTypeOfProduct(ActionEvent event) throws IOException {
@@ -217,8 +226,8 @@ public class AngelaccesoriosGUI {
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		//initializeTableViewOfTypesOfProducts(); 
-		//lbUserName.setText(lbUserNameMenu.getText());
-		//lbUserId.setText(lbUserIdMenu.getText());  
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
+		
 	}
 
 	@FXML
@@ -251,8 +260,8 @@ public class AngelaccesoriosGUI {
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfBrands();
-		//lbUserName.setText(lbUserNameMenu.getText());
-		//lbUserId.setText(lbUserIdMenu.getText());  
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
+		 
 	}
 
 	@FXML
@@ -379,8 +388,8 @@ public class AngelaccesoriosGUI {
 		//createProductForm.setVisible(true);
 		//initializeTableViewOfProducts();
 		//showComboBoxOfTypesOfProducts();
-		//lbUserName.setText(lbUserNameMenu.getText());
-		//lbUserId.setText(lbUserIdMenu.getText()); 
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
+		
 	}
 
 	@FXML
@@ -393,6 +402,7 @@ public class AngelaccesoriosGUI {
 		mainPane.getChildren().clear();
 
 		mainPane.setCenter(clientPane);
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 	}
 
 	@FXML
@@ -419,8 +429,8 @@ public class AngelaccesoriosGUI {
 		//initializeTableViewOfOrders();
 		//createOrderForm.setVisible(true);
 		//btAddProductsOrder.setDisable(true);
-		//lbUserName.setText(lbUserNameMenu.getText());
-		//lbUserId.setText(lbUserIdMenu.getText()); 
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
+		
 	}
 
 	@FXML
@@ -452,10 +462,14 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void returnToMenu(ActionEvent event) throws IOException {
-		//lbObjectId.setText("");
-		showMenu(); 
-		//lbUserNameMenu.setText(lbUserName.getText());
-		//lbUserIdMenu.setText(lbUserId.getText());
+		
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(menuPane);
+		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
+		
 	}
 
 	@FXML
@@ -472,9 +486,9 @@ public class AngelaccesoriosGUI {
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		//initializeTableViewClients();
 
-		//lbUserName.setText(lbUserNameMenu.getText());
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
-		//lbUserId.setText(lbUserIdMenu.getText());  	
+	
 
 	}
 
@@ -513,7 +527,37 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void registerAdmin(ActionEvent event) throws IOException {
-		loadLogIn(null);
+    	if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty() && !txtEmail.getText().isEmpty()) {
+    		Alert alert2 = new Alert(AlertType.ERROR);
+			alert2.setTitle("Error de validacion");
+			alert2.setHeaderText(null);
+			
+    		try {
+				angelaccesorios.createUserAdmin(txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), txtUserName.getText().toLowerCase(),passwordField.getText(),txtEmail.getText());
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+        		alert1.setTitle("Informacion");
+        		alert1.setHeaderText(null);
+        		alert1.setContentText("El usuario administrador ha sido registrado exitosamente!");
+        		alert1.showAndWait();
+        		
+        		txtName.clear();
+        		txtLastName.clear();
+            	txtId.clear();
+            	
+            	loadLogIn(null);
+    		} catch (EmailException ee) {
+    			alert2.setContentText("No se pudo registrar el usuario, correo no válido");
+    			alert2.showAndWait();
+				
+			} catch (SpaceException se) {
+				alert2.setContentText("No se pudo registrar el usuario, el nombre de usuario no puede llevar espacios");
+				alert2.showAndWait();
+			}
+    	}else {
+    		showValidationErrorAlert();
+    	}
+    		
+		
 	}
 
 	@FXML
@@ -554,8 +598,7 @@ public class AngelaccesoriosGUI {
 		//initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());
 		dtPickerFinalDate.setValue(LocalDate.now());
-		//lbUserName.setText(lbUserNameMenu.getText());
-		//lbUserId.setText(lbUserIdMenu.getText()); 
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName()); 
 	}
 
 
@@ -576,8 +619,7 @@ public class AngelaccesoriosGUI {
 		//initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());
 		dtPickerFinalDate.setValue(LocalDate.now());
-		//lbUserName.setText(lbUserNameMenu.getText());
-		//lbUserId.setText(lbUserIdMenu.getText()); 
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 	}
 
 	@FXML
@@ -597,8 +639,7 @@ public class AngelaccesoriosGUI {
 		//initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());
 		dtPickerFinalDate.setValue(LocalDate.now());
-		//lbUserName.setText(lbUserNameMenu.getText());
-		//lbUserId.setText(lbUserIdMenu.getText()); 
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 	}
 
 	@FXML

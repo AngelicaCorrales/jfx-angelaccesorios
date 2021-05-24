@@ -39,11 +39,6 @@
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <Label fx:id="lbUserId" text="id" visible="false">
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin>
-                  </Label>
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
@@ -65,14 +60,6 @@
                      </font>
                      <HBox.margin>
                         <Insets bottom="6.0" left="340.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="12:30:00" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="160.0" top="5.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -195,7 +182,6 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </PasswordField>
-                        <Label fx:id="lbObjectId" text="objectId" visible="false" GridPane.rowIndex="8" />
                         <TextField fx:id="txtUserName1" prefHeight="25.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="10.0" />

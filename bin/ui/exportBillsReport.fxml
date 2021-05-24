@@ -134,20 +134,11 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserId" visible="false" />
                </children>
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
             </HBox>
-            <Label text="12:30:00" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="820.0" top="40.0" />
-               </VBox.margin>
-            </Label>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de facturas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />

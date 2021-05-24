@@ -23,14 +23,14 @@ public class AngelaccesoriosTest {
 
 	//All the scenarios related with User
 	
-	public void setupScenary2() throws IOException, EmailException, SpaceException {
+	public void setupScenary2() throws  EmailException, SpaceException {
 		angelaccesorios=new Angelaccesorios();
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 
 	}
 
-	public void setupScenary3() throws IOException, EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void setupScenary3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		angelaccesorios=new Angelaccesorios();
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
@@ -60,7 +60,7 @@ public class AngelaccesoriosTest {
 	
 	//Method: CreateUserAdmin
 	@Test
-	public void testCreateUserAdmin1() throws IOException, EmailException, SpaceException {
+	public void testCreateUserAdmin1() throws EmailException, SpaceException {
 		setupScenary1();
 		String id ="1007793567";
 		String name= "ANGELA";
@@ -82,7 +82,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUserAdmin2() throws IOException, EmailException, SpaceException {
+	public void testCreateUserAdmin2() throws EmailException, SpaceException {
 		setupScenary1();
 		String id ="1007793567";
 		String name= "ANGELA";
@@ -104,7 +104,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUserAdmin3() throws IOException, EmailException, SpaceException {
+	public void testCreateUserAdmin3() throws EmailException, SpaceException {
 		setupScenary1();
 		String id ="1007793567";
 		String name= "ANGELA";
@@ -129,7 +129,7 @@ public class AngelaccesoriosTest {
 
 	//Method: CreateUser
 	@Test
-	public void testCreateUser1() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser1() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary2();
 		String id ="16704327";
 		String name= "GEORGE";
@@ -157,7 +157,7 @@ public class AngelaccesoriosTest {
 
 
 	@Test
-	public void testCreateUser2() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser2() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary2();
 		String id ="16704327";
 		String name= "GEORGE";
@@ -181,7 +181,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUser3() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser3() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		String id ="31689300";
 		String name= "MITSKI";
@@ -207,7 +207,7 @@ public class AngelaccesoriosTest {
 	}
 	
 	@Test
-	public void testCreateUser4() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		String id ="16348023";
 		String name= "MITSKI";
@@ -229,7 +229,7 @@ public class AngelaccesoriosTest {
 	}
 	
 	@Test
-	public void testCreateUser5() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		String id ="31689300";
 		String name= "MITSKI";
@@ -254,21 +254,21 @@ public class AngelaccesoriosTest {
 	//Method: SearchUser
 	
 	@Test
-	public void testSearchUser1() throws IOException, EmailException, SpaceException {
+	public void testSearchUser1() throws EmailException, SpaceException {
 		setupScenary2();
 		User u=angelaccesorios.searchUser("1007793567");
 		assertFalse(u==null);
 	}
 
 	@Test
-	public void testSearchUser2() throws IOException, EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUser2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.searchUser("16348023");
 		assertFalse(u==null);
 	}
 
 	@Test
-	public void testSearchUser3() throws IOException, EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUser3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.searchUser("31689300");
 		assertEquals(u,null);
@@ -276,7 +276,7 @@ public class AngelaccesoriosTest {
 	
 	//Method: searchUserName
 	@Test
-	public void testSearchUserName1() throws IOException, EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUserName1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.searchUserName("jimin");
 		
@@ -284,7 +284,7 @@ public class AngelaccesoriosTest {
 	}
 	
 	@Test
-	public void testSearchUserName2() throws IOException, EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUserName2() throws  EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.searchUserName("alvinsch");
 		assertEquals(u,null);
@@ -293,7 +293,7 @@ public class AngelaccesoriosTest {
 
 	//Method: deleteUser
 	@Test
-	public void testdeleteUser1() throws IOException, EmailException, SpaceException {
+	public void testdeleteUser1() throws  EmailException, SpaceException {
 		setupScenary2();
 		User u=angelaccesorios.getFirstUser();
 		boolean deleted=angelaccesorios.deleteUser(u);
@@ -303,7 +303,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testdeleteUser2() throws IOException, EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testdeleteUser2() throws  EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 		boolean deleted=angelaccesorios.deleteUser(u);
@@ -314,7 +314,7 @@ public class AngelaccesoriosTest {
 	
 	//Method: updateUser
 	@Test
-	public void testUpdateUser1() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser1() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 		
@@ -336,7 +336,7 @@ public class AngelaccesoriosTest {
 	}
 	
 	@Test
-	public void testUpdateUser2() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser2() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 		
@@ -356,7 +356,7 @@ public class AngelaccesoriosTest {
 	}
 	
 	@Test
-	public void testUpdateUser3() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser3() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 		
@@ -377,7 +377,7 @@ public class AngelaccesoriosTest {
 	}
 	
 	@Test
-	public void testUpdateUser4() throws IOException, SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 		
@@ -395,6 +395,70 @@ public class AngelaccesoriosTest {
 		}catch(SameUserNameException sune) {
 			fail("SpaceException expected");
 		}
+	}
+	
+	//Method: logInUser
+	@Test
+	public void testLogInUser1() throws EmailException, SpaceException {
+		setupScenary2();
+		
+		boolean logIn=angelaccesorios.logInUser("alvinsch","h4yunc0d1g0qu3n0est4nb1nari0");
+		assertEquals(angelaccesorios.getLoggedUser(),null);
+		assertFalse(logIn);
+	}
+	
+	@Test
+	public void testLogInUser2() throws EmailException, SpaceException {
+		setupScenary2();
+		
+		boolean logIn=angelaccesorios.logInUser("angelaccesorios", "4ng3laACC");
+		assertTrue(angelaccesorios.getLoggedUser()!=null);
+		assertTrue(logIn);
+	}
+	
+	@Test
+	public void testLogInUser3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary3();
+		
+		boolean logIn=angelaccesorios.logInUser("jimin", "LACHIM0LALA");
+		assertEquals(angelaccesorios.getLoggedUser(),null);
+		assertFalse(logIn);
+	}
+	
+	@Test
+	public void testLogInUser4() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary3();
+		
+		boolean logIn=angelaccesorios.logInUser("angelacesorios@gmail.com", "4ng3laACC");
+		assertEquals(angelaccesorios.getLoggedUser(),null);
+		assertFalse(logIn);
+	}
+	
+	@Test
+	public void testLogInUser5() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary3();
+		
+		boolean logIn=angelaccesorios.logInUser("angelaccesorios@gmail.com", "4ng3laacc");
+		assertEquals(angelaccesorios.getLoggedUser(),null);
+		assertFalse(logIn);
+	}
+	
+	@Test
+	public void testLogInUser6() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary3();
+		
+		boolean logIn=angelaccesorios.logInUser("angelaccesorios@gmail.com", "4ng3laACC");
+		assertTrue(angelaccesorios.getLoggedUser()!=null);
+		assertTrue(logIn);
+	}
+	
+	@Test
+	public void testLogInUser7() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary3();
+		
+		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
+		assertTrue(angelaccesorios.getLoggedUser()!=null);
+		assertTrue(logIn);
 	}
 
 	//All the test cases related with Brand
