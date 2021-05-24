@@ -93,8 +93,6 @@
                      </items></Menu>
               </menus>
             </MenuBar>
-            <Label fx:id="lbUserNameMenu" text="username" visible="false" />
-            <Label fx:id="lbUserIdMenu" text="userid" visible="false" />
             <Label alignment="CENTER" contentDisplay="CENTER" text="¡Bienvenido!" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
