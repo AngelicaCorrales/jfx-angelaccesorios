@@ -7,14 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-=======
->>>>>>> 24f30cdab723549ed25e1417e87bc56ad59f0548
 import java.util.concurrent.ThreadLocalRandom;
-
 import exceptions.EmailException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
@@ -45,15 +41,11 @@ public class Angelaccesorios {
 	public Angelaccesorios() {
 		brands = new ArrayList<Brand>();
 		products = new ArrayList<Product>();
-<<<<<<< HEAD
-		typesOfProducts = new ArrayList<TypeOfProduct>();
 		clients=new ArrayList<Client>();
+		receipts = new ArrayList<Receipt>(); 
 	}
 	public List<Client> getClients() {
-		return clients;
-=======
-		receipts = new ArrayList<Receipt>(); 
->>>>>>> 24f30cdab723549ed25e1417e87bc56ad59f0548
+		return clients;	
 	}
 
 	public User getLoggedUser() {
@@ -251,7 +243,7 @@ public class Angelaccesorios {
 
 				if(user.getPassword().equals(password)) {
 					loggedUser=firstUser;
-				
+				}
 				if(user.getPassword().equals(password) && user.isEnabled()) {
 					loggedUser=user;
 					logIn=true;
