@@ -241,9 +241,6 @@ public class Angelaccesorios {
 			User user=searchUserName(userName);
 			if(user!=null) { 
 
-				if(user.getPassword().equals(password)) {
-					loggedUser=firstUser;
-				}
 				if(user.getPassword().equals(password) && user.isEnabled()) {
 					loggedUser=user;
 					logIn=true;

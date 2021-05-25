@@ -91,6 +91,13 @@ public class AngelaccesoriosTest {
 		assertFalse(angelaccesorios.getLastUser()==null);
 		assertTrue(angelaccesorios.getLastUser()==angelaccesorios.getFirstUser());
 		assertTrue(angelaccesorios.getFirstUser().getNext()==null);
+		
+		assertEquals(angelaccesorios.getFirstUser().getName(),name);
+		assertEquals(angelaccesorios.getFirstUser().getLastName(),lastName);
+		assertEquals(angelaccesorios.getFirstUser().getId(),id);
+		assertEquals(angelaccesorios.getFirstUser().getUserName(),userName);
+		assertEquals(angelaccesorios.getFirstUser().getPassword(),password);
+		assertEquals(((Admin) angelaccesorios.getFirstUser()).getEmail(),email);
 	}
 
 	@Test
@@ -153,6 +160,11 @@ public class AngelaccesoriosTest {
 			angelaccesorios.createUser(id, name, lastName, userName, password);
 			User u= angelaccesorios.getLastUser();
 			assertEquals(u.getId(),id);
+			assertEquals(u.getName(),name);
+			assertEquals(u.getLastName(),lastName);
+			assertEquals(u.getUserName(),userName);
+			assertEquals(u.getPassword(),password);
+			
 			assertTrue(u.getNext()==null);
 			assertTrue(u.getPrev()==angelaccesorios.getFirstUser());
 
@@ -205,6 +217,10 @@ public class AngelaccesoriosTest {
 			angelaccesorios.createUser(id, name, lastName, userName, password);
 			User u= angelaccesorios.getLastUser();
 			assertEquals(u.getId(),id);
+			assertEquals(u.getName(),name);
+			assertEquals(u.getLastName(),lastName);
+			assertEquals(u.getUserName(),userName);
+			assertEquals(u.getPassword(),password);
 			assertTrue(u.getNext()==null);
 			assertTrue(u.getPrev()==angelaccesorios.getFirstUser().getNext());
 		}catch(SpaceException se) {
