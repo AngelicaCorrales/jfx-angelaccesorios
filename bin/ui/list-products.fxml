@@ -27,7 +27,6 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lbUserId" />
          </children>
          <VBox.margin>
             <Insets top="10.0" />
