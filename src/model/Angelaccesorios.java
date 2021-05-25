@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,11 +32,16 @@ public class Angelaccesorios {
 	private ArrayList<Product> products;
 	private ArrayList<TypeOfProduct> typesOfProducts;
 	private Supplier supplierRoot;
+	private List<Client> clients;
 
 	public Angelaccesorios() {
 		brands = new ArrayList<Brand>();
 		products = new ArrayList<Product>();
 		typesOfProducts = new ArrayList<TypeOfProduct>();
+		clients=new ArrayList<Client>();
+	}
+	public List<Client> getClients() {
+		return clients;
 	}
 
 	public User getLoggedUser() {
@@ -238,6 +245,173 @@ public class Angelaccesorios {
 		}
 				
 		return logIn;
+	}
+	
+	public void createClient(String name, String lastName, String id, String typeId, String address, String phone) throws SameIDException {
+
+		Client client= searchClient(id);
+		if(client!=null) {
+			throw new SameIDException();
+		}
+		
+		client= new Client( name,  lastName,  id,  TypeId.valueOf(typeId),  address,  phone);
+		addSortedClient(client);
+
+		//saveDataClients();
+
+	}
+	
+	public void addSortedClient(Client client) {
+		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
+		
+		if(clients.isEmpty()) {
+			clients.add(client);
+		}
+		else {
+			int i=0;
+			while(i<clients.size() && clientLastNameAndNameComparator.compare(clients.get(i),client)>0) {
+				i++;
+			}
+			clients.add(i, client);
+		}
+
+	}
+	
+	public Client searchClient(String clientId) {
+		boolean found=false;
+		
+		Client client=null;
+		for(int i=0; i<clients.size() && !found;i++ ) {
+			if(clients.get(i).getId().equals(clientId)) {
+				client=clients.get(i);
+				found=true;						
+			}
+		}
+		return client;
+		
+	}
+	
+	public boolean deleteClient(Client client) {
+		boolean deleted=false;
+		//if(searchClientInInvoice(client)==null) {
+			int i=clients.indexOf(client);
+			clients.remove(i);
+			deleted=true;
+			//saveDataClients();
+
+		//}
+				
+		return deleted;
+
+	}
+	/*
+	public Invoice searchClientInInvoice(Client client) {
+		Invoice invoice=null;
+		boolean found=false;
+		for(int i=0; i<invoices.size() && !found;i++) {
+			if(invoices.get(i).getBuyer().getId().equals(client.getId())) {
+				found=true;
+				invoice=invoices.get(i);
+			}
+
+		}
+		return invoice;
+	}
+	*/
+	public void updateClient(Client client,String name, String lastName, String id, String typeId, String address, String phone, boolean enabled) throws SameIDException {
+
+		Client client2= searchClient(id);
+
+		if(client!=client2) {
+			if(client2!=null) {
+				throw new SameIDException();
+			}
+		}
+
+		boolean sortList=false;
+		if(!client.getLastName().equals(lastName) || !client.getName().equals(name) ) {
+			sortList= true;
+		}
+
+		client.setName(name);
+		client.setLastName(lastName);
+
+		client.setEnabled(enabled);
+		client.setId(id);
+		client.setAddress(address);
+		client.setPhone(phone);
+		client.setTypeId(TypeId.valueOf(typeId));
+
+
+		if(sortList) {
+			Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
+
+			Collections.sort(clients,Collections.reverseOrder(clientLastNameAndNameComparator));
+		}
+		//saveDataClients();
+
+	}
+	
+	public int binarySearchClient(String clientNames, String clientLastNames) {
+		
+		Client client= new Client(clientNames,clientLastNames,null,null,null,null);
+		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
+		
+		int pos = -1;
+		int i=0;
+		int j=clients.size()-1;
+		
+		while(i<=j && pos<0){
+			int m= (i+j)/2;
+			
+			if(clientLastNameAndNameComparator.compare(clients.get(m),client)==0){
+				pos =m;
+			}else if(clientLastNameAndNameComparator.compare(clients.get(m),client)<0){
+				j=m-1;
+			}else{
+				i=m+1;
+			}
+		}
+		
+		return pos;
+	}
+	
+	public List<Client> searchClientByName(String clientNames, String clientLastNames){
+		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
+		List<Client> clientsByName=new ArrayList<Client>();
+		int pos;
+
+		pos=binarySearchClient(clientNames,clientLastNames);
+		int sameUp=1;
+		int sameDown=1;
+		if(pos>=0) {
+			if(clients.get(pos).isEnabled()) {
+				clientsByName.add(clients.get(pos));
+			}
+			
+			boolean same=false;
+			do {
+				same=false;
+				if((pos-sameDown)>=0 && clientLastNameAndNameComparator.compare(clients.get(pos), clients.get(pos-sameDown))==0) {
+					if(clients.get(pos-sameDown).isEnabled()) {
+						clientsByName.add(clients.get(pos-sameDown));
+						sameDown++;
+						same=true;
+					}
+				}
+
+				if((pos+sameUp)<=clients.size()-1 && clientLastNameAndNameComparator.compare(clients.get(pos), clients.get(pos+sameUp))==0) {
+					if(clients.get(pos+sameUp).isEnabled()) {
+						clientsByName.add(clients.get(pos+sameUp));
+						sameUp++;
+						same=true;
+					}
+				}
+			}while(same);
+					
+		}
+
+		return clientsByName;
 	}
 
 
@@ -804,8 +978,8 @@ public class Angelaccesorios {
 		boolean deleted = false;
 		boolean stop = false; 
 		boolean find = false;
-		for(int k=0; k<orders.size() && !stop;k++) {
-			find = orders.get(k).findProduct(product.getId());
+		for(int k=0; k<invoices.size() && !stop;k++) {
+			find = invoices.get(k).findProduct(product.getId());
 			if(find==true) {
 				stop = true;
 			}

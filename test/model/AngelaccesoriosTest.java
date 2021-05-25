@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -56,6 +57,17 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addBrand("Alcatel");
 		angelaccesorios.updateBrand(angelaccesorios.getBrands().get(0), "Samsung", false);
 		angelaccesorios.updateBrand(angelaccesorios.getBrands().get(3), "Xiaomi", false);
+	}
+	
+	//All the scenarios related with Client
+	public void setupScenary6() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.createClient("RINGO", "STARR", "16357453", "CC", "819 McCullough Lights Suite 240", "3183345631");
+		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "TI", "57265 Vernon Mission Apt. 527", "4394578");
+		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16377753", "CE", "58030 Nitzsche Circles Apt. 311", "3172456368");
+		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16388853", "PP", "45021 Strosin Roads1", "3119034678");
+		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16399953", "CC", "2713 Adah Drive", "2883456");
+
 	}
 	
 	//Method: CreateUserAdmin
@@ -526,6 +538,206 @@ public class AngelaccesoriosTest {
 		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
 		assertEquals(angelaccesorios.getLoggedUser(),null);
 		assertFalse(logIn);
+	}
+	
+	//Method: createClient
+	@Test
+	public void testCreateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		
+		String name= "KIM";
+		String lastName="TAEHYUNG";
+		String id ="1005783564";
+		String typeId="TI";
+		String address="919 Sauer Avenue";
+		String phone= "3157356473";
+		try {
+			angelaccesorios.createClient(name, lastName, id, typeId, address, phone);
+			assertEquals(angelaccesorios.getClients().size(),6);
+			assertEquals(angelaccesorios.getClients().get(0).getName(),name);
+			assertEquals(angelaccesorios.getClients().get(0).getLastName(),lastName);
+			assertEquals(angelaccesorios.getClients().get(0).getId(),id);
+			assertEquals(angelaccesorios.getClients().get(0).getTypeId().name(),typeId);
+			assertEquals(angelaccesorios.getClients().get(0).getAddress(),address);
+			assertEquals(angelaccesorios.getClients().get(0).getPhone(),phone);
+
+		}catch(SameIDException side) {
+			fail("SameIDException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testCreateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		
+		String name= "JOHN";
+		String lastName="LENNON";
+		String id ="16357453";
+		String typeId="CE";
+		String address="3972 Nova Springs Suite 224";
+		String phone= "3107869999";
+		try {
+			angelaccesorios.createClient(name, lastName, id, typeId, address, phone);
+			fail("SameIDException expected");
+
+		}catch(SameIDException side) {
+			assertEquals(angelaccesorios.getClients().size(),5);
+		}
+		
+	}
+	
+	@Test
+	public void testAddSortedClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		
+		String name= "JOHN";
+		String lastName="OLENNON";
+		String id ="16357999";
+		String typeId="CE";
+		String address="3972 Nova Springs Suite 224";
+		String phone= "3107869999";
+		Client client= new Client(name, lastName, id,  TypeId.valueOf(typeId), address, phone);
+		
+		angelaccesorios.addSortedClient(client);
+		
+		assertEquals(angelaccesorios.getClients().size(),6);
+		assertEquals(angelaccesorios.getClients().indexOf(client),2);
+				
+	}
+	
+	@Test
+	public void testSearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		Client c=angelaccesorios.searchClient("16377753");
+		
+		assertFalse(c==null);
+	}
+	
+	@Test
+	public void testSearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		Client c=angelaccesorios.searchClient("16370053");
+		
+		assertTrue(c==null);
+	}
+	
+	@Test
+	public void testDeleteClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		Client c=angelaccesorios.getClients().get(3);
+		boolean deleted=angelaccesorios.deleteClient(c);
+		assertTrue(deleted);
+		assertEquals(angelaccesorios.getClients().size(),4);
+	
+	}
+	
+	@Test
+	public void testDeleteClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		//FALTAAAAA CASO QUE NO SE ELIMINA PORQUE LO TIENE UNA FACTURA VIGENTE
+		setupScenary6();
+		Client c=angelaccesorios.getClients().get(3);
+		boolean deleted=angelaccesorios.deleteClient(c);
+		assertTrue(deleted);
+		assertEquals(angelaccesorios.getClients().size(),4);
+	
+	}
+	
+	@Test
+	public void testUpdateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		
+		Client c=angelaccesorios.getClients().get(3);
+		String newName= "KIM";
+		String newLastName="TAEHYUNG";
+		String newId ="1005783564";
+		String newTypeId="TI";
+		String newAddress="919 Sauer Avenue";
+		String newPhone= "3157356473";
+		boolean enabled=false;
+		try {
+			angelaccesorios.updateClient(c,newName, newLastName, newId, newTypeId, newAddress, newPhone,enabled);
+			assertEquals(angelaccesorios.getClients().size(),5);
+			assertEquals(angelaccesorios.getClients().get(0).getName(),newName);
+			assertEquals(angelaccesorios.getClients().get(0).getLastName(),newLastName);
+			assertEquals(angelaccesorios.getClients().get(0).getId(),newId);
+			assertEquals(angelaccesorios.getClients().get(0).getTypeId().name(),newTypeId);
+			assertEquals(angelaccesorios.getClients().get(0).getAddress(),newAddress);
+			assertEquals(angelaccesorios.getClients().get(0).getPhone(),newPhone);
+			assertFalse(angelaccesorios.getClients().get(0).isEnabled());
+
+		}catch(SameIDException side) {
+			fail("SameIDException not expected");
+		}
+		
+	}
+	
+	@Test
+	public void testUpdateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		
+		Client c=angelaccesorios.getClients().get(3);
+
+		String newId ="16357453";
+		try {
+			angelaccesorios.updateClient(c,"PAUL", "MCCARTNEY", newId, "CE", "58030 Nitzsche Circles Apt. 311", "3172456368",true);
+			fail("SameIDException expected");
+
+		}catch(SameIDException side) {
+			assertEquals(angelaccesorios.getClients().size(),5);
+			assertFalse(c.getId().equals(newId));
+		}
+		
+	}
+	
+	@Test
+	public void testBinarySearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		int pos=angelaccesorios.binarySearchClient("KIM", "NAMJOON");
+		
+		assertTrue(pos==-1);
+	}
+	
+	@Test
+	public void testBinarySearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		int pos=angelaccesorios.binarySearchClient("PAUL", "MCCARTNEY");
+		
+		assertTrue(pos==2);
+	}
+	
+	@Test
+	public void testBinarySearchClient3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		int pos=angelaccesorios.binarySearchClient("WILLOW", "SMITH");
+		
+		assertTrue(pos==1);
+	}
+	
+	@Test
+	public void testSearchClientByName1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		List<Client> list=angelaccesorios.searchClientByName("TOWA", "BIRD");
+		
+		assertTrue(list.isEmpty());
+	}
+	
+	@Test
+	public void testSearchClientByName2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		List<Client> list=angelaccesorios.searchClientByName("WILLOW", "SMITH");
+		
+		assertEquals(list.size(),1);
+		assertEquals(angelaccesorios.getClients().get(1),list.get(0));
+	}
+	
+	@Test
+	public void testSearchClientByName3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary6();
+		List<Client> list=angelaccesorios.searchClientByName("PAUL", "MCCARTNEY");
+		
+		assertEquals(list.size(),3);
+		
 	}
 
 	//All the test cases related with Brand
