@@ -11,7 +11,7 @@ public class Product {
 	private double price;
 	private boolean enabled;
 	
-	public Product(TypeOfProduct t, Brand b, int u, boolean g, String m, double p) {
+	public Product(TypeOfProduct t, Brand b, int u, boolean g, String m, double p, String c) {
 		type = t;
 		brand = b;
 		units = u;
@@ -19,6 +19,7 @@ public class Product {
 		model = m;
 		price = p;
 		enabled = true;
+		c = code;
 	}
 
 	public String getCode() {

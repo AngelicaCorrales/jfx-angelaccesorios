@@ -8,6 +8,10 @@ public class TypeOfProduct implements Serializable{
 	private String name;
 	private boolean enabled;
 	
+	private TypeOfProduct left;
+	private TypeOfProduct right;
+	private TypeOfProduct parent;
+	
 	public TypeOfProduct(String n) {
 		name = n;
 		enabled = true;
@@ -41,5 +45,29 @@ public class TypeOfProduct implements Serializable{
 	
 	public String toString() {
 		return name;
+	}
+
+	public TypeOfProduct getLeft() {
+		return left;
+	}
+
+	public void setLeft(TypeOfProduct left) {
+		this.left = left;
+	}
+
+	public TypeOfProduct getRight() {
+		return right;
+	}
+
+	public void setRight(TypeOfProduct right) {
+		this.right = right;
+	}
+
+	public TypeOfProduct getParent() {
+		return parent;
+	}
+
+	public void setParent(TypeOfProduct parent) {
+		this.parent = parent;
 	}
 }

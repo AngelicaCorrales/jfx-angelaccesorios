@@ -7,12 +7,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+=======
+>>>>>>> 24f30cdab723549ed25e1417e87bc56ad59f0548
 import java.util.concurrent.ThreadLocalRandom;
 
 import exceptions.EmailException;
+import exceptions.NegativePriceException;
+import exceptions.NegativeQuantityException;
+import exceptions.NoPriceException;
+import exceptions.NoQuantityException;
 import exceptions.SameIDException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
@@ -30,18 +37,23 @@ public class Angelaccesorios {
 	public final static String SEPARATOR = ";";
 	private ArrayList<Brand> brands;
 	private ArrayList<Product> products;
-	private ArrayList<TypeOfProduct> typesOfProducts;
+	private ArrayList<Receipt> receipts;
+	private TypeOfProduct typePRoot;
 	private Supplier supplierRoot;
 	private List<Client> clients;
 
 	public Angelaccesorios() {
 		brands = new ArrayList<Brand>();
 		products = new ArrayList<Product>();
+<<<<<<< HEAD
 		typesOfProducts = new ArrayList<TypeOfProduct>();
 		clients=new ArrayList<Client>();
 	}
 	public List<Client> getClients() {
 		return clients;
+=======
+		receipts = new ArrayList<Receipt>(); 
+>>>>>>> 24f30cdab723549ed25e1417e87bc56ad59f0548
 	}
 
 	public User getLoggedUser() {
@@ -119,7 +131,7 @@ public class Angelaccesorios {
 
 		lastUser=admin;
 
-		
+
 		//saveDataUsers();
 
 	}
@@ -180,8 +192,8 @@ public class Angelaccesorios {
 
 	}
 
+	//CORREOOO
 	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled, String email) throws SameIDException, SameUserNameException, SpaceException, EmailException {
-		
 		userName=userName.trim();
 		String[] parts=userName.split(" ");
 		if(parts.length>1) {
@@ -220,7 +232,7 @@ public class Angelaccesorios {
 
 
 		//saveDataUsers();
-		
+
 	}
 
 	public boolean logInUser(String userName, String password) {
@@ -236,6 +248,9 @@ public class Angelaccesorios {
 		}else {
 			User user=searchUserName(userName);
 			if(user!=null) { 
+
+				if(user.getPassword().equals(password)) {
+					loggedUser=firstUser;
 				
 				if(user.getPassword().equals(password) && user.isEnabled()) {
 					loggedUser=user;
@@ -243,7 +258,7 @@ public class Angelaccesorios {
 				}
 			}
 		}
-				
+
 		return logIn;
 	}
 	
@@ -293,7 +308,7 @@ public class Angelaccesorios {
 	
 	public boolean deleteClient(Client client) {
 		boolean deleted=false;
-		//if(searchClientInInvoice(client)==null) {
+		//if(searchClientInReceipt(client)==null) {
 			int i=clients.indexOf(client);
 			clients.remove(i);
 			deleted=true;
@@ -305,17 +320,17 @@ public class Angelaccesorios {
 
 	}
 	/*
-	public Invoice searchClientInInvoice(Client client) {
-		Invoice invoice=null;
+	public Receipt searchClientInReceipt(Client client) {
+		Receipt receipt=null;
 		boolean found=false;
-		for(int i=0; i<invoices.size() && !found;i++) {
-			if(invoices.get(i).getBuyer().getId().equals(client.getId())) {
+		for(int i=0; i<receipts.size() && !found;i++) {
+			if(receipts.get(i).getBuyer().getId().equals(client.getId())) {
 				found=true;
-				invoice=invoices.get(i);
+				receipt=receipts.get(i);
 			}
 
 		}
-		return invoice;
+		return receipt;
 	}
 	*/
 	public void updateClient(Client client,String name, String lastName, String id, String typeId, String address, String phone, boolean enabled) throws SameIDException {
@@ -527,72 +542,72 @@ public class Angelaccesorios {
 
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	//All related with Brand
@@ -734,7 +749,7 @@ public class Angelaccesorios {
 
 	public boolean deleteSupplier(Supplier s) throws IOException {
 		boolean deleted = false;
-		if(!searchSuppliersInTypesOfProducts(s)){
+		if(!searchSupplierInTypesOfProducts(typePRoot, s)){
 			removeSupplier(s);
 			deleted = true;
 			saveDataSuppliers();
@@ -819,17 +834,32 @@ public class Angelaccesorios {
 		}
 	}
 
-	public boolean searchSuppliersInTypesOfProducts(Supplier s) {
+	public boolean searchSupplierInTypesOfProducts(TypeOfProduct current, Supplier s) {
 		boolean found = false;
-		for(int i=0; i<typesOfProducts.size() && !found;i++) {
-			TypeOfProduct type = typesOfProducts.get(i);
-			if(type instanceof ElectronicEquipment) {
-				if(((ElectronicEquipment)type).getSupplier().getName().equals(s.getName())){
-					found = true;
+		if(current!=null && current instanceof ElectronicEquipment) {
+			if(((ElectronicEquipment)current).findSupplier(s.getName())==true) {
+				found = true;
+				return found;
+			}else {
+				if(current.getLeft()!=null && current.getName().compareTo(current.getLeft().getName())<0) {
+					return searchSupplierInTypesOfProducts(current.getLeft(), s);	
+				}else if(current.getRight()!=null){
+					return searchSupplierInTypesOfProducts(current.getRight(), s);
+				}else {
+					return found;
 				}
 			}
+		}else if(current==null){
+			return found;
+		}else{
+			if(current.getLeft()!=null && current.getName().compareTo(current.getLeft().getName())<0) {
+				return searchSupplierInTypesOfProducts(current.getLeft(), s);	
+			}else if(current.getRight()!=null){
+				return searchSupplierInTypesOfProducts(current.getRight(), s);
+			}else {
+				return found;
+			}
 		}
-		return found;
 	}
 
 	public Supplier getSupplierRoot() {
@@ -839,14 +869,13 @@ public class Angelaccesorios {
 	public void setSupplierRoot(Supplier supplierRoot) {
 		this.supplierRoot = supplierRoot;
 	}
-	
+
 	public void saveDataSuppliers() throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SUPPLIERS_SAVE_PATH_FILE));
 		oos.writeObject(supplierRoot);
 		oos.close();
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean loadDataSuppliers() throws IOException, ClassNotFoundException{
 		File f = new File(SUPPLIERS_SAVE_PATH_FILE);
 		boolean loaded = false;
@@ -861,42 +890,125 @@ public class Angelaccesorios {
 
 	//All related with TypeOfProduct
 
-	public boolean addTypeOfProduct(String name) throws IOException {
-		TypeOfProduct ty = searchTypeOfProduct(name);
+	public boolean createTypeOfProduct(String name, String category) throws IOException {
+		TypeOfProduct ty = searchTypeOfProduct(typePRoot, name);
 		boolean added = false;
 		if(ty==null) {
-			ty = new Accessory(name);
-			typesOfProducts.add(ty);
+			if(category.equals("Accesorio")) {
+				ty = new Accessory(name);
+			}else {
+				ty = new ElectronicEquipment(name);
+			}
+			if(typePRoot==null) {
+				setTypePRoot(ty);
+				saveDataTypesOfProducts();
+			}else {
+				addTypeOfProduct(typePRoot, ty);
+				saveDataTypesOfProducts();
+			}
+			added = true;
+		}
+		return added;
+	}
+
+	private void addTypeOfProduct(TypeOfProduct current, TypeOfProduct newType) {
+		if(newType.getName().compareTo(current.getName())<0){
+			if(current.getRight()==null){
+				current.setRight(newType);
+				newType.setParent(current);
+			}else{
+				addTypeOfProduct(current.getRight(),newType);
+			}
+		}else{
+			if(current.getLeft()==null){
+				current.setLeft(newType);
+				newType.setParent(current);
+			}else{
+				addTypeOfProduct(current.getLeft(),newType);
+			}	
+		}	
+	}
+
+	public boolean addSupplierToATypeOfP(TypeOfProduct tp, Supplier sp) throws IOException{
+		boolean find = ((ElectronicEquipment)tp).findSupplier(sp.getName());
+		boolean added = false;
+		if(find==false) {
+			((ElectronicEquipment)tp).getSuppliers().add(sp);
 			added = true;
 			saveDataTypesOfProducts();
 		}
 		return added;
 	}
 
-	public boolean addTypeOfProduct(String name, Supplier supplier) throws IOException {
-		TypeOfProduct ty = searchTypeOfProduct(name);
-		boolean added = false;
-		if(ty==null) {
-			ty = new ElectronicEquipment(name);
-			typesOfProducts.add(ty);
-			added = true;
-			saveDataTypesOfProducts();
-		}
-		return added;
+	public void deleteASupplierOfATypeOfP(TypeOfProduct tp, Supplier sp) throws IOException {
+		ElectronicEquipment eq = ((ElectronicEquipment) tp);
+		eq.getSuppliers().remove(eq.getSuppliers().indexOf(sp));
+		saveDataTypesOfProducts();
 	}
 
 	public boolean deleteTypeOfProduct(TypeOfProduct type) throws IOException {
 		boolean deleted = false;
-		if(!searchTypeOfProductInProducts(type)){
-			typesOfProducts.remove(typesOfProducts.indexOf(type));
+		boolean found = false;
+		for(int i=0; i<products.size() && !found;i++) {
+			found = products.get(i).getType().getName().equals(type.getName());	
+		}
+		if(found){
+			removeType(type);
 			deleted = true;
 			saveDataTypesOfProducts();
 		}
 		return deleted;
 	}
 
-	public boolean updateTypeOfProduct(TypeOfProduct ty, String newName, String category, boolean enabled) throws IOException {
-		TypeOfProduct type = searchTypeOfProduct(newName);
+	private void removeType(TypeOfProduct t) {
+		if(t.getLeft()==null && t.getRight()==null){
+			if(t==typePRoot){
+				typePRoot=null;
+			}else if(t == t.getParent().getLeft()){
+				t.getParent().setLeft(null);
+
+			}else{
+				t.getParent().setRight(null);
+			}
+			t.setParent(null);
+
+		}else if(t.getLeft()==null || t.getRight()==null){
+			TypeOfProduct onlyChild;
+			if(t.getLeft()!=null){
+				onlyChild = t.getLeft();
+				t.setLeft(null);
+			}else{
+				onlyChild = t.getRight();
+				t.setRight(null);
+			}
+			onlyChild.setParent(t.getParent());
+			if(t==typePRoot){
+				typePRoot=onlyChild;
+			}else if(t==t.getParent().getLeft()){
+				t.getParent().setLeft(onlyChild);
+
+			}else{
+				t.getParent().setRight(onlyChild);
+			}
+			t.setParent(null);
+
+		}else{ 
+			TypeOfProduct successor =min(t.getRight());
+			t.setName(successor.getName());
+			removeType(successor);	
+		}
+	}
+
+	private TypeOfProduct min(TypeOfProduct current){
+		if(current.getLeft()!=null){
+			return min(current.getLeft());
+		}else{
+			return current;
+		}
+	}
+
+	public boolean updateTypeOfProduct(TypeOfProduct ty, String newName, boolean enabled) throws IOException {
+		TypeOfProduct type = searchTypeOfProduct(typePRoot, newName);
 		boolean updated=false;
 		boolean findType = false;
 		if(ty!= type) {
@@ -905,55 +1017,46 @@ public class Angelaccesorios {
 			}
 		}
 		if(!findType) {
-			b.setName(newName);
-			b.setEnabled(enabled);
-			saveDataBrands();
+			ty.setName(newName);
+			ty.setEnabled(enabled);
+			saveDataTypesOfProducts();
 			updated=true;
 		}
 		return updated;
 	}
 
-	public boolean searchTypeOfProductInProducts(TypeOfProduct ty) {
-		boolean found = false;
-		for(int i=0; i<typesOfProducts.size() && !found;i++) {
-			found = products.get(i).getType().getName().equals(ty.getName());	
-		}
-		return found;
-	}
-
-	public TypeOfProduct searchTypeOfProduct(String name) {
-		boolean found = false;
-		TypeOfProduct ty = null;
-		for(int i=0; i<typesOfProducts.size() && !found;i++ ) {
-			if(typesOfProducts.get(i).getName().equalsIgnoreCase(name)) {
-				ty = typesOfProducts.get(i);
-				found = true;						
+	public TypeOfProduct searchTypeOfProduct(TypeOfProduct current, String name) {
+		if(current==null || current.getName().equalsIgnoreCase(name)) {
+			return current;
+		}else {
+			if(name.compareTo(current.getName())<0) {
+				return searchTypeOfProduct(current.getLeft(), name);
+			}else {
+				return searchTypeOfProduct(current.getRight(), name);
 			}
 		}
-		return ty;
 	}
 
-	public ArrayList<TypeOfProduct> getTypesOfProducts() {
-		return typesOfProducts;
+	public TypeOfProduct getTypePRoot() {
+		return typePRoot;
 	}
 
-	public void setTypesOfProducts(ArrayList<TypeOfProduct> typesOfProducts) {
-		this.typesOfProducts = typesOfProducts;
+	public void setTypePRoot(TypeOfProduct typePRoot) {
+		this.typePRoot = typePRoot;
 	}
 
 	public void saveDataTypesOfProducts() throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TYPESOFPRODUCTS_SAVE_PATH_FILE));
-		oos.writeObject(typesOfProducts);
+		oos.writeObject(typePRoot);
 		oos.close();
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean loadDataTypesOfProducts() throws IOException, ClassNotFoundException{
 		File f = new File(TYPESOFPRODUCTS_SAVE_PATH_FILE);
 		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			typesOfProducts = (ArrayList<TypeOfProduct>)ois.readObject();
+			typePRoot = (TypeOfProduct)ois.readObject();
 			ois.close();
 			loaded = true;
 		}
@@ -962,29 +1065,56 @@ public class Angelaccesorios {
 
 	//All related with Product
 
-	public boolean addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException {
+	public boolean addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		Product p = searchProduct(type, b, model);
 		boolean added = false;
-		if(p==null) {
-			p = new Product(type, b, units, guarantee, model, price);
+		if(p==null && units>0 && price>0) {
+			int num = ThreadLocalRandom.current().nextInt(1000, 10000);
+			String code = "";
+			boolean found = false;
+			do {
+				if(type instanceof ElectronicEquipment) {
+					code = ((ElectronicEquipment)type).getCode()+num;
+				}else {
+					code = ((Accessory)type).getCode()+num;
+				}
+				for(int i=0; i<products.size() && !found;i++ ) {
+					if(products.get(i).getCode().equals(code)) {
+						found = true;						
+					}
+				}
+			}while(!found);
+			p = new Product(type, b, units, guarantee, model, price, code);
 			products.add(p);
+			p.setCode(p.getCode()+"-"+products.indexOf(p));
 			added = true;
 			saveDataProducts();
+		}else {
+			if(units==0) {
+				throw new NoQuantityException(units); 
+			}
+			if(units<0) {
+				throw new NegativeQuantityException(units);
+			}
+			if(price==0) {
+				throw new NoPriceException(price);
+			}
+			if(price<0) {
+				throw new NegativePriceException(price);
+			}
 		}
 		return added;
 	}
 
 	public boolean deleteProduct(Product p) throws IOException {
-		boolean deleted = false;
-		boolean stop = false; 
+		boolean deleted = false; 
 		boolean find = false;
-		for(int k=0; k<invoices.size() && !stop;k++) {
-			find = invoices.get(k).findProduct(product.getId());
-			if(find==true) {
-				stop = true;
+		for(int k=0; k<receipts.size() && !find;k++) {
+			if(receipts.get(k) instanceof SeparateReceipt && ((SeparateReceipt)receipts.get(k)).getState().equals(State.NO_ENTREGADO)) {
+				find = ((SeparateReceipt)receipts.get(k)).findProduct(p.getCode());	
 			}
 		}
-		if(!searchProductInReceipts(p)){
+		if(!find){
 			products.remove(products.indexOf(p));
 			deleted = true;
 			saveDataProducts();
@@ -992,8 +1122,8 @@ public class Angelaccesorios {
 		return deleted;
 	}
 
-	public boolean updateProduct(Product p, TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException {
-		Product product = searchProduct(type, b, model);
+	public boolean updateProduct(Product p, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException {
+		Product product = searchProduct(p.getType(), b, model);
 		boolean updated=false;
 		boolean findProduct = false;
 		if(p!= product) {
@@ -1006,7 +1136,6 @@ public class Angelaccesorios {
 			p.setGuarantee(guarantee);
 			p.setModel(model);
 			p.setPrice(price);
-			p.setType(type);
 			p.setUnits(units);
 			p.setEnabled(enabled);
 			saveDataProducts();
@@ -1055,6 +1184,15 @@ public class Angelaccesorios {
 	}
 
 	//All related with Receipt
+
+	public ArrayList<Receipt> getReceipts() {
+		return receipts;
+	}
+
+	public void setReceipts(ArrayList<Receipt> receipts) {
+		this.receipts = receipts;
+	}
+
 
 
 }
