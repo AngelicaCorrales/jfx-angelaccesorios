@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import exceptions.EmailException;
+import exceptions.SameIDException;
+import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,8 +30,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
+import model.User;
 
 public class AngelaccesoriosGUI {
 
@@ -49,6 +53,18 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TextField txtEmail;
+	
+	@FXML
+    private Button btManageBrand;
+
+    @FXML
+    private Button btManageTypeProd;
+
+    @FXML
+    private Button btManageProd;
+
+    @FXML
+    private Button btManageUser;
 
 	//Brand------------
 
@@ -182,15 +198,40 @@ public class AngelaccesoriosGUI {
 	@FXML
 	private ComboBox<?> cmbxFinalMinute;
 
+	//User--------
+	@FXML
+    private Label lbEmail;
+
+	@FXML
+	private TableView<User> tvListUsers;
+
+	@FXML
+	private TableColumn<User, String> colNameUser;
+
+	@FXML
+	private TableColumn<User, String> colLastNameUser;
+
+	@FXML
+	private TableColumn<User, String> colIdUser;
+
+	@FXML
+	private TableColumn<User, String> colEnabledUser;
+
+	@FXML
+	private TableColumn<User, String> colUserName;
+
+	@FXML
+	private TableColumn<User, String> colPassword;
+
 
 	@FXML
 	public void logIn(ActionEvent event) throws IOException {
-			
-		 Alert alert = new Alert(AlertType.ERROR);
+
+		Alert alert = new Alert(AlertType.ERROR);
 		alert.setHeaderText(null);
 
 		if(txtUserName.getText().isEmpty() && passwordField.getText().isEmpty()) {
-    		showValidationErrorAlert();
+			showValidationErrorAlert();
 
 		}
 		else {
@@ -206,10 +247,10 @@ public class AngelaccesoriosGUI {
 				alert.showAndWait();
 			}
 		}
-		
+
 		txtUserName.clear();
-    	passwordField.clear();
-		 
+		passwordField.clear();
+
 	}
 
 	public AngelaccesoriosGUI(Angelaccesorios ac) {
@@ -227,7 +268,7 @@ public class AngelaccesoriosGUI {
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		//initializeTableViewOfTypesOfProducts(); 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-		
+
 	}
 
 	@FXML
@@ -261,7 +302,7 @@ public class AngelaccesoriosGUI {
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfBrands();
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-		 
+
 	}
 
 	@FXML
@@ -308,7 +349,7 @@ public class AngelaccesoriosGUI {
 			}
 			txtBrandName.clear();
 			tvOfBrands.getItems().clear();
-    		initializeTableViewOfBrands();
+			initializeTableViewOfBrands();
 		}else {
 			showValidationErrorAlert();
 		}
@@ -336,7 +377,7 @@ public class AngelaccesoriosGUI {
 			txtBrandName.clear();
 			ckbxDisable.setSelected(false);
 			tvOfBrands.getItems().clear();
-    		initializeTableViewOfBrands();
+			initializeTableViewOfBrands();
 			disableButtons();
 		} 
 	}
@@ -344,34 +385,34 @@ public class AngelaccesoriosGUI {
 	@FXML
 	public void updateBrand(ActionEvent event) throws IOException {
 		if (!txtBrandName.getText().equals("")) {
-    		String newName = txtBrandName.getText();
-    		boolean enabled = true;
-    		if(ckbxDisable.isSelected()) {
-    			enabled = false;
-    		}
-    		boolean updated = angelaccesorios.updateBrand(tvOfBrands.getSelectionModel().getSelectedItem(), newName, enabled);
-    		if(updated==false) {
-    			Alert alert1 = new Alert(AlertType.ERROR);
-    			alert1.setTitle("Error de validacion");
-    			alert1.setHeaderText(null);
-    			alert1.setContentText("Ya existe una marca agregada con dicho nombre, intentelo nuevamente");
-    			alert1.showAndWait();
-    		}else {
-    			Alert alert2 = new Alert(AlertType.INFORMATION);
-        		alert2.setTitle("Informacion");
-        		alert2.setHeaderText(null);
-        		alert2.setContentText("La marca elegida ha sido actualizada exitosamente");
-        		alert2.showAndWait();
-    		}
-    		txtBrandName.clear();
-    		ckbxDisable.setSelected(false);
-    		tvOfBrands.getItems().clear();
-    		initializeTableViewOfBrands();
-    	}else {
-    		showValidationErrorAlert();
-    	}
+			String newName = txtBrandName.getText();
+			boolean enabled = true;
+			if(ckbxDisable.isSelected()) {
+				enabled = false;
+			}
+			boolean updated = angelaccesorios.updateBrand(tvOfBrands.getSelectionModel().getSelectedItem(), newName, enabled);
+			if(updated==false) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Ya existe una marca agregada con dicho nombre, intentelo nuevamente");
+				alert1.showAndWait();
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("La marca elegida ha sido actualizada exitosamente");
+				alert2.showAndWait();
+			}
+			txtBrandName.clear();
+			ckbxDisable.setSelected(false);
+			tvOfBrands.getItems().clear();
+			initializeTableViewOfBrands();
+		}else {
+			showValidationErrorAlert();
+		}
 	}
-	
+
 	@FXML
 	public void sortListBrands(ActionEvent event) {
 
@@ -389,7 +430,7 @@ public class AngelaccesoriosGUI {
 		//initializeTableViewOfProducts();
 		//showComboBoxOfTypesOfProducts();
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-		
+
 	}
 
 	@FXML
@@ -430,7 +471,7 @@ public class AngelaccesoriosGUI {
 		//createOrderForm.setVisible(true);
 		//btAddProductsOrder.setDisable(true);
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-		
+
 	}
 
 	@FXML
@@ -456,20 +497,29 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void signOutOfSystem(ActionEvent event) throws IOException {
+		angelaccesorios.setLoggedUser(null);
 		loadLogIn(null);
 
 	}
 
 	@FXML
 	public void returnToMenu(ActionEvent event) throws IOException {
-		
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
+		if(angelaccesorios.getLoggedUser() instanceof Admin) {
+			
+			btManageBrand.setDisable(false);
+			btManageTypeProd.setDisable(false);
+			btManageProd.setDisable(false);
+			btManageUser.setDisable(false);
+		}
 		
+
 	}
 
 	@FXML
@@ -488,7 +538,7 @@ public class AngelaccesoriosGUI {
 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
-	
+
 
 	}
 
@@ -527,37 +577,37 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void registerAdmin(ActionEvent event) throws IOException {
-    	if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty() && !txtEmail.getText().isEmpty()) {
-    		Alert alert2 = new Alert(AlertType.ERROR);
+		if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty() && !txtEmail.getText().isEmpty()) {
+			Alert alert2 = new Alert(AlertType.ERROR);
 			alert2.setTitle("Error de validacion");
 			alert2.setHeaderText(null);
-			
-    		try {
+
+			try {
 				angelaccesorios.createUserAdmin(txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), txtUserName.getText().toLowerCase(),passwordField.getText(),txtEmail.getText());
 				Alert alert1 = new Alert(AlertType.INFORMATION);
-        		alert1.setTitle("Informacion");
-        		alert1.setHeaderText(null);
-        		alert1.setContentText("El usuario administrador ha sido registrado exitosamente!");
-        		alert1.showAndWait();
-        		
-        		txtName.clear();
-        		txtLastName.clear();
-            	txtId.clear();
-            	
-            	loadLogIn(null);
-    		} catch (EmailException ee) {
-    			alert2.setContentText("No se pudo registrar el usuario, correo no válido");
-    			alert2.showAndWait();
-				
+				alert1.setTitle("Informacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("El usuario administrador ha sido registrado exitosamente!");
+				alert1.showAndWait();
+
+				txtName.clear();
+				txtLastName.clear();
+				txtId.clear();
+
+				loadLogIn(null);
+			} catch (EmailException ee) {
+				alert2.setContentText("No se pudo registrar el usuario, correo no válido");
+				alert2.showAndWait();
+
 			} catch (SpaceException se) {
 				alert2.setContentText("No se pudo registrar el usuario, el nombre de usuario no puede llevar espacios");
 				alert2.showAndWait();
 			}
-    	}else {
-    		showValidationErrorAlert();
-    	}
-    		
-		
+		}else {
+			showValidationErrorAlert();
+		}
+
+
 	}
 
 	@FXML
@@ -572,6 +622,178 @@ public class AngelaccesoriosGUI {
 		mainPane.setCenter(clientPane);
 
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
+		initializeTableViewUsers(); 
+	}
+	
+	private void initializeTableViewUsers() {
+		
+		ObservableList<User> observableList=FXCollections.observableArrayList();
+		User u=angelaccesorios.getFirstUser();
+		while(u!=null) {
+			observableList.add(u);
+			u=u.getNext();
+		}
+		
+		tvListUsers.setItems(observableList);
+		colNameUser.setCellValueFactory(new PropertyValueFactory<User, String>("Name"));
+    	colLastNameUser.setCellValueFactory(new PropertyValueFactory<User, String>("LastName"));
+    	colIdUser.setCellValueFactory(new PropertyValueFactory<User, String>("id"));
+    	colEnabledUser.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
+    	colUserName.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
+    	colPassword.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
+    	tvListUsers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
+	
+	
+	
+	@FXML
+	public void clickOnTableViewUsers(MouseEvent event) {
+		if (tvListUsers.getSelectionModel().getSelectedItem() != null) {
+			enableButtons();
+			User selectedUser = tvListUsers.getSelectionModel().getSelectedItem();
+			txtUserName.setText(selectedUser.getUserName());
+    		passwordField.setText(selectedUser.getPassword());
+    		txtName.setText(selectedUser.getName());
+    		txtLastName.setText(selectedUser.getLastName());
+    		txtId.setText(selectedUser.getId());
+   		
+    		ckbxDisable.setSelected(!selectedUser.isEnabled());
+    		if(selectedUser instanceof Admin) {
+    			lbEmail.setVisible(true);
+    			txtEmail.setVisible(true);
+    			txtEmail.setText(((Admin)selectedUser).getEmail());
+    			ckbxDisable.setDisable(true);
+    		}
+		}
+		
+	}
+
+	@FXML
+	public void createUser(ActionEvent event) {
+		if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+			Alert alert2 = new Alert(AlertType.ERROR);
+			alert2.setTitle("Error de validacion");
+			alert2.setHeaderText(null);
+
+			try {
+				angelaccesorios.createUser(txtId.getText(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(), txtUserName.getText().toLowerCase(),passwordField.getText());
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Informacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("El usuario ha sido creado exitosamente!");
+				alert1.showAndWait();
+
+				txtName.clear();
+				txtLastName.clear();
+				txtId.clear();
+				txtUserName.clear();
+				passwordField.clear();
+				initializeTableViewUsers();
+			} catch (SpaceException e) {
+				alert2.setContentText("No se pudo registrar el usuario, el nombre de usuario no puede llevar espacios");
+				alert2.showAndWait();
+			} catch (SameIDException e) {
+				alert2.setContentText("No se pudo registrar el usuario, el numero de identificación es igual al de otro usuario");
+				alert2.showAndWait();
+			} catch (SameUserNameException e) {
+				alert2.setContentText("No se pudo registrar el usuario, el nombre de usuario es igual al de otro usuario");
+				alert2.showAndWait();
+			}
+
+		}else {
+			showValidationErrorAlert();
+		}
+
+	}
+
+	@FXML
+	public void deleteUser(ActionEvent event) {
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Confirmacion de proceso");
+    	alert1.setHeaderText(null);
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar el empleado escogido?");
+    	Optional<ButtonType> result = alert1.showAndWait();
+    	if (result.get() == ButtonType.OK){
+        	
+    		boolean deleted= angelaccesorios.deleteUser(tvListUsers.getSelectionModel().getSelectedItem());
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+        	alert2.setTitle("Informacion");
+        	alert2.setHeaderText(null);
+        	
+        	if(deleted) {
+        		alert2.setContentText("El usuario ha sido eliminado exitosamente");
+        		           	           	
+            	initializeTableViewUsers();
+            	
+        	}else {
+        		alert2.setContentText("El usuario no se pudo eliminar");
+        		
+        	}
+        	alert2.showAndWait();
+    		txtName.clear();
+    		txtLastName.clear();
+        	txtId.clear();
+        	txtUserName.clear();
+			passwordField.clear();
+        	disableButtons();
+        	
+    	}
+	}
+
+
+	@FXML
+	public void updateUser(ActionEvent event) {
+		boolean update=true;
+		if(tvListUsers.getSelectionModel().getSelectedItem() instanceof Admin && txtEmail.getText().isEmpty()) {
+			update=false;
+		}
+		if (update && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+			Alert alert2 = new Alert(AlertType.ERROR);
+			alert2.setTitle("Error de validacion");
+			alert2.setHeaderText(null);		
+    		
+			try {
+				
+				angelaccesorios.updateUser(tvListUsers.getSelectionModel().getSelectedItem(),txtId.getText() ,txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(),txtEmail.getText());
+				
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+        		alert1.setTitle("Informacion");
+        		alert1.setHeaderText(null);
+        		alert1.setContentText("El usuario ha sido actualizado exitosamente!");
+        		alert1.showAndWait();
+        		
+        		txtName.clear();
+        		txtLastName.clear();
+            	txtId.clear();
+            	txtUserName.clear();
+    			passwordField.clear();
+    			txtEmail.clear();
+
+    			txtEmail.setVisible(false);
+    			lbEmail.setVisible(false);
+            	disableButtons();
+            	tvListUsers.getItems().clear();
+
+            	initializeTableViewUsers();
+			
+			} catch (SameIDException e) {
+				alert2.setContentText("No se pudo actualizar el usuario, el numero de identificación es igual al de otro usuario");
+				alert2.showAndWait();
+			} catch (SameUserNameException e) {
+				alert2.setContentText("No se pudo actualizar el usuario, el nombre de usuario es igual al de otro usuario");
+				alert2.showAndWait();
+			} catch (SpaceException e) {
+				alert2.setContentText("No se pudo actualizar el usuario, el nombre de usuario no puede llevar espacios");
+				alert2.showAndWait();
+			}catch (EmailException e) {
+				alert2.setContentText("No se pudo actualizar el usuario, correo no válido");
+				alert2.showAndWait();
+			}
+    		
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
 
 
@@ -656,12 +878,23 @@ public class AngelaccesoriosGUI {
 	}
 
 	public void disableButtons() {
-    	btDelete.setDisable(true);
+		btDelete.setDisable(true);
 		btUpdate.setDisable(true);
 		ckbxDisable.setDisable(true);
 		btAdd.setDisable(false);
-    }
+	}
+	
+	 public void enableButtons() {
+	    	btDelete.setDisable(false);
+			btUpdate.setDisable(false);
+			ckbxDisable.setDisable(false);
+			btAdd.setDisable(true);
+	    }
 
+
+
+
+	
 
 
 

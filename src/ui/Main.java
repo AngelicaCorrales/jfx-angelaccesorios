@@ -57,7 +57,12 @@ public class Main extends Application{
 		primaryStage.setTitle("Angelaccesorios");
 		primaryStage.show();
 		
-		angelaccesoriosgui.loadRegisterAdmin();
+		if(angelaccesorios.getFirstUser()==null) {
+			angelaccesoriosgui.loadRegisterAdmin();
+		}else {
+			angelaccesoriosgui.loadLogIn(null);
+		}
+		
 	}
 
 }

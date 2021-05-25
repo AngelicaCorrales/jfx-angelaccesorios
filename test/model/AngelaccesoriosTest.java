@@ -322,7 +322,7 @@ public class AngelaccesoriosTest {
 		boolean enabled=false;
 		try {
 			
-			angelaccesorios.updateUser(u, "16348023", newName, "JIMIN", "jimin", "lachim0lala", enabled);
+			angelaccesorios.updateUser(u, "16348023", newName, "JIMIN", "jimin", "lachim0lala", enabled,"");
 			assertEquals(u.getName(),newName);
 			assertEquals(u.isEnabled(),enabled);
 			
@@ -331,6 +331,8 @@ public class AngelaccesoriosTest {
 		}catch(SameIDException side) {
 			fail("SameIDException not expected");
 		}catch(SameUserNameException sune) {
+			fail("SameUserNameException not expected");
+		}catch(EmailException ee) {
 			fail("SameUserNameException not expected");
 		}
 	}
@@ -343,7 +345,7 @@ public class AngelaccesoriosTest {
 		String newId="1007793567";
 		try {
 					
-			angelaccesorios.updateUser(u, newId, "PARK", "JIMIN", "jimin", "lachim0lala", true);
+			angelaccesorios.updateUser(u, newId, "PARK", "JIMIN", "jimin", "lachim0lala", true,"");
 			
 			fail("SameIDException expected");
 		}catch(SpaceException se) {
@@ -351,6 +353,8 @@ public class AngelaccesoriosTest {
 		}catch(SameIDException side) {
 			assertFalse(u.getId().equals(newId));
 		}catch(SameUserNameException sune) {
+			fail("SameIDException not expected");
+		}catch(EmailException ee) {
 			fail("SameIDException not expected");
 		}
 	}
@@ -363,7 +367,7 @@ public class AngelaccesoriosTest {
 		String newUserName="angelaccesorios";
 		try {
 					
-			angelaccesorios.updateUser(u, "16348023", "PARK", "JIMIN", newUserName, "lachim0lala", true);
+			angelaccesorios.updateUser(u, "16348023", "PARK", "JIMIN", newUserName, "lachim0lala", true,"");
 			
 			fail("SameUserNameException expected");
 		}catch(SpaceException se) {
@@ -373,6 +377,9 @@ public class AngelaccesoriosTest {
 			
 		}catch(SameUserNameException sune) {
 			assertFalse(u.getUserName().equals(newUserName));
+		}catch(EmailException ee) {
+			fail("SameUserNameException expected");
+			
 		}
 	}
 	
@@ -384,7 +391,7 @@ public class AngelaccesoriosTest {
 		String newUserName="ji min";
 		try {
 					
-			angelaccesorios.updateUser(u, "16348023", "PARK", "JIMIN", newUserName, "lachim0lala", true);
+			angelaccesorios.updateUser(u, "16348023", "PARK", "JIMIN", newUserName, "lachim0lala", true,"");
 			
 			fail("SpaceException expected");
 		}catch(SpaceException se) {
@@ -394,6 +401,56 @@ public class AngelaccesoriosTest {
 			
 		}catch(SameUserNameException sune) {
 			fail("SpaceException expected");
+		}catch(EmailException ee) {
+			fail("SpaceException expected");
+		}
+	}
+	
+	@Test
+	public void testUpdateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+		setupScenary2();
+		User u=angelaccesorios.getFirstUser();
+		
+		String newEmail="angelaccesorios@hotmail.com";
+		
+		try {
+
+			angelaccesorios.updateUser(u, "1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", true,newEmail);
+			assertEquals(((Admin) u).getEmail(),newEmail);
+			
+			
+		}catch(SpaceException se) {
+			fail("SpaceException not expected");
+		}catch(SameIDException side) {
+			fail("SameIDException not expected");
+		}catch(SameUserNameException sune) {
+			fail("SameUserNameException not expected");
+		}catch(EmailException ee) {
+			fail("SameUserNameException not expected");
+		}
+	}
+	
+	@Test
+	public void testUpdateUser6() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+		setupScenary2();
+		User u=angelaccesorios.getFirstUser();
+		
+		String newEmail="angelaccesorios.com";
+		
+		try {
+
+			angelaccesorios.updateUser(u, "1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", true,newEmail);
+			
+			fail("EmailException expected");
+			
+		}catch(SpaceException se) {
+			fail("EmailException expected");
+		}catch(SameIDException side) {
+			fail("EmailException expected");
+		}catch(SameUserNameException sune) {
+			fail("EmailException expected");
+		}catch(EmailException ee) {
+			assertFalse(((Admin) u).getEmail().equals(newEmail));
 		}
 	}
 	
@@ -459,6 +516,16 @@ public class AngelaccesoriosTest {
 		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
 		assertTrue(angelaccesorios.getLoggedUser()!=null);
 		assertTrue(logIn);
+	}
+	
+	@Test
+	public void testLogInUser8() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		setupScenary3();
+		angelaccesorios.getLastUser().setEnabled(false);
+		
+		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
+		assertEquals(angelaccesorios.getLoggedUser(),null);
+		assertFalse(logIn);
 	}
 
 	//All the test cases related with Brand
