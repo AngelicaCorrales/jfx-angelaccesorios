@@ -182,7 +182,11 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </PasswordField>
+<<<<<<< HEAD
                         <TextField fx:id="txtName" prefHeight="25.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+=======
+                        <TextField fx:id="txtUserName1" prefHeight="25.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+>>>>>>> 87891bf983b2cf213a627e6dd6043bb25635e034
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>

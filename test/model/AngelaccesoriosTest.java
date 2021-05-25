@@ -512,7 +512,8 @@ public class AngelaccesoriosTest {
 		setupScenary4();
 		Brand b = angelaccesorios.getBrands().get(0);
 		String newName = "Motorolaa";
-		boolean updated = angelaccesorios.updateBrand(b, newName, false);
+		boolean enabled = false;
+		boolean updated = angelaccesorios.updateBrand(b, newName, enabled);
 		assertTrue(updated);
 		assertEquals(newName, angelaccesorios.getBrands().get(0).getName());
 		assertFalse(angelaccesorios.getBrands().get(0).isEnabled());
@@ -523,7 +524,8 @@ public class AngelaccesoriosTest {
 		setupScenary4();
 		Brand b = angelaccesorios.getBrands().get(2);
 		String newName = "Apple";
-		boolean updated = angelaccesorios.updateBrand(b, newName, false);
+		boolean enabled = false;
+		boolean updated = angelaccesorios.updateBrand(b, newName, enabled);
 		assertTrue(updated);
 		assertEquals(newName, angelaccesorios.getBrands().get(2).getName());
 		assertFalse(angelaccesorios.getBrands().get(2).isEnabled());
@@ -534,7 +536,8 @@ public class AngelaccesoriosTest {
 		setupScenary4();
 		Brand b = angelaccesorios.getBrands().get(2);
 		String newName = "Applee";
-		boolean updated = angelaccesorios.updateBrand(b, newName, true);
+		boolean enabled = true;
+		boolean updated = angelaccesorios.updateBrand(b, newName, enabled);
 		assertTrue(updated);
 		assertEquals(newName, angelaccesorios.getBrands().get(2).getName());
 		assertTrue(angelaccesorios.getBrands().get(2).isEnabled());
@@ -545,9 +548,34 @@ public class AngelaccesoriosTest {
 		setupScenary4();
 		Brand b = angelaccesorios.getBrands().get(3);
 		String newName = "Motorola";
+		boolean enabled = false; 
+		boolean updated = angelaccesorios.updateBrand(b, newName, enabled);
+		assertFalse(updated);
+		assertEquals("Xiaomi", angelaccesorios.getBrands().get(3).getName());
+		assertTrue(angelaccesorios.getBrands().get(3).isEnabled());
+	}
+	
+	@Test
+	public void testUpdateBrand5() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.getBrands().get(3);
+		String newName = "MOTOROLA";	
 		boolean updated = angelaccesorios.updateBrand(b, newName, false);
 		assertFalse(updated);
 		assertEquals("Xiaomi", angelaccesorios.getBrands().get(3).getName());
+		assertTrue(angelaccesorios.getBrands().get(3).isEnabled());
+	}
+	
+	@Test
+	public void testUpdateBrand6() throws IOException {
+		setupScenary4();
+		Brand b = angelaccesorios.getBrands().get(3);
+		b.setEnabled(false);
+		String newName = "Xiaomi";
+		boolean enabled = true;
+		boolean updated = angelaccesorios.updateBrand(b, newName, enabled);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getBrands().get(3).getName());
 		assertTrue(angelaccesorios.getBrands().get(3).isEnabled());
 	}
 	
@@ -556,28 +584,32 @@ public class AngelaccesoriosTest {
 	@Test
 	public void testSearchBrand1() throws IOException {
 		setupScenary1();
-		Brand b = angelaccesorios.searchBrand("Motorola");
+		String nameBrand = "Motorola";
+		Brand b = angelaccesorios.searchBrand(nameBrand);
 		assertEquals(b, null);
 	}
 	
 	@Test
 	public void testSearchBrand2() throws IOException {
 		setupScenary4();
-		Brand b = angelaccesorios.searchBrand("Samsung");
-		assertEquals("Samsung", b.getName());
+		String nameBrand = "Samsung";
+		Brand b = angelaccesorios.searchBrand(nameBrand);
+		assertEquals(nameBrand, b.getName());
 	}
 	
 	@Test
 	public void testSearchBrand3() throws IOException {
 		setupScenary4();
-		Brand b = angelaccesorios.searchBrand("XIAOMI");
+		String nameBrand = "XIAOMI";
+		Brand b = angelaccesorios.searchBrand(nameBrand);
 		assertEquals("Xiaomi", b.getName());
 	}
 	
 	@Test
 	public void testSearchBrand4() throws IOException {
 		setupScenary4();
-		Brand b = angelaccesorios.searchBrand("Alcatel");
+		String nameBrand = "Alcatel";
+		Brand b = angelaccesorios.searchBrand(nameBrand);
 		assertEquals(b, null);
 	}
 	
