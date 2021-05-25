@@ -40,6 +40,10 @@ public class Angelaccesorios {
 	public User getLoggedUser() {
 		return loggedUser;
 	}
+	
+	public void setLoggedUser(User u) {
+		loggedUser=u;
+	}
 
 	public User getFirstUser() {
 		return firstUser;
@@ -169,8 +173,7 @@ public class Angelaccesorios {
 
 	}
 
-	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled) throws SameIDException, SameUserNameException, SpaceException {
-		//CORREOOO
+	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled, String email) throws SameIDException, SameUserNameException, SpaceException, EmailException {
 		
 		userName=userName.trim();
 		String[] parts=userName.split(" ");
@@ -190,6 +193,15 @@ public class Angelaccesorios {
 			if(u!=null) {
 				throw new SameIDException();
 			}
+		}
+		if(u instanceof Admin) {
+			email=email.trim();
+			parts=email.split("@");
+			if(parts.length>2 ||parts.length<=1) {
+				throw new EmailException();
+				
+			}
+			((Admin)user).setEmail(email);
 		}
 
 		user.setName(name);
@@ -218,8 +230,8 @@ public class Angelaccesorios {
 			User user=searchUserName(userName);
 			if(user!=null) { 
 				
-				if(user.getPassword().equals(password)) {
-					loggedUser=firstUser;
+				if(user.getPassword().equals(password) && user.isEnabled()) {
+					loggedUser=user;
 					logIn=true;
 				}
 			}

@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <GridPane alignment="CENTER" maxHeight="170.0" maxWidth="450.0" minHeight="170.0" minWidth="416.0" prefHeight="170.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+      <GridPane alignment="CENTER" maxHeight="260.0" maxWidth="553.0" minHeight="170.0" minWidth="416.0" prefHeight="260.0" prefWidth="650.0" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="243.0" />
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="207.0" minWidth="0.0" prefWidth="194.0" />
@@ -27,31 +27,27 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageBrand" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="1. Gestionar marca">
+            <Button fx:id="btManageBrand" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#manageBrand" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="1. Gestionar marca">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#manageTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="2. Gestionar tipo de producto" GridPane.rowIndex="1">
+            <Button fx:id="btManageTypeProd" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#manageTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="2. Gestionar tipo de producto" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#manageProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="3. Gestionar producto" GridPane.rowIndex="2">
+            <Button fx:id="btManageProd" disable="true" mnemonicParsing="false" onAction="#manageProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="3. Gestionar producto" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#manageInvoice" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="4. Gestionar factura" GridPane.rowIndex="3">
+            <Button mnemonicParsing="false" onAction="#manageClient" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="6. Gestionar cliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#manageClient" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="5. Gestionar cliente" GridPane.columnIndex="1">
+            <Button fx:id="btManageUser" disable="true" mnemonicParsing="false" onAction="#manageUser" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="4. Gestionar usuario" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#manageUser" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="6. Gestionar usuario" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#listProducts" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Lista de productos" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#listProducts" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="5. Lista de productos" textAlignment="CENTER" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
@@ -59,6 +55,11 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
+            <Button mnemonicParsing="false" onAction="#manageInvoice" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Gestionar factura" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
          <BorderPane.margin>
             <Insets bottom="80.0" />

@@ -2,8 +2,6 @@ package ui;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import exceptions.EmailException;
@@ -32,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
 import model.User;
@@ -54,6 +53,18 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TextField txtEmail;
+	
+	@FXML
+    private Button btManageBrand;
+
+    @FXML
+    private Button btManageTypeProd;
+
+    @FXML
+    private Button btManageProd;
+
+    @FXML
+    private Button btManageUser;
 
 	//Brand------------
 
@@ -188,6 +199,9 @@ public class AngelaccesoriosGUI {
 	private ComboBox<?> cmbxFinalMinute;
 
 	//User--------
+	@FXML
+    private Label lbEmail;
+
 	@FXML
 	private TableView<User> tvListUsers;
 
@@ -483,6 +497,7 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void signOutOfSystem(ActionEvent event) throws IOException {
+		angelaccesorios.setLoggedUser(null);
 		loadLogIn(null);
 
 	}
@@ -496,6 +511,14 @@ public class AngelaccesoriosGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
+		if(angelaccesorios.getLoggedUser() instanceof Admin) {
+			
+			btManageBrand.setDisable(false);
+			btManageTypeProd.setDisable(false);
+			btManageProd.setDisable(false);
+			btManageUser.setDisable(false);
+		}
+		
 
 	}
 
@@ -636,6 +659,12 @@ public class AngelaccesoriosGUI {
     		txtId.setText(selectedUser.getId());
    		
     		ckbxDisable.setSelected(!selectedUser.isEnabled());
+    		if(selectedUser instanceof Admin) {
+    			lbEmail.setVisible(true);
+    			txtEmail.setVisible(true);
+    			txtEmail.setText(((Admin)selectedUser).getEmail());
+    			ckbxDisable.setDisable(true);
+    		}
 		}
 		
 	}
@@ -658,6 +687,9 @@ public class AngelaccesoriosGUI {
 				txtName.clear();
 				txtLastName.clear();
 				txtId.clear();
+				txtUserName.clear();
+				passwordField.clear();
+				initializeTableViewUsers();
 			} catch (SpaceException e) {
 				alert2.setContentText("No se pudo registrar el usuario, el nombre de usuario no puede llevar espacios");
 				alert2.showAndWait();
@@ -712,12 +744,18 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void updateUser(ActionEvent event) {
-		if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+		boolean update=true;
+		if(tvListUsers.getSelectionModel().getSelectedItem() instanceof Admin && txtEmail.getText().isEmpty()) {
+			update=false;
+		}
+		if (update && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
 			Alert alert2 = new Alert(AlertType.ERROR);
 			alert2.setTitle("Error de validacion");
-			alert2.setHeaderText(null);
+			alert2.setHeaderText(null);		
+    		
 			try {
-				angelaccesorios.updateUser(tvListUsers.getSelectionModel().getSelectedItem(),txtId.getText() ,txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected());
+				
+				angelaccesorios.updateUser(tvListUsers.getSelectionModel().getSelectedItem(),txtId.getText() ,txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(),txtEmail.getText());
 				
 				Alert alert1 = new Alert(AlertType.INFORMATION);
         		alert1.setTitle("Informacion");
@@ -730,7 +768,10 @@ public class AngelaccesoriosGUI {
             	txtId.clear();
             	txtUserName.clear();
     			passwordField.clear();
+    			txtEmail.clear();
 
+    			txtEmail.setVisible(false);
+    			lbEmail.setVisible(false);
             	disableButtons();
             	tvListUsers.getItems().clear();
 
@@ -743,7 +784,10 @@ public class AngelaccesoriosGUI {
 				alert2.setContentText("No se pudo actualizar el usuario, el nombre de usuario es igual al de otro usuario");
 				alert2.showAndWait();
 			} catch (SpaceException e) {
-				alert2.setContentText("No se pudo actualizat el usuario, el nombre de usuario no puede llevar espacios");
+				alert2.setContentText("No se pudo actualizar el usuario, el nombre de usuario no puede llevar espacios");
+				alert2.showAndWait();
+			}catch (EmailException e) {
+				alert2.setContentText("No se pudo actualizar el usuario, correo no válido");
 				alert2.showAndWait();
 			}
     		
