@@ -793,7 +793,7 @@ public class Angelaccesorios {
 		}
 	}
 
-	public boolean updateSupplier(Supplier s, String newName, String phone) throws IOException {
+	public boolean updateSupplier(Supplier s, String newName, String newPhone) throws IOException {
 		Supplier supplier = searchSupplier(supplierRoot, newName);
 		boolean updated=false;
 		boolean findSupplier = false;
@@ -804,7 +804,7 @@ public class Angelaccesorios {
 		}
 		if(!findSupplier) {
 			s.setName(newName);
-			s.setPhoneNumber(phone);
+			s.setPhoneNumber(newPhone);
 			saveDataSuppliers();
 			updated=true;
 		}

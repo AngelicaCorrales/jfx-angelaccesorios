@@ -78,6 +78,19 @@ public class AngelaccesoriosTest {
 
 	}
 	
+	//All the scenarios related with Supplier
+	public void setupScenary8() throws IOException{
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.addSupplier("AntaresTech", "3118925687");
+		angelaccesorios.addSupplier("MundoDigital", "3145678222");
+		angelaccesorios.addSupplier("TecnoPunto", "3112563351");
+		angelaccesorios.addSupplier("DigiStore", "3045431190");
+	}
+	
+	//All the scenarios related with TypeOfProduct
+	
+	//All the scenarios related with Product
+	
 	//Method: CreateUserAdmin
 	@Test
 	public void testCreateUserAdmin1() throws EmailException, SpaceException {
@@ -807,6 +820,18 @@ public class AngelaccesoriosTest {
 		assertEquals(4, angelaccesorios.getBrands().size());
 	}
 	
+	//Method: deleteBrand
+	
+	@Test
+	public void testDeleteBrand1() {
+		
+	}
+	
+	@Test
+	public void testDeleteBrand2() {
+		
+	}
+	
 	//Method: updateBrand
 	
 	@Test
@@ -937,4 +962,67 @@ public class AngelaccesoriosTest {
 		ArrayList<Brand> list = angelaccesorios.returnEnabledBrands();
 		assertEquals(3, list.size());
 	}
-}
+	
+	//All the test cases related with Supplier
+	
+	//Method: addSupplier
+
+	@Test
+	public void testAddSupplier1() {
+		setupScenary1();
+	}
+	
+	@Test
+	public void testAddSupplier2() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testAddSupplier3() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testAddSupplier4() throws IOException {
+		setupScenary8();
+	}
+	
+	//Method: updateSupplier
+	
+	@Test
+	public void testUpdateSupplier1() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testUpdateSupplier2() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testUpdateSupplier3() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testUpdateSupplier4() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testUpdateSupplier5() throws IOException {
+		setupScenary8();
+	}
+	
+	//Method: searchSupplier
+	
+	@Test
+	public void testSearchSupplier1() throws IOException {
+		setupScenary1();
+	}
+	
+	@Test
+	public void testSearchSupplier2() throws IOException {
+		setupScenary8();
+	}
+}	
