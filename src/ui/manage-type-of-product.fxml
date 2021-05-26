@@ -43,7 +43,6 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserId" visible="false" />
                </children>
                <VBox.margin>
                   <Insets top="6.0" />

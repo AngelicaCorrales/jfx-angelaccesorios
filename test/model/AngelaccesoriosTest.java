@@ -38,6 +38,14 @@ public class AngelaccesoriosTest {
 		angelaccesorios.createUser("16348023", "PARK", "JIMIN", "jimin", "lachim0lala");
 	}
 	
+	public void setupScenary7() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+		angelaccesorios=new Angelaccesorios();
+
+		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
+		angelaccesorios.createUser("16348023", "PARK", "JIMIN", "jimin", "lachim0lala");
+		angelaccesorios.getLastUser().setEnabled(false);
+	}
+	
 	//All the scenarios related with Brand
 	
 	public void setupScenary4() throws IOException {
@@ -326,8 +334,8 @@ public class AngelaccesoriosTest {
 		User u=angelaccesorios.getFirstUser();
 		boolean deleted=angelaccesorios.deleteUser(u);
 		assertFalse(deleted);
-		assertEquals(u.getNext(),null);
-		assertEquals(u.getPrev(),null);
+		assertEquals(u,angelaccesorios.getFirstUser());
+		
 	}
 
 	@Test
@@ -548,9 +556,8 @@ public class AngelaccesoriosTest {
 	
 	@Test
 	public void testLogInUser8() throws EmailException, SpaceException, SameIDException, SameUserNameException {
-		setupScenary3();
-		angelaccesorios.getLastUser().setEnabled(false);
-		
+		setupScenary7();
+				
 		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
 		assertEquals(angelaccesorios.getLoggedUser(),null);
 		assertFalse(logIn);
