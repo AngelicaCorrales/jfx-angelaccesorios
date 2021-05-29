@@ -1,15 +1,15 @@
 package model;
 
-import java.util.Date;
+import java.util.ArrayList;
 
-public class SeparateReceipt extends Receipt{
+public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPrice{
 
 	private static final long serialVersionUID = 1;
 	private Payment firstPayment;
 	private State state;
 
-	public SeparateReceipt(Client b, User c, Date d, String obs, String pm, double vp) {
-		super(b, c, d, obs, pm); 
+	public SeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, String obs, String pm, double vp) {
+		super(listProd,listQ,b, c, obs, pm); 
 		PaymentMethod pMT = null;
 		switch(pm) {
 		case "Efectivo": 
@@ -25,7 +25,7 @@ public class SeparateReceipt extends Receipt{
 			pMT = PaymentMethod.TRANSFERENCIA_BANCARIA;
 			break;
 		}
-		firstPayment = new Payment(vp, pMT, d, c);
+		firstPayment = new Payment(vp, pMT,getDateAndTime(), c);
 		state = State.NO_ENTREGADO;
 	}
 	
@@ -43,6 +43,18 @@ public class SeparateReceipt extends Receipt{
 
 	public void setFirstPayment(Payment firstPayment) {
 		this.firstPayment = firstPayment;
+	}
+
+	@Override
+	public double calculatePaymentTotal() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double calculateUnpaidPrice() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

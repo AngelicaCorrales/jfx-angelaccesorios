@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Receipt implements Serializable, Comparable<Receipt>{
+public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 
 	private static final long serialVersionUID = 1;
 	private String code;
@@ -17,9 +17,10 @@ public class Receipt implements Serializable, Comparable<Receipt>{
 	private Client buyer;
 	private PaymentMethod paymentMethod;
 	
-	public Receipt(Client b, User c, Date d, String obs, String pm) {
-		listOfProducts = new ArrayList<Product>();
-		listOfQuantity = new ArrayList<Integer>();
+	public Receipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, String obs, String pm) {
+		dateAndTime=new Date();
+		listOfProducts = listProd;
+		listOfQuantity = listQ;
 		creator = c;
 		buyer = b;
 		observations = obs;
@@ -129,6 +130,12 @@ public class Receipt implements Serializable, Comparable<Receipt>{
 	@Override
 	public int compareTo(Receipt r) {
 		return dateAndTime.compareTo(r.getDateAndTime());
+	}
+
+	@Override
+	public double calculateTotalPrice() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

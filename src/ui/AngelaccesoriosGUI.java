@@ -24,12 +24,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
@@ -53,18 +56,18 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TextField txtEmail;
-	
+
 	@FXML
-    private Button btManageBrand;
+	private Button btManageBrand;
 
-    @FXML
-    private Button btManageTypeProd;
+	@FXML
+	private Button btManageTypeProd;
 
-    @FXML
-    private Button btManageProd;
+	@FXML
+	private Button btManageProd;
 
-    @FXML
-    private Button btManageUser;
+	@FXML
+	private Button btManageUser;
 
 	//Brand------------
 
@@ -113,6 +116,39 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TableColumn<?, ?> colStatusTypeOfProduct;
+
+	@FXML
+	private TextField txtSupplier;
+
+	@FXML
+	private Button btDeleteSupplierTP;
+
+	@FXML
+	private Button btAddSupplierTP;
+
+	@FXML
+	private Button btAddSupplierToTypeOfProduct;
+
+	@FXML
+	private TableView<?> tvTypeOfProducts;
+
+	@FXML
+	private TableView<?> tvAddedSuppliers;
+
+	@FXML
+	private TableColumn<?, ?> colNameAddedSuppliers;
+
+	@FXML
+	private TableView<?> tvSuppliersInATypeOfProduct;
+
+	@FXML
+	private TableColumn<?, ?> colNameSuppliersInATypeOfProduct;
+
+	@FXML
+	private VBox supplierForm;
+
+	@FXML
+	private VBox typeOfProdForm;
 
 	//Client -----
 	@FXML
@@ -179,6 +215,55 @@ public class AngelaccesoriosGUI {
 	@FXML
 	private TableColumn<?, ?> colModelProduct;
 
+	@FXML
+	private Label lbManageProduct;
+
+	@FXML
+	private TableView<?> tvOfProducts;
+
+	@FXML
+	private TableColumn<?, ?> colStatusProduct;
+
+	@FXML
+	private TableColumn<?, ?> colUnitsProduct;
+
+	@FXML
+	private TableColumn<?, ?> colPriceProduct;
+
+	@FXML
+	private TableColumn<?, ?> colWarrantyProduct;
+
+	@FXML
+	private Button btSortProductPrices;
+
+	@FXML
+	private VBox createProductForm;
+
+	@FXML
+	private ComboBox<?> cmbxBrand;
+
+	@FXML
+	private ComboBox<?> cmbxTypeOfProduct;
+
+	@FXML
+	private TextField txtModel;
+
+	@FXML
+	private TextField txtUnits;
+
+	@FXML
+	private TextField txtPrice;
+
+	@FXML
+	private RadioButton rbYes;
+
+	@FXML
+	private ToggleGroup tgWarranty;
+
+	@FXML
+	private RadioButton rbNo;
+
+
 	//Reports------------
 	@FXML
 	private DatePicker dtPickerInitialDate;
@@ -200,7 +285,7 @@ public class AngelaccesoriosGUI {
 
 	//User--------
 	@FXML
-    private Label lbEmail;
+	private Label lbEmail;
 
 	@FXML
 	private TableView<User> tvListUsers;
@@ -222,6 +307,8 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TableColumn<User, String> colPassword;
+
+
 
 
 	@FXML
@@ -268,6 +355,7 @@ public class AngelaccesoriosGUI {
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		//initializeTableViewOfTypesOfProducts(); 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
+		typeOfProdForm.setVisible(true);
 
 	}
 
@@ -290,6 +378,42 @@ public class AngelaccesoriosGUI {
 	public void updateTypeOfProduct(ActionEvent event) {
 
 	}
+
+
+	@FXML
+	void addSupplierToTypeOfProduct(ActionEvent event) {
+
+	}
+
+	@FXML
+	void clickOnTableViewOfAddedSuppliers(MouseEvent event) {
+
+	}
+
+	@FXML
+	void clickOnTableViewOfSuppliersInAProduct(MouseEvent event) {
+
+	}
+
+
+	@FXML
+	void deleteSupplierFromTypeOfProduct(ActionEvent event) {
+
+	}
+
+
+	@FXML
+	void loadAddSupplierToTypeOfProduct(ActionEvent event) {
+
+	}
+
+	@FXML
+	void returnToManageTypeOfProduct(ActionEvent event) {
+
+	}
+
+
+
 
 
 	@FXML
@@ -432,6 +556,26 @@ public class AngelaccesoriosGUI {
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
 	}
+	@FXML
+	void addProduct(ActionEvent event) {
+
+	}
+
+	@FXML
+	void clickOnTableViewOfProducts(MouseEvent event) {
+
+	}
+
+	@FXML
+	void deleteProduct(ActionEvent event) {
+
+	}
+
+	@FXML
+	void updateProduct(ActionEvent event) {
+
+	}
+
 
 	@FXML
 	public void listProducts(ActionEvent event) throws IOException {
@@ -458,7 +602,7 @@ public class AngelaccesoriosGUI {
 
 
 	@FXML
-	public void manageInvoice(ActionEvent event) throws IOException {
+	public void manageReceipt(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bill.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
@@ -512,13 +656,13 @@ public class AngelaccesoriosGUI {
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		if(angelaccesorios.getLoggedUser() instanceof Admin) {
-			
+
 			btManageBrand.setDisable(false);
 			btManageTypeProd.setDisable(false);
 			btManageProd.setDisable(false);
 			btManageUser.setDisable(false);
 		}
-		
+
 
 	}
 
@@ -625,48 +769,48 @@ public class AngelaccesoriosGUI {
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		initializeTableViewUsers(); 
 	}
-	
+
 	private void initializeTableViewUsers() {
-		
+
 		ObservableList<User> observableList=FXCollections.observableArrayList();
 		User u=angelaccesorios.getFirstUser();
 		while(u!=null) {
 			observableList.add(u);
 			u=u.getNext();
 		}
-		
+
 		tvListUsers.setItems(observableList);
 		colNameUser.setCellValueFactory(new PropertyValueFactory<User, String>("Name"));
-    	colLastNameUser.setCellValueFactory(new PropertyValueFactory<User, String>("LastName"));
-    	colIdUser.setCellValueFactory(new PropertyValueFactory<User, String>("id"));
-    	colEnabledUser.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
-    	colUserName.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
-    	colPassword.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
-    	tvListUsers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		colLastNameUser.setCellValueFactory(new PropertyValueFactory<User, String>("LastName"));
+		colIdUser.setCellValueFactory(new PropertyValueFactory<User, String>("id"));
+		colEnabledUser.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
+		colUserName.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
+		colPassword.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
+		tvListUsers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
-	
-	
-	
+
+
+
 	@FXML
 	public void clickOnTableViewUsers(MouseEvent event) {
 		if (tvListUsers.getSelectionModel().getSelectedItem() != null) {
 			enableButtons();
 			User selectedUser = tvListUsers.getSelectionModel().getSelectedItem();
 			txtUserName.setText(selectedUser.getUserName());
-    		passwordField.setText(selectedUser.getPassword());
-    		txtName.setText(selectedUser.getName());
-    		txtLastName.setText(selectedUser.getLastName());
-    		txtId.setText(selectedUser.getId());
-   		
-    		ckbxDisable.setSelected(!selectedUser.isEnabled());
-    		if(selectedUser instanceof Admin) {
-    			lbEmail.setVisible(true);
-    			txtEmail.setVisible(true);
-    			txtEmail.setText(((Admin)selectedUser).getEmail());
-    			ckbxDisable.setDisable(true);
-    		}
+			passwordField.setText(selectedUser.getPassword());
+			txtName.setText(selectedUser.getName());
+			txtLastName.setText(selectedUser.getLastName());
+			txtId.setText(selectedUser.getId());
+
+			ckbxDisable.setSelected(!selectedUser.isEnabled());
+			if(selectedUser instanceof Admin) {
+				lbEmail.setVisible(true);
+				txtEmail.setVisible(true);
+				txtEmail.setText(((Admin)selectedUser).getEmail());
+				ckbxDisable.setDisable(true);
+			}
 		}
-		
+
 	}
 
 	@FXML
@@ -710,35 +854,35 @@ public class AngelaccesoriosGUI {
 	@FXML
 	public void deleteUser(ActionEvent event) {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
-    	alert1.setTitle("Confirmacion de proceso");
-    	alert1.setHeaderText(null);
-    	alert1.setContentText("¿Esta seguro de que quiere eliminar el empleado escogido?");
-    	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.OK){
-        	
-    		boolean deleted= angelaccesorios.deleteUser(tvListUsers.getSelectionModel().getSelectedItem());
-        	Alert alert2 = new Alert(AlertType.INFORMATION);
-        	alert2.setTitle("Informacion");
-        	alert2.setHeaderText(null);
-        	
-        	if(deleted) {
-        		alert2.setContentText("El usuario ha sido eliminado exitosamente");
-        		           	           	
-            	initializeTableViewUsers();
-            	
-        	}else {
-        		alert2.setContentText("El usuario no se pudo eliminar");
-        		
-        	}
-        	alert2.showAndWait();
-    		txtName.clear();
-    		txtLastName.clear();
-        	txtId.clear();
-        	txtUserName.clear();
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar el empleado escogido?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK){
+
+			boolean deleted= angelaccesorios.deleteUser(tvListUsers.getSelectionModel().getSelectedItem());
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
+
+			if(deleted) {
+				alert2.setContentText("El usuario ha sido eliminado exitosamente");
+
+				initializeTableViewUsers();
+
+			}else {
+				alert2.setContentText("El usuario no se pudo eliminar");
+
+			}
+			alert2.showAndWait();
+			txtName.clear();
+			txtLastName.clear();
+			txtId.clear();
+			txtUserName.clear();
 			passwordField.clear();
-        	disableButtons();
-        	
-    	}
+			disableButtons();
+
+		}
 	}
 
 
@@ -752,31 +896,31 @@ public class AngelaccesoriosGUI {
 			Alert alert2 = new Alert(AlertType.ERROR);
 			alert2.setTitle("Error de validacion");
 			alert2.setHeaderText(null);		
-    		
+
 			try {
-				
+
 				angelaccesorios.updateUser(tvListUsers.getSelectionModel().getSelectedItem(),txtId.getText() ,txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtUserName.getText().toLowerCase(),passwordField.getText(), !ckbxDisable.isSelected(),txtEmail.getText());
-				
+
 				Alert alert1 = new Alert(AlertType.INFORMATION);
-        		alert1.setTitle("Informacion");
-        		alert1.setHeaderText(null);
-        		alert1.setContentText("El usuario ha sido actualizado exitosamente!");
-        		alert1.showAndWait();
-        		
-        		txtName.clear();
-        		txtLastName.clear();
-            	txtId.clear();
-            	txtUserName.clear();
-    			passwordField.clear();
-    			txtEmail.clear();
+				alert1.setTitle("Informacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("El usuario ha sido actualizado exitosamente!");
+				alert1.showAndWait();
 
-    			txtEmail.setVisible(false);
-    			lbEmail.setVisible(false);
-            	disableButtons();
-            	tvListUsers.getItems().clear();
+				txtName.clear();
+				txtLastName.clear();
+				txtId.clear();
+				txtUserName.clear();
+				passwordField.clear();
+				txtEmail.clear();
 
-            	initializeTableViewUsers();
-			
+				txtEmail.setVisible(false);
+				lbEmail.setVisible(false);
+				disableButtons();
+				tvListUsers.getItems().clear();
+
+				initializeTableViewUsers();
+
 			} catch (SameIDException e) {
 				alert2.setContentText("No se pudo actualizar el usuario, el numero de identificación es igual al de otro usuario");
 				alert2.showAndWait();
@@ -790,10 +934,10 @@ public class AngelaccesoriosGUI {
 				alert2.setContentText("No se pudo actualizar el usuario, correo no válido");
 				alert2.showAndWait();
 			}
-    		
-    	}else {
-    		showValidationErrorAlert();
-    	}
+
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 
@@ -830,7 +974,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void exportInvoiceReport(ActionEvent event) throws IOException {
+	public void exportReceiptReport(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportBillsReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
@@ -845,7 +989,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	void generateInvoicesReport(ActionEvent event) {
+	void generateReceiptsReport(ActionEvent event) {
 
 	}
 
@@ -883,18 +1027,18 @@ public class AngelaccesoriosGUI {
 		ckbxDisable.setDisable(true);
 		btAdd.setDisable(false);
 	}
-	
-	 public void enableButtons() {
-	    	btDelete.setDisable(false);
-			btUpdate.setDisable(false);
-			ckbxDisable.setDisable(false);
-			btAdd.setDisable(true);
-	    }
+
+	public void enableButtons() {
+		btDelete.setDisable(false);
+		btUpdate.setDisable(false);
+		ckbxDisable.setDisable(false);
+		btAdd.setDisable(true);
+	}
 
 
 
 
-	
+
 
 
 

@@ -88,7 +88,7 @@ public class Angelaccesorios {
 		lastUser=user;
 
 
-		//saveDataUsers();
+		//saveDataAngelaccesorios();
 
 
 	}
@@ -120,7 +120,7 @@ public class Angelaccesorios {
 		lastUser=admin;
 
 
-		//saveDataUsers();
+		//saveDataAngelaccesorios();
 
 	}
 
@@ -175,7 +175,7 @@ public class Angelaccesorios {
 			}
 			deleted=true;
 		}
-		//saveDataUsers();
+		//saveDataAngelaccesorios();
 		return deleted;
 
 	}
@@ -219,7 +219,7 @@ public class Angelaccesorios {
 		user.setId(id);
 
 
-		//saveDataUsers();
+		//saveDataAngelaccesorios();
 
 	}
 
@@ -257,7 +257,7 @@ public class Angelaccesorios {
 		client= new Client( name,  lastName,  id,  TypeId.valueOf(typeId),  address,  phone);
 		addSortedClient(client);
 
-		//saveDataClients();
+		//saveDataAngelaccesorios();
 
 	}
 	
@@ -297,17 +297,17 @@ public class Angelaccesorios {
 			int i=clients.indexOf(client);
 			clients.remove(i);
 			deleted=true;
-			//saveDataClients();
+			//saveDataAngelaccesorios();
 
 		//}
 				
 		return deleted;
 
 	}
-	/*
+	
 	public Receipt searchClientInReceipt(Client client) {
 		Receipt receipt=null;
-		boolean found=false;
+		/*boolean found=false;
 		for(int i=0; i<receipts.size() && !found;i++) {
 			if(receipts.get(i).getBuyer().getId().equals(client.getId())) {
 				found=true;
@@ -315,9 +315,10 @@ public class Angelaccesorios {
 			}
 
 		}
+		*/
 		return receipt;
 	}
-	*/
+	
 	public void updateClient(Client client,String name, String lastName, String id, String typeId, String address, String phone, boolean enabled) throws SameIDException {
 
 		Client client2= searchClient(id);
@@ -348,7 +349,7 @@ public class Angelaccesorios {
 
 			Collections.sort(clients,Collections.reverseOrder(clientLastNameAndNameComparator));
 		}
-		//saveDataClients();
+		//saveDataAngelaccesorios();
 
 	}
 	
@@ -414,6 +415,39 @@ public class Angelaccesorios {
 		return clientsByName;
 	}
 
+//	public Receipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, Date d, String obs, String pm) {
+
+	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) {
+		
+	}
+	
+	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod, double valuePayment) {
+			
+	}
+	
+	public void addProductToAReceipt(Product prod, ArrayList<Product> listProd) {
+		
+	}
+
+	public void deleteProductFromAReceipt(Product prod, ArrayList<Product> listProd) {
+
+	}
+
+	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) {
+		
+	}
+	
+	public void generateReceipt(Receipt receipt) {
+
+	}
+	
+	public void deleteReceipt(Receipt receipt) {
+
+	}
+	
+	public void searchReceipt(String code) {
+
+	}
 
 
 

@@ -1077,4 +1077,356 @@ public class AngelaccesoriosTest {
 	public void testSearchSupplier4() throws IOException {
 		setupScenary8();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Test
+	public void testSearchClientInReceipt1() {
+		
+	}
+	
+	@Test
+	public void testSearchClientInReceipt2() {
+		
+	}
+	
+	@Test
+	public void testSearchClientInReceipt3() {
+		
+	}
+	
+	@Test
+	public void testCreateCashReceipt1() {
+		
+	}
+	
+	@Test
+	public void testCreateCashReceipt2() {
+		
+	}
+	
+	@Test
+	public void testCreateCashReceipt3() {
+		
+	}
+	
+	@Test
+	public void testCreateCashReceipt4() {
+		
+	}
+	
+	@Test
+	public void testCreateSeparateReceipt1() {
+		
+	}
+	
+	@Test
+	public void testCreateSeparateReceipt2() {
+		
+	}
+	
+	@Test
+	public void testAddProductToAReceipt1() {
+		
+	}
+	
+	@Test
+	public void testAddProductToAReceipt2() {
+		
+	}
+	
+	@Test
+	public void testDeleteProductFromAReceipt1() {
+		
+	}
+	
+	@Test
+	public void testUpdateSeparateReceipt1() {
+		
+	}
+	
+	@Test
+	public void testUpdateSeparateReceipt2() {
+		
+	}
+	
+	@Test
+	public void testGenerateReceipt1() {
+		
+	}
+	
+	@Test
+	public void testGenerateReceipt2() {
+		
+	}
+	
+	@Test
+	public void testDeleteReceipt1() {
+		
+	}
+	
+	@Test
+	public void testDeleteReceipt2() {
+		
+	}
+	
+	@Test
+	public void testDeleteReceipt3() {
+		
+	}
+	
+	@Test
+	public void testSearchReceipt1() {
+		
+	}
+	
+	@Test
+	public void testSearchReceipt2() {
+		
+	}
+	
+	@Test
+	public void testSaveDataAngelaccesorios1() {
+		
+	}
+	
+	
 }	

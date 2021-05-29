@@ -81,7 +81,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" visible="false">
+            <VBox fx:id="supplierForm" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para añadir o eliminar un determinado proveedor de un tipo de producto, seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <padding>
@@ -112,12 +112,12 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField prefHeight="25.0" prefWidth="155.0" GridPane.columnIndex="1">
+                        <TextField fx:id="txtSupplier" prefHeight="25.0" prefWidth="155.0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btUpdate1" disable="true" mnemonicParsing="false" onAction="#updateTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Eliminar" GridPane.rowIndex="1">
+                        <Button fx:id="btDeleteSupplierTP" disable="true" mnemonicParsing="false" onAction="#deleteSupplierFromTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Eliminar" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -125,7 +125,7 @@
                               <Insets left="70.0" top="30.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="btUpdate11" disable="true" mnemonicParsing="false" onAction="#updateTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Añadir" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button fx:id="btAddSupplierTP" disable="true" mnemonicParsing="false" onAction="#addSupplierToTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Añadir" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -138,7 +138,7 @@
                         <Insets top="50.0" />
                      </VBox.margin>
                   </GridPane>
-                  <Button fx:id="btUpdate12" mnemonicParsing="false" onAction="#updateTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToManageTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Atrás">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -148,7 +148,7 @@
                   </Button>
                </children>
             </VBox>
-            <VBox visible="false">
+            <VBox fx:id="typeOfProdForm" visible="false">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para actualizar o eliminar un determinado tipo de producto seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <padding>
@@ -254,7 +254,7 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button fx:id="btAdd1" disable="true" mnemonicParsing="false" onAction="#addTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir uno nuevo o eliminar alguno existente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Button fx:id="btAddSupplierToTypeOfProduct" disable="true" mnemonicParsing="false" onAction="#loadAddSupplierToTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir uno nuevo o eliminar alguno existente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold" size="11.0" />
                            </font>
@@ -273,7 +273,7 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <TableView fx:id="tvOfTypeOfProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfTypeOfProducts" prefHeight="527.0" prefWidth="673.0" visible="false">
+                        <TableView fx:id="tvTypeOfProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfTypeOfProducts" prefHeight="527.0" prefWidth="673.0" visible="false">
                           <columns>
                               <TableColumn fx:id="colCodeTypeOfProduct" prefWidth="167.0" sortable="false" text="Codigo" />
                             <TableColumn fx:id="colNameTypeOfProduct" prefWidth="158.481689453125" sortable="false" text="Nombre" />
@@ -283,17 +283,17 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvOfAddedIngredients" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedIngredients" prefHeight="527.0" prefWidth="314.0" visible="false">
+                        <TableView fx:id="tvAddedSuppliers" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedSuppliers" prefHeight="527.0" prefWidth="314.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colNameAddedIngredients" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores existentes" />
+                              <TableColumn fx:id="colNameAddedSuppliers" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores existentes" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvOfIngredientsInAProduct" blendMode="DARKEN" layoutX="313.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfIngredientsInAProduct" prefHeight="529.0" prefWidth="359.0" visible="false">
+                        <TableView fx:id="tvSuppliersInATypeOfProduct" blendMode="DARKEN" layoutX="313.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfSuppliersInAProduct" prefHeight="529.0" prefWidth="359.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colNameIngredientsOfAProduct" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores del tipo de producto seleccionado" />
+                              <TableColumn fx:id="colNameSuppliersInATypeOfProduct" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores del tipo de producto seleccionado" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

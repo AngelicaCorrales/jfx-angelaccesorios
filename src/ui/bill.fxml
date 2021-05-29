@@ -138,7 +138,7 @@
                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="btAddProductsOrder" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAnOrder" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button fx:id="btAddProductsReceipt" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAReceipt" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
@@ -170,7 +170,7 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cbEmployee" prefHeight="29.0" prefWidth="161.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <ComboBox fx:id="cbPaymentMethod" prefHeight="29.0" prefWidth="161.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets top="5.0" />
                            </GridPane.margin></ComboBox>
@@ -210,7 +210,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="txtClientSearchedName1" prefHeight="29.0" prefWidth="151.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <TextField fx:id="txtPaymentValue" prefHeight="29.0" prefWidth="151.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -331,7 +331,7 @@
                   <Insets bottom="25.0" left="10.0" right="15.0" />
                </GridPane.margin>
             </ScrollPane>
-            <VBox fx:id="addPaymentForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
+            <VBox fx:id="addPaymentForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Agregar un nuevo abono" textAlignment="CENTER" textFill="#fffefe" wrapText="true">
                      <padding>
@@ -351,6 +351,7 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Valor del abono:" textAlignment="CENTER" textFill="WHITE">
@@ -361,11 +362,20 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="txtNameProductOrder" editable="false" prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="1">
+                        <TextField fx:id="txtPaymentValue1" editable="false" prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="15.0" />
                            </GridPane.margin>
                         </TextField>
+                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Método de pago: " textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="cmbxPaymentMethod" prefWidth="150.0" promptText="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" top="30.0" />
@@ -373,14 +383,14 @@
                   </GridPane>
                   <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btDeleteProduct" mnemonicParsing="false" onAction="#deleteProductOfAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                        <Button fx:id="bt" mnemonicParsing="false" onAction="#returnToCreateReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="50.0" />
                            </HBox.margin></Button>
-                        <Button fx:id="btAddProduct" mnemonicParsing="false" onAction="#addProductToAnOrder" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                        <Button fx:id="btAddPayment" mnemonicParsing="false" onAction="#addPaymentToAReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>

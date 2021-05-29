@@ -55,7 +55,7 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#manageInvoice" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Gestionar factura" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" onAction="#manageReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Gestionar factura" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -81,7 +81,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Exportar">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#exportInvoiceReport" text="Reporte de facturas" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportIReceiptsReport" text="Reporte de facturas" />
                               <MenuItem mnemonicParsing="false" onAction="#exportUsersReport" text="Reporte de usuarios" />
                               <MenuItem mnemonicParsing="false" onAction="#exportProductsReport" text="Reporte de Productos" />
                            </items>
