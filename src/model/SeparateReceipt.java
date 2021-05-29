@@ -44,15 +44,5 @@ public class SeparateReceipt extends Receipt{
 	public void setFirstPayment(Payment firstPayment) {
 		this.firstPayment = firstPayment;
 	}
-	
-	public boolean findProduct(String code) {
-		boolean found=false;
-		for(int i=0; i<super.getListOfProducts().size() && !found;i++ ) {
-			if(super.getListOfProducts().get(i).getCode().equals(code)) {
-				found=true;						
-			}
-		}		
-		return found;
-	}
 
 }

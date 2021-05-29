@@ -13,7 +13,6 @@ public class Receipt implements Serializable, Comparable<Receipt>{
 	private ArrayList<Integer> listOfQuantity;
 	private Date dateAndTime;
 	private String observations;
-	private double totalValue;
 	private User creator;
 	private Client buyer;
 	private PaymentMethod paymentMethod;
@@ -87,14 +86,6 @@ public class Receipt implements Serializable, Comparable<Receipt>{
 		this.observations = observations;
 	}
 
-	public double getTotalValue() {
-		return totalValue;
-	}
-
-	public void setTotalValue(double totalValue) {
-		this.totalValue = totalValue;
-	}
-
 	public User getCreator() {
 		return creator;
 	}
@@ -123,6 +114,16 @@ public class Receipt implements Serializable, Comparable<Receipt>{
 
 	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
+	}
+	
+	public boolean findProduct(String code) {
+		boolean found=false;
+		for(int i=0; i<listOfProducts.size() && !found;i++ ) {
+			if(listOfProducts.get(i).getCode().equals(code)) {
+				found=true;						
+			}
+		}		
+		return found;
 	}
 
 	@Override

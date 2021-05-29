@@ -25,11 +25,7 @@ public class Angelaccesorios {
 	private User lastUser;
 	private User loggedUser;
 
-	public final static String BRANDS_SAVE_PATH_FILE = "data/brands.ackl";
-	public final static String TYPESOFPRODUCTS_SAVE_PATH_FILE = "data/typesOfProducts.ackl";
-	public final static String PRODUCTS_SAVE_PATH_FILE = "data/products.ackl";
-	public final static String SUPPLIERS_SAVE_PATH_FILE = "data/suppliers.ackl";
-
+	public final static String ANGELACCESORIOS_SAVE_PATH_FILE = "data/angelaccesorios.ackl";
 	public final static String SEPARATOR = ";";
 	private ArrayList<Brand> brands;
 	private ArrayList<Product> products;
@@ -608,7 +604,7 @@ public class Angelaccesorios {
 			b = new Brand(name);
 			brands.add(b);
 			added = true;
-			saveDataBrands();
+			saveDataAngelaccesorios();
 		}
 		return added;
 	}
@@ -618,7 +614,7 @@ public class Angelaccesorios {
 		if(!searchBrandInProducts(brand)){
 			brands.remove(brands.indexOf(brand));
 			deleted = true;
-			saveDataBrands();
+			saveDataAngelaccesorios();
 		}
 		return deleted;
 	}
@@ -635,7 +631,7 @@ public class Angelaccesorios {
 		if(!findBrand) {
 			b.setName(newName);
 			b.setEnabled(enabled);
-			saveDataBrands();
+			saveDataAngelaccesorios();
 			updated=true;
 		}
 		return updated;
@@ -679,25 +675,6 @@ public class Angelaccesorios {
 		this.brands = brands;
 	}
 
-	public void saveDataBrands() throws IOException{
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(BRANDS_SAVE_PATH_FILE));
-		oos.writeObject(brands);
-		oos.close();
-	}
-
-	@SuppressWarnings("unchecked")
-	public boolean loadDataBrands() throws IOException, ClassNotFoundException{
-		File f = new File(BRANDS_SAVE_PATH_FILE);
-		boolean loaded = false;
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			brands = (ArrayList<Brand>)ois.readObject();
-			ois.close();
-			loaded = true;
-		}
-		return loaded;
-	}
-
 	//All related with Supplier
 
 	public boolean addSupplier(String name, String phoneN) throws IOException {
@@ -707,10 +684,10 @@ public class Angelaccesorios {
 			s = new Supplier(name, phoneN);
 			if(supplierRoot==null) {
 				setSupplierRoot(s);
-				saveDataSuppliers();
+				saveDataAngelaccesorios();
 			}else {
 				addSupplier(supplierRoot, s);
-				saveDataSuppliers();
+				saveDataAngelaccesorios();
 			}
 			added = true;
 		}
@@ -741,7 +718,7 @@ public class Angelaccesorios {
 		if(!searchSupplierInTypesOfProducts(typePRoot, s)){
 			removeSupplier(s);
 			deleted = true;
-			saveDataSuppliers();
+			saveDataAngelaccesorios();
 		}
 		return deleted;
 	}
@@ -805,7 +782,7 @@ public class Angelaccesorios {
 		if(!findSupplier) {
 			s.setName(newName);
 			s.setPhoneNumber(newPhone);
-			saveDataSuppliers();
+			saveDataAngelaccesorios();
 			updated=true;
 		}
 		return updated;
@@ -823,7 +800,7 @@ public class Angelaccesorios {
 		}
 	}
 
-	public boolean searchSupplierInTypesOfProducts(TypeOfProduct current, Supplier s) {
+	private boolean searchSupplierInTypesOfProducts(TypeOfProduct current, Supplier s) {
 		boolean found = false;
 		if(current!=null && current instanceof ElectronicEquipment) {
 			if(((ElectronicEquipment)current).findSupplier(s.getName())==true) {
@@ -859,27 +836,9 @@ public class Angelaccesorios {
 		this.supplierRoot = supplierRoot;
 	}
 
-	public void saveDataSuppliers() throws IOException{
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SUPPLIERS_SAVE_PATH_FILE));
-		oos.writeObject(supplierRoot);
-		oos.close();
-	}
-
-	public boolean loadDataSuppliers() throws IOException, ClassNotFoundException{
-		File f = new File(SUPPLIERS_SAVE_PATH_FILE);
-		boolean loaded = false;
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			supplierRoot = (Supplier)ois.readObject();
-			ois.close();
-			loaded = true;
-		}
-		return loaded;
-	}
-
 	//All related with TypeOfProduct
 
-	public boolean createTypeOfProduct(String name, String category) throws IOException {
+	public boolean addTypeOfProduct(String name, String category) throws IOException {
 		TypeOfProduct ty = searchTypeOfProduct(typePRoot, name);
 		boolean added = false;
 		if(ty==null) {
@@ -890,10 +849,10 @@ public class Angelaccesorios {
 			}
 			if(typePRoot==null) {
 				setTypePRoot(ty);
-				saveDataTypesOfProducts();
+				saveDataAngelaccesorios();
 			}else {
 				addTypeOfProduct(typePRoot, ty);
-				saveDataTypesOfProducts();
+				saveDataAngelaccesorios();
 			}
 			added = true;
 		}
@@ -918,21 +877,20 @@ public class Angelaccesorios {
 		}	
 	}
 
-	public boolean addSupplierToATypeOfP(TypeOfProduct tp, Supplier sp) throws IOException{
-		boolean find = ((ElectronicEquipment)tp).findSupplier(sp.getName());
+	public boolean addSupplierToEQE(ElectronicEquipment tp, Supplier sp) throws IOException{
+		boolean find = tp.findSupplier(sp.getName());
 		boolean added = false;
 		if(find==false) {
-			((ElectronicEquipment)tp).getSuppliers().add(sp);
+			tp.getSuppliers().add(sp);
 			added = true;
-			saveDataTypesOfProducts();
+			saveDataAngelaccesorios();
 		}
 		return added;
 	}
 
-	public void deleteASupplierOfATypeOfP(TypeOfProduct tp, Supplier sp) throws IOException {
-		ElectronicEquipment eq = ((ElectronicEquipment) tp);
-		eq.getSuppliers().remove(eq.getSuppliers().indexOf(sp));
-		saveDataTypesOfProducts();
+	public void deleteSupplierOfAnEQE(ElectronicEquipment tp, Supplier sp) throws IOException {
+		tp.getSuppliers().remove(tp.getSuppliers().indexOf(sp));
+		saveDataAngelaccesorios();
 	}
 
 	public boolean deleteTypeOfProduct(TypeOfProduct type) throws IOException {
@@ -944,7 +902,7 @@ public class Angelaccesorios {
 		if(found){
 			removeType(type);
 			deleted = true;
-			saveDataTypesOfProducts();
+			saveDataAngelaccesorios();
 		}
 		return deleted;
 	}
@@ -1008,7 +966,7 @@ public class Angelaccesorios {
 		if(!findType) {
 			ty.setName(newName);
 			ty.setEnabled(enabled);
-			saveDataTypesOfProducts();
+			saveDataAngelaccesorios();
 			updated=true;
 		}
 		return updated;
@@ -1034,24 +992,6 @@ public class Angelaccesorios {
 		this.typePRoot = typePRoot;
 	}
 
-	public void saveDataTypesOfProducts() throws IOException{
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TYPESOFPRODUCTS_SAVE_PATH_FILE));
-		oos.writeObject(typePRoot);
-		oos.close();
-	}
-
-	public boolean loadDataTypesOfProducts() throws IOException, ClassNotFoundException{
-		File f = new File(TYPESOFPRODUCTS_SAVE_PATH_FILE);
-		boolean loaded = false;
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			typePRoot = (TypeOfProduct)ois.readObject();
-			ois.close();
-			loaded = true;
-		}
-		return loaded;
-	}
-
 	//All related with Product
 
 	public boolean addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
@@ -1075,9 +1015,8 @@ public class Angelaccesorios {
 			}while(!found);
 			p = new Product(type, b, units, guarantee, model, price, code);
 			products.add(p);
-			p.setCode(p.getCode()+"-"+products.indexOf(p));
 			added = true;
-			saveDataProducts();
+			saveDataAngelaccesorios();
 		}else {
 			if(units==0) {
 				throw new NoQuantityException(units); 
@@ -1100,18 +1039,18 @@ public class Angelaccesorios {
 		boolean find = false;
 		for(int k=0; k<receipts.size() && !find;k++) {
 			if(receipts.get(k) instanceof SeparateReceipt && ((SeparateReceipt)receipts.get(k)).getState().equals(State.NO_ENTREGADO)) {
-				find = ((SeparateReceipt)receipts.get(k)).findProduct(p.getCode());	
+				find = receipts.get(k).findProduct(p.getCode());	
 			}
 		}
 		if(!find){
 			products.remove(products.indexOf(p));
 			deleted = true;
-			saveDataProducts();
+			saveDataAngelaccesorios();
 		}
 		return deleted;
 	}
 
-	public boolean updateProduct(Product p, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException {
+	public boolean updateProduct(Product p, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		Product product = searchProduct(p.getType(), b, model);
 		boolean updated=false;
 		boolean findProduct = false;
@@ -1120,15 +1059,28 @@ public class Angelaccesorios {
 				findProduct =true;
 			}
 		}
-		if(!findProduct) {
+		if(!findProduct && units>0 && price>0) {
 			p.setBrand(b);
 			p.setGuarantee(guarantee);
 			p.setModel(model);
 			p.setPrice(price);
 			p.setUnits(units);
 			p.setEnabled(enabled);
-			saveDataProducts();
+			saveDataAngelaccesorios();
 			updated=true;
+		}else {
+			if(units==0) {
+				throw new NoQuantityException(units); 
+			}
+			if(units<0) {
+				throw new NegativeQuantityException(units);
+			}
+			if(price==0) {
+				throw new NoPriceException(price);
+			}
+			if(price<0) {
+				throw new NegativePriceException(price);
+			}
 		}
 		return updated;
 	}
@@ -1153,25 +1105,6 @@ public class Angelaccesorios {
 		this.products = products;
 	}
 
-	public void saveDataProducts() throws IOException{
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_SAVE_PATH_FILE));
-		oos.writeObject(products);
-		oos.close();
-	}
-
-	@SuppressWarnings("unchecked")
-	public boolean loadDataProducts() throws IOException, ClassNotFoundException{
-		File f = new File(PRODUCTS_SAVE_PATH_FILE);
-		boolean loaded = false;
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			products = (ArrayList<Product>)ois.readObject();
-			ois.close();
-			loaded = true;
-		}
-		return loaded;
-	}
-
 	//All related with Receipt
 
 	public ArrayList<Receipt> getReceipts() {
@@ -1181,7 +1114,25 @@ public class Angelaccesorios {
 	public void setReceipts(ArrayList<Receipt> receipts) {
 		this.receipts = receipts;
 	}
+	
+	//Serializable Methods
 
+	public void saveDataAngelaccesorios() throws IOException{
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ANGELACCESORIOS_SAVE_PATH_FILE));
+		oos.writeObject(this);
+		oos.close();
+	}
 
+	public boolean loadDataAngelaccesorios(Angelaccesorios ang) throws IOException, ClassNotFoundException{
+		File f = new File(ANGELACCESORIOS_SAVE_PATH_FILE);
+		boolean loaded = false;
+		if(f.exists()){
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			ang = (Angelaccesorios)ois.readObject();
+			ois.close();
+			loaded = true;
+		}
+		return loaded;
+	}
 
 }

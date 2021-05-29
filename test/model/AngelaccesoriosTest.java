@@ -9,6 +9,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import exceptions.EmailException;
+import exceptions.NegativePriceException;
+import exceptions.NegativeQuantityException;
+import exceptions.NoPriceException;
+import exceptions.NoQuantityException;
 import exceptions.SameIDException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
@@ -88,8 +92,46 @@ public class AngelaccesoriosTest {
 	}
 	
 	//All the scenarios related with TypeOfProduct
+	public void setupScenary9() throws IOException{
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addTypeOfProduct("Audifonos", "Accesorio");
+		angelaccesorios.addTypeOfProduct("Tablet", "Equipo electronico");
+	}
+	
+	public void setupScenary10() throws IOException {
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addSupplier("AntaresTech", "3118925687");
+		angelaccesorios.addSupplier("MundoDigital", "3145678222");
+		angelaccesorios.addSupplier("DigiStore", "3045431190");
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot().getRight());
+	}
 	
 	//All the scenarios related with Product
+	
+	public void setupScenary11() throws IOException {
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.addTypeOfProduct("Tablet", "Equipo electronico");
+		angelaccesorios.addBrand("Samsung");
+		
+	}
+	
+	public void setupScenary12() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		angelaccesorios=new Angelaccesorios();
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight().getRight(), angelaccesorios.getBrands().get(0), "5V", 14, 20000, false);
+		angelaccesorios.getProducts().get(0).setCode("ACC3202");
+		angelaccesorios.getProducts().get(1).setCode("EQE4503");
+		angelaccesorios.getProducts().get(2).setCode("ACC8904");
+	}
 	
 	//Method: CreateUserAdmin
 	@Test
@@ -1023,6 +1065,16 @@ public class AngelaccesoriosTest {
 	
 	@Test
 	public void testSearchSupplier2() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testSearchSupplier3() throws IOException {
+		setupScenary8();
+	}
+	
+	@Test
+	public void testSearchSupplier4() throws IOException {
 		setupScenary8();
 	}
 }	
