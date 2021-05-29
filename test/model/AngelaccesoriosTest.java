@@ -1029,6 +1029,13 @@ public class AngelaccesoriosTest {
 		setupScenary8();
 	}
 	
+	//Method: deleteSupplier
+	
+	@Test
+	public void testDeleteSupplier1() throws IOException {
+		
+	}
+	
 	//Method: updateSupplier
 	
 	@Test
@@ -1078,244 +1085,234 @@ public class AngelaccesoriosTest {
 		setupScenary8();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//All the test cases related with TypeOfProduct
+	
+	//Method: addTypeOfProduct
+	
+	@Test
+	public void testAddTypeOfProduct1() throws IOException {
+		setupScenary1();
+	}
+	
+	@Test
+	public void testAddTypeOfProduct2() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testAddTypeOfProduct3() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testAddTypeOfProduct4() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testAddTypeOfProduct5() throws IOException {
+		setupScenary9();
+	}
+	
+	//Method: addSupplierToEQE
+	
+	@Test
+	public void testAddSupplierToEQE1() throws IOException {
+		setupScenary10();
+	}
+	
+	@Test
+	public void testAddSupplierToEQE2() throws IOException {
+		setupScenary10();
+	}
+	
+	//Method: deleteSupplierOfAnEQE
+	
+	@Test
+	public void testDeleteSupplierToEQE() throws IOException {
+		setupScenary10();
+	}
+	
+	//Method: deleteTypeOfProduct
+	
+	@Test
+	public void testDeleteTypeOfProduct1() throws IOException {
+		
+	}
+	
+	@Test
+	public void testDeleteTypeOfProduct2() throws IOException {
+		
+	}
+	
+	@Test
+	public void testDeleteTypeOfProduct3() throws IOException {
+		
+	}
+	
+	//Method: updateTypeOfProduct
+	
+	@Test
+	public void testUpdateTypeOfProduct1() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testUpdateTypeOfProduct2() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testUpdateTypeOfProduct3() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testUpdateTypeOfProduct4() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testUpdateTypeOfProduct5() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testUpdateTypeOfProduct6() throws IOException {
+		setupScenary9();
+	}
+	
+	//Method: searchTypeOfProduct
+	
+	@Test
+	public void testSearchTypeOfProduct1() throws IOException {
+		setupScenary1();
+	}
+	
+	@Test
+	public void testSearchTypeOfProduct2() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testSearchTypeOfProduct3() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testSearchTypeOfProduct4() throws IOException {
+		setupScenary9();
+	}
+	
+	//All the test cases related with Product
+	
+	@Test
+	public void testAddProduct1() throws IOException {
+		setupScenary11();
+	}
+	
+	@Test
+	public void testAddProduct2() throws IOException {
+		setupScenary11();
+	}
+	
+	@Test
+	public void testAddProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testAddProduct4() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testAddProduct5() throws IOException {
+		setupScenary11();
+	}
+	
+	@Test
+	public void testAddProduct6() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testAddProduct7() throws IOException {
+		setupScenary11();
+	}
+	
+	@Test
+	public void testAddProduct8() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	//	Method: deleteProduct
+	
+	@Test
+	public void testDeleteProduct1() {
+		
+	}
+	
+	public void testDeleteProduct2() {
+		
+	}
+public void testDeleteProduct3() {
+		
+	}
+	
+	//Method: updateProduct
+	
+	@Test
+	public void testUpdateProduct1() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testUpdateProduct2() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testUpdateProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testUpdateProduct4() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testUpdateProduct5() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	@Test
+	public void testUpdateProduct6() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+	}
+	
+	//Method: searchProduct
+	
+	@Test
+	public void testSearchProduct1() {
+		setupScenary1();
+	}
+	
+	@Test
+	public void testSearchProduct2() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testSearchProduct3() throws IOException {
+		setupScenary9();
+	}
+	
+	@Test
+	public void testSearchProduct4() throws IOException {
+		setupScenary9();
+	}	
 	
 	
 	@Test
@@ -1379,8 +1376,9 @@ public class AngelaccesoriosTest {
 	}
 	
 	@Test
+
 	public void testUpdateSeparateReceipt1() {
-		
+
 	}
 	
 	@Test

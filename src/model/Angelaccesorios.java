@@ -1,14 +1,22 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import exceptions.EmailException;
@@ -47,7 +55,7 @@ public class Angelaccesorios {
 	public User getLoggedUser() {
 		return loggedUser;
 	}
-	
+
 	public void setLoggedUser(User u) {
 		loggedUser=u;
 	}
@@ -206,7 +214,7 @@ public class Angelaccesorios {
 			parts=email.split("@");
 			if(parts.length>2 ||parts.length<=1) {
 				throw new EmailException();
-				
+
 			}
 			((Admin)user).setEmail(email);
 		}
@@ -246,24 +254,24 @@ public class Angelaccesorios {
 
 		return logIn;
 	}
-	
+
 	public void createClient(String name, String lastName, String id, String typeId, String address, String phone) throws SameIDException {
 
 		Client client= searchClient(id);
 		if(client!=null) {
 			throw new SameIDException();
 		}
-		
+
 		client= new Client( name,  lastName,  id,  TypeId.valueOf(typeId),  address,  phone);
 		addSortedClient(client);
 
 		//saveDataAngelaccesorios();
 
 	}
-	
+
 	public void addSortedClient(Client client) {
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
-		
+
 		if(clients.isEmpty()) {
 			clients.add(client);
 		}
@@ -276,10 +284,10 @@ public class Angelaccesorios {
 		}
 
 	}
-	
+
 	public Client searchClient(String clientId) {
 		boolean found=false;
-		
+
 		Client client=null;
 		for(int i=0; i<clients.size() && !found;i++ ) {
 			if(clients.get(i).getId().equals(clientId)) {
@@ -288,9 +296,9 @@ public class Angelaccesorios {
 			}
 		}
 		return client;
-		
+
 	}
-	
+
 	public boolean deleteClient(Client client) {
 		boolean deleted=false;
 		//if(searchClientInReceipt(client)==null) {
@@ -299,8 +307,9 @@ public class Angelaccesorios {
 			deleted=true;
 			//saveDataAngelaccesorios();
 
+
 		//}
-				
+
 		return deleted;
 
 	}
@@ -318,7 +327,7 @@ public class Angelaccesorios {
 		*/
 		return receipt;
 	}
-	
+
 	public void updateClient(Client client,String name, String lastName, String id, String typeId, String address, String phone, boolean enabled) throws SameIDException {
 
 		Client client2= searchClient(id);
@@ -352,19 +361,19 @@ public class Angelaccesorios {
 		//saveDataAngelaccesorios();
 
 	}
-	
+
 	public int binarySearchClient(String clientNames, String clientLastNames) {
-		
+
 		Client client= new Client(clientNames,clientLastNames,null,null,null,null);
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
-		
+
 		int pos = -1;
 		int i=0;
 		int j=clients.size()-1;
-		
+
 		while(i<=j && pos<0){
 			int m= (i+j)/2;
-			
+
 			if(clientLastNameAndNameComparator.compare(clients.get(m),client)==0){
 				pos =m;
 			}else if(clientLastNameAndNameComparator.compare(clients.get(m),client)<0){
@@ -373,10 +382,10 @@ public class Angelaccesorios {
 				i=m+1;
 			}
 		}
-		
+
 		return pos;
 	}
-	
+
 	public List<Client> searchClientByName(String clientNames, String clientLastNames){
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
 		List<Client> clientsByName=new ArrayList<Client>();
@@ -389,7 +398,7 @@ public class Angelaccesorios {
 			if(clients.get(pos).isEnabled()) {
 				clientsByName.add(clients.get(pos));
 			}
-			
+
 			boolean same=false;
 			do {
 				same=false;
@@ -409,7 +418,7 @@ public class Angelaccesorios {
 					}
 				}
 			}while(same);
-					
+
 		}
 
 		return clientsByName;
@@ -1138,6 +1147,18 @@ public class Angelaccesorios {
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
 	}
+	
+	//Searches products in the list of products of the system from a type and brand name
+	public ArrayList<Product> returnFoundProducts(String type, String brand){
+		ArrayList<Product> found = new ArrayList<Product>();
+		for(int k = 0; k<products.size() ; k++) {
+			if(products.get(k).getType().getName().equalsIgnoreCase(type) && products.get(k).getBrand().getName().equalsIgnoreCase(brand)) {
+				found.add(products.get(k));
+			}
+		}
+		return found;
+	}
+	
 
 	//All related with Receipt
 
@@ -1148,7 +1169,7 @@ public class Angelaccesorios {
 	public void setReceipts(ArrayList<Receipt> receipts) {
 		this.receipts = receipts;
 	}
-	
+
 	//Serializable Methods
 
 	public void saveDataAngelaccesorios() throws IOException{
@@ -1167,6 +1188,172 @@ public class Angelaccesorios {
 			loaded = true;
 		}
 		return loaded;
+	}
+
+	//All related with the reports of the system
+
+	public List<String> getHours(){
+		List<String> allHours = new ArrayList<String>();
+		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
+		allHours = Arrays.asList(hours);
+		return allHours;
+	}
+
+	public List<String> getMinutes(){
+		List<String> allMinutes = new ArrayList<String>();
+		String[] minutes = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"};
+		allMinutes = Arrays.asList(minutes);
+		return allMinutes;
+	}
+
+	public ArrayList<Receipt> sortByDateAndTime() {
+		ArrayList<Receipt> copyOfReceipts = new ArrayList<Receipt>(receipts);
+		Collections.sort(copyOfReceipts);
+		return copyOfReceipts;
+	}
+
+	public ArrayList<Receipt> selectedReceipts(String initialTime, String finalTime) throws ParseException{
+		boolean correct = false;
+		ArrayList<Receipt> selectedReceipts = new ArrayList<Receipt>();
+		ArrayList<Receipt> sortingReceipts = sortByDateAndTime();
+		for(int k=0; k<sortingReceipts.size();k++) {
+			correct = compareWithInitialAndFinalDate(sortingReceipts.get(k),initialTime,finalTime);
+			if(correct==true){
+				selectedReceipts.add(sortingReceipts.get(k));
+			}
+		}
+		return selectedReceipts;
+	}
+
+	public boolean compareWithInitialAndFinalDate(Receipt receipt, String initialTime, String finalTime) throws ParseException {
+		boolean correct = false;
+		Date date1 = null;
+		Date date2 = null;
+		Date dateOrder = null;
+		String strFormat = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
+		date1 = formato.parse(initialTime);
+		date2 = formato.parse(finalTime);
+		dateOrder = formato.parse(receipt.getDateAndHour());
+		int result1 = dateOrder.compareTo(date1);
+		int result2 = dateOrder.compareTo(date2);
+		if((result1>0 || result1==0)&&(result2<0||result2==0)) {
+			correct = true;
+		}
+		return correct;
+	}
+	
+	//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+	
+	public void exportOrdersReport(String fn, String initialTime, String finalTime, String separator) throws FileNotFoundException {
+		ArrayList<Receipt> receiptsS = selectedReceipts(initialTime,finalTime);
+		PrintWriter pw = new PrintWriter(fn);
+		String info ="";
+		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Tipo de identificación"+separator+"Numero de identificación"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Nombre del Empleado"+separator+"Identificacion del empleado"+separator+"Producto(s): Nombre, cantidad y valor unitario";
+		for(int i=0;i<receiptsS.size();i++){
+			Receipt objReceipt = receiptsS.get(i);
+			info+=objReceipt.getCode()+separator+objReceipt.ge.name()+separator+objOrder.getDateAndHour()+separator+objOrder.getObservations()+separator+objOrder.getClientName()+separator+objOrder.getBuyer().getAddress()+separator+objOrder.getBuyer().getPhone()+separator+objOrder.getEmployeeName()+separator;
+			for(int k=0;k<objReceipt.getListOfProducts().size();k++) {
+				info += objReceipt.getListOfProducts().get(k).getName()+separator;
+				info += objReceipt.getListOfQuantity().get(k)+separator;
+				info += objReceipt.getListOfSizes().get(k).getName()+separator; 
+				info += objReceipt.getListOfSizes().get(k).getPrice(); 
+				int listSize = objOrder.getListOfProducts().size();
+				if(k<listSize) {
+					info+=separator;
+				}
+			}
+			if(i!=ordersS.size()-1) {
+				info+="\n";
+			}
+		}
+		pw.println(nameColumns);
+		pw.print(info);
+		pw.close();
+	}
+
+	//Sort products by ascending price
+	
+	//Bubble sorting
+	public ArrayList<Product> sortingPricesOfProducts() {
+		ArrayList<Product> copyOfProducts = new ArrayList<Product>(products);
+		for(int i=1;i<copyOfProducts.size();i++) {
+			for(int j=0;j<copyOfProducts.size()-i;j++) {
+				if(copyOfProducts.get(j).getPrice()>copyOfProducts.get(j+1).getPrice()) {
+					Product temp = copyOfProducts.get(j);
+					copyOfProducts.set(j, copyOfProducts.get(j+1));
+					copyOfProducts.set(j+1, temp);
+				}
+			}
+		}
+		return copyOfProducts;
+	}
+	
+	//Sort brands in descending alphabetical order
+	
+	//Insertion sorting
+	public ArrayList<Brand> sortingBrandNames() {
+		ArrayList<Brand> listSorted=new ArrayList<Brand>(brands);
+		for(int i=1;i<listSorted.size();i++) {
+			for(int j=i;j>0 && listSorted.get(j-1).getName().compareTo(listSorted.get(j).getName())<0;j--) {
+				Brand temp=listSorted.get(j);
+				listSorted.set(j, listSorted.get(j-1));
+				listSorted.set(j-1, temp);
+			}
+		}
+		return listSorted;
+	}
+	
+	//Import data from csv files
+	
+	public void importClientsData(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+		while(line!=null){
+			String[] parts = line.split(";");
+			if(!parts[0].equals("id")) {
+
+				createClient( parts[0],  parts[1].toUpperCase(),  parts[2].toUpperCase(),  parts[3],  parts[4],  parts[5],  "");
+			}
+			
+			line = br.readLine();
+		}
+	    br.close();
+	}
+	
+	
+	public void importProductsData(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+		String creator="";
+		while(line!=null){
+			String[] parts = line.split(";");
+			if(!parts[0].equals("productName")) {
+				addTypeOfProduct(parts[1],creator);
+				TypeOfProduct top=searchTypeOfProductByName(parts[1]);
+				Product prod=new Product(parts[0], null, top, idProduct);
+				this.products.add(prod);
+				idProduct++;
+				String[] ingredients=parts[2].split("-");
+
+				for(int i=0; i<ingredients.length;i++) {
+					Ingredient ing= new Ingredient(ingredients[i], null, idIngredient);
+					this.ingredients.add(ing);
+					idIngredient++;
+					
+					addIngredientToAProduct( prod,  ing,  creator);
+
+				}
+				double price= Double.parseDouble(parts[4]);
+				addSizeOfAProduct( prod,  parts[3],  price,creator); 
+
+			}
+			
+			line = br.readLine();
+		}
+	    br.close();
+	    saveDataIngredients();
+
 	}
 
 }
