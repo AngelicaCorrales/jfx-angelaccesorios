@@ -71,6 +71,9 @@ public class AngelaccesoriosGUI {
 	@FXML
 	private Button btManageUser;
 
+	@FXML
+	private Button btManageSupplier;
+
 	//Brand------------
 
 	@FXML
@@ -312,161 +315,177 @@ public class AngelaccesoriosGUI {
 
 	//Receipts-------
 
-    @FXML
-    private TextField txtCode;
-    
-    @FXML
-    private Label lbWindow;
+	@FXML
+	private TextField txtCode;
 
-    @FXML
-    private Label lbManageOrder;
+	@FXML
+	private Label lbWindow;
 
-    @FXML
-    private VBox createSeparateReceipt;
+	@FXML
+	private Label lbManageOrder;
 
-    @FXML
-    private ComboBox<?> cmbxClients;
+	@FXML
+	private VBox createSeparateReceipt;
 
-    @FXML
-    private ComboBox<?> cbPaymentMethod;
+	@FXML
+	private ComboBox<?> cmbxClients;
 
-    @FXML
-    private TextField txtClientSearchedName;
+	@FXML
+	private ComboBox<?> cbPaymentMethod;
 
-    @FXML
-    private TextField txtClientSearchedLastName;
+	@FXML
+	private TextField txtClientSearchedName;
 
-    @FXML
-    private TextField txtPaymentValue;
-    
-    @FXML
-    private ScrollPane scrollPaneTableviews;
+	@FXML
+	private TextField txtClientSearchedLastName;
 
-    @FXML
-    private TableView<?> tvOfCountedReceipts;
+	@FXML
+	private TextField txtPaymentValue;
 
-    @FXML
-    private TableColumn<?, ?> colCodeC;
+	@FXML
+	private ScrollPane scrollPaneTableviews;
 
-    @FXML
-    private TableColumn<?, ?> colDateandTimeC;
+	@FXML
+	private TableView<?> tvOfCountedReceipts;
 
-    @FXML
-    private TableColumn<?, ?> colClientC;
+	@FXML
+	private TableColumn<?, ?> colCodeC;
 
-    @FXML
-    private TableColumn<?, ?> colUserC;
+	@FXML
+	private TableColumn<?, ?> colDateandTimeC;
 
-    @FXML
-    private TableColumn<?, ?> colProductsInCR;
+	@FXML
+	private TableColumn<?, ?> colClientC;
 
-    @FXML
-    private TableColumn<?, ?> colSubtotalPriceC;
+	@FXML
+	private TableColumn<?, ?> colUserC;
 
-    @FXML
-    private TableColumn<?, ?> colIVAC;
+	@FXML
+	private TableColumn<?, ?> colProductsInCR;
 
-    @FXML
-    private TableColumn<?, ?> colTotalValueC;
+	@FXML
+	private TableColumn<?, ?> colSubtotalPriceC;
 
-    @FXML
-    private TableColumn<?, ?> colPaymentMC;
+	@FXML
+	private TableColumn<?, ?> colIVAC;
 
-    @FXML
-    private TableColumn<?, ?> colObservationsC;
+	@FXML
+	private TableColumn<?, ?> colTotalValueC;
 
-    @FXML
-    private TableView<?> tvOfAddedProducts;
+	@FXML
+	private TableColumn<?, ?> colPaymentMC;
 
-    @FXML
-    private TableColumn<?, ?> colNameAddedProduct;
+	@FXML
+	private TableColumn<?, ?> colObservationsC;
 
-    @FXML
-    private TableView<?> tvOfReceiptProducts;
+	@FXML
+	private TableView<?> tvOfAddedProducts;
 
-    @FXML
-    private TableColumn<?, ?> colNameOrderProduct;
+	@FXML
+	private TableColumn<?, ?> colNameAddedProduct;
 
-    @FXML
-    private TableView<?> tvOfQuantities;
+	@FXML
+	private TableView<?> tvOfReceiptProducts;
 
-    @FXML
-    private TableColumn<?, ?> colQuantityOrderProduct;
+	@FXML
+	private TableColumn<?, ?> colNameOrderProduct;
 
-    @FXML
-    private TableView<?> tvOfSeparateReceipts;
+	@FXML
+	private TableView<?> tvOfQuantities;
 
-    @FXML
-    private TableColumn<?, ?> colCodeS;
+	@FXML
+	private TableColumn<?, ?> colQuantityOrderProduct;
 
-    @FXML
-    private TableColumn<?, ?> colDateandTimeS;
+	@FXML
+	private TableView<?> tvOfSeparateReceipts;
 
-    @FXML
-    private TableColumn<?, ?> colClientS;
+	@FXML
+	private TableColumn<?, ?> colCodeS;
 
-    @FXML
-    private TableColumn<?, ?> colUserS;
+	@FXML
+	private TableColumn<?, ?> colDateandTimeS;
 
-    @FXML
-    private TableColumn<?, ?> colProductsInSR;
+	@FXML
+	private TableColumn<?, ?> colClientS;
 
-    @FXML
-    private TableColumn<?, ?> colSubtotalPriceS;
+	@FXML
+	private TableColumn<?, ?> colUserS;
 
-    @FXML
-    private TableColumn<?, ?> colIVAS;
+	@FXML
+	private TableColumn<?, ?> colProductsInSR;
 
-    @FXML
-    private TableColumn<?, ?> colTotalValueS;
+	@FXML
+	private TableColumn<?, ?> colSubtotalPriceS;
 
-    @FXML
-    private TableColumn<?, ?> colPayments;
+	@FXML
+	private TableColumn<?, ?> colIVAS;
 
-    @FXML
-    private TableColumn<?, ?> colToPay;
+	@FXML
+	private TableColumn<?, ?> colTotalValueS;
 
-    @FXML
-    private TableColumn<?, ?> colObservationsS;
+	@FXML
+	private TableColumn<?, ?> colPayments;
 
-    @FXML
-    private VBox addPaymentForm;
+	@FXML
+	private TableColumn<?, ?> colToPay;
 
-    @FXML
-    private TextField txtNewPayment;
+	@FXML
+	private TableColumn<?, ?> colObservationsS;
 
-    @FXML
-    private VBox addObservationsForm;
+	@FXML
+	private VBox addPaymentForm;
 
-    @FXML
-    private TextArea separateReceiptObs;
+	@FXML
+	private TextField txtNewPayment;
 
-    @FXML
-    private VBox createCountedReceipt;
+	@FXML
+	private VBox addObservationsForm;
 
-    @FXML
-    private TextArea txtObsevations;
+	@FXML
+	private TextArea separateReceiptObs;
 
-    @FXML
-    private VBox addProductsToAReceipt;
+	@FXML
+	private VBox createCountedReceipt;
 
-    @FXML
-    private TextField txtNameProduct;
+	@FXML
+	private TextArea txtObsevations;
 
-    @FXML
-    private TextField txtQuantityProduct;
+	@FXML
+	private VBox addProductsToAReceipt;
 
-    @FXML
-    private Button btDeleteProductR;
+	@FXML
+	private TextField txtNameProduct;
 
-    @FXML
-    private Button btAddProductR;
-    
-    @FXML
-    private Button btGenerateR;
+	@FXML
+	private TextField txtQuantityProduct;
 
-    @FXML
-    private VBox receiptMenu;
+	@FXML
+	private Button btDeleteProductR;
+
+	@FXML
+	private Button btAddProductR;
+
+	@FXML
+	private Button btGenerateR;
+
+	@FXML
+	private VBox receiptMenu;
+
+	//Suppliers-----
+	@FXML
+	private TextField txtSupplierName;
+
+	@FXML
+	private TextField txtSupplierPhone;
+
+	@FXML
+	private TableView<?> tvSuppliers;
+
+	@FXML
+	private TableColumn<?, ?> colNameSupplier;
+
+	@FXML
+	private TableColumn<?, ?> colPhoneSupplier;
 
 	@FXML
 	public void logIn(ActionEvent event) throws IOException {
@@ -510,9 +529,13 @@ public class AngelaccesoriosGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
-		//initializeTableViewOfTypesOfProducts(); 
+		initializeTableViewOfTypesOfProducts(); 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		typeOfProdForm.setVisible(true);
+
+	}
+
+	private void initializeTableViewOfTypesOfProducts() {
 
 	}
 
@@ -569,7 +592,43 @@ public class AngelaccesoriosGUI {
 
 	}
 
+	@FXML
+	void manageSupplier(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-supplier.fxml"));
+		fxmlLoader.setController(this);
+		Parent menuPane = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(menuPane);
+		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
+		initializeTableViewOfSuppliers(); 
+		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
+	}
+
+	private void initializeTableViewOfSuppliers() {
+
+	}
+
+	@FXML
+	void addSupplier(ActionEvent event) {
+
+	}
+
+	@FXML
+	void clickOnTableViewOfSuppliers(MouseEvent event) {
+
+	}
+
+	@FXML
+	void deleteSupplier(ActionEvent event) {
+
+	}
+
+
+	@FXML
+	void updateSupplier(ActionEvent event) {
+
+	}
 
 
 
@@ -708,11 +767,16 @@ public class AngelaccesoriosGUI {
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		//createProductForm.setVisible(true);
-		//initializeTableViewOfProducts();
+		initializeTableViewOfProducts();
 		//showComboBoxOfTypesOfProducts();
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
 	}
+
+	private void initializeTableViewOfProducts() {
+
+	}
+
 	@FXML
 	void addProduct(ActionEvent event) {
 
@@ -766,145 +830,151 @@ public class AngelaccesoriosGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
-		//initializeComboBoxOfClients();
-		//initializeComboBoxEmployees();
-		//initializeTableViewOfOrders();
-		//createOrderForm.setVisible(true);
-		//btAddProductsOrder.setDisable(true);
+
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		receiptMenu.setVisible(true);
 	}
-	
+
 	@FXML
-    public void addPaymentToAReceipt(ActionEvent event) {
+	public void addPaymentToAReceipt(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void addProductToAReceipt(ActionEvent event) {
+	@FXML
+	public void addProductToAReceipt(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void addReceipt(ActionEvent event) {
+	@FXML
+	public void addReceipt(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void addSeparateReceiptObs(ActionEvent event) {
+	@FXML
+	public void addSeparateReceiptObs(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void chooseProductsOfAReceipt(ActionEvent event) {
-    	btGenerateR.setVisible(false);
-    	btDelete.setVisible(false);
-    	createCountedReceipt.setVisible(false);
-    	createSeparateReceipt.setVisible(false);
-    	tvOfSeparateReceipts.setVisible(false);
-    	tvOfCountedReceipts.setVisible(false);
-    	addProductsToAReceipt.setVisible(true);
-    	tvOfAddedProducts.setVisible(true);
-    	tvOfReceiptProducts.setVisible(true);
-    	tvOfQuantities.setVisible(true);
-    }
+	@FXML
+	public void chooseProductsOfAReceipt(ActionEvent event) {
+		btGenerateR.setVisible(false);
+		btDelete.setVisible(false);
+		createCountedReceipt.setVisible(false);
+		createSeparateReceipt.setVisible(false);
+		tvOfSeparateReceipts.setVisible(false);
+		tvOfCountedReceipts.setVisible(false);
+		addProductsToAReceipt.setVisible(true);
+		tvOfAddedProducts.setVisible(true);
+		tvOfReceiptProducts.setVisible(true);
+		tvOfQuantities.setVisible(true);
+	}
 
-    @FXML
-    public void clickOnTableViewOfAddedProducts(MouseEvent event) {
+	@FXML
+	public void clickOnTableViewOfAddedProducts(MouseEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void clickOnTableViewOfOrderProducts(MouseEvent event) {
+	@FXML
+	public void clickOnTableViewOfOrderProducts(MouseEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void clickOnTableViewOfOrders(MouseEvent event) {
+	@FXML
+	public void clickOnTableViewOfOrders(MouseEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void deleteProductOfAReceipt(ActionEvent event) {
+	@FXML
+	public void deleteProductOfAReceipt(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void deleteReceipt(ActionEvent event) {
+	@FXML
+	public void deleteReceipt(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    public void generateReceipt(ActionEvent event) {
+	@FXML
+	public void generateReceipt(ActionEvent event) {
 
-    }
-    
-    @FXML
-    public void manageCountedReceipt(ActionEvent event) {
-    	createCountedReceipt.setVisible(true);
-    	receiptMenu.setVisible(false);
-    	scrollPaneTableviews.setVisible(true);
-    	tvOfCountedReceipts.setVisible(true);
-    	lbWindow.setText("C");
-    	btGenerateR.setVisible(true);
-    	btGenerateR.setDisable(true);
-    	btDelete.setVisible(true);
-    	btDelete.setDisable(true);
-    }
+	}
 
-    @FXML
-    public void manageSeparateReceipt(ActionEvent event) {
-    	createSeparateReceipt.setVisible(true);
-    	receiptMenu.setVisible(false);
-    	scrollPaneTableviews.setVisible(true);
-    	tvOfSeparateReceipts.setVisible(true);
-    	lbWindow.setText("S");
-    	btGenerateR.setVisible(true);
-    	btGenerateR.setDisable(true);
-    	btDelete.setVisible(true);
-    	btDelete.setDisable(true);
-    }
+	@FXML
+	public void manageCountedReceipt(ActionEvent event) {
+		createCountedReceipt.setVisible(true);
+		receiptMenu.setVisible(false);
+		scrollPaneTableviews.setVisible(true);
+		tvOfCountedReceipts.setVisible(true);
+		lbWindow.setText("C");
+		btGenerateR.setVisible(true);
+		btGenerateR.setDisable(true);
+		btDelete.setVisible(true);
+		btDelete.setDisable(true);
+		initializeTableViewOfCountedReceipts();
+	}
 
-    @FXML
-    public void returnToReceiptForm(ActionEvent event) {
-    	addProductsToAReceipt.setVisible(false);
-    	tvOfAddedProducts.setVisible(false);
-    	tvOfReceiptProducts.setVisible(false);
-    	tvOfQuantities.setVisible(false);
-    	if(lbWindow.getText().equals("C")) {
-    		manageCountedReceipt(null);
-    	}else {
-    		manageSeparateReceipt(null);
-    	}
-    }
+	private void initializeTableViewOfCountedReceipts() {
 
-    @FXML
-    public void returnToReceiptMenu(ActionEvent event) {
-    	createCountedReceipt.setVisible(false);
-    	createSeparateReceipt.setVisible(false);
-    	scrollPaneTableviews.setVisible(false);
-    	tvOfCountedReceipts.setVisible(false);
-    	tvOfSeparateReceipts.setVisible(false);
-    	btGenerateR.setVisible(false);
-    	btDelete.setVisible(false);
-    	receiptMenu.setVisible(true);
-    }
+	}
 
-    @FXML
-    public void searchClientByName(ActionEvent event) {
+	@FXML
+	public void manageSeparateReceipt(ActionEvent event) {
+		createSeparateReceipt.setVisible(true);
+		receiptMenu.setVisible(false);
+		scrollPaneTableviews.setVisible(true);
+		tvOfSeparateReceipts.setVisible(true);
+		lbWindow.setText("S");
+		btGenerateR.setVisible(true);
+		btGenerateR.setDisable(true);
+		btDelete.setVisible(true);
+		btDelete.setDisable(true);
+		initializeTableViewOfSeparateReceipts();
+	}
 
-    }
+	private void initializeTableViewOfSeparateReceipts() {
 
-    @FXML
-    public void searchReceiptByCode(ActionEvent event) {
+	}
 
-    }
+	@FXML
+	public void returnToReceiptForm(ActionEvent event) {
+		addProductsToAReceipt.setVisible(false);
+		tvOfAddedProducts.setVisible(false);
+		tvOfReceiptProducts.setVisible(false);
+		tvOfQuantities.setVisible(false);
+		if(lbWindow.getText().equals("C")) {
+			manageCountedReceipt(null);
+		}else {
+			manageSeparateReceipt(null);
+		}
+	}
 
-    @FXML
-    public void updateReceipt(ActionEvent event) {
+	@FXML
+	public void returnToReceiptMenu(ActionEvent event) {
+		createCountedReceipt.setVisible(false);
+		createSeparateReceipt.setVisible(false);
+		scrollPaneTableviews.setVisible(false);
+		tvOfCountedReceipts.setVisible(false);
+		tvOfSeparateReceipts.setVisible(false);
+		btGenerateR.setVisible(false);
+		btDelete.setVisible(false);
+		receiptMenu.setVisible(true);
+	}
 
-    }
-	
+	@FXML
+	public void searchClientByName(ActionEvent event) {
+
+	}
+
+	@FXML
+	public void searchReceiptByCode(ActionEvent event) {
+
+	}
+
+	@FXML
+	public void updateReceipt(ActionEvent event) {
+
+	}
+
 	@FXML
 	public void showAboutCreators(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -948,6 +1018,7 @@ public class AngelaccesoriosGUI {
 			btManageTypeProd.setDisable(false);
 			btManageProd.setDisable(false);
 			btManageUser.setDisable(false);
+			btManageSupplier.setDisable(false);
 		}
 
 
@@ -965,11 +1036,15 @@ public class AngelaccesoriosGUI {
 		mainPane.setCenter(clientPane);
 
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		//initializeTableViewClients();
+		initializeTableViewClients();
 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
 
+
+	}
+
+	private void initializeTableViewClients() {
 
 	}
 
@@ -1239,6 +1314,14 @@ public class AngelaccesoriosGUI {
 
 	}
 
+	private void initializeComboBoxOfHours() {
+
+	}
+
+	private void initializeComboBoxOfMinutes() {
+
+	}
+
 	@FXML
 	public void exportUsersReport(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportUsersReport.fxml"));
@@ -1247,8 +1330,8 @@ public class AngelaccesoriosGUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
-		//initializeComboBoxOfHours();
-		//initializeComboBoxOfMinutes();
+		initializeComboBoxOfHours();
+		initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());
 		dtPickerFinalDate.setValue(LocalDate.now());
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName()); 
@@ -1321,6 +1404,7 @@ public class AngelaccesoriosGUI {
 		ckbxDisable.setDisable(false);
 		btAdd.setDisable(true);
 	}
+
 
 
 
