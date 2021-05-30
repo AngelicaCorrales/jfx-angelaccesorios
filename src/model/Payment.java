@@ -10,6 +10,7 @@ public class Payment {
 	private User creator;
 	
 	private Payment next;
+	private Payment prev;
 	
 	public Payment(double a, PaymentMethod pm, Date d, User c) {
 		amount = a;
@@ -52,6 +53,14 @@ public class Payment {
 
 	public void setNext(Payment next) {
 		this.next = next;
+	}
+
+	public Payment getPrev() {
+		return prev;
+	}
+
+	public void setPrev(Payment prev) {
+		this.prev = prev;
 	}	
 	
 }

@@ -8,8 +8,8 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 	private Payment firstPayment;
 	private State state;
 
-	public SeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, String obs, String pm, double vp) {
-		super(listProd,listQ,b, c, obs, pm); 
+	public SeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c,String pm, double vp) {
+		super(listProd,listQ,b, c, "", pm); 
 		PaymentMethod pMT = null;
 		switch(pm) {
 		case "Efectivo": 
@@ -27,6 +27,10 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 		}
 		firstPayment = new Payment(vp, pMT,getDateAndTime(), c);
 		state = State.NO_ENTREGADO;
+	}
+	
+	public void addPayment(double vp,String pm, User c ) {
+		
 	}
 	
 	public State getState() {

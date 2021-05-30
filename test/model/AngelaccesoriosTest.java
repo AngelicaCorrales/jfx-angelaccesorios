@@ -1351,10 +1351,6 @@ public class AngelaccesoriosTest {
 		
 	}
 	
-	@Test
-	public void testCreateCashReceipt4() {
-		
-	}
 	
 	@Test
 	public void testCreateSeparateReceipt1() {
@@ -1363,6 +1359,10 @@ public class AngelaccesoriosTest {
 	
 	@Test
 	public void testCreateSeparateReceipt2() {
+		
+	}
+	@Test
+	public void testCreateSeparateReceipt3() {
 		
 	}
 	

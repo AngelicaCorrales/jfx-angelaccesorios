@@ -16,7 +16,7 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	private User creator;
 	private Client buyer;
 	private PaymentMethod paymentMethod;
-	
+
 	public Receipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, String obs, String pm) {
 		dateAndTime=new Date();
 		listOfProducts = listProd;
@@ -39,7 +39,7 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 			break;
 		}
 	}
-	
+
 	public String getCode() {
 		return code;
 	}
@@ -71,12 +71,12 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	public void setDateAndTime(Date dateAndTime) {
 		this.dateAndTime = dateAndTime;
 	}
-	
+
 	public String getDateAndHour() {
 		String strDateFormat = "yyyy-MM-dd HH:mm"; 
-        SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
-        String dateAndHour = objSDF.format(dateAndTime);
-        return dateAndHour;
+		SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+		String dateAndHour = objSDF.format(dateAndTime);
+		return dateAndHour;
 	}
 
 	public String getObservations() {
@@ -94,7 +94,7 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-	
+
 	public String getUserName() {
 		String name = creator.toString();
 		return name;
@@ -107,7 +107,7 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	public void setBuyer(Client buyer) {
 		this.buyer = buyer;
 	}
-	
+
 	public String getClientName() {
 		String name = buyer.toString();
 		return name;
@@ -116,7 +116,7 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
 	}
-	
+
 	public boolean findProduct(String code) {
 		boolean found=false;
 		for(int i=0; i<listOfProducts.size() && !found;i++ ) {
@@ -126,6 +126,25 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 		}		
 		return found;
 	}
+
+	public boolean findElectronicEquipmentProduct() {
+
+		boolean found=false;
+		/*
+		 for(int i=0; i<listOfProducts.size() && !found;i++ ) {
+			if(listOfProducts.get(i).getCode().equals("")) {
+				found=true;						
+			}
+		}		
+		 */
+		return found;
+	}
+
+	public boolean isInForce() {
+
+		return true;
+	}
+
 
 	@Override
 	public int compareTo(Receipt r) {

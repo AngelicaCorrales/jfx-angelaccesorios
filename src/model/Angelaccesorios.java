@@ -439,7 +439,10 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod, double valuePayment) {
+	
+	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) {
+			
+
 
 	}
 
