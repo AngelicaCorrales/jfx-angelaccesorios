@@ -25,9 +25,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -310,6 +312,161 @@ public class AngelaccesoriosGUI {
 
 	//Receipts-------
 
+    @FXML
+    private TextField txtCode;
+    
+    @FXML
+    private Label lbWindow;
+
+    @FXML
+    private Label lbManageOrder;
+
+    @FXML
+    private VBox createSeparateReceipt;
+
+    @FXML
+    private ComboBox<?> cmbxClients;
+
+    @FXML
+    private ComboBox<?> cbPaymentMethod;
+
+    @FXML
+    private TextField txtClientSearchedName;
+
+    @FXML
+    private TextField txtClientSearchedLastName;
+
+    @FXML
+    private TextField txtPaymentValue;
+    
+    @FXML
+    private ScrollPane scrollPaneTableviews;
+
+    @FXML
+    private TableView<?> tvOfCountedReceipts;
+
+    @FXML
+    private TableColumn<?, ?> colCodeC;
+
+    @FXML
+    private TableColumn<?, ?> colDateandTimeC;
+
+    @FXML
+    private TableColumn<?, ?> colClientC;
+
+    @FXML
+    private TableColumn<?, ?> colUserC;
+
+    @FXML
+    private TableColumn<?, ?> colProductsInCR;
+
+    @FXML
+    private TableColumn<?, ?> colSubtotalPriceC;
+
+    @FXML
+    private TableColumn<?, ?> colIVAC;
+
+    @FXML
+    private TableColumn<?, ?> colTotalValueC;
+
+    @FXML
+    private TableColumn<?, ?> colPaymentMC;
+
+    @FXML
+    private TableColumn<?, ?> colObservationsC;
+
+    @FXML
+    private TableView<?> tvOfAddedProducts;
+
+    @FXML
+    private TableColumn<?, ?> colNameAddedProduct;
+
+    @FXML
+    private TableView<?> tvOfReceiptProducts;
+
+    @FXML
+    private TableColumn<?, ?> colNameOrderProduct;
+
+    @FXML
+    private TableView<?> tvOfQuantities;
+
+    @FXML
+    private TableColumn<?, ?> colQuantityOrderProduct;
+
+    @FXML
+    private TableView<?> tvOfSeparateReceipts;
+
+    @FXML
+    private TableColumn<?, ?> colCodeS;
+
+    @FXML
+    private TableColumn<?, ?> colDateandTimeS;
+
+    @FXML
+    private TableColumn<?, ?> colClientS;
+
+    @FXML
+    private TableColumn<?, ?> colUserS;
+
+    @FXML
+    private TableColumn<?, ?> colProductsInSR;
+
+    @FXML
+    private TableColumn<?, ?> colSubtotalPriceS;
+
+    @FXML
+    private TableColumn<?, ?> colIVAS;
+
+    @FXML
+    private TableColumn<?, ?> colTotalValueS;
+
+    @FXML
+    private TableColumn<?, ?> colPayments;
+
+    @FXML
+    private TableColumn<?, ?> colToPay;
+
+    @FXML
+    private TableColumn<?, ?> colObservationsS;
+
+    @FXML
+    private VBox addPaymentForm;
+
+    @FXML
+    private TextField txtNewPayment;
+
+    @FXML
+    private VBox addObservationsForm;
+
+    @FXML
+    private TextArea separateReceiptObs;
+
+    @FXML
+    private VBox createCountedReceipt;
+
+    @FXML
+    private TextArea txtObsevations;
+
+    @FXML
+    private VBox addProductsToAReceipt;
+
+    @FXML
+    private TextField txtNameProduct;
+
+    @FXML
+    private TextField txtQuantityProduct;
+
+    @FXML
+    private Button btDeleteProductR;
+
+    @FXML
+    private Button btAddProductR;
+    
+    @FXML
+    private Button btGenerateR;
+
+    @FXML
+    private VBox receiptMenu;
 
 	@FXML
 	public void logIn(ActionEvent event) throws IOException {
@@ -603,7 +760,7 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void manageReceipt(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bill.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-receipt.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.getChildren().clear();
@@ -615,9 +772,139 @@ public class AngelaccesoriosGUI {
 		//createOrderForm.setVisible(true);
 		//btAddProductsOrder.setDisable(true);
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-
+		receiptMenu.setVisible(true);
 	}
+	
+	@FXML
+    public void addPaymentToAReceipt(ActionEvent event) {
 
+    }
+
+    @FXML
+    public void addProductToAReceipt(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void addReceipt(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void addSeparateReceiptObs(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void chooseProductsOfAReceipt(ActionEvent event) {
+    	btGenerateR.setVisible(false);
+    	btDelete.setVisible(false);
+    	createCountedReceipt.setVisible(false);
+    	createSeparateReceipt.setVisible(false);
+    	tvOfSeparateReceipts.setVisible(false);
+    	tvOfCountedReceipts.setVisible(false);
+    	addProductsToAReceipt.setVisible(true);
+    	tvOfAddedProducts.setVisible(true);
+    	tvOfReceiptProducts.setVisible(true);
+    	tvOfQuantities.setVisible(true);
+    }
+
+    @FXML
+    public void clickOnTableViewOfAddedProducts(MouseEvent event) {
+
+    }
+
+    @FXML
+    public void clickOnTableViewOfOrderProducts(MouseEvent event) {
+
+    }
+
+    @FXML
+    public void clickOnTableViewOfOrders(MouseEvent event) {
+
+    }
+
+    @FXML
+    public void deleteProductOfAReceipt(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void deleteReceipt(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void generateReceipt(ActionEvent event) {
+
+    }
+    
+    @FXML
+    public void manageCountedReceipt(ActionEvent event) {
+    	createCountedReceipt.setVisible(true);
+    	receiptMenu.setVisible(false);
+    	scrollPaneTableviews.setVisible(true);
+    	tvOfCountedReceipts.setVisible(true);
+    	lbWindow.setText("C");
+    	btGenerateR.setVisible(true);
+    	btGenerateR.setDisable(true);
+    	btDelete.setVisible(true);
+    	btDelete.setDisable(true);
+    }
+
+    @FXML
+    public void manageSeparateReceipt(ActionEvent event) {
+    	createSeparateReceipt.setVisible(true);
+    	receiptMenu.setVisible(false);
+    	scrollPaneTableviews.setVisible(true);
+    	tvOfSeparateReceipts.setVisible(true);
+    	lbWindow.setText("S");
+    	btGenerateR.setVisible(true);
+    	btGenerateR.setDisable(true);
+    	btDelete.setVisible(true);
+    	btDelete.setDisable(true);
+    }
+
+    @FXML
+    public void returnToReceiptForm(ActionEvent event) {
+    	addProductsToAReceipt.setVisible(false);
+    	tvOfAddedProducts.setVisible(false);
+    	tvOfReceiptProducts.setVisible(false);
+    	tvOfQuantities.setVisible(false);
+    	if(lbWindow.getText().equals("C")) {
+    		manageCountedReceipt(null);
+    	}else {
+    		manageSeparateReceipt(null);
+    	}
+    }
+
+    @FXML
+    public void returnToReceiptMenu(ActionEvent event) {
+    	createCountedReceipt.setVisible(false);
+    	createSeparateReceipt.setVisible(false);
+    	scrollPaneTableviews.setVisible(false);
+    	tvOfCountedReceipts.setVisible(false);
+    	tvOfSeparateReceipts.setVisible(false);
+    	btGenerateR.setVisible(false);
+    	btDelete.setVisible(false);
+    	receiptMenu.setVisible(true);
+    }
+
+    @FXML
+    public void searchClientByName(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void searchReceiptByCode(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void updateReceipt(ActionEvent event) {
+
+    }
+	
 	@FXML
 	public void showAboutCreators(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
