@@ -1,15 +1,13 @@
 package model;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +26,8 @@ import exceptions.SameIDException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 
-public class Angelaccesorios {
+public class Angelaccesorios implements Serializable{
+	private static final long serialVersionUID = 1;
 	private User firstUser;
 	private User lastUser;
 	private User loggedUser;
@@ -302,10 +301,10 @@ public class Angelaccesorios {
 	public boolean deleteClient(Client client) {
 		boolean deleted=false;
 		//if(searchClientInReceipt(client)==null) {
-			int i=clients.indexOf(client);
-			clients.remove(i);
-			deleted=true;
-			//saveDataAngelaccesorios();
+		int i=clients.indexOf(client);
+		clients.remove(i);
+		deleted=true;
+		//saveDataAngelaccesorios();
 
 
 		//}
@@ -313,7 +312,7 @@ public class Angelaccesorios {
 		return deleted;
 
 	}
-	
+
 	public Receipt searchClientInReceipt(Client client) {
 		Receipt receipt=null;
 		/*boolean found=false;
@@ -324,7 +323,7 @@ public class Angelaccesorios {
 			}
 
 		}
-		*/
+		 */
 		return receipt;
 	}
 
@@ -424,18 +423,31 @@ public class Angelaccesorios {
 		return clientsByName;
 	}
 
-//	public Receipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, Date d, String obs, String pm) {
+	//All related with Receipt
+
+	public ArrayList<Receipt> getReceipts() {
+		return receipts;
+	}
+
+	public void setReceipts(ArrayList<Receipt> receipts) {
+		this.receipts = receipts;
+	}
+
+	//	public Receipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, Date d, String obs, String pm) {
 
 	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) {
-		
+
 	}
+
 	
 	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) {
 			
+
+
 	}
-	
+
 	public void addProductToAReceipt(Product prod, ArrayList<Product> listProd) {
-		
+
 	}
 
 	public void deleteProductFromAReceipt(Product prod, ArrayList<Product> listProd) {
@@ -443,17 +455,17 @@ public class Angelaccesorios {
 	}
 
 	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) {
-		
+
 	}
-	
+
 	public void generateReceipt(Receipt receipt) {
 
 	}
-	
+
 	public void deleteReceipt(Receipt receipt) {
 
 	}
-	
+
 	public void searchReceipt(String code) {
 
 	}
@@ -683,7 +695,9 @@ public class Angelaccesorios {
 	private boolean searchBrandInProducts(Brand b) {
 		boolean found = false;
 		for(int i=0; i<products.size() && !found;i++) {
-			found = products.get(i).getBrand().getName().equals(b.getName());	
+			if(products.get(i).getBrand().getName().equals(b.getName())) {
+				found = true;
+			}
 		}
 		return found;
 	}
@@ -940,9 +954,11 @@ public class Angelaccesorios {
 		boolean deleted = false;
 		boolean found = false;
 		for(int i=0; i<products.size() && !found;i++) {
-			found = products.get(i).getType().getName().equals(type.getName());	
+			if(products.get(i).getType().getName().equals(type.getName())) {
+				found = true;
+			}
 		}
-		if(found){
+		if(found==false){
 			removeType(type);
 			deleted = true;
 			saveDataAngelaccesorios();
@@ -1147,7 +1163,7 @@ public class Angelaccesorios {
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
 	}
-	
+
 	//Searches products in the list of products of the system from a type and brand name
 	public ArrayList<Product> returnFoundProducts(String type, String brand){
 		ArrayList<Product> found = new ArrayList<Product>();
@@ -1157,17 +1173,6 @@ public class Angelaccesorios {
 			}
 		}
 		return found;
-	}
-	
-
-	//All related with Receipt
-
-	public ArrayList<Receipt> getReceipts() {
-		return receipts;
-	}
-
-	public void setReceipts(ArrayList<Receipt> receipts) {
-		this.receipts = receipts;
 	}
 
 	//Serializable Methods
@@ -1206,7 +1211,7 @@ public class Angelaccesorios {
 		return allMinutes;
 	}
 
-	public ArrayList<Receipt> sortByDateAndTime() {
+	private ArrayList<Receipt> sortByDateAndTime() {
 		ArrayList<Receipt> copyOfReceipts = new ArrayList<Receipt>(receipts);
 		Collections.sort(copyOfReceipts);
 		return copyOfReceipts;
@@ -1242,11 +1247,11 @@ public class Angelaccesorios {
 		}
 		return correct;
 	}
-	
+
 	//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-	
+
 	public void exportOrdersReport(String fn, String initialTime, String finalTime, String separator) throws FileNotFoundException {
-		ArrayList<Receipt> receiptsS = selectedReceipts(initialTime,finalTime);
+		/*ArrayList<Receipt> receiptsS = selectedReceipts(initialTime,finalTime);
 		PrintWriter pw = new PrintWriter(fn);
 		String info ="";
 		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Tipo de identificación"+separator+"Numero de identificación"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Nombre del Empleado"+separator+"Identificacion del empleado"+separator+"Producto(s): Nombre, cantidad y valor unitario";
@@ -1269,11 +1274,73 @@ public class Angelaccesorios {
 		}
 		pw.println(nameColumns);
 		pw.print(info);
+		pw.close();*/
+	}
+	
+	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
+		/*int totalOrders=0;
+		int totalMoney=0;
+		List<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
+		
+		PrintWriter pw = new PrintWriter(fn);
+		String nameColumns = "Empleado"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de ordenes entregadas"+SEPARATOR+"Precio total de las ordenes entregadas";
+		pw.println(nameColumns);
+		
+		for(int k=0;k<ordersS.size();k++) {
+			ordersS.get(k).getDeliverer().setCont(0);
+		}
+		for(int i=0;i<ordersS.size();i++){
+			Order objOrder = ordersS.get(i);
+			objOrder.getDeliverer().setCont((objOrder.getDeliverer().getCont())+1);
+
+			if(objOrder.getDeliverer().getCont()==1) {
+				pw.println(objOrder.getDeliverer().getName()+SEPARATOR+objOrder.getDeliverer().getId()+SEPARATOR+objOrder.getDeliverer().getNumberOrders()+SEPARATOR+objOrder.getDeliverer().getSumTotalOrders());
+				totalOrders+=objOrder.getDeliverer().getNumberOrders();
+				totalMoney+=objOrder.getDeliverer().getSumTotalOrders();
+			}
+		}
+		pw.println(SEPARATOR+"Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
+
 		pw.close();
+		
+		*/
+	}
+	
+	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
+		/*int totalOrders=0;
+		int totalMoney=0;
+		List<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
+		PrintWriter pw = new PrintWriter(fn);
+		String nameColumns = "Nombre del producto"+SEPARATOR+"Numero total de veces que fue pedido"+SEPARATOR+"Cantidad de total de dinero recaudado";
+		pw.println(nameColumns);
+		for(int i=0;i<ordersS.size();i++){
+			Order objOrder = ordersS.get(i);
+			for(int k=0;k<objOrder.getListOfProducts().size();k++) {
+				Product pd = objOrder.getListOfProducts().get(k);
+				pd.setCont((pd.getCont())+1);
+				if(pd.getCont()==1) {
+					pw.println(pd.getName()+SEPARATOR+pd.getNumTimesAddedOrders()+SEPARATOR+pd.getTotalPriceAddedOrders());
+					totalOrders+=pd.getNumTimesAddedOrders();
+					totalMoney+=pd.getTotalPriceAddedOrders();
+				}
+			}
+		}
+		pw.println("Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
+
+		pw.close();
+		for(int j=0;j<ordersS.size();j++) {
+			Order ord = ordersS.get(j);
+			for(int k=0;k<ord.getListOfProducts().size();k++) {
+				Product p = ord.getListOfProducts().get(k);
+				p.setNumTimesAddedOrders(0);
+				p.setTotalPriceAddedOrders(0);
+				p.setCont(0);
+			}
+		} */
 	}
 
 	//Sort products by ascending price
-	
+
 	//Bubble sorting
 	public ArrayList<Product> sortingPricesOfProducts() {
 		ArrayList<Product> copyOfProducts = new ArrayList<Product>(products);
@@ -1288,9 +1355,9 @@ public class Angelaccesorios {
 		}
 		return copyOfProducts;
 	}
-	
+
 	//Sort brands in descending alphabetical order
-	
+
 	//Insertion sorting
 	public ArrayList<Brand> sortingBrandNames() {
 		ArrayList<Brand> listSorted=new ArrayList<Brand>(brands);
@@ -1303,11 +1370,11 @@ public class Angelaccesorios {
 		}
 		return listSorted;
 	}
-	
+
 	//Import data from csv files
-	
+
 	public void importClientsData(String fileName) throws IOException{
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		/*BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
 		while(line!=null){
 			String[] parts = line.split(";");
@@ -1315,15 +1382,16 @@ public class Angelaccesorios {
 
 				createClient( parts[0],  parts[1].toUpperCase(),  parts[2].toUpperCase(),  parts[3],  parts[4],  parts[5],  "");
 			}
-			
+
 			line = br.readLine();
 		}
-	    br.close();
+		br.close();
+		*/
 	}
-	
-	
+
+
 	public void importProductsData(String fileName) throws IOException{
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		/*BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
 		String creator="";
 		while(line!=null){
@@ -1340,7 +1408,7 @@ public class Angelaccesorios {
 					Ingredient ing= new Ingredient(ingredients[i], null, idIngredient);
 					this.ingredients.add(ing);
 					idIngredient++;
-					
+
 					addIngredientToAProduct( prod,  ing,  creator);
 
 				}
@@ -1348,12 +1416,12 @@ public class Angelaccesorios {
 				addSizeOfAProduct( prod,  parts[3],  price,creator); 
 
 			}
-			
+
 			line = br.readLine();
 		}
-	    br.close();
-	    saveDataIngredients();
-
+		br.close();
+		saveDataIngredients();
+	*/
 	}
 
 }

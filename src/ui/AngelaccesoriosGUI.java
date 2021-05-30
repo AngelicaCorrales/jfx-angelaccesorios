@@ -308,7 +308,7 @@ public class AngelaccesoriosGUI {
 	@FXML
 	private TableColumn<User, String> colPassword;
 
-
+	//Receipts-------
 
 
 	@FXML
@@ -974,7 +974,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void exportReceiptReport(ActionEvent event) throws IOException {
+	public void exportReceiptsReport(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportBillsReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
