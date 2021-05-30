@@ -1345,10 +1345,6 @@ public void testDeleteProduct3() {
 		
 	}
 	
-	@Test
-	public void testCreateCashReceipt4() {
-		
-	}
 	
 	@Test
 	public void testCreateSeparateReceipt1() {
@@ -1357,6 +1353,10 @@ public void testDeleteProduct3() {
 	
 	@Test
 	public void testCreateSeparateReceipt2() {
+		
+	}
+	@Test
+	public void testCreateSeparateReceipt3() {
 		
 	}
 	
