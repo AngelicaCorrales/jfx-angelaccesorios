@@ -3,8 +3,8 @@ package model;
 public class User extends Person{
 	private String userName;
 	private String password;
-	private int numberOrders;
-	private double sumTotalOrders;
+	private int numberReceipts;
+	private double sumTotalReceipts;
 	private int cont;
 	
 	private User next;
@@ -15,8 +15,8 @@ public class User extends Person{
 		this.userName=userName;
 		this.password=password;
 		
-		numberOrders=0;
-		sumTotalOrders=0;
+		numberReceipts=0;
+		sumTotalReceipts=0;
 		cont=0;
 	}
 
@@ -36,20 +36,20 @@ public class User extends Person{
 		this.password = password;
 	}
 
-	public int getNumberOrders() {
-		return numberOrders;
+	public int getNumberReceipts() {
+		return numberReceipts;
 	}
 
-	public void setNumberOrders(int numberOrders) {
-		this.numberOrders = numberOrders;
+	public void setNumberReceipts(int numberReceipts) {
+		this.numberReceipts = numberReceipts;
 	}
 
-	public double getSumTotalOrders() {
-		return sumTotalOrders;
+	public double getSumTotalReceipts() {
+		return sumTotalReceipts;
 	}
 
-	public void setSumTotalOrders(double sumTotalOrders) {
-		this.sumTotalOrders = sumTotalOrders;
+	public void setSumTotalReceipts(double sumTotalReceipts) {
+		this.sumTotalReceipts = sumTotalReceipts;
 	}
 
 	public int getCont() {

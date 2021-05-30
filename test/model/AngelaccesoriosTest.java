@@ -134,6 +134,26 @@ public class AngelaccesoriosTest {
 		angelaccesorios.getProducts().get(2).setCode("ACC8904");
 	}
 	
+	public void setupScenary13() {
+
+	}
+
+	public void setupScenary14() {
+
+	}
+
+	public void setupScenary15() {
+
+	}
+
+	public void setupScenary16() {
+
+	}
+
+	public void setupScenary17() {
+
+	}
+
 	//Method: CreateUserAdmin
 	@Test
 	public void testCreateUserAdmin1() throws EmailException, SpaceException {
