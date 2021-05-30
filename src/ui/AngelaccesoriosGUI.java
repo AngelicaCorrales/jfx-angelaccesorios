@@ -38,6 +38,11 @@ import javafx.scene.layout.VBox;
 import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
+import model.Client;
+import model.Product;
+import model.Receipt;
+import model.Supplier;
+import model.TypeOfProduct;
 import model.User;
 
 public class AngelaccesoriosGUI {
@@ -105,22 +110,22 @@ public class AngelaccesoriosGUI {
 	private TextField txtTypeOfProductName;
 
 	@FXML
-	private ComboBox<?> cmbxCategory;
+	private ComboBox<String> cmbxCategory;
 
 	@FXML
-	private TableView<?> tvOfTypeOfProducts;
+	private TableView<TypeOfProduct> tvOfTypeOfProducts;
 
 	@FXML
-	private TableColumn<?, ?> colCategoryTypeOfProduct;
+	private TableColumn<TypeOfProduct, String> colCategoryTypeOfProduct;
 
 	@FXML
-	private TableColumn<?, ?> colCodeTypeOfProduct;
+	private TableColumn<TypeOfProduct, String> colCodeTypeOfProduct;
 
 	@FXML
-	private TableColumn<?, ?> colNameTypeOfProduct;
+	private TableColumn<TypeOfProduct, String> colNameTypeOfProduct;
 
 	@FXML
-	private TableColumn<?, ?> colStatusTypeOfProduct;
+	private TableColumn<TypeOfProduct, String> colStatusTypeOfProduct;
 
 	@FXML
 	private TextField txtSupplier;
@@ -135,19 +140,19 @@ public class AngelaccesoriosGUI {
 	private Button btAddSupplierToTypeOfProduct;
 
 	@FXML
-	private TableView<?> tvTypeOfProducts;
+	private TableView<TypeOfProduct> tvTypeOfProducts;
 
 	@FXML
-	private TableView<?> tvAddedSuppliers;
+	private TableView<Supplier> tvAddedSuppliers;
 
 	@FXML
-	private TableColumn<?, ?> colNameAddedSuppliers;
+	private TableColumn<Supplier, String> colNameAddedSuppliers;
 
 	@FXML
-	private TableView<?> tvSuppliersInATypeOfProduct;
+	private TableView<Supplier> tvSuppliersInATypeOfProduct;
 
 	@FXML
-	private TableColumn<?, ?> colNameSuppliersInATypeOfProduct;
+	private TableColumn<Supplier, String> colNameSuppliersInATypeOfProduct;
 
 	@FXML
 	private VBox supplierForm;
@@ -175,31 +180,31 @@ public class AngelaccesoriosGUI {
 	private TextField txtPhone;
 
 	@FXML
-	private ComboBox<?> cmbxIdType;
+	private ComboBox<String> cmbxIdType;
 
 	@FXML
-	private TableView<?> tvListClients;
+	private TableView<Client> tvListClients;
 
 	@FXML
-	private TableColumn<?, ?> colNameClient;
+	private TableColumn<Client, String> colNameClient;
 
 	@FXML
-	private TableColumn<?, ?> colLastNameClient;
+	private TableColumn<Client, String> colLastNameClient;
 
 	@FXML
-	private TableColumn<?, ?> colIdTypeClient;
+	private TableColumn<Client, String> colIdTypeClient;
 
 	@FXML
-	private TableColumn<?, ?> colIdClient;
+	private TableColumn<Client, String> colIdClient;
 
 	@FXML
-	private TableColumn<?, ?> colAddressClient;
+	private TableColumn<Client, String> colAddressClient;
 
 	@FXML
-	private TableColumn<?, ?> colPhoneClient;
+	private TableColumn<Client, String> colPhoneClient;
 
 	@FXML
-	private TableColumn<?, ?> colEnabledClient;
+	private TableColumn<Client, String> colEnabledClient;
 
 	//Products-------
 	@FXML
@@ -209,34 +214,34 @@ public class AngelaccesoriosGUI {
 	private TextField txtBrand;
 
 	@FXML
-	private TableColumn<?, ?> colCodeProduct;
+	private TableColumn<Product, String> colCodeProduct;
 
 	@FXML
-	private TableColumn<?, ?> colTypeProduct;
+	private TableColumn<Product, String> colTypeProduct;
 
 	@FXML
-	private TableColumn<?, ?> colBrandProduct;
+	private TableColumn<Product, String> colBrandProduct;
 
 	@FXML
-	private TableColumn<?, ?> colModelProduct;
+	private TableColumn<Product, String> colModelProduct;
 
 	@FXML
 	private Label lbManageProduct;
 
 	@FXML
-	private TableView<?> tvOfProducts;
+	private TableView<Product> tvOfProducts;
 
 	@FXML
-	private TableColumn<?, ?> colStatusProduct;
+	private TableColumn<Product, String> colStatusProduct;
 
 	@FXML
-	private TableColumn<?, ?> colUnitsProduct;
+	private TableColumn<Product, Integer> colUnitsProduct;
 
 	@FXML
-	private TableColumn<?, ?> colPriceProduct;
+	private TableColumn<Product, Double> colPriceProduct;
 
 	@FXML
-	private TableColumn<?, ?> colWarrantyProduct;
+	private TableColumn<Product, String> colWarrantyProduct;
 
 	@FXML
 	private Button btSortProductPrices;
@@ -245,10 +250,10 @@ public class AngelaccesoriosGUI {
 	private VBox createProductForm;
 
 	@FXML
-	private ComboBox<?> cmbxBrand;
+	private ComboBox<Brand> cmbxBrand;
 
 	@FXML
-	private ComboBox<?> cmbxTypeOfProduct;
+	private ComboBox<TypeOfProduct> cmbxTypeOfProduct;
 
 	@FXML
 	private TextField txtModel;
@@ -277,16 +282,16 @@ public class AngelaccesoriosGUI {
 	private DatePicker dtPickerFinalDate;
 
 	@FXML
-	private ComboBox<?> cmbxInitialHour;
+	private ComboBox<String> cmbxInitialHour;
 
 	@FXML
-	private ComboBox<?> cmbxInitialMinute;
+	private ComboBox<String> cmbxInitialMinute;
 
 	@FXML
-	private ComboBox<?> cmbxFinalHour;
+	private ComboBox<String> cmbxFinalHour;
 
 	@FXML
-	private ComboBox<?> cmbxFinalMinute;
+	private ComboBox<String> cmbxFinalMinute;
 
 	//User--------
 	@FXML
@@ -328,10 +333,10 @@ public class AngelaccesoriosGUI {
 	private VBox createSeparateReceipt;
 
 	@FXML
-	private ComboBox<?> cmbxClients;
+	private ComboBox<Client> cmbxClients;
 
 	@FXML
-	private ComboBox<?> cbPaymentMethod;
+	private ComboBox<String> cbPaymentMethod;
 
 	@FXML
 	private TextField txtClientSearchedName;
@@ -346,91 +351,91 @@ public class AngelaccesoriosGUI {
 	private ScrollPane scrollPaneTableviews;
 
 	@FXML
-	private TableView<?> tvOfCountedReceipts;
+	private TableView<Receipt> tvOfCountedReceipts;
 
 	@FXML
-	private TableColumn<?, ?> colCodeC;
+	private TableColumn<Receipt, String> colCodeC;
 
 	@FXML
-	private TableColumn<?, ?> colDateandTimeC;
+	private TableColumn<Receipt, String> colDateandTimeC;
 
 	@FXML
-	private TableColumn<?, ?> colClientC;
+	private TableColumn<Receipt, String> colClientC;
 
 	@FXML
-	private TableColumn<?, ?> colUserC;
+	private TableColumn<Receipt, String> colUserC;
 
 	@FXML
-	private TableColumn<?, ?> colProductsInCR;
+	private TableColumn<Receipt, String> colProductsInCR;
 
 	@FXML
-	private TableColumn<?, ?> colSubtotalPriceC;
+	private TableColumn<Receipt, Double> colSubtotalPriceC;
 
 	@FXML
-	private TableColumn<?, ?> colIVAC;
+	private TableColumn<Receipt, Double> colIVAC;
 
 	@FXML
-	private TableColumn<?, ?> colTotalValueC;
+	private TableColumn<Receipt, Double> colTotalValueC;
 
 	@FXML
-	private TableColumn<?, ?> colPaymentMC;
+	private TableColumn<Receipt, String> colPaymentMC;
 
 	@FXML
-	private TableColumn<?, ?> colObservationsC;
+	private TableColumn<Receipt, String> colObservationsC;
 
 	@FXML
-	private TableView<?> tvOfAddedProducts;
+	private TableView<Product> tvOfAddedProducts;
 
 	@FXML
-	private TableColumn<?, ?> colNameAddedProduct;
+	private TableColumn<Product, String> colNameAddedProduct;
 
 	@FXML
-	private TableView<?> tvOfReceiptProducts;
+	private TableView<Product> tvOfReceiptProducts;
 
 	@FXML
-	private TableColumn<?, ?> colNameOrderProduct;
+	private TableColumn<Product, String> colNameRProduct;
 
 	@FXML
-	private TableView<?> tvOfQuantities;
+	private TableView<Integer> tvOfQuantities;
 
 	@FXML
-	private TableColumn<?, ?> colQuantityOrderProduct;
+	private TableColumn<Integer, Integer> colQuantityRProduct;
 
 	@FXML
-	private TableView<?> tvOfSeparateReceipts;
+	private TableView<Receipt> tvOfSeparateReceipts;
 
 	@FXML
-	private TableColumn<?, ?> colCodeS;
+	private TableColumn<Receipt, String> colCodeS;
 
 	@FXML
-	private TableColumn<?, ?> colDateandTimeS;
+	private TableColumn<Receipt, String> colDateandTimeS;
 
 	@FXML
-	private TableColumn<?, ?> colClientS;
+	private TableColumn<Receipt, String> colClientS;
 
 	@FXML
-	private TableColumn<?, ?> colUserS;
+	private TableColumn<Receipt, String> colUserS;
 
 	@FXML
-	private TableColumn<?, ?> colProductsInSR;
+	private TableColumn<Receipt, String> colProductsInSR;
 
 	@FXML
-	private TableColumn<?, ?> colSubtotalPriceS;
+	private TableColumn<Receipt, Double> colSubtotalPriceS;
 
 	@FXML
-	private TableColumn<?, ?> colIVAS;
+	private TableColumn<Receipt, Double> colIVAS;
 
 	@FXML
-	private TableColumn<?, ?> colTotalValueS;
+	private TableColumn<Receipt, Double> colTotalValueS;
 
 	@FXML
-	private TableColumn<?, ?> colPayments;
+	private TableColumn<Receipt, String> colPayments;
 
 	@FXML
-	private TableColumn<?, ?> colToPay;
+	private TableColumn<Receipt, Double> colToPay;
 
 	@FXML
-	private TableColumn<?, ?> colObservationsS;
+	private TableColumn<Receipt, String> colObservationsS;
 
 	@FXML
 	private VBox addPaymentForm;
@@ -479,13 +484,13 @@ public class AngelaccesoriosGUI {
 	private TextField txtSupplierPhone;
 
 	@FXML
-	private TableView<?> tvSuppliers;
+	private TableView<Supplier> tvSuppliers;
 
 	@FXML
-	private TableColumn<?, ?> colNameSupplier;
+	private TableColumn<Supplier, String> colNameSupplier;
 
 	@FXML
-	private TableColumn<?, ?> colPhoneSupplier;
+	private TableColumn<Supplier, String> colPhoneSupplier;
 
 	@FXML
 	public void logIn(ActionEvent event) throws IOException {

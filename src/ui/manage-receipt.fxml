@@ -287,7 +287,7 @@
                         </TableView>
                         <TableView fx:id="tvOfReceiptProducts" blendMode="DARKEN" layoutX="238.0" onMouseClicked="#clickOnTableViewOfOrderProducts" prefHeight="489.0" prefWidth="234.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colNameOrderProduct" prefWidth="158.481689453125" sortable="false" text="Productos de la factura" />
+                              <TableColumn fx:id="colNameRProduct" prefWidth="158.481689453125" sortable="false" text="Productos de la factura" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -295,7 +295,7 @@
                         </TableView>
                         <TableView fx:id="tvOfQuantities" blendMode="DARKEN" layoutX="472.0" layoutY="-1.0" mouseTransparent="true" prefHeight="490.0" prefWidth="140.0" visible="false">
                            <columns>
-                              <TableColumn fx:id="colQuantityOrderProduct" prefWidth="158.481689453125" sortable="false" text="Cantidad" />
+                              <TableColumn fx:id="colQuantityRProduct" prefWidth="158.481689453125" sortable="false" text="Cantidad" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
