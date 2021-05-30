@@ -116,18 +116,19 @@ public class AngelaccesoriosTest {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addTypeOfProduct("Tablet", "Equipo electronico");
 		angelaccesorios.addBrand("Samsung");
-		
+		angelaccesorios.addTypeOfProduct("Audifonos", "Accesorio");
+		angelaccesorios.addBrand("Huawei");
 	}
 	
 	public void setupScenary12() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
-		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addBrand("Xiaomi");
 		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
 		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
-		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight().getRight(), angelaccesorios.getBrands().get(0), "5V", 14, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone 8", 14, 20000, false);
 		angelaccesorios.getProducts().get(0).setCode("ACC3202");
 		angelaccesorios.getProducts().get(1).setCode("EQE4503");
 		angelaccesorios.getProducts().get(2).setCode("ACC8904");
@@ -865,13 +866,19 @@ public class AngelaccesoriosTest {
 	//Method: deleteBrand
 	
 	@Test
-	public void testDeleteBrand1() {
-		
+	public void testDeleteBrand1() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+		boolean added = angelaccesorios.deleteBrand(angelaccesorios.getBrands().get(1));
+		assertTrue(added);
+		assertEquals(1, angelaccesorios.getBrands().size());
 	}
 	
 	@Test
-	public void testDeleteBrand2() {
-		
+	public void testDeleteBrand2() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+		setupScenary12();
+		boolean added = angelaccesorios.deleteBrand(angelaccesorios.getBrands().get(0));
+		assertFalse(added);
+		assertEquals(2, angelaccesorios.getBrands().size());
 	}
 	
 	//Method: updateBrand
@@ -1011,22 +1018,22 @@ public class AngelaccesoriosTest {
 
 	@Test
 	public void testAddSupplier1() {
-		setupScenary1();
+		//setupScenary1();
 	}
 	
 	@Test
 	public void testAddSupplier2() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testAddSupplier3() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testAddSupplier4() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	//Method: deleteSupplier
@@ -1036,53 +1043,58 @@ public class AngelaccesoriosTest {
 		
 	}
 	
+	@Test
+	public void testDeleteSupplier2() throws IOException {
+		
+	}
+	
 	//Method: updateSupplier
 	
 	@Test
 	public void testUpdateSupplier1() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testUpdateSupplier2() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testUpdateSupplier3() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testUpdateSupplier4() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testUpdateSupplier5() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	//Method: searchSupplier
 	
 	@Test
 	public void testSearchSupplier1() throws IOException {
-		setupScenary1();
+		//setupScenary1();
 	}
 	
 	@Test
 	public void testSearchSupplier2() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testSearchSupplier3() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	@Test
 	public void testSearchSupplier4() throws IOException {
-		setupScenary8();
+		//setupScenary8();
 	}
 	
 	//All the test cases related with TypeOfProduct
@@ -1091,46 +1103,46 @@ public class AngelaccesoriosTest {
 	
 	@Test
 	public void testAddTypeOfProduct1() throws IOException {
-		setupScenary1();
+		//setupScenary1();
 	}
 	
 	@Test
 	public void testAddTypeOfProduct2() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testAddTypeOfProduct3() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testAddTypeOfProduct4() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testAddTypeOfProduct5() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	//Method: addSupplierToEQE
 	
 	@Test
 	public void testAddSupplierToEQE1() throws IOException {
-		setupScenary10();
+		//setupScenary10();
 	}
 	
 	@Test
 	public void testAddSupplierToEQE2() throws IOException {
-		setupScenary10();
+		//setupScenary10();
 	}
 	
 	//Method: deleteSupplierOfAnEQE
 	
 	@Test
 	public void testDeleteSupplierToEQE() throws IOException {
-		setupScenary10();
+		//setupScenary10();
 	}
 	
 	//Method: deleteTypeOfProduct
@@ -1145,105 +1157,102 @@ public class AngelaccesoriosTest {
 		
 	}
 	
-	@Test
-	public void testDeleteTypeOfProduct3() throws IOException {
-		
-	}
-	
 	//Method: updateTypeOfProduct
 	
 	@Test
 	public void testUpdateTypeOfProduct1() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testUpdateTypeOfProduct2() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testUpdateTypeOfProduct3() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testUpdateTypeOfProduct4() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testUpdateTypeOfProduct5() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testUpdateTypeOfProduct6() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	//Method: searchTypeOfProduct
 	
 	@Test
 	public void testSearchTypeOfProduct1() throws IOException {
-		setupScenary1();
+		//setupScenary1();
 	}
 	
 	@Test
 	public void testSearchTypeOfProduct2() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testSearchTypeOfProduct3() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testSearchTypeOfProduct4() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	//All the test cases related with Product
 	
+	//Method: addProduct
+	
 	@Test
 	public void testAddProduct1() throws IOException {
-		setupScenary11();
+		//setupScenary11();
 	}
 	
 	@Test
 	public void testAddProduct2() throws IOException {
-		setupScenary11();
+		//setupScenary11();
 	}
 	
 	@Test
 	public void testAddProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testAddProduct4() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testAddProduct5() throws IOException {
-		setupScenary11();
+		//setupScenary11();
 	}
 	
 	@Test
 	public void testAddProduct6() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testAddProduct7() throws IOException {
-		setupScenary11();
+		//setupScenary11();
 	}
 	
 	@Test
 	public void testAddProduct8() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	//	Method: deleteProduct
@@ -1256,62 +1265,59 @@ public class AngelaccesoriosTest {
 	public void testDeleteProduct2() {
 		
 	}
-public void testDeleteProduct3() {
-		
-	}
 	
 	//Method: updateProduct
 	
 	@Test
 	public void testUpdateProduct1() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testUpdateProduct2() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testUpdateProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testUpdateProduct4() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testUpdateProduct5() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	@Test
 	public void testUpdateProduct6() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		setupScenary12();
+		//setupScenary12();
 	}
 	
 	//Method: searchProduct
 	
 	@Test
 	public void testSearchProduct1() {
-		setupScenary1();
+		//setupScenary1();
 	}
 	
 	@Test
 	public void testSearchProduct2() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testSearchProduct3() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}
 	
 	@Test
 	public void testSearchProduct4() throws IOException {
-		setupScenary9();
+		//setupScenary9();
 	}	
 	
 	

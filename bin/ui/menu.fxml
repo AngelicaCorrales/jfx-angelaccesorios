@@ -81,7 +81,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Exportar">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#exportIReceiptsReport" text="Reporte de facturas" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportReceiptsReport" text="Reporte de facturas" />
                               <MenuItem mnemonicParsing="false" onAction="#exportUsersReport" text="Reporte de usuarios" />
                               <MenuItem mnemonicParsing="false" onAction="#exportProductsReport" text="Reporte de Productos" />
                            </items>
