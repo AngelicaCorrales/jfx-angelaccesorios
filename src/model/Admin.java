@@ -2,6 +2,7 @@ package model;
 
 public class Admin extends User{
 	
+	private static final long serialVersionUID = 1;
 	private String email;
 	
 	public Admin(String name, String lastName, String id, String userName, String password, String email) {
