@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Payment {
+public class Payment implements Serializable{
 	
+	
+	private static final long serialVersionUID = 1;
 	private double amount;
 	private PaymentMethod paymentMethod;
 	private Date dateAndTime;
