@@ -566,39 +566,39 @@ public class AngelaccesoriosGUI {
 
 
 	@FXML
-	void addSupplierToTypeOfProduct(ActionEvent event) {
+	public void addSupplierToTypeOfProduct(ActionEvent event) {
 
 	}
 
 	@FXML
-	void clickOnTableViewOfAddedSuppliers(MouseEvent event) {
+	public void clickOnTableViewOfAddedSuppliers(MouseEvent event) {
 
 	}
 
 	@FXML
-	void clickOnTableViewOfSuppliersInAProduct(MouseEvent event) {
-
-	}
-
-
-	@FXML
-	void deleteSupplierFromTypeOfProduct(ActionEvent event) {
+	public void clickOnTableViewOfSuppliersInAProduct(MouseEvent event) {
 
 	}
 
 
 	@FXML
-	void loadAddSupplierToTypeOfProduct(ActionEvent event) {
+	public void deleteSupplierFromTypeOfProduct(ActionEvent event) {
+
+	}
+
+
+	@FXML
+	public void loadAddSupplierToTypeOfProduct(ActionEvent event) {
 
 	}
 
 	@FXML
-	void returnToManageTypeOfProduct(ActionEvent event) {
+	public void returnToManageTypeOfProduct(ActionEvent event) {
 
 	}
 
 	@FXML
-	void manageSupplier(ActionEvent event) throws IOException {
+	public void manageSupplier(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-supplier.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
@@ -615,23 +615,23 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	void addSupplier(ActionEvent event) {
+	public void addSupplier(ActionEvent event) {
 
 	}
 
 	@FXML
-	void clickOnTableViewOfSuppliers(MouseEvent event) {
+	public void clickOnTableViewOfSuppliers(MouseEvent event) {
 
 	}
 
 	@FXML
-	void deleteSupplier(ActionEvent event) {
+	public void deleteSupplier(ActionEvent event) {
 
 	}
 
 
 	@FXML
-	void updateSupplier(ActionEvent event) {
+	public void updateSupplier(ActionEvent event) {
 
 	}
 
@@ -783,22 +783,22 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	void addProduct(ActionEvent event) {
+	public void addProduct(ActionEvent event) {
 
 	}
 
 	@FXML
-	void clickOnTableViewOfProducts(MouseEvent event) {
+	public void clickOnTableViewOfProducts(MouseEvent event) {
 
 	}
 
 	@FXML
-	void deleteProduct(ActionEvent event) {
+	public void deleteProduct(ActionEvent event) {
 
 	}
 
 	@FXML
-	void updateProduct(ActionEvent event) {
+	public void updateProduct(ActionEvent event) {
 
 	}
 
@@ -1344,7 +1344,7 @@ public class AngelaccesoriosGUI {
 
 
 	@FXML
-	void generateUsersReport(ActionEvent event) {
+	public void generateUsersReport(ActionEvent event) {
 
 	}
 
@@ -1364,7 +1364,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	void generateReceiptsReport(ActionEvent event) {
+	public void generateReceiptsReport(ActionEvent event) {
 
 	}
 
@@ -1384,7 +1384,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	void generateProductsReport(ActionEvent event) {
+	public void generateProductsReport(ActionEvent event) {
 
 	}
 
@@ -1409,22 +1409,5 @@ public class AngelaccesoriosGUI {
 		ckbxDisable.setDisable(false);
 		btAdd.setDisable(true);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
