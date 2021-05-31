@@ -1350,7 +1350,7 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void exportReceiptsReport(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportBillsReport.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportReceiptsReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
 		mainPane.getChildren().clear();
