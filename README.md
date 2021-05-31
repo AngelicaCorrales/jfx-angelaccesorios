@@ -5,7 +5,7 @@ This program is a software system that allows to carry out the invoicing, invent
 
 ## Installation 🔧💻
 * This project is compatible with all the operative systems like Windows, Linux, MacOS.
-* You can download a .zip file of our project here... [Milestone1](https://github.com/AngelicaCorrales/jfx-angelaccesorios/releases/tag/Milestone1) and then compile it in your console. 
+* You can download a .zip file of our project here... [Milestone2](https://github.com/AngelicaCorrales/jfx-angelaccesorios/releases/tag/Milestone2) and then compile it in your console. 
 * To run the program you need a minimum JRE of: "jre1.8.0_281". 
     
 ## Build with 🛠️
@@ -21,4 +21,8 @@ We use [GitHub](http://github.com/) for versioning. For all available versions s
 * **Keren López Córdoba** - [KerenLopez](https://github.com/KerenLopez).
 
 ## More information 📖
-You can find more information about this project at [Angelaccesorios system: problem statement, functional requirements and interface mockups](https://drive.google.com/file/d/1Q67dY-4iycG8jGBXyyDgOihuf_WUEY7I/view?usp=sharing).
+You can find more information about this project at 
+
+[Angelaccesorios system: problem statement, functional requirements and interface mockups](https://drive.google.com/file/d/1Q67dY-4iycG8jGBXyyDgOihuf_WUEY7I/view?usp=sharing).
+
+[Angelaccesorios system: class diagram, functional and not functional requirements, design of test cases and implemented requirements](https://drive.google.com/file/d/1apC0ZEhYvOGDDmzRBtOaTfXqGpbuRQBu/view?usp=sharing).
