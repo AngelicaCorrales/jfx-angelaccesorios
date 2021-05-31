@@ -1044,33 +1044,162 @@ public class AngelaccesoriosGUI {
 		initializeTableViewClients();
 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-
-
+		
+		initializeComboBoxIdType();
 
 	}
+	
+	private void initializeComboBoxIdType() {
+		ObservableList<String> options = 
+			    FXCollections.observableArrayList("TI","CC","PP","CE");
+		cmbxIdType.setItems(options);
+	}
+	
 
 	private void initializeTableViewClients() {
+		ObservableList<Client> observableList;
+    	observableList = FXCollections.observableArrayList(angelaccesorios.getClients());
+    	tvListClients.setItems(observableList);
+    	
+    	colNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    	colLastNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("lastName"));
+    	colIdClient.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+    	colAddressClient.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
+    	colPhoneClient.setCellValueFactory(new PropertyValueFactory<Client, String>("phone"));
+    	colIdTypeClient.setCellValueFactory(new PropertyValueFactory<Client, String>("typeId"));
+    	colEnabledClient.setCellValueFactory(new PropertyValueFactory<Client, String>("status"));
+    
 
+    	tvListClients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@FXML
 	public void clickOnTableViewClients(MouseEvent event) {
+		if (tvListClients.getSelectionModel().getSelectedItem() != null) {
+    		enableButtons();
+    		Client selectedClient = tvListClients.getSelectionModel().getSelectedItem();
+    		txtName.setText(selectedClient.getName());
+    		txtLastName.setText(selectedClient.getLastName());
+    		txtId.setText(selectedClient.getId());
+    		txtAddress.setText(selectedClient.getAddress());
+    		txtPhone.setText(selectedClient.getPhone());
+    		cmbxIdType.setValue(selectedClient.getTypeId().name());
 
+   		
+    		ckbxDisable.setSelected(!selectedClient.isEnabled());
+    	}
 	}
 
 	@FXML
 	public void createClient(ActionEvent event) {
+		if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() && !cmbxIdType.getSelectionModel().getSelectedItem().isEmpty()) {
+		
+    		try {
+				angelaccesorios.createClient(txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtId.getText(),cmbxIdType.getSelectionModel().getSelectedItem(), txtAddress.getText().toUpperCase(),txtPhone.getText());
+				
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+    			alert1.setTitle("Informacion");
+    			alert1.setHeaderText(null);
+    			alert1.setContentText("El cliente ha sido creado exitosamente!");
+    			alert1.showAndWait();
 
+    			txtName.clear();
+    			txtLastName.clear();
+    			txtId.clear();
+    			txtAddress.clear();
+    			txtPhone.clear();
+    			cmbxIdType.setValue(null);
+
+    			initializeTableViewClients();
+    		} catch (SameIDException e) {
+
+    			Alert alert2 = new Alert(AlertType.ERROR);
+    			alert2.setTitle("Error de validacion");
+    			alert2.setHeaderText(null);
+    			alert2.setContentText("No se pudo crear el cliente, ya existe uno con el mismo número de identificación");
+    			alert2.showAndWait();
+			}
+			
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
 
 	@FXML
 	public void deleteClient(ActionEvent event) {
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Confirmacion de proceso");
+    	alert1.setHeaderText(null);
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar el cliente "+tvListClients.getSelectionModel().getSelectedItem()+"?");
+    	Optional<ButtonType> result = alert1.showAndWait();
+    	if (result.get() == ButtonType.OK){
+        	
+    		boolean deleted= angelaccesorios.deleteClient(tvListClients.getSelectionModel().getSelectedItem() );
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+        	alert2.setTitle("Informacion");
+        	alert2.setHeaderText(null);
+        	
+        	if(deleted) {
+        		alert2.setContentText("El cliente ha sido eliminado exitosamente");
+        		txtName.clear();
+        		txtLastName.clear();
+            	txtId.clear();
+            	txtPhone.clear();
+            	txtAddress.clear();
+            	cmbxIdType.setValue(null);
 
+            	disableButtons();
+
+            	
+            	initializeTableViewClients();
+            	
+            	           	
+        	}else {
+        		alert2.setContentText("El cliente no se pudo eliminar");
+
+        	}
+        	alert2.showAndWait();
+        	
+        	disableButtons();
+    	}
 	}
 
 	@FXML
 	public void updateClient(ActionEvent event) {
+		if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() &&  !cmbxIdType.getSelectionModel().getSelectedItem().isEmpty()) {
 
+    		try {
+				angelaccesorios.updateClient(tvListClients.getSelectionModel().getSelectedItem(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtId.getText(),cmbxIdType.getSelectionModel().getSelectedItem(), txtAddress.getText().toUpperCase(),txtPhone.getText(), !ckbxDisable.isSelected());
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+        		alert1.setTitle("Informacion");
+        		alert1.setHeaderText(null);
+        		alert1.setContentText("El empleado ha sido actualizado exitosamente!");
+        		alert1.showAndWait();
+        		
+        		txtName.clear();
+        		txtLastName.clear();
+            	txtId.clear();
+            	txtPhone.clear();
+            	txtAddress.clear();
+            	cmbxIdType.setValue(null);
+
+            	disableButtons();
+            	tvListClients.getItems().clear();
+
+            	initializeTableViewClients();
+    		} catch (SameIDException e) {
+    			Alert alert2 = new Alert(AlertType.ERROR);
+    			alert2.setTitle("Error de validacion");
+    			alert2.setHeaderText(null);
+    			alert2.setContentText("No se pudo actualizar el empleado, intentelo nuevamente");
+    			alert2.showAndWait();
+    		
+			}
+
+
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
 
 	public void loadRegisterAdmin() throws IOException	{
