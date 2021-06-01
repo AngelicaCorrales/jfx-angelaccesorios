@@ -2103,17 +2103,85 @@ public class AngelaccesoriosTest {
 
 
 	@Test
-	public void testCreateSeparateReceipt1() {
+	public void testCreateSeparateReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary15();
+		
 
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(0));
+		listQ.add(1);
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		
+		Client buyer= angelaccesorios.getClients().get(0);
+		String paymentMethod= "Tarjeta de debito";
+		double valuePayment=150000;
+	
+		try {
+			angelaccesorios.createSeparateReceipt(listProd, listQ, buyer, paymentMethod,valuePayment);
+
+			fail("UnderAgeException expected");
+		} catch (NoProductsAddedException npae) {
+			fail("UnderAgeException expected");
+		} catch (UnderAgeException uae) {
+			assertEquals(angelaccesorios.getReceipts().size(),1);
+		}
 	}
 
 	@Test
-	public void testCreateSeparateReceipt2() {
-
+	public void testCreateSeparateReceipt2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary13();
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		
+		Client buyer= angelaccesorios.getClients().get(0);
+		String paymentMethod= "Tarjeta de debito";
+		double valuePayment=150000;
+		
+		try {
+			angelaccesorios.createSeparateReceipt(listProd, listQ, buyer, paymentMethod,valuePayment);
+			assertEquals(angelaccesorios.getReceipts().size(),2);
+			assertTrue(buyer==angelaccesorios.getReceipts().get(1).getBuyer());
+			assertTrue(angelaccesorios.getLoggedUser()==angelaccesorios.getReceipts().get(1).getCreator());
+			assertEquals("",angelaccesorios.getReceipts().get(1).getObservations());
+			assertEquals("TARJETA_DE_DEBITO",angelaccesorios.getReceipts().get(1).getPaymentMethod().name());
+			assertEquals(angelaccesorios.getReceipts().get(1).getListOfProducts().size(),1);
+			assertTrue(angelaccesorios.getReceipts().get(1).getListOfProducts()==listProd);
+			assertEquals(angelaccesorios.getReceipts().get(1).getListOfQuantity().size(),1);
+			assertTrue(angelaccesorios.getReceipts().get(1).getListOfQuantity()==listQ);
+			
+		} catch (NoProductsAddedException npae) {
+			fail("NoProductsAddedException not expected");
+		} catch (UnderAgeException uae) {
+			fail("UnderAgeException not expected");
+		}
 	}
 	@Test
-	public void testCreateSeparateReceipt3() {
+	public void testCreateSeparateReceipt3() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary14();
 
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		Client buyer= angelaccesorios.getClients().get(0);
+		String paymentMethod= "Efectivo";
+		double valuePayment=150000;
+	
+		try {
+			angelaccesorios.createSeparateReceipt(listProd, listQ, buyer, paymentMethod,valuePayment);
+			fail("NoProductsAddedException expected");
+		} catch (NoProductsAddedException npae) {
+			assertEquals(angelaccesorios.getReceipts().size(),1);
+		} catch (UnderAgeException uae) {
+			
+			fail("NoProductsAddedException expected");
+		}
 	}
 
 	@Test
