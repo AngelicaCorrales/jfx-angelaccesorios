@@ -27,7 +27,7 @@ public class AngelaccesoriosTest {
 	}
 
 	//All the scenarios related with User
-	
+
 	public void setupScenary2() throws  EmailException, SpaceException {
 		angelaccesorios=new Angelaccesorios();
 
@@ -41,7 +41,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createUser("16348023", "PARK", "JIMIN", "jimin", "lachim0lala");
 	}
-	
+
 	public void setupScenary7() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		angelaccesorios=new Angelaccesorios();
 
@@ -49,9 +49,9 @@ public class AngelaccesoriosTest {
 		angelaccesorios.createUser("16348023", "PARK", "JIMIN", "jimin", "lachim0lala");
 		angelaccesorios.getLastUser().setEnabled(false);
 	}
-	
+
 	//All the scenarios related with Brand
-	
+
 	public void setupScenary4() throws IOException {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addBrand("Samsung");
@@ -59,7 +59,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addBrand("Apple");
 		angelaccesorios.addBrand("Xiaomi");
 	}
-	
+
 	public void setupScenary5() throws IOException {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addBrand("Samsung");
@@ -70,7 +70,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.updateBrand(angelaccesorios.getBrands().get(0), "Samsung", false);
 		angelaccesorios.updateBrand(angelaccesorios.getBrands().get(3), "Xiaomi", false);
 	}
-	
+
 	//All the scenarios related with Client
 	public void setupScenary6() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		angelaccesorios=new Angelaccesorios();
@@ -81,7 +81,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16399953", "CC", "2713 Adah Drive", "2883456");
 
 	}
-	
+
 	//All the scenarios related with Supplier
 	public void setupScenary8() throws IOException{
 		angelaccesorios=new Angelaccesorios();
@@ -90,7 +90,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addSupplier("TecnoPunto", "3112563351");
 		angelaccesorios.addSupplier("DigiStore", "3045431190");
 	}
-	
+
 	//All the scenarios related with TypeOfProduct
 	public void setupScenary9() throws IOException{
 		angelaccesorios=new Angelaccesorios();
@@ -99,7 +99,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addTypeOfProduct("Audifonos", "Accesorio");
 		angelaccesorios.addTypeOfProduct("Tablet", "Equipo electronico");
 	}
-	
+
 	public void setupScenary10() throws IOException {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
@@ -107,11 +107,11 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addSupplier("MundoDigital", "3145678222");
 		angelaccesorios.addSupplier("DigiStore", "3045431190");
 		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
-		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot().getRight());
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot().getLeft().getRight());
 	}
-	
+
 	//All the scenarios related with Product
-	
+
 	public void setupScenary11() throws IOException {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addTypeOfProduct("Tablet", "Equipo electronico");
@@ -119,7 +119,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addTypeOfProduct("Audifonos", "Accesorio");
 		angelaccesorios.addBrand("Huawei");
 	}
-	
+
 	public void setupScenary12() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
@@ -132,26 +132,6 @@ public class AngelaccesoriosTest {
 		angelaccesorios.getProducts().get(0).setCode("ACC3202");
 		angelaccesorios.getProducts().get(1).setCode("EQE4503");
 		angelaccesorios.getProducts().get(2).setCode("ACC8904");
-	}
-	
-	public void setupScenary13() {
-
-	}
-
-	public void setupScenary14() {
-
-	}
-
-	public void setupScenary15() {
-
-	}
-
-	public void setupScenary16() {
-
-	}
-
-	public void setupScenary17() {
-
 	}
 
 	//Method: CreateUserAdmin
@@ -175,7 +155,7 @@ public class AngelaccesoriosTest {
 		assertFalse(angelaccesorios.getLastUser()==null);
 		assertTrue(angelaccesorios.getLastUser()==angelaccesorios.getFirstUser());
 		assertTrue(angelaccesorios.getFirstUser().getNext()==null);
-		
+
 		assertEquals(angelaccesorios.getFirstUser().getName(),name);
 		assertEquals(angelaccesorios.getFirstUser().getLastName(),lastName);
 		assertEquals(angelaccesorios.getFirstUser().getId(),id);
@@ -248,7 +228,7 @@ public class AngelaccesoriosTest {
 			assertEquals(u.getLastName(),lastName);
 			assertEquals(u.getUserName(),userName);
 			assertEquals(u.getPassword(),password);
-			
+
 			assertTrue(u.getNext()==null);
 			assertTrue(u.getPrev()==angelaccesorios.getFirstUser());
 
@@ -314,10 +294,10 @@ public class AngelaccesoriosTest {
 		}catch(SameUserNameException sune) {
 			fail("SameUserNameException not expected");
 		}
-		
+
 
 	}
-	
+
 	@Test
 	public void testCreateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
@@ -329,7 +309,7 @@ public class AngelaccesoriosTest {
 
 		try {
 			angelaccesorios.createUser(id, name, lastName, userName, password);
-			
+
 			fail("SameIDException expected");
 		}catch(SpaceException se) {
 			fail("SameIDException expected");
@@ -339,7 +319,7 @@ public class AngelaccesoriosTest {
 			fail("SameIDException expected");
 		}
 	}
-	
+
 	@Test
 	public void testCreateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
@@ -351,20 +331,20 @@ public class AngelaccesoriosTest {
 
 		try {
 			angelaccesorios.createUser(id, name, lastName, userName, password);
-			
+
 			fail("SameUserNameException expected");
 		}catch(SpaceException se) {
 			fail("SameUserNameException expected");
 		}catch(SameIDException side) {
 			fail("SameUserNameException expected");
-			
+
 		}catch(SameUserNameException sune) {
 			assertEquals(angelaccesorios.getFirstUser().getNext().getNext(), null);
 		}
 	}
 
 	//Method: SearchUser
-	
+
 	@Test
 	public void testSearchUser1() throws EmailException, SpaceException {
 		setupScenary2();
@@ -385,16 +365,16 @@ public class AngelaccesoriosTest {
 		User u=angelaccesorios.searchUser("31689300");
 		assertEquals(u,null);
 	}
-	
+
 	//Method: searchUserName
 	@Test
 	public void testSearchUserName1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.searchUserName("jimin");
-		
+
 		assertFalse(u==null);
 	}
-	
+
 	@Test
 	public void testSearchUserName2() throws  EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
@@ -411,7 +391,7 @@ public class AngelaccesoriosTest {
 		boolean deleted=angelaccesorios.deleteUser(u);
 		assertFalse(deleted);
 		assertEquals(u,angelaccesorios.getFirstUser());
-		
+
 	}
 
 	@Test
@@ -421,23 +401,23 @@ public class AngelaccesoriosTest {
 		boolean deleted=angelaccesorios.deleteUser(u);
 		assertTrue(deleted);
 		assertEquals(angelaccesorios.getFirstUser().getNext(),null);
-		
+
 	}
-	
+
 	//Method: updateUser
 	@Test
 	public void testUpdateUser1() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
-		
+
 		String newName="PEDRO";
 		boolean enabled=false;
 		try {
-			
+
 			angelaccesorios.updateUser(u, "16348023", newName, "JIMIN", "jimin", "lachim0lala", enabled,"");
 			assertEquals(u.getName(),newName);
 			assertEquals(u.isEnabled(),enabled);
-			
+
 		}catch(SpaceException se) {
 			fail("SpaceException not expected");
 		}catch(SameIDException side) {
@@ -448,17 +428,17 @@ public class AngelaccesoriosTest {
 			fail("SameUserNameException not expected");
 		}
 	}
-	
+
 	@Test
 	public void testUpdateUser2() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
-		
+
 		String newId="1007793567";
 		try {
-					
+
 			angelaccesorios.updateUser(u, newId, "PARK", "JIMIN", "jimin", "lachim0lala", true,"");
-			
+
 			fail("SameIDException expected");
 		}catch(SpaceException se) {
 			fail("SameIDException not expected");
@@ -470,67 +450,67 @@ public class AngelaccesoriosTest {
 			fail("SameIDException not expected");
 		}
 	}
-	
+
 	@Test
 	public void testUpdateUser3() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
-		
+
 		String newUserName="angelaccesorios";
 		try {
-					
+
 			angelaccesorios.updateUser(u, "16348023", "PARK", "JIMIN", newUserName, "lachim0lala", true,"");
-			
+
 			fail("SameUserNameException expected");
 		}catch(SpaceException se) {
 			fail("SameUserNameException expected");
 		}catch(SameIDException side) {
 			fail("SameUserNameException expected");
-			
+
 		}catch(SameUserNameException sune) {
 			assertFalse(u.getUserName().equals(newUserName));
 		}catch(EmailException ee) {
 			fail("SameUserNameException expected");
-			
+
 		}
 	}
-	
+
 	@Test
 	public void testUpdateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
-		
+
 		String newUserName="ji min";
 		try {
-					
+
 			angelaccesorios.updateUser(u, "16348023", "PARK", "JIMIN", newUserName, "lachim0lala", true,"");
-			
+
 			fail("SpaceException expected");
 		}catch(SpaceException se) {
 			assertFalse(u.getUserName().equals(newUserName));
 		}catch(SameIDException side) {
 			fail("SpaceException expected");
-			
+
 		}catch(SameUserNameException sune) {
 			fail("SpaceException expected");
 		}catch(EmailException ee) {
 			fail("SpaceException expected");
 		}
 	}
-	
+
 	@Test
 	public void testUpdateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary2();
 		User u=angelaccesorios.getFirstUser();
-		
+
 		String newEmail="angelaccesorios@hotmail.com";
-		
+
 		try {
 
 			angelaccesorios.updateUser(u, "1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", true,newEmail);
 			assertEquals(((Admin) u).getEmail(),newEmail);
-			
-			
+
+
 		}catch(SpaceException se) {
 			fail("SpaceException not expected");
 		}catch(SameIDException side) {
@@ -541,20 +521,20 @@ public class AngelaccesoriosTest {
 			fail("SameUserNameException not expected");
 		}
 	}
-	
+
 	@Test
 	public void testUpdateUser6() throws SpaceException, EmailException, SameIDException, SameUserNameException {
 		setupScenary2();
 		User u=angelaccesorios.getFirstUser();
-		
+
 		String newEmail="angelaccesorios.com";
-		
+
 		try {
 
 			angelaccesorios.updateUser(u, "1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", true,newEmail);
-			
+
 			fail("EmailException expected");
-			
+
 		}catch(SpaceException se) {
 			fail("EmailException expected");
 		}catch(SameIDException side) {
@@ -565,85 +545,85 @@ public class AngelaccesoriosTest {
 			assertFalse(((Admin) u).getEmail().equals(newEmail));
 		}
 	}
-	
+
 	//Method: logInUser
 	@Test
 	public void testLogInUser1() throws EmailException, SpaceException {
 		setupScenary2();
-		
+
 		boolean logIn=angelaccesorios.logInUser("alvinsch","h4yunc0d1g0qu3n0est4nb1nari0");
 		assertEquals(angelaccesorios.getLoggedUser(),null);
 		assertFalse(logIn);
 	}
-	
+
 	@Test
 	public void testLogInUser2() throws EmailException, SpaceException {
 		setupScenary2();
-		
+
 		boolean logIn=angelaccesorios.logInUser("angelaccesorios", "4ng3laACC");
 		assertTrue(angelaccesorios.getLoggedUser()!=null);
 		assertTrue(logIn);
 	}
-	
+
 	@Test
 	public void testLogInUser3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
-		
+
 		boolean logIn=angelaccesorios.logInUser("jimin", "LACHIM0LALA");
 		assertEquals(angelaccesorios.getLoggedUser(),null);
 		assertFalse(logIn);
 	}
-	
+
 	@Test
 	public void testLogInUser4() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
-		
+
 		boolean logIn=angelaccesorios.logInUser("angelacesorios@gmail.com", "4ng3laACC");
 		assertEquals(angelaccesorios.getLoggedUser(),null);
 		assertFalse(logIn);
 	}
-	
+
 	@Test
 	public void testLogInUser5() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
-		
+
 		boolean logIn=angelaccesorios.logInUser("angelaccesorios@gmail.com", "4ng3laacc");
 		assertEquals(angelaccesorios.getLoggedUser(),null);
 		assertFalse(logIn);
 	}
-	
+
 	@Test
 	public void testLogInUser6() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
-		
+
 		boolean logIn=angelaccesorios.logInUser("angelaccesorios@gmail.com", "4ng3laACC");
 		assertTrue(angelaccesorios.getLoggedUser()!=null);
 		assertTrue(logIn);
 	}
-	
+
 	@Test
 	public void testLogInUser7() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary3();
-		
+
 		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
 		assertTrue(angelaccesorios.getLoggedUser()!=null);
 		assertTrue(logIn);
 	}
-	
+
 	@Test
 	public void testLogInUser8() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary7();
-				
+
 		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
 		assertEquals(angelaccesorios.getLoggedUser(),null);
 		assertFalse(logIn);
 	}
-	
+
 	//Method: createClient
 	@Test
 	public void testCreateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
-		
+
 		String name= "KIM";
 		String lastName="TAEHYUNG";
 		String id ="1005783564";
@@ -663,13 +643,13 @@ public class AngelaccesoriosTest {
 		}catch(SameIDException side) {
 			fail("SameIDException not expected");
 		}
-		
+
 	}
-	
+
 	@Test
 	public void testCreateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
-		
+
 		String name= "JOHN";
 		String lastName="LENNON";
 		String id ="16357453";
@@ -683,13 +663,13 @@ public class AngelaccesoriosTest {
 		}catch(SameIDException side) {
 			assertEquals(angelaccesorios.getClients().size(),5);
 		}
-		
+
 	}
-	
+
 	@Test
 	public void testAddSortedClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
-		
+
 		String name= "JOHN";
 		String lastName="OLENNON";
 		String id ="16357999";
@@ -697,30 +677,30 @@ public class AngelaccesoriosTest {
 		String address="3972 Nova Springs Suite 224";
 		String phone= "3107869999";
 		Client client= new Client(name, lastName, id,  TypeId.valueOf(typeId), address, phone);
-		
+
 		angelaccesorios.addSortedClient(client);
-		
+
 		assertEquals(angelaccesorios.getClients().size(),6);
 		assertEquals(angelaccesorios.getClients().indexOf(client),2);
-				
+
 	}
-	
+
 	@Test
 	public void testSearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		Client c=angelaccesorios.searchClient("16377753");
-		
+
 		assertFalse(c==null);
 	}
-	
+
 	@Test
 	public void testSearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		Client c=angelaccesorios.searchClient("16370053");
-		
+
 		assertTrue(c==null);
 	}
-	
+
 	@Test
 	public void testDeleteClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
@@ -728,9 +708,9 @@ public class AngelaccesoriosTest {
 		boolean deleted=angelaccesorios.deleteClient(c);
 		assertTrue(deleted);
 		assertEquals(angelaccesorios.getClients().size(),4);
-	
+
 	}
-	
+
 	@Test
 	public void testDeleteClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		//FALTAAAAA CASO QUE NO SE ELIMINA PORQUE LO TIENE UNA FACTURA VIGENTE
@@ -739,13 +719,13 @@ public class AngelaccesoriosTest {
 		boolean deleted=angelaccesorios.deleteClient(c);
 		assertTrue(deleted);
 		assertEquals(angelaccesorios.getClients().size(),4);
-	
+
 	}
-	
+
 	@Test
 	public void testUpdateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
-		
+
 		Client c=angelaccesorios.getClients().get(3);
 		String newName= "KIM";
 		String newLastName="TAEHYUNG";
@@ -768,13 +748,13 @@ public class AngelaccesoriosTest {
 		}catch(SameIDException side) {
 			fail("SameIDException not expected");
 		}
-		
+
 	}
-	
+
 	@Test
 	public void testUpdateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
-		
+
 		Client c=angelaccesorios.getClients().get(3);
 
 		String newId ="16357453";
@@ -786,63 +766,63 @@ public class AngelaccesoriosTest {
 			assertEquals(angelaccesorios.getClients().size(),5);
 			assertFalse(c.getId().equals(newId));
 		}
-		
+
 	}
-	
+
 	@Test
 	public void testBinarySearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		int pos=angelaccesorios.binarySearchClient("KIM", "NAMJOON");
-		
+
 		assertTrue(pos==-1);
 	}
-	
+
 	@Test
 	public void testBinarySearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		int pos=angelaccesorios.binarySearchClient("PAUL", "MCCARTNEY");
-		
+
 		assertTrue(pos==2);
 	}
-	
+
 	@Test
 	public void testBinarySearchClient3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		int pos=angelaccesorios.binarySearchClient("WILLOW", "SMITH");
-		
+
 		assertTrue(pos==1);
 	}
-	
+
 	@Test
 	public void testSearchClientByName1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		List<Client> list=angelaccesorios.searchClientByName("TOWA", "BIRD");
-		
+
 		assertTrue(list.isEmpty());
 	}
-	
+
 	@Test
 	public void testSearchClientByName2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		List<Client> list=angelaccesorios.searchClientByName("WILLOW", "SMITH");
-		
+
 		assertEquals(list.size(),1);
 		assertEquals(angelaccesorios.getClients().get(1),list.get(0));
 	}
-	
+
 	@Test
 	public void testSearchClientByName3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
 		setupScenary6();
 		List<Client> list=angelaccesorios.searchClientByName("PAUL", "MCCARTNEY");
-		
+
 		assertEquals(list.size(),3);
-		
+
 	}
 
 	//All the test cases related with Brand
-	
+
 	//Method: addBrand
-	
+
 	@Test
 	public void testAddBrand1() throws IOException{
 		setupScenary1();
@@ -853,7 +833,7 @@ public class AngelaccesoriosTest {
 		assertEquals(nameBrand, angelaccesorios.getBrands().get(0).getName());
 		assertTrue(angelaccesorios.getBrands().get(0).isEnabled());
 	}
-	
+
 	@Test
 	public void testAddBrand2() throws IOException {
 		setupScenary4();
@@ -864,7 +844,7 @@ public class AngelaccesoriosTest {
 		assertEquals(nameBrand, angelaccesorios.getBrands().get(4).getName());
 		assertTrue(angelaccesorios.getBrands().get(4).isEnabled());
 	}
-	
+
 	@Test
 	public void testAddBrand3() throws IOException {
 		setupScenary4();
@@ -873,7 +853,7 @@ public class AngelaccesoriosTest {
 		assertFalse(added);
 		assertEquals(4, angelaccesorios.getBrands().size());
 	}
-	
+
 	@Test
 	public void testAddBrand4() throws IOException {
 		setupScenary4();
@@ -882,9 +862,9 @@ public class AngelaccesoriosTest {
 		assertFalse(added);
 		assertEquals(4, angelaccesorios.getBrands().size());
 	}
-	
+
 	//Method: deleteBrand
-	
+	/*
 	@Test
 	public void testDeleteBrand1() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		setupScenary12();
@@ -892,17 +872,17 @@ public class AngelaccesoriosTest {
 		assertTrue(added);
 		assertEquals(1, angelaccesorios.getBrands().size());
 	}
-	
+
 	@Test
 	public void testDeleteBrand2() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		setupScenary12();
 		boolean added = angelaccesorios.deleteBrand(angelaccesorios.getBrands().get(0));
 		assertFalse(added);
 		assertEquals(2, angelaccesorios.getBrands().size());
-	}
-	
+	}*/
+
 	//Method: updateBrand
-	
+
 	@Test
 	public void testUpdateBrand1() throws IOException {
 		setupScenary4();
@@ -914,7 +894,7 @@ public class AngelaccesoriosTest {
 		assertEquals(newName, angelaccesorios.getBrands().get(0).getName());
 		assertFalse(angelaccesorios.getBrands().get(0).isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateBrand2() throws IOException {
 		setupScenary4();
@@ -926,7 +906,7 @@ public class AngelaccesoriosTest {
 		assertEquals(newName, angelaccesorios.getBrands().get(2).getName());
 		assertFalse(angelaccesorios.getBrands().get(2).isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateBrand3() throws IOException {
 		setupScenary4();
@@ -938,7 +918,7 @@ public class AngelaccesoriosTest {
 		assertEquals(newName, angelaccesorios.getBrands().get(2).getName());
 		assertTrue(angelaccesorios.getBrands().get(2).isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateBrand4() throws IOException {
 		setupScenary4();
@@ -950,7 +930,7 @@ public class AngelaccesoriosTest {
 		assertEquals("Xiaomi", angelaccesorios.getBrands().get(3).getName());
 		assertTrue(angelaccesorios.getBrands().get(3).isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateBrand5() throws IOException {
 		setupScenary4();
@@ -961,7 +941,7 @@ public class AngelaccesoriosTest {
 		assertEquals("Xiaomi", angelaccesorios.getBrands().get(3).getName());
 		assertTrue(angelaccesorios.getBrands().get(3).isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateBrand6() throws IOException {
 		setupScenary4();
@@ -974,9 +954,9 @@ public class AngelaccesoriosTest {
 		assertEquals(newName, angelaccesorios.getBrands().get(3).getName());
 		assertTrue(angelaccesorios.getBrands().get(3).isEnabled());
 	}
-	
+
 	//Method: searchBrand
-	
+
 	@Test
 	public void testSearchBrand1() throws IOException {
 		setupScenary1();
@@ -984,7 +964,7 @@ public class AngelaccesoriosTest {
 		Brand b = angelaccesorios.searchBrand(nameBrand);
 		assertEquals(b, null);
 	}
-	
+
 	@Test
 	public void testSearchBrand2() throws IOException {
 		setupScenary4();
@@ -992,7 +972,7 @@ public class AngelaccesoriosTest {
 		Brand b = angelaccesorios.searchBrand(nameBrand);
 		assertEquals(nameBrand, b.getName());
 	}
-	
+
 	@Test
 	public void testSearchBrand3() throws IOException {
 		setupScenary4();
@@ -1000,7 +980,7 @@ public class AngelaccesoriosTest {
 		Brand b = angelaccesorios.searchBrand(nameBrand);
 		assertEquals("Xiaomi", b.getName());
 	}
-	
+
 	@Test
 	public void testSearchBrand4() throws IOException {
 		setupScenary4();
@@ -1008,449 +988,819 @@ public class AngelaccesoriosTest {
 		Brand b = angelaccesorios.searchBrand(nameBrand);
 		assertEquals(b, null);
 	}
-	
+
 	//Method: returnEnabledBrands
-	
+
 	@Test
 	public void testReturnEnabledBrands1() {
 		setupScenary1();
 		ArrayList<Brand> list = angelaccesorios.returnEnabledBrands();
 		assertTrue(list.isEmpty());
 	}
-	
+
 	@Test
 	public void testReturnEnabledBrands2() throws IOException {
 		setupScenary4();
 		ArrayList<Brand> list = angelaccesorios.returnEnabledBrands();
 		assertEquals(4, list.size());
 	}
-	
+
 	@Test
 	public void testReturnEnabledBrands3() throws IOException {
 		setupScenary5();
 		ArrayList<Brand> list = angelaccesorios.returnEnabledBrands();
 		assertEquals(3, list.size());
 	}
-	
+
 	//All the test cases related with Supplier
-	
+
 	//Method: addSupplier
 
 	@Test
-	public void testAddSupplier1() {
-		//setupScenary1();
+	public void testAddSupplier1() throws IOException {
+		setupScenary1();
+		String nameSupplier = "MovilShop";
+		String phone = "3118925687";
+		boolean added = angelaccesorios.addSupplier(nameSupplier, phone);
+		assertTrue(added);
+		assertTrue(angelaccesorios.getSupplierRoot().getName()!=null);
+		assertEquals(nameSupplier, angelaccesorios.getSupplierRoot().getName());
 	}
-	
+
 	@Test
 	public void testAddSupplier2() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String nameSupplier = "Acmovil";
+		String phone = "3228935117";
+		boolean added = angelaccesorios.addSupplier(nameSupplier, phone);
+		assertTrue(added);
+		assertEquals(nameSupplier, angelaccesorios.getSupplierRoot().getRight().getName());
+		int numSuppliers = 0;
+		if(angelaccesorios.getSupplierRoot()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getRight()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft().getLeft()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft().getRight()!=null) {
+			numSuppliers+=1;
+		}
+		assertEquals(5, numSuppliers);
 	}
-	
+
 	@Test
 	public void testAddSupplier3() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String nameSupplier = "TecnoPunto";
+		String phone = "3112563351";
+		boolean added = angelaccesorios.addSupplier(nameSupplier, phone);
+		assertFalse(added);
+		int numSuppliers = 0;
+		if(angelaccesorios.getSupplierRoot()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft().getLeft()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft().getRight()!=null) {
+			numSuppliers+=1;
+		}
+		assertEquals(4, numSuppliers);
 	}
-	
+
 	@Test
 	public void testAddSupplier4() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String nameSupplier = "TECNOPUNTO";
+		String phone = "3112563351";
+		boolean added = angelaccesorios.addSupplier(nameSupplier, phone);
+		assertFalse(added);
+		int numSuppliers = 0;
+		if(angelaccesorios.getSupplierRoot()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft().getLeft()!=null) {
+			numSuppliers+=1;
+		}
+		if(angelaccesorios.getSupplierRoot().getLeft().getRight()!=null) {
+			numSuppliers+=1;
+		}
+		assertEquals(4, numSuppliers);
 	}
-	
+
 	//Method: deleteSupplier
-	
+
 	@Test
 	public void testDeleteSupplier1() throws IOException {
-		
+
 	}
-	
+
 	@Test
 	public void testDeleteSupplier2() throws IOException {
-		
+
 	}
-	
+
 	//Method: updateSupplier
-	
+
 	@Test
 	public void testUpdateSupplier1() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String newName = "AntenasTech";
+		String newPhone = "3128507928";
+		boolean updated = angelaccesorios.updateSupplier(angelaccesorios.getSupplierRoot(), newName, newPhone);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getSupplierRoot().getName());
+		assertEquals(newPhone, angelaccesorios.getSupplierRoot().getPhoneNumber());
 	}
-	
+
 	@Test
 	public void testUpdateSupplier2() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String newName = "AntenasTech";
+		String newPhone = "3118925687";
+		boolean updated = angelaccesorios.updateSupplier(angelaccesorios.getSupplierRoot(), newName, newPhone);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getSupplierRoot().getName());
+		assertEquals(newPhone, angelaccesorios.getSupplierRoot().getPhoneNumber());
 	}
-	
+
 	@Test
 	public void testUpdateSupplier3() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String newName = "AntaresTech";
+		String newPhone = "3114221090";
+		boolean updated = angelaccesorios.updateSupplier(angelaccesorios.getSupplierRoot(), newName, newPhone);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getSupplierRoot().getName());
+		assertEquals(newPhone, angelaccesorios.getSupplierRoot().getPhoneNumber());
 	}
-	
+
 	@Test
 	public void testUpdateSupplier4() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String newName = "MundoDigital";
+		String newPhone = "3045431190";
+		boolean updated = angelaccesorios.updateSupplier(angelaccesorios.getSupplierRoot().getLeft().getRight(), newName, newPhone);
+		assertFalse(updated);
+		assertEquals("DigiStore", angelaccesorios.getSupplierRoot().getLeft().getRight().getName());
+		assertEquals("3045431190", angelaccesorios.getSupplierRoot().getLeft().getRight().getPhoneNumber());
 	}
-	
+
 	@Test
 	public void testUpdateSupplier5() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String newName = "MUNDODIGITAL";
+		String newPhone = "3045121098";
+		boolean updated = angelaccesorios.updateSupplier(angelaccesorios.getSupplierRoot().getLeft().getRight(), newName, newPhone);
+		assertFalse(updated);
+		assertEquals("DigiStore", angelaccesorios.getSupplierRoot().getLeft().getRight().getName());
+		assertEquals("3045431190", angelaccesorios.getSupplierRoot().getLeft().getRight().getPhoneNumber());
 	}
-	
+
 	//Method: searchSupplier
-	
+
 	@Test
 	public void testSearchSupplier1() throws IOException {
-		//setupScenary1();
+		setupScenary1();
+		String nameSupplier = "TecnoMovil";
+		Supplier s = angelaccesorios.searchSupplier(null, nameSupplier);
+		assertEquals(null, s);
 	}
-	
+
 	@Test
 	public void testSearchSupplier2() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String nameSupplier = "DigiStore";
+		Supplier s = angelaccesorios.searchSupplier(angelaccesorios.getSupplierRoot(), nameSupplier);
+		assertTrue(s!=null);
+		assertEquals(nameSupplier, s.getName());
 	}
-	
+
 	@Test
 	public void testSearchSupplier3() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String nameSupplier = "MUNDODIGITAL";
+		Supplier s = angelaccesorios.searchSupplier(angelaccesorios.getSupplierRoot(), nameSupplier);
+		assertTrue(s!=null);
+		assertEquals("MundoDigital", s.getName());
 	}
-	
+
 	@Test
 	public void testSearchSupplier4() throws IOException {
-		//setupScenary8();
+		setupScenary8();
+		String nameSupplier = "CeluPunto";
+		Supplier s = angelaccesorios.searchSupplier(angelaccesorios.getSupplierRoot(), nameSupplier);
+		assertEquals(null, s);
 	}
-	
+
 	//All the test cases related with TypeOfProduct
-	
+
 	//Method: addTypeOfProduct
-	
+
 	@Test
 	public void testAddTypeOfProduct1() throws IOException {
-		//setupScenary1();
+		setupScenary1();
+		String nameType = "Celular";
+		String category = "Equipo electronico";
+		boolean added = angelaccesorios.addTypeOfProduct(nameType, category);
+		assertTrue(added);
+		assertEquals(nameType, angelaccesorios.getTypePRoot().getName());
+		assertEquals("EQE", ((ElectronicEquipment)angelaccesorios.getTypePRoot()).getCode());
 	}
-	
+
 	@Test
 	public void testAddTypeOfProduct2() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String nameType = "Cargador";
+		String category = "Accesorio";
+		boolean added = angelaccesorios.addTypeOfProduct(nameType, category);
+		assertTrue(added);
+		assertEquals(nameType, angelaccesorios.getTypePRoot().getRight().getRight().getLeft().getName());
+		assertEquals("ACC", ((Accessory)angelaccesorios.getTypePRoot().getRight().getRight().getLeft()).getCode());
+		int numTp = 0;
+		if(angelaccesorios.getTypePRoot()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getLeft()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight().getRight()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight().getRight().getLeft()!=null) {
+			numTp+=1;
+		}
+		assertEquals(5, numTp);
 	}
-	
+
 	@Test
 	public void testAddTypeOfProduct3() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String nameType = "Tablet";
+		String category = "Equipo electronico";
+		boolean added = angelaccesorios.addTypeOfProduct(nameType, category);
+		assertFalse(added);
+		int numTp = 0;
+		if(angelaccesorios.getTypePRoot()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getLeft()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight().getRight()!=null) {
+			numTp+=1;
+		}
+		assertEquals(4, numTp);
 	}
-	
+
 	@Test
 	public void testAddTypeOfProduct4() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String nameType = "Tablet";
+		String category = "Accesorio";
+		boolean added = angelaccesorios.addTypeOfProduct(nameType, category);
+		assertFalse(added);
+		int numTp = 0;
+		if(angelaccesorios.getTypePRoot()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getLeft()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight().getRight()!=null) {
+			numTp+=1;
+		}
+		assertEquals(4, numTp);
 	}
-	
+
 	@Test
 	public void testAddTypeOfProduct5() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String nameType = "TABLET";
+		String category = "Equipo electronico";
+		boolean added = angelaccesorios.addTypeOfProduct(nameType, category);
+		assertFalse(added);
+		int numTp = 0;
+		if(angelaccesorios.getTypePRoot()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getLeft()!=null) {
+			numTp+=1;
+		}
+		if(angelaccesorios.getTypePRoot().getRight().getRight()!=null) {
+			numTp+=1;
+		}
+		assertEquals(4, numTp);
 	}
-	
+
 	//Method: addSupplierToEQE
-	
+
 	@Test
 	public void testAddSupplierToEQE1() throws IOException {
-		//setupScenary10();
+		setupScenary10();
+		boolean added = angelaccesorios.addSupplierToEQE(((ElectronicEquipment)angelaccesorios.getTypePRoot()), angelaccesorios.getSupplierRoot().getLeft());
+		assertTrue(added);
+		assertEquals(angelaccesorios.getSupplierRoot().getLeft().getName(), ((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().get(2).getName());
+		assertEquals(3, ((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().size());
 	}
-	
+
 	@Test
 	public void testAddSupplierToEQE2() throws IOException {
-		//setupScenary10();
+		setupScenary10();
+		boolean added = angelaccesorios.addSupplierToEQE(((ElectronicEquipment)angelaccesorios.getTypePRoot()), angelaccesorios.getSupplierRoot());
+		assertFalse(added);
+		assertEquals(2, ((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().size());
 	}
-	
+
 	//Method: deleteSupplierOfAnEQE
-	
+
 	@Test
 	public void testDeleteSupplierToEQE() throws IOException {
-		//setupScenary10();
+		setupScenary10();
+		angelaccesorios.deleteSupplierOfAnEQE(((ElectronicEquipment)angelaccesorios.getTypePRoot()), angelaccesorios.getSupplierRoot().getLeft().getRight());
+		assertEquals(1, ((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().size());
 	}
-	
+
 	//Method: deleteTypeOfProduct
-	
+
 	@Test
 	public void testDeleteTypeOfProduct1() throws IOException {
-		
+
 	}
-	
+
 	@Test
 	public void testDeleteTypeOfProduct2() throws IOException {
-		
+
 	}
-	
+
 	//Method: updateTypeOfProduct
-	
+
 	@Test
 	public void testUpdateTypeOfProduct1() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String newName = "Equipo de sonido";
+		boolean enabled = false;
+		boolean updated = angelaccesorios.updateTypeOfProduct(angelaccesorios.getTypePRoot().getLeft(), newName, enabled);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getTypePRoot().getLeft().getName());
+		assertFalse(angelaccesorios.getTypePRoot().getLeft().isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateTypeOfProduct2() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String newName = "Estuche";
+		boolean enabled = false;
+		boolean updated = angelaccesorios.updateTypeOfProduct(angelaccesorios.getTypePRoot(), newName, enabled);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getTypePRoot().getName());
+		assertFalse(angelaccesorios.getTypePRoot().isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateTypeOfProduct3() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String newName = "Estuchee";
+		boolean enabled = true;
+		boolean updated = angelaccesorios.updateTypeOfProduct(angelaccesorios.getTypePRoot(), newName, enabled);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getTypePRoot().getName());
+		assertTrue(angelaccesorios.getTypePRoot().isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateTypeOfProduct4() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String newName = "Celular";
+		boolean enabled = false;
+		boolean updated = angelaccesorios.updateTypeOfProduct(angelaccesorios.getTypePRoot().getLeft(), newName, enabled);
+		assertFalse(updated);
+		assertEquals("Tablet", angelaccesorios.getTypePRoot().getLeft().getName());
+		assertTrue(angelaccesorios.getTypePRoot().getLeft().isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateTypeOfProduct5() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String newName = "CELULAR";
+		boolean enabled = false;
+		boolean updated = angelaccesorios.updateTypeOfProduct(angelaccesorios.getTypePRoot().getLeft(), newName, enabled);
+		assertFalse(updated);
+		assertEquals("Tablet", angelaccesorios.getTypePRoot().getLeft().getName());
+		assertTrue(angelaccesorios.getTypePRoot().getLeft().isEnabled());
 	}
-	
+
 	@Test
 	public void testUpdateTypeOfProduct6() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		angelaccesorios.getTypePRoot().setEnabled(false);
+		String newName = "Estuche";
+		boolean enabled = true;
+		boolean updated = angelaccesorios.updateTypeOfProduct(angelaccesorios.getTypePRoot(), newName, enabled);
+		assertTrue(updated);
+		assertEquals(newName, angelaccesorios.getTypePRoot().getName());
+		assertTrue(angelaccesorios.getTypePRoot().isEnabled());
 	}
-	
+
 	//Method: searchTypeOfProduct
-	
+
 	@Test
 	public void testSearchTypeOfProduct1() throws IOException {
-		//setupScenary1();
+		setupScenary1();
+		String nameTp = "Secador";
+		TypeOfProduct ty = angelaccesorios.searchTypeOfProduct(null, nameTp);
+		assertEquals(null, ty);
 	}
-	
+
 	@Test
 	public void testSearchTypeOfProduct2() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String nameTp = "Audifonos";
+		TypeOfProduct ty = angelaccesorios.searchTypeOfProduct(angelaccesorios.getTypePRoot(), nameTp);
+		assertTrue(ty!=null);
+		assertEquals(nameTp, ty.getName());
 	}
-	
+
 	@Test
 	public void testSearchTypeOfProduct3() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String nameTp = "AUDIFONOS";
+		TypeOfProduct ty = angelaccesorios.searchTypeOfProduct(angelaccesorios.getTypePRoot(), nameTp);
+		assertTrue(ty!=null);
+		assertEquals("Audifonos", ty.getName());
 	}
-	
+
 	@Test
 	public void testSearchTypeOfProduct4() throws IOException {
-		//setupScenary9();
+		setupScenary9();
+		String nameTp = "Equipos de sonido";
+		TypeOfProduct ty = angelaccesorios.searchTypeOfProduct(angelaccesorios.getTypePRoot(), nameTp);
+		assertEquals(null, ty);
+
 	}
-	
+
 	//All the test cases related with Product
-	
+
 	//Method: addProduct
-	
+
 	@Test
 	public void testAddProduct1() throws IOException {
 		//setupScenary11();
 	}
-	
+
 	@Test
 	public void testAddProduct2() throws IOException {
 		//setupScenary11();
 	}
-	
+
 	@Test
 	public void testAddProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testAddProduct4() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testAddProduct5() throws IOException {
 		//setupScenary11();
 	}
-	
+
 	@Test
 	public void testAddProduct6() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testAddProduct7() throws IOException {
 		//setupScenary11();
 	}
-	
+
 	@Test
 	public void testAddProduct8() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	//	Method: deleteProduct
-	
+
 	@Test
 	public void testDeleteProduct1() {
-		
+
 	}
-	
+
 	public void testDeleteProduct2() {
-		
+
 	}
-	
+
 	//Method: updateProduct
-	
+
 	@Test
 	public void testUpdateProduct1() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testUpdateProduct2() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testUpdateProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testUpdateProduct4() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testUpdateProduct5() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	@Test
 	public void testUpdateProduct6() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
 		//setupScenary12();
 	}
-	
+
 	//Method: searchProduct
-	
+
 	@Test
 	public void testSearchProduct1() {
 		//setupScenary1();
 	}
-	
+
 	@Test
 	public void testSearchProduct2() throws IOException {
 		//setupScenary9();
 	}
-	
+
 	@Test
 	public void testSearchProduct3() throws IOException {
 		//setupScenary9();
 	}
-	
+
 	@Test
 	public void testSearchProduct4() throws IOException {
 		//setupScenary9();
 	}	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setupScenary13() {
+
+	}
+
+	public void setupScenary14() {
+
+	}
+
+	public void setupScenary15() {
+
+	}
+
+	public void setupScenary16() {
+
+	}
+
+	public void setupScenary17() {
+
+	}
+
 	@Test
 	public void testSearchClientInReceipt1() {
-		
+
 	}
-	
+
 	@Test
 	public void testSearchClientInReceipt2() {
-		
+
 	}
-	
+
 	@Test
 	public void testSearchClientInReceipt3() {
-		
+
 	}
-	
+
 	@Test
 	public void testCreateCashReceipt1() {
-		
+
 	}
-	
+
 	@Test
 	public void testCreateCashReceipt2() {
-		
+
 	}
-	
+
 	@Test
 	public void testCreateCashReceipt3() {
-		
+
 	}
-	
-	
+
+
 	@Test
 	public void testCreateSeparateReceipt1() {
-		
+
 	}
-	
+
 	@Test
 	public void testCreateSeparateReceipt2() {
-		
+
 	}
 	@Test
 	public void testCreateSeparateReceipt3() {
-		
+
 	}
-	
+
 	@Test
 	public void testAddProductToAReceipt1() {
-		
+
 	}
-	
+
 	@Test
 	public void testAddProductToAReceipt2() {
-		
+
 	}
-	
+
 	@Test
 	public void testDeleteProductFromAReceipt1() {
-		
+
 	}
-	
+
 	@Test
 
 	public void testUpdateSeparateReceipt1() {
 
 	}
-	
+
 	@Test
 	public void testUpdateSeparateReceipt2() {
-		
+
 	}
-	
+
 	@Test
 	public void testGenerateReceipt1() {
-		
+
 	}
-	
+
 	@Test
 	public void testGenerateReceipt2() {
-		
+
 	}
-	
+
 	@Test
 	public void testDeleteReceipt1() {
-		
+
 	}
-	
+
 	@Test
 	public void testDeleteReceipt2() {
-		
+
 	}
-	
+
 	@Test
 	public void testDeleteReceipt3() {
-		
+
 	}
-	
+
 	@Test
 	public void testSearchReceipt1() {
-		
+
 	}
-	
+
 	@Test
 	public void testSearchReceipt2() {
-		
+
 	}
-	
+
 	@Test
 	public void testSaveDataAngelaccesorios1() {
-		
+
 	}
-	
-	
+
+
 }	

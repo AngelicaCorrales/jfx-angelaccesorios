@@ -845,11 +845,11 @@ public class Angelaccesorios implements Serializable{
 		return updated;
 	}
 
-	private Supplier searchSupplier(Supplier current, String name) {
+	public Supplier searchSupplier(Supplier current, String name) {
 		if(current==null || current.getName().equalsIgnoreCase(name)) {
 			return current;
 		}else {
-			if(name.compareTo(current.getName())<0) {
+			if(current.getName().compareTo(name)<0) {
 				return searchSupplier(current.getLeft(), name);
 			}else {
 				return searchSupplier(current.getRight(), name);
@@ -1035,7 +1035,7 @@ public class Angelaccesorios implements Serializable{
 		if(current==null || current.getName().equalsIgnoreCase(name)) {
 			return current;
 		}else {
-			if(name.compareTo(current.getName())<0) {
+			if(current.getName().compareTo(name)<0) {
 				return searchTypeOfProduct(current.getLeft(), name);
 			}else {
 				return searchTypeOfProduct(current.getRight(), name);
