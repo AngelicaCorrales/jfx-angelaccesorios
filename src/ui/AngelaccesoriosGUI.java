@@ -760,7 +760,9 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void sortListBrands(ActionEvent event) {
-
+		ObservableList<Brand> observableList;
+    	observableList = FXCollections.observableArrayList(angelaccesorios.sortingBrandNames());
+    	tvOfBrands.setItems(observableList);
 	}
 
 	@FXML
@@ -967,7 +969,37 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void searchClientByName(ActionEvent event) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+    	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
+    	   
+    		ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+    		cmbxClients.setItems(clientsList);
+    		if(clientsList.isEmpty()) {
 
+    			alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
+        		alert.showAndWait();
+        		initializeTableViewClients();
+        		txtClientSearchedName.clear();
+        		txtClientSearchedLastName.clear();
+
+    		}else {
+    			Alert alert2 = new Alert(AlertType.INFORMATION);
+    		    alert2.setTitle("Cliente(s) encontrado(s)");
+    		    alert2.setHeaderText(null);
+    		    alert2.setContentText("Puede desplegar la lista para seleccionar al cliente buscado");
+    		    alert2.showAndWait();
+    			txtClientSearchedName.clear();
+        		txtClientSearchedLastName.clear();
+    		}
+    	}else {
+    		
+    		alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
+    		alert.showAndWait();
+    		initializeTableViewClients();
+
+    	}
 	}
 
 	@FXML
@@ -1049,6 +1081,33 @@ public class AngelaccesoriosGUI {
 
 	}
 	
+	@FXML
+	public void searchClientByNameInClient(ActionEvent event) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+    	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
+    	   
+    		ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+    		tvListClients.setItems(clientsList);
+    		if(clientsList.isEmpty()) {
+
+    			alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
+        		alert.showAndWait();
+        		initializeTableViewClients();
+    		}
+    		
+    		txtClientSearchedName.clear();
+    		txtClientSearchedLastName.clear();
+    	}else {
+    		
+    		alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
+    		alert.showAndWait();
+    		initializeTableViewClients();
+
+    	}
+	}
+
 	private void initializeComboBoxIdType() {
 		ObservableList<String> options = 
 			    FXCollections.observableArrayList("TI","CC","PP","CE");
