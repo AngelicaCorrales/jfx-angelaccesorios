@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 
@@ -24,22 +25,26 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 		creator = c;
 		buyer = b;
 		observations = obs;
+		paymentMethod=stringToPaymentMethod(pm);
+	}
+	public PaymentMethod stringToPaymentMethod(String pm) {
+		PaymentMethod pMT = null;
 		switch(pm) {
 		case "Efectivo": 
-			paymentMethod = PaymentMethod.EFECTIVO;
+			pMT = PaymentMethod.EFECTIVO;
 			break;
 		case "Tarjeta de debito":
-			paymentMethod = PaymentMethod.TARJETA_DE_DEBITO;
+			pMT = PaymentMethod.TARJETA_DE_DEBITO;
 			break;
 		case "Tarjeta de credito":
-			paymentMethod = PaymentMethod.TARJETA_DE_CREDITO;
+			pMT = PaymentMethod.TARJETA_DE_CREDITO;
 			break;
 		case "Transferencia bancaria":
-			paymentMethod = PaymentMethod.TRANSFERENCIA_BANCARIA;
+			pMT = PaymentMethod.TRANSFERENCIA_BANCARIA;
 			break;
 		}
+		return pMT;
 	}
-
 	public String getCode() {
 		return code;
 	}
@@ -128,21 +133,27 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	}
 
 	public boolean findElectronicEquipmentProduct() {
-
 		boolean found=false;
-		/*
-		 for(int i=0; i<listOfProducts.size() && !found;i++ ) {
-			if(listOfProducts.get(i).getCode().equals("")) {
-				found=true;						
+		for(int i=0; i<listOfProducts.size() && !found;i++) {
+			if(listOfProducts.get(i).getType() instanceof ElectronicEquipment) {
+				found=true;
 			}
-		}		
-		 */
+		}
 		return found;
 	}
 
 	public boolean isInForce() {
+		boolean inForce=false;
+		Date date= new Date();
 
-		return true;
+		long diff = date.getTime() - dateAndTime.getTime();
+
+		TimeUnit time = TimeUnit.DAYS; 
+		long difference = time.convert(diff, TimeUnit.MILLISECONDS);
+		if(difference<366) {
+			inForce=true;
+		}
+		return inForce;
 	}
 
 
@@ -153,8 +164,11 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 
 	@Override
 	public double calculateTotalPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		double totalPrice=0;
+		for(int i=0; i<listOfProducts.size();i++) {
+			totalPrice+=listOfProducts.get(i).getPrice();
+		}
+		return totalPrice;
 	}
 
 }

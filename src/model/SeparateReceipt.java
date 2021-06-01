@@ -1,44 +1,37 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPrice{
 
 	private static final long serialVersionUID = 1;
 	private Payment firstPayment;
+	private Payment lastPayment;
 	private State state;
 
 	public SeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c,String pm, double vp) {
 		super(listProd,listQ,b, c, "", pm); 
-		PaymentMethod pMT = null;
-		switch(pm) {
-		case "Efectivo": 
-			pMT = PaymentMethod.EFECTIVO;
-			break;
-		case "Tarjeta de debito":
-			pMT = PaymentMethod.TARJETA_DE_DEBITO;
-			break;
-		case "Tarjeta de credito":
-			pMT = PaymentMethod.TARJETA_DE_CREDITO;
-			break;
-		case "Transferencia bancaria":
-			pMT = PaymentMethod.TRANSFERENCIA_BANCARIA;
-			break;
-		}
-		firstPayment = new Payment(vp, pMT,getDateAndTime(), c);
+		
+		firstPayment = new Payment(vp, stringToPaymentMethod(pm),getDateAndTime(), c);
+		lastPayment=firstPayment;
 		state = State.NO_ENTREGADO;
 	}
 	
 	public void addPayment(double vp,String pm, User c ) {
+		Date date=new Date();
+		Payment payment=new Payment(vp, stringToPaymentMethod(pm), date, c);
+		lastPayment.setNext(payment);
+		payment.setPrev(lastPayment);
+		lastPayment=payment;
 		
+		if(calculateUnpaidPrice()==0) {
+			state = State.ENTREGADO;
+		}
 	}
 	
 	public State getState() {
 		return state;
-	}
-
-	public void updateState(String st) {
-		state = State.valueOf(st);
 	}
 
 	public Payment getFirstPayment() {
@@ -48,17 +41,39 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 	public void setFirstPayment(Payment firstPayment) {
 		this.firstPayment = firstPayment;
 	}
+	
+	public Payment getLastPayment() {
+		return lastPayment;
+	}
+
+	public void setLastPayment(Payment lastPayment) {
+		this.lastPayment = lastPayment;
+	}
 
 	@Override
 	public double calculatePaymentTotal() {
-		// TODO Auto-generated method stub
-		return 0;
+		double paymentTotal=0;
+		paymentTotal+=calculatePaymentTotal(firstPayment,paymentTotal);
+		return paymentTotal;
+	}
+	
+	private double calculatePaymentTotal(Payment current, double paymentTotal) {
+		if(current==null) {
+			return paymentTotal;
+		}else {
+			paymentTotal+=current.getAmount();
+			current=current.getNext();
+			return calculatePaymentTotal(current, paymentTotal);
+		}
+		
 	}
 
 	@Override
 	public double calculateUnpaidPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		double unpaidPrice=calculateTotalPrice()-calculatePaymentTotal();
+		return unpaidPrice;
 	}
+
+	
 
 }
