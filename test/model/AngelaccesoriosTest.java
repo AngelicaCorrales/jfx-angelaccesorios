@@ -16,6 +16,7 @@ import exceptions.NoPriceException;
 import exceptions.NoProductsAddedException;
 import exceptions.NoQuantityException;
 import exceptions.SameIDException;
+import exceptions.SameProductException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 import exceptions.UnderAgeException;
@@ -123,7 +124,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addBrand("Huawei");
 	}
 
-	public void setupScenary12() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+	public void setupScenary12() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
 		angelaccesorios=new Angelaccesorios();
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
@@ -1472,42 +1473,177 @@ public class AngelaccesoriosTest {
 
 	@Test
 	public void testAddProduct1() throws IOException {
-		//setupScenary11();
+		setupScenary11();
+		String model = "Galaxy Tab S4";
+		int units = 8;
+		double price = 980000;
+		boolean guarantee = true;
+		try {
+			angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), model, units, price, guarantee);
+			assertEquals("EQE",((ElectronicEquipment)angelaccesorios.getProducts().get(0).getType()).getCode());
+			assertEquals("Tablet", angelaccesorios.getProducts().get(0).getTypeName());
+			assertEquals("Samsung", angelaccesorios.getProducts().get(0).getBrandName());
+			assertEquals(model, angelaccesorios.getProducts().get(0).getModel());
+			assertEquals(units, angelaccesorios.getProducts().get(0).getUnits());
+			assertEquals(price, angelaccesorios.getProducts().get(0).getPrice());
+			assertTrue(angelaccesorios.getProducts().get(0).hasGuarantee());
+			assertEquals(1, angelaccesorios.getProducts().size());
+		}catch(NoQuantityException q) {
+			fail("NoQuantityException not expected");
+		}catch(NegativeQuantityException nq) {
+			fail("NegativeQuantityException not expected");
+		}catch(NoPriceException p) {
+			fail("NoPriceException not expected");
+		}catch(NegativePriceException np) {
+			fail("NegativePriceException not expected");
+		}catch(SameProductException s) {
+			fail("SameProductException not expected");
+		}
+	}
+
+	//@Test
+	public void testAddProduct2() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
+		setupScenary12();
+		String model = "iPhone XS";
+		int units = 5;
+		double price = 20000;
+		boolean guarantee = false;
+		try {
+			angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), model, units, price, guarantee);
+			fail("SameProductException expected");
+		}catch(NoQuantityException q) {
+			fail("NoQuantityException not expected");
+		}catch(NegativeQuantityException nq) {
+			fail("NegativeQuantityException not expected");
+		}catch(NoPriceException p) {
+			fail("NoPriceException not expected");
+		}catch(NegativePriceException np) {
+			fail("NegativePriceException not expected");
+		}catch(SameProductException s) {
+			assertEquals(3, angelaccesorios.getProducts().size());
+		}
 	}
 
 	@Test
-	public void testAddProduct2() throws IOException {
-		//setupScenary11();
+	public void testAddProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
+		setupScenary12();
+		String model = "iPhone 11";
+		int units = 5;
+		double price = 3100000;
+		boolean guarantee = true;
+		try {
+			angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight(), angelaccesorios.getBrands().get(0), model, units, price, guarantee);
+			assertEquals("EQE",((ElectronicEquipment)angelaccesorios.getProducts().get(3).getType()).getCode());
+			assertEquals("Celular", angelaccesorios.getProducts().get(3).getTypeName());
+			assertEquals("Apple", angelaccesorios.getProducts().get(3).getBrandName());
+			assertEquals(model, angelaccesorios.getProducts().get(3).getModel());
+			assertEquals(units, angelaccesorios.getProducts().get(3).getUnits());
+			assertEquals(price, angelaccesorios.getProducts().get(3).getPrice());
+			assertTrue(angelaccesorios.getProducts().get(3).hasGuarantee());
+			assertEquals(4, angelaccesorios.getProducts().size());
+		}catch(NoQuantityException q) {
+			fail("NoQuantityException not expected");
+		}catch(NegativeQuantityException nq) {
+			fail("NegativeQuantityException not expected");
+		}catch(NoPriceException p) {
+			fail("NoPriceException not expected");
+		}catch(NegativePriceException np) {
+			fail("NegativePriceException not expected");
+		}catch(SameProductException s) {
+			fail("SameProductException not expected");
+		}
 	}
 
 	@Test
-	public void testAddProduct3() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		//setupScenary12();
+	public void testAddProduct4() throws IOException {
+		setupScenary11();
+		String model = "FreeBuds 4i";
+		int units = 0;
+		double price = 200000;
+		boolean guarantee = true;
+		try {
+			angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight(), angelaccesorios.getBrands().get(1), model, units, price, guarantee);	
+			fail("NoQuantityException expected");
+		}catch(NoQuantityException q) {
+			assertTrue(angelaccesorios.getProducts().isEmpty());
+		}catch(NegativeQuantityException nq) {
+			fail("NegativeQuantityException not expected");
+		}catch(NoPriceException p) {
+			fail("NoPriceException not expected");
+		}catch(NegativePriceException np) {
+			fail("NegativePriceException not expected");
+		}catch(SameProductException s) {
+			fail("SameProductException not expected");
+		}
 	}
 
 	@Test
-	public void testAddProduct4() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		//setupScenary12();
+	public void testAddProduct5() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
+		setupScenary12();
+		String model = "Redmi Note 9";
+		int units = -3;
+		double price = 2000000;
+		boolean guarantee = true;
+		try {
+			angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight(), angelaccesorios.getBrands().get(1), model, units, price, guarantee);	
+			fail("NegativeQuantityException expected");
+		}catch(NoQuantityException q) {
+			fail("NoQuantityException not expected");
+		}catch(NegativeQuantityException nq) {
+			assertEquals(3, angelaccesorios.getProducts().size());
+		}catch(NoPriceException p) {
+			fail("NoPriceException not expected");
+		}catch(NegativePriceException np) {
+			fail("NegativePriceException not expected");
+		}catch(SameProductException s) {
+			fail("SameProductException not expected");
+		}
 	}
 
 	@Test
-	public void testAddProduct5() throws IOException {
-		//setupScenary11();
+	public void testAddProduct6() throws IOException{
+		setupScenary11();
+		String model = "FreeBuds 4i";
+		int units = 5;
+		double price = 0;
+		boolean guarantee = true;
+		try {
+			angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight(), angelaccesorios.getBrands().get(1), model, units, price, guarantee);	
+			fail("NoPriceException expected");
+		}catch(NoQuantityException q) {
+			fail("NoQuantityException not expected");
+		}catch(NegativeQuantityException nq) {
+			fail("NegativeQuantityException not expected");
+		}catch(NoPriceException p) {
+			assertTrue(angelaccesorios.getProducts().isEmpty());
+		}catch(NegativePriceException np) {
+			fail("NegativePriceException not expected");
+		}catch(SameProductException s) {
+			fail("SameProductException not expected");
+		}
 	}
 
 	@Test
-	public void testAddProduct6() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		//setupScenary12();
-	}
-
-	@Test
-	public void testAddProduct7() throws IOException {
-		//setupScenary11();
-	}
-
-	@Test
-	public void testAddProduct8() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		//setupScenary12();
+	public void testAddProduct7() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
+		setupScenary12();
+		String model = "Redmi Note 9";
+		int units = 5;
+		double price = -2000000;
+		boolean guarantee = true;
+		try {
+			angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getRight(), angelaccesorios.getBrands().get(1), model, units, price, guarantee);	
+			fail("NegativePriceException expected");
+		}catch(NoQuantityException q) {
+			fail("NoQuantityException not expected");
+		}catch(NegativeQuantityException nq) {
+			fail("NegativeQuantityException not expected");
+		}catch(NoPriceException p) {
+			fail("NoPriceException not expected");
+		}catch(NegativePriceException np) {
+			assertEquals(3, angelaccesorios.getProducts().size());
+		}catch(SameProductException s) {
+			fail("SameProductException not expected");
+		}
 	}
 
 	//	Method: deleteProduct
@@ -1524,8 +1660,32 @@ public class AngelaccesoriosTest {
 	//Method: updateProduct
 
 	@Test
-	public void testUpdateProduct1() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
-		//setupScenary12();
+	public void testUpdateProduct1() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
+		setupScenary12();
+		String newModel = "Redmi Note 9";
+		int units = 5;
+		double price = 23000;
+		boolean guarantee = true;
+		boolean enabled  = false;
+		try {
+			angelaccesorios.updateProduct(angelaccesorios.getProducts().get(0), angelaccesorios.getBrands().get(1), newModel, units, price, guarantee, enabled);	
+			assertEquals(angelaccesorios.getProducts().get(0).getBrandName(), angelaccesorios.getBrands().get(1).getName());
+			assertEquals(newModel, angelaccesorios.getProducts().get(0).getModel());
+			assertEquals(units, angelaccesorios.getProducts().get(0).getUnits());
+			assertEquals(price, angelaccesorios.getProducts().get(0).getPrice());
+			assertTrue(angelaccesorios.getProducts().get(0).hasGuarantee());
+			assertFalse(angelaccesorios.getProducts().get(0).isEnabled());
+		}catch(NoQuantityException q) {
+			fail("NoQuantityException not expected");
+		}catch(NegativeQuantityException nq) {
+			fail("NegativeQuantityException not expected");
+		}catch(NoPriceException p) {
+			fail("NoPriceException not expected");
+		}catch(NegativePriceException np) {
+			fail("NegativePriceException not expected");
+		}catch(SameProductException s) {
+			fail("SameProductException not expected");
+		}
 	}
 
 	@Test
