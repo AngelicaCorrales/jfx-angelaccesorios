@@ -21,10 +21,12 @@ import exceptions.EmailException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
+import exceptions.NoProductsAddedException;
 import exceptions.NoQuantityException;
 import exceptions.SameIDException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
+import exceptions.UnderAgeException;
 
 public class Angelaccesorios implements Serializable{
 	private static final long serialVersionUID = 1;
@@ -433,24 +435,60 @@ public class Angelaccesorios implements Serializable{
 		this.receipts = receipts;
 	}
 
-	//	public Receipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, Date d, String obs, String pm) {
 
-	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) {
-
+	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) throws NoProductsAddedException, UnderAgeException {
+		if(listProd.isEmpty()) {
+			throw new NoProductsAddedException();
+		}
+		
+		if(buyer.getTypeId().name().equals("TI") && findElectronicEquipmentProductOnReceiptToBeCreated(listProd)) {
+			throw new UnderAgeException();
+		}
+		
+		Receipt receipt= new Receipt(listProd, listQ, buyer, loggedUser, observations, paymentMethod);
+		receipts.add(receipt);
+		
+		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.calculateTotalPrice());
+		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
+		//saveDataAngelaccesorios();
+	}
+	
+	private boolean findElectronicEquipmentProductOnReceiptToBeCreated(ArrayList<Product> listProd) {
+		boolean found=false;
+		for(int i=0; i<listProd.size() && !found;i++) {
+			if(listProd.get(i).getType() instanceof ElectronicEquipment) {
+				found=true;
+			}
+		}
+		return found;
+		
 	}
 
 	
-	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) {
-			
+	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException {
+		if(listProd.isEmpty()) {
+			throw new NoProductsAddedException();
+		}
+		
+		if(buyer.getTypeId().name().equals("TI") && findElectronicEquipmentProductOnReceiptToBeCreated(listProd)) {
+			throw new UnderAgeException();
+		}
+	
+		Receipt receipt= new SeparateReceipt(listProd, listQ, buyer, loggedUser, paymentMethod, valuePayment);
+		receipts.add(receipt);
+		
+		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayment);
+		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
+		//saveDataAngelaccesorios();
 
 
 	}
 
-	public void addProductToAReceipt(Product prod, ArrayList<Product> listProd) {
-
+	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) {
+		
 	}
 
-	public void deleteProductFromAReceipt(Product prod, ArrayList<Product> listProd) {
+	public void deleteProductFromAReceipt(Product prod, ArrayList<Product> listProd,ArrayList<Integer> listQ) {
 
 	}
 

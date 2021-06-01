@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,12 @@ import exceptions.EmailException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
+import exceptions.NoProductsAddedException;
 import exceptions.NoQuantityException;
 import exceptions.SameIDException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
+import exceptions.UnderAgeException;
 
 public class AngelaccesoriosTest {
 	Angelaccesorios angelaccesorios;
@@ -1671,24 +1674,170 @@ public class AngelaccesoriosTest {
 
 
 
-	public void setupScenary13() {
+	public void setupScenary13() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException {
+		angelaccesorios=new Angelaccesorios();
 
+		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
+		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16399953", "CE", "2713 Adah Drive", "2883456");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addSupplier("MundoDigital", "3145678222");
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.getProducts().get(0).setCode("ACC3202");
+		angelaccesorios.getProducts().get(1).setCode("EQE4503");
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		angelaccesorios.setLoggedUser(angelaccesorios.getFirstUser());
+		angelaccesorios.createCashReceipt(listProd, listQ, angelaccesorios.getClients().get(0), "IMEI: 016385802093028", "Efectivo");
+		angelaccesorios.getReceipts().get(0).setCode("23567-1");
+		String s="1622235078971";
+		long d=Long.parseLong(s);
+		//Fri May 28 15:51:18 COT 2021
+		Date f=new Date(d);
+		angelaccesorios.getReceipts().get(0).setDateAndTime(f);
+		
+		
+		
 	}
 
-	public void setupScenary14() {
+	public void setupScenary14() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException {
+		angelaccesorios=new Angelaccesorios();
 
+		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
+		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "CC", "57265 Vernon Mission Apt. 527", "4394578");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addSupplier("MundoDigital", "3145678222");
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.getProducts().get(0).setCode("ACC3202");
+		angelaccesorios.getProducts().get(1).setCode("EQE4503");
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		angelaccesorios.setLoggedUser(angelaccesorios.getFirstUser());
+		angelaccesorios.createCashReceipt(listProd, listQ, angelaccesorios.getClients().get(0), "IMEI: 016385802093028", "Tarjeta de debito");
+		angelaccesorios.getReceipts().get(0).setCode("53567-1");
+		String s="1522235078971";
+		long d=Long.parseLong(s);
+		//Wed Mar 28 06:04:38 COT 2018
+		Date f=new Date(d);
+		angelaccesorios.getReceipts().get(0).setDateAndTime(f);
 	}
 
-	public void setupScenary15() {
+	public void setupScenary15() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException {
+		angelaccesorios=new Angelaccesorios();
 
+		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
+		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "TI", "57265 Vernon Mission Apt. 527", "4394578");
+		angelaccesorios.createClient("TOWA", "BIRD", "314567764", "CC", "2713 Adah Drive", "3186547722");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addSupplier("MundoDigital", "3145678222");
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.getProducts().get(0).setCode("ACC3202");
+		angelaccesorios.getProducts().get(1).setCode("EQE4503");
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(0));
+		listQ.add(3);
+		
+		angelaccesorios.setLoggedUser(angelaccesorios.getFirstUser());
+		angelaccesorios.createCashReceipt(listProd, listQ, angelaccesorios.getClients().get(0), "Color: aqua", "Tarjeta de credito");
+		angelaccesorios.getReceipts().get(0).setCode("14547-1");
+		String s="1622235078971";
+		long d=Long.parseLong(s);
+		//Fri May 28 15:51:18 COT 2021
+		Date f=new Date(d);
+		angelaccesorios.getReceipts().get(0).setDateAndTime(f);
 	}
 
-	public void setupScenary16() {
+	public void setupScenary16() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException {
+		angelaccesorios=new Angelaccesorios();
 
+		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
+		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16399953", "CE", "2713 Adah Drive", "2883456");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addSupplier("MundoDigital", "3145678222");
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.getProducts().get(0).setCode("ACC3202");
+		angelaccesorios.getProducts().get(1).setCode("EQE4503");
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		
+		angelaccesorios.setLoggedUser(angelaccesorios.getFirstUser());
+		angelaccesorios.createSeparateReceipt(listProd, listQ, angelaccesorios.getClients().get(0), "Tarjeta de credito",100000);
+		angelaccesorios.getReceipts().get(0).setCode("23567-1");
+		String s="1622235078971";
+		long d=Long.parseLong(s);
+		//Fri May 28 15:51:18 COT 2021
+		Date f=new Date(d);
+		angelaccesorios.getReceipts().get(0).setDateAndTime(f);
 	}
 
-	public void setupScenary17() {
+	public void setupScenary17() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException {
+		angelaccesorios=new Angelaccesorios();
 
+		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
+		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "CC", "57265 Vernon Mission Apt. 527", "4394578");
+		angelaccesorios.addBrand("Apple");
+		angelaccesorios.addSupplier("MundoDigital", "3145678222");
+		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
+		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
+		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.getProducts().get(0).setCode("ACC3202");
+		angelaccesorios.getProducts().get(1).setCode("EQE4503");
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		
+		angelaccesorios.setLoggedUser(angelaccesorios.getFirstUser());
+		angelaccesorios.createSeparateReceipt(listProd, listQ, angelaccesorios.getClients().get(0), "Tarjeta de debito",1000000);
+		angelaccesorios.getReceipts().get(0).setCode("53567-1");
+		String s="1522235078971";
+		long d=Long.parseLong(s);
+		//Wed Mar 28 06:04:38 COT 2018
+		Date f=new Date(d);
+		angelaccesorios.getReceipts().get(0).setDateAndTime(f);
+		((SeparateReceipt)angelaccesorios.getReceipts().get(0)).getFirstPayment().setDateAndTime(f);
+		
+		String s2="1523775078971";
+		long d2=Long.parseLong(s2);
+		//Sun Apr 15 01:51:18 COT 2018
+		Date f2=new Date(d2);
+		((SeparateReceipt)angelaccesorios.getReceipts().get(0)).addPayment(1800000,"Tarjeta de debito",angelaccesorios.getLoggedUser());
+		((SeparateReceipt)angelaccesorios.getReceipts().get(0)).getLastPayment().setDateAndTime(f2);
+		
 	}
 
 	@Test
@@ -1707,18 +1856,89 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateCashReceipt1() {
+	public void testCreateCashReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException  {
+		setupScenary15();
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(0));
+		listQ.add(1);
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		
+		Client buyer= angelaccesorios.getClients().get(0);
+		String observations="IMEI: 997298087485129";
+		String paymentMethod= "Transferencia bancaria";
+	
+		try {
+			angelaccesorios.createCashReceipt(listProd, listQ, buyer, observations, paymentMethod);
+			fail("UnderAgeException expected");
+		} catch (NoProductsAddedException npae) {
+			fail("UnderAgeException expected");
+		} catch (UnderAgeException uae) {
+			assertEquals(angelaccesorios.getReceipts().size(),1);
+		}
+
 
 	}
 
 	@Test
-	public void testCreateCashReceipt2() {
+	public void testCreateCashReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException {
+		setupScenary16();
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		listProd.add(angelaccesorios.getProducts().get(0));
+		listQ.add(1);
+		listProd.add(angelaccesorios.getProducts().get(1));
+		listQ.add(1);
+		
+		Client buyer= angelaccesorios.getClients().get(0);
+		String observations="IMEI: 997298087485129";
+		String paymentMethod= "Tarjeta de credito";
+	
+		try {
+			angelaccesorios.createCashReceipt(listProd, listQ, buyer, observations, paymentMethod);
+			assertEquals(angelaccesorios.getReceipts().size(),2);
+			assertTrue(buyer==angelaccesorios.getReceipts().get(1).getBuyer());
+			assertTrue(angelaccesorios.getLoggedUser()==angelaccesorios.getReceipts().get(1).getCreator());
+			assertEquals(observations,angelaccesorios.getReceipts().get(1).getObservations());
+			assertEquals(paymentMethod,angelaccesorios.getReceipts().get(1).getPaymentMethod());
+			assertEquals(angelaccesorios.getReceipts().get(1).getListOfProducts().size(),2);
+			assertTrue(angelaccesorios.getReceipts().get(1).getListOfProducts()==listProd);
+			assertEquals(angelaccesorios.getReceipts().get(1).getListOfQuantity().size(),2);
+			assertTrue(angelaccesorios.getReceipts().get(1).getListOfQuantity()==listQ);
+			
+		} catch (NoProductsAddedException npae) {
+			fail("NoProductsAddedException not expected");
+		} catch (UnderAgeException uae) {
+			fail("UnderAgeException not expected");
+		}
 
 	}
 
 	@Test
-	public void testCreateCashReceipt3() {
-
+	public void testCreateCashReceipt3() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException {
+		setupScenary13();
+		
+		ArrayList<Product> listProd=new ArrayList<Product>();
+		ArrayList<Integer> listQ=new ArrayList<Integer>();
+		
+		Client buyer= angelaccesorios.getClients().get(0);
+		String observations="IMEI: 997298087485129";
+		String paymentMethod= "Tarjeta de debito";
+	
+		try {
+			angelaccesorios.createCashReceipt(listProd, listQ, buyer, observations, paymentMethod);
+			fail("NoProductsAddedException expected");
+		} catch (NoProductsAddedException npae) {
+			assertEquals(angelaccesorios.getReceipts().size(),1);
+		} catch (UnderAgeException uae) {
+			
+			fail("NoProductsAddedException expected");
+		}
 	}
 
 
