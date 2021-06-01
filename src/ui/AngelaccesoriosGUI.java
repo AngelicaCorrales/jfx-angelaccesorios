@@ -11,6 +11,7 @@ import exceptions.SpaceException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,6 +36,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
@@ -44,6 +47,7 @@ import model.Receipt;
 import model.Supplier;
 import model.TypeOfProduct;
 import model.User;
+import thread.ClockThread;
 
 public class AngelaccesoriosGUI {
 
@@ -51,6 +55,9 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private BorderPane mainPane;
+	
+	@FXML
+    private Label lbClock;
 
 	@FXML
 	private TextField txtUserName;
@@ -491,7 +498,8 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TableColumn<Supplier, String> colPhoneSupplier;
-
+	private Stage window;
+	private boolean runClock;
 	@FXML
 	public void logIn(ActionEvent event) throws IOException {
 
@@ -523,6 +531,31 @@ public class AngelaccesoriosGUI {
 
 	public AngelaccesoriosGUI(Angelaccesorios ac) {
 		angelaccesorios=ac;
+		runClock=true;
+	}
+	public void setStage(Stage st) {
+		window=st;
+	}
+	
+	public Label getLbClock() {
+		return lbClock;
+	}
+	
+	public boolean getRunClock() {
+		return runClock;
+	}
+	
+	public void initialize() {
+		ClockThread clock=new ClockThread(this);
+		clock.start();
+		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+					
+					@Override
+					public void handle(WindowEvent event) {
+						runClock = false;
+					}
+				});
+		
 	}
 
 
@@ -531,7 +564,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-type-of-product.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfTypesOfProducts(); 
@@ -602,7 +635,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-supplier.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfSuppliers(); 
@@ -642,7 +675,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-brand.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfBrands();
@@ -770,7 +803,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-product.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		//createProductForm.setVisible(true);
@@ -812,7 +845,6 @@ public class AngelaccesoriosGUI {
 
 		Parent clientPane = fxmlLoader.load();
 
-		mainPane.getChildren().clear();
 
 		mainPane.setCenter(clientPane);
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
@@ -834,7 +866,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-receipt.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 
@@ -1027,7 +1059,7 @@ public class AngelaccesoriosGUI {
 
 		fxmlLoader.setController(this);
 		Parent login= fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(login);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 
@@ -1046,7 +1078,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		if(angelaccesorios.getLoggedUser() instanceof Admin) {
@@ -1068,7 +1100,7 @@ public class AngelaccesoriosGUI {
 
 		Parent clientPane = fxmlLoader.load();
 
-		mainPane.getChildren().clear();
+	
 
 		mainPane.setCenter(clientPane);
 
@@ -1266,8 +1298,8 @@ public class AngelaccesoriosGUI {
 		fxmlLoader.setController(this);
 
 		Parent clientPane = fxmlLoader.load();
-
-		mainPane.getChildren().clear();
+	
+		
 
 		mainPane.setCenter(clientPane);
 
@@ -1316,7 +1348,7 @@ public class AngelaccesoriosGUI {
 
 		Parent clientPane = fxmlLoader.load();
 
-		mainPane.getChildren().clear();
+		
 
 		mainPane.setCenter(clientPane);
 
@@ -1520,7 +1552,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportUsersReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeComboBoxOfHours();
@@ -1541,7 +1573,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportReceiptsReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		//initializeComboBoxOfHours();
@@ -1561,7 +1593,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportProductsReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		mainPane.getChildren().clear();
+		
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		//initializeComboBoxOfHours();
