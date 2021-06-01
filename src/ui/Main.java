@@ -43,6 +43,7 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		angelaccesoriosgui.setStage(primaryStage);
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-pane.fxml"));
 
 		fxmlLoader.setController(angelaccesoriosgui);
