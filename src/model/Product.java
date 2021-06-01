@@ -22,7 +22,7 @@ public class Product implements Serializable{
 		model = m;
 		price = p;
 		enabled = true;
-		c = code;
+		code = c;
 	}
 
 	public String getCode() {
@@ -75,6 +75,10 @@ public class Product implements Serializable{
 			g = "No";
 		}
 		return g;
+	}
+	
+	public boolean hasGuarantee() {
+		return guarantee;
 	}
 
 	public void setGuarantee(boolean guarantee) {

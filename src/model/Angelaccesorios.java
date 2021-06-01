@@ -23,6 +23,7 @@ import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
 import exceptions.NoQuantityException;
 import exceptions.SameIDException;
+import exceptions.SameProductException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 
@@ -1053,30 +1054,34 @@ public class Angelaccesorios implements Serializable{
 
 	//All related with Product
 
-	public boolean addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+	public void addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
 		Product p = searchProduct(type, b, model);
-		boolean added = false;
 		if(p==null && units>0 && price>0) {
-			int num = ThreadLocalRandom.current().nextInt(1000, 10000);
-			String code = "";
 			boolean found = false;
+			String code;
 			do {
+				int num = ThreadLocalRandom.current().nextInt(1000, 10000);
+				code = "";
 				if(type instanceof ElectronicEquipment) {
 					code = ((ElectronicEquipment)type).getCode()+num;
 				}else {
 					code = ((Accessory)type).getCode()+num;
 				}
-				for(int i=0; i<products.size() && !found;i++ ) {
+				boolean stop = false;
+				for(int i=0; i<products.size() && !stop;i++ ) {
 					if(products.get(i).getCode().equals(code)) {
-						found = true;						
+						found = true;
+						stop = true;
 					}
 				}
-			}while(!found);
+			}while(found);
 			p = new Product(type, b, units, guarantee, model, price, code);
 			products.add(p);
-			added = true;
 			saveDataAngelaccesorios();
 		}else {
+			if(p!=null) {
+				throw new SameProductException();
+			}
 			if(units==0) {
 				throw new NoQuantityException(units); 
 			}
@@ -1090,7 +1095,6 @@ public class Angelaccesorios implements Serializable{
 				throw new NegativePriceException(price);
 			}
 		}
-		return added;
 	}
 
 	public boolean deleteProduct(Product p) throws IOException {
@@ -1109,13 +1113,13 @@ public class Angelaccesorios implements Serializable{
 		return deleted;
 	}
 
-	public boolean updateProduct(Product p, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException {
+	public void updateProduct(Product p, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
 		Product product = searchProduct(p.getType(), b, model);
-		boolean updated=false;
 		boolean findProduct = false;
 		if(p!= product) {
 			if(product!=null) {
 				findProduct =true;
+				throw new SameProductException();
 			}
 		}
 		if(!findProduct && units>0 && price>0) {
@@ -1126,7 +1130,6 @@ public class Angelaccesorios implements Serializable{
 			p.setUnits(units);
 			p.setEnabled(enabled);
 			saveDataAngelaccesorios();
-			updated=true;
 		}else {
 			if(units==0) {
 				throw new NoQuantityException(units); 
@@ -1141,7 +1144,6 @@ public class Angelaccesorios implements Serializable{
 				throw new NegativePriceException(price);
 			}
 		}
-		return updated;
 	}
 
 	public Product searchProduct(TypeOfProduct ty, Brand b, String model) {
