@@ -86,7 +86,7 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="312.0" text="*Para actualizar o eliminar un determinado proveedor seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <padding>
-                        <Insets left="50.0" />
+                        <Insets left="20.0" />
                      </padding>
                      <VBox.margin>
                         <Insets top="60.0" />
@@ -125,9 +125,9 @@
                               <Font size="13.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateSupplier" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Actualizar" GridPane.rowIndex="4">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateSupplier" prefHeight="24.0" prefWidth="90.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Actualizar" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets left="35.0" top="5.0" />
+                              <Insets left="35.0" top="15.0" />
                            </GridPane.margin>
                            <font>
                               <Font name="System Bold" size="14.0" />
@@ -135,7 +135,7 @@
                         </Button>
                         <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteSupplier" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
+                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteSupplier" prefHeight="35.0" prefWidth="78.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
