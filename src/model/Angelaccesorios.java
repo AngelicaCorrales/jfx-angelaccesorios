@@ -485,12 +485,26 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) {
+	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) throws SameProductException {
+		boolean found=false;
+		for(int i=0;i<listProd.size() && !found;i++) {
+			if(listProd.get(i)==prod) {
+				found=true;
+			}
+		}
 		
+		if(found) {
+			throw new SameProductException();
+		}
+		
+		listProd.add(prod);
+		listQ.add(quantity);
 	}
 
 	public void deleteProductFromAReceipt(Product prod, ArrayList<Product> listProd,ArrayList<Integer> listQ) {
-
+		int i=listProd.indexOf(prod);
+		listProd.remove(i);
+		listQ.remove(i);
 	}
 
 	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) {
