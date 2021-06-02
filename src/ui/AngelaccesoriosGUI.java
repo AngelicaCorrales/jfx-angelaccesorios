@@ -42,6 +42,7 @@ import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
 import model.Client;
+import model.ElectronicEquipment;
 import model.Product;
 import model.Receipt;
 import model.Supplier;
@@ -570,31 +571,145 @@ public class AngelaccesoriosGUI {
 		initializeTableViewOfTypesOfProducts(); 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		typeOfProdForm.setVisible(true);
+		tvTypeOfProducts.setVisible(true);
+		ObservableList<String> categoryList = FXCollections.observableArrayList("Accesorio","Equipo electronico");
+		cmbxCategory.setPromptText("Elija una categoria");
+		cmbxCategory.setItems(categoryList);
 
 	}
 
 	private void initializeTableViewOfTypesOfProducts() {
-
+		ObservableList<TypeOfProduct> observableList=FXCollections.observableArrayList();
+		if(angelaccesorios.getTypePRoot()!=null) {
+			listTypesPInorder(observableList, angelaccesorios.getTypePRoot(), angelaccesorios.getTypePRoot().getParent());	
+		}
+		tvTypeOfProducts.setItems(observableList);
+		colCodeTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("Code"));
+		colStatusTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("State"));
+		colNameTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("Name"));
+		tvTypeOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
+	
+	private void listTypesPInorder(ObservableList<TypeOfProduct> list, TypeOfProduct current, TypeOfProduct parent) {
+		if(current!=null) {
+			if(current.getLeft()!=parent) {
+				listTypesPInorder(list, current.getLeft(), current);
+			}
+			list.add(current);
+			if(current.getRight()!=parent) {
+				listTypesPInorder(list, current.getRight(), current);
+			}
+		}else {
+			return;
+		}
 	}
 
 	@FXML
-	public void addTypeOfProduct(ActionEvent event) {
-
+	public void addTypeOfProduct(ActionEvent event) throws IOException {
+		if (!txtTypeOfProductName.getText().equals("") && cmbxCategory.getValue()!=null) {
+			String newType = txtTypeOfProductName.getText();
+			String category = cmbxCategory.getValue().toString();
+			boolean added = angelaccesorios.addTypeOfProduct(newType, category);
+			if(added==false) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Ya existe un tipo de producto agregado con dicho nombre, intentelo nuevamente");
+				alert1.showAndWait();
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("El tipo de producto ha sido agregado exitosamente");
+				alert2.showAndWait();
+			}
+			txtTypeOfProductName.clear();
+			cmbxCategory.setValue(null);
+			tvTypeOfProducts.getItems().clear();
+			initializeTableViewOfTypesOfProducts();
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
 	public void clickOnTableViewOfTypeOfProducts(MouseEvent event) {
-
+		TypeOfProduct selectedType= tvTypeOfProducts.getSelectionModel().getSelectedItem();
+		if (selectedType!=null) {
+			enableButtons();
+			txtTypeOfProductName.setText(selectedType.getName());
+			if(selectedType instanceof ElectronicEquipment) {
+				cmbxCategory.setValue("Equipo electronico");
+				cmbxCategory.setDisable(true);
+			}else {
+				cmbxCategory.setValue("Accesorio");
+				cmbxCategory.setDisable(true);
+			}
+			ckbxDisable.setSelected(!selectedType.isEnabled());
+			btAddSupplierToTypeOfProduct.setDisable(false);
+		}
 	}
 
 	@FXML
-	public void deleteTypeOfProduct(ActionEvent event) {
-
+	public void deleteTypeOfProduct(ActionEvent event) throws IOException {
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar este tipo de producto?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK){
+			boolean deleted = angelaccesorios.deleteTypeOfProduct(tvTypeOfProducts.getSelectionModel().getSelectedItem());
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
+			if(deleted==true) {
+				alert2.setContentText("El tipo de producto seleccionado ha sido eliminado exitosamente");
+				alert2.showAndWait();
+			}else {
+				alert2.setContentText("El tipo de producto seleccionado no pudo ser eliminado debido a que se encuentra relacionado con un producto");
+				alert2.showAndWait();
+			}
+			txtTypeOfProductName.clear();
+			cmbxCategory.setValue(null);
+			tvTypeOfProducts.getItems().clear();
+			initializeTableViewOfTypesOfProducts();
+			btDelete.setDisable(true);
+			btUpdate.setDisable(true);
+			btAdd.setDisable(false);
+			ckbxDisable.setSelected(false);
+			btAddSupplierToTypeOfProduct.setDisable(true);
+		}
 	}
 
 	@FXML
-	public void updateTypeOfProduct(ActionEvent event) {
-
+	public void updateTypeOfProduct(ActionEvent event) throws IOException {
+		if (!txtTypeOfProductName.getText().equals("")) {
+			String newName = txtTypeOfProductName.getText();
+			boolean enabled = true;
+    		if(ckbxDisable.isSelected()) {
+    			enabled = false;
+    		} 
+			boolean updated = angelaccesorios.updateTypeOfProduct(tvTypeOfProducts.getSelectionModel().getSelectedItem(), newName, enabled);
+			if(updated==false) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Ya existe un tipo de producto agregado con dicho nombre, intentelo nuevamente");
+				alert1.showAndWait();
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("El tipo de producto elegido ha sido actualizado exitosamente");
+				alert2.showAndWait();
+			}
+			txtTypeOfProductName.clear();
+			cmbxCategory.setValue(null);
+			tvTypeOfProducts.getItems().clear();
+			initializeTableViewOfTypesOfProducts();
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 
@@ -622,12 +737,16 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void loadAddSupplierToTypeOfProduct(ActionEvent event) {
-
+		tvTypeOfProducts.setVisible(false);
+		tvAddedSuppliers.setVisible(true);
+		tvSuppliersInATypeOfProduct.setVisible(true);
+		typeOfProdForm.setVisible(false);
+		supplierForm.setVisible(true);
 	}
 
 	@FXML
-	public void returnToManageTypeOfProduct(ActionEvent event) {
-
+	public void returnToManageTypeOfProduct(ActionEvent event) throws IOException {
+		manageTypeOfProduct(null);
 	}
 
 	@FXML
@@ -644,28 +763,127 @@ public class AngelaccesoriosGUI {
 	}
 
 	private void initializeTableViewOfSuppliers() {
-
+		ObservableList<Supplier> observableList=FXCollections.observableArrayList();
+		if(angelaccesorios.getSupplierRoot()!=null) {
+			listSuppliersInorder(observableList, angelaccesorios.getSupplierRoot(), angelaccesorios.getSupplierRoot().getParent());
+			
+		}
+		tvSuppliers.setItems(observableList);
+		colNameSupplier.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
+		colPhoneSupplier.setCellValueFactory(new PropertyValueFactory<Supplier, String>("PhoneNumber"));
+		tvSuppliers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
+	
+	private void listSuppliersInorder(ObservableList<Supplier> list, Supplier current, Supplier parent) {
+		if(current!=null) {
+			if(current.getLeft()!=parent) {
+				listSuppliersInorder(list, current.getLeft(), current);
+			}
+			list.add(current);
+			if(current.getRight()!=parent) {
+				listSuppliersInorder(list, current.getRight(), current);
+			}
+		}else {
+			return;
+		}
 	}
 
 	@FXML
-	public void addSupplier(ActionEvent event) {
-
+	public void addSupplier(ActionEvent event) throws IOException {
+		if (!txtSupplierName.getText().equals("") && !txtSupplierPhone.getText().equals("")) {
+			String newSupplier = txtSupplierName.getText();
+			String phone = txtSupplierPhone.getText();
+			boolean added = angelaccesorios.addSupplier(newSupplier, phone);
+			if(added==false) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Ya existe un proveedor agregado con dicho nombre, intentelo nuevamente");
+				alert1.showAndWait();
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("El proveedor ha sido agregado exitosamente");
+				alert2.showAndWait();
+			}
+			txtSupplierName.clear();
+			txtSupplierPhone.clear();
+			tvSuppliers.getItems().clear();
+			initializeTableViewOfSuppliers();
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
 	public void clickOnTableViewOfSuppliers(MouseEvent event) {
-
+		Supplier selectedSupplier= tvSuppliers.getSelectionModel().getSelectedItem();
+		if (selectedSupplier!=null) {
+			btDelete.setDisable(false);
+			btUpdate.setDisable(false);
+			btAdd.setDisable(true);
+			txtSupplierName.setText(selectedSupplier.getName());
+			txtSupplierPhone.setText(selectedSupplier.getPhoneNumber());
+		}
 	}
 
 	@FXML
-	public void deleteSupplier(ActionEvent event) {
-
+	public void deleteSupplier(ActionEvent event) throws IOException {
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar este proveedor?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK){
+			boolean deleted = angelaccesorios.deleteSupplier(tvSuppliers.getSelectionModel().getSelectedItem());
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
+			if(deleted==true) {
+				alert2.setContentText("El proveedor seleccionado ha sido eliminado exitosamente");
+				alert2.showAndWait();
+			}else {
+				alert2.setContentText("El proveedor seleccionado no pudo ser eliminado debido a que se encuentra relacionado con un producto");
+				alert2.showAndWait();
+			}
+			txtSupplierName.clear();
+			txtSupplierPhone.clear();
+			tvSuppliers.getItems().clear();
+			initializeTableViewOfSuppliers();
+			btDelete.setDisable(true);
+			btUpdate.setDisable(true);
+			btAdd.setDisable(false);
+		} 
 	}
 
 
 	@FXML
-	public void updateSupplier(ActionEvent event) {
-
+	public void updateSupplier(ActionEvent event) throws IOException {
+		if (!txtSupplierName.getText().equals("") && !txtSupplierPhone.getText().equals("")) {
+			String newName = txtSupplierName.getText();
+			String newPhone = txtSupplierPhone.getText();
+			boolean updated = angelaccesorios.updateSupplier(tvSuppliers.getSelectionModel().getSelectedItem(), newName, newPhone);
+			if(updated==false) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Ya existe un proveedor agregado con dicho nombre, intentelo nuevamente");
+				alert1.showAndWait();
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("El proveedor elegido ha sido actualizado exitosamente");
+				alert2.showAndWait();
+			}
+			txtSupplierName.clear();
+			txtSupplierPhone.clear();
+			tvSuppliers.getItems().clear();
+			initializeTableViewOfSuppliers();
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 
@@ -698,11 +916,8 @@ public class AngelaccesoriosGUI {
 	public void clickOnTableViewOfBrands(MouseEvent event) {
 		Brand selectedBrand= tvOfBrands.getSelectionModel().getSelectedItem();
 		if (selectedBrand!=null) {
-			btDelete.setDisable(false);
-			btAdd.setDisable(true);
-			btUpdate.setDisable(false);
+			enableButtons();
 			txtBrandName.setText(selectedBrand.getName());
-			ckbxDisable.setDisable(false);
 			ckbxDisable.setSelected(!selectedBrand.isEnabled());
 		}
 	}
