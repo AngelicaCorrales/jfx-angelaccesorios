@@ -52,7 +52,7 @@
                <children>
                   <Label text="Gestionar tipo de producto" textAlignment="CENTER" textFill="WHITE">
                      <padding>
-                        <Insets left="50.0" top="20.0" />
+                        <Insets left="70.0" top="20.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -60,11 +60,14 @@
                   </Label>
                   <Label text="Lista de tipos de productos agregados" textFill="WHITE">
                      <padding>
-                        <Insets left="200.0" top="20.0" />
+                        <Insets left="220.0" top="20.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Label>
                </children>
             </HBox>
@@ -148,7 +151,7 @@
                   </Button>
                </children>
             </VBox>
-            <VBox fx:id="typeOfProdForm" visible="false">
+            <VBox fx:id="typeOfProdForm">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para actualizar o eliminar un determinado tipo de producto seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <padding>
@@ -283,7 +286,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvAddedSuppliers" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedSuppliers" prefHeight="527.0" prefWidth="314.0" visible="false">
+                        <TableView fx:id="tvAddedSuppliers" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedSuppliers" prefHeight="527.0" prefWidth="314.0">
                            <columns>
                               <TableColumn fx:id="colNameAddedSuppliers" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores existentes" />
                            </columns>
@@ -291,7 +294,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvSuppliersInATypeOfProduct" blendMode="DARKEN" layoutX="313.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfSuppliersInAProduct" prefHeight="529.0" prefWidth="359.0" visible="false">
+                        <TableView fx:id="tvSuppliersInATypeOfProduct" blendMode="DARKEN" layoutX="313.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfSuppliersInAProduct" prefHeight="529.0" prefWidth="359.0">
                            <columns>
                               <TableColumn fx:id="colNameSuppliersInATypeOfProduct" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores del tipo de producto seleccionado" />
                            </columns>

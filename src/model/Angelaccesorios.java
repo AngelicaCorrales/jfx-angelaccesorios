@@ -466,7 +466,13 @@ public class Angelaccesorios implements Serializable{
 	}
 
 	
-	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException {
+	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException, NoPriceException, NegativePriceException {
+		if(valuePayment==0) {
+			throw new NoPriceException(valuePayment); 
+		}
+		if(valuePayment<0) {
+			throw new NegativePriceException(valuePayment);
+		}
 		if(listProd.isEmpty()) {
 			throw new NoProductsAddedException();
 		}
@@ -485,16 +491,45 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) {
+	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) throws SameProductException, NoQuantityException, NegativeQuantityException {
+		if(quantity==0) {
+			throw new NoQuantityException(quantity); 
+		}
+		if(quantity<0) {
+			throw new NegativeQuantityException(quantity);
+		}
+		boolean found=false;
+		for(int i=0;i<listProd.size() && !found;i++) {
+			if(listProd.get(i)==prod) {
+				found=true;
+			}
+		}
 		
+		if(found) {
+			throw new SameProductException();
+		}
+		
+		listProd.add(prod);
+		listQ.add(quantity);
 	}
 
 	public void deleteProductFromAReceipt(Product prod, ArrayList<Product> listProd,ArrayList<Integer> listQ) {
-
+		int i=listProd.indexOf(prod);
+		listProd.remove(i);
+		listQ.remove(i);
 	}
 
-	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) {
-
+	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) throws NoPriceException, NegativePriceException {
+		if(valuePayable==0) {
+			throw new NoPriceException(valuePayable); 
+		}
+		if(valuePayable<0) {
+			throw new NegativePriceException(valuePayable);
+		}
+		((SeparateReceipt)receipt).addPayment(valuePayable, paymentMethod, loggedUser);
+		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayable);
+		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
+		//saveDataAngelaccesorios();
 	}
 
 	public void generateReceipt(Receipt receipt) {
