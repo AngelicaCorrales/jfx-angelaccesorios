@@ -2418,13 +2418,36 @@ public class AngelaccesoriosTest {
 
 	@Test
 
-	public void testUpdateSeparateReceipt1() {
-
+	public void testUpdateSeparateReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary16();
+		SeparateReceipt sr=(SeparateReceipt)angelaccesorios.getReceipts().get(0);
+		String paymentMethod= "Efectivo";
+		double valuePayable=60000;
+		
+		angelaccesorios.updateSeparateReceipt(sr, paymentMethod, valuePayable);
+		assertTrue(sr.getFirstPayment().getNext()!=null);
+		assertEquals(sr.getFirstPayment().getNext().getAmount(),valuePayable);
+		assertEquals(sr.calculatePaymentTotal(),160000);
+		assertEquals(angelaccesorios.getLoggedUser().getSumTotalReceipts(),160000);
+		assertEquals(angelaccesorios.getLoggedUser().getNumberReceipts(),2);
+		assertEquals(sr.getState().name(),"NO_ENTREGADO");
+		
 	}
 
 	@Test
-	public void testUpdateSeparateReceipt2() {
-
+	public void testUpdateSeparateReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary16();
+		SeparateReceipt sr=(SeparateReceipt)angelaccesorios.getReceipts().get(0);
+		String paymentMethod= "Tarjeta de debito";
+		double valuePayable=2700000;
+		
+		angelaccesorios.updateSeparateReceipt(sr, paymentMethod, valuePayable);
+		assertTrue(sr.getFirstPayment().getNext()!=null);
+		assertEquals(sr.getFirstPayment().getNext().getAmount(),valuePayable);
+		assertEquals(sr.calculatePaymentTotal(),2800000);
+		assertEquals(angelaccesorios.getLoggedUser().getSumTotalReceipts(),2800000);
+		assertEquals(angelaccesorios.getLoggedUser().getNumberReceipts(),2);
+		assertEquals(sr.getState().name(),"ENTREGADO");
 	}
 
 	@Test

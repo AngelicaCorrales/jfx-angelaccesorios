@@ -166,7 +166,7 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	public double calculateTotalPrice() {
 		double totalPrice=0;
 		for(int i=0; i<listOfProducts.size();i++) {
-			totalPrice+=listOfProducts.get(i).getPrice();
+			totalPrice+=listOfProducts.get(i).getPrice() *listOfQuantity.get(i);
 		}
 		return totalPrice;
 	}
