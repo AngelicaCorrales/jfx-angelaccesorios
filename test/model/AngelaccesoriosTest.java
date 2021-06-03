@@ -716,13 +716,13 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testDeleteClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
-		//FALTAAAAA CASO QUE NO SE ELIMINA PORQUE LO TIENE UNA FACTURA VIGENTE
-		setupScenary6();
-		Client c=angelaccesorios.getClients().get(3);
+	public void testDeleteClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		
+		setupScenary13();
+		Client c=angelaccesorios.getClients().get(0);
 		boolean deleted=angelaccesorios.deleteClient(c);
-		assertTrue(deleted);
-		assertEquals(angelaccesorios.getClients().size(),4);
+		assertFalse(deleted);
+		assertEquals(angelaccesorios.getClients().size(),1);
 
 	}
 
@@ -2461,28 +2461,46 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testDeleteReceipt1() {
-
+	public void testDeleteReceipt1() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary14();
+		Receipt toBeDeleted=angelaccesorios.getReceipts().get(0);
+		boolean deleted=angelaccesorios.deleteReceipt(toBeDeleted);
+		assertTrue(deleted);
+		assertEquals(0,angelaccesorios.getReceipts().size());
 	}
 
 	@Test
-	public void testDeleteReceipt2() {
-
+	public void testDeleteReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary17();
+		Receipt toBeDeleted=angelaccesorios.getReceipts().get(0);
+		boolean deleted=angelaccesorios.deleteReceipt(toBeDeleted);
+		assertTrue(deleted);
+		assertEquals(0,angelaccesorios.getReceipts().size());
 	}
 
 	@Test
-	public void testDeleteReceipt3() {
-
+	public void testDeleteReceipt3() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary13();
+		Receipt toBeDeleted=angelaccesorios.getReceipts().get(0);
+		boolean deleted=angelaccesorios.deleteReceipt(toBeDeleted);
+		assertFalse(deleted);
+		assertEquals(1,angelaccesorios.getReceipts().size());
 	}
 
 	@Test
-	public void testSearchReceipt1() {
-
+	public void testSearchReceipt1() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary14();
+		String code="53567-1";
+		Receipt receipt=angelaccesorios.searchReceipt(code);
+		assertTrue(receipt!=null);
 	}
 
 	@Test
-	public void testSearchReceipt2() {
-
+	public void testSearchReceipt2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary16();
+		String code="76543-2";
+		Receipt receipt=angelaccesorios.searchReceipt(code);
+		assertTrue(receipt==null);
 	}
 
 	@Test

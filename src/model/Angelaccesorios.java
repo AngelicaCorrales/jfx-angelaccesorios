@@ -303,14 +303,14 @@ public class Angelaccesorios implements Serializable{
 
 	public boolean deleteClient(Client client) {
 		boolean deleted=false;
-		//if(searchClientInReceipt(client)==null) {
-		int i=clients.indexOf(client);
-		clients.remove(i);
-		deleted=true;
-		//saveDataAngelaccesorios();
+		if(searchClientInReceipt(client)==null) {
+			int i=clients.indexOf(client);
+			clients.remove(i);
+			deleted=true;
+			//saveDataAngelaccesorios();
 
 
-		//}
+		}
 
 		return deleted;
 
@@ -318,15 +318,15 @@ public class Angelaccesorios implements Serializable{
 
 	public Receipt searchClientInReceipt(Client client) {
 		Receipt receipt=null;
-		/*boolean found=false;
+		boolean found=false;
 		for(int i=0; i<receipts.size() && !found;i++) {
-			if(receipts.get(i).getBuyer().getId().equals(client.getId())) {
+			if(receipts.get(i).getBuyer().getId().equals(client.getId()) && receipts.get(i).isInForce()) {
 				found=true;
 				receipt=receipts.get(i);
 			}
 
 		}
-		 */
+		
 		return receipt;
 	}
 
@@ -533,15 +533,36 @@ public class Angelaccesorios implements Serializable{
 	}
 
 	public void generateReceipt(Receipt receipt) {
-
+		
 	}
 
-	public void deleteReceipt(Receipt receipt) {
-
+	public boolean deleteReceipt(Receipt receipt) {
+		boolean deleted=false;
+		if(receipt.findElectronicEquipmentProduct()) {
+			if(!receipt.isInForce()) {
+				int i=receipts.indexOf(receipt);
+				receipts.remove(i);
+				deleted=true;
+			}
+		}else {
+			int i=receipts.indexOf(receipt);
+			receipts.remove(i);
+			deleted=true;
+		}
+		
+		//saveDataAngelaccesorios();
+		return deleted;
 	}
 
-	public void searchReceipt(String code) {
-
+	public Receipt searchReceipt(String code) {
+		Receipt receipt=null;
+		for(int i=0;i<receipts.size() && receipt==null;i++) {
+			if(receipts.get(i).getCode().equalsIgnoreCase(code)) {
+				receipt=receipts.get(i);
+			}
+				
+		}
+		return receipt;
 	}
 
 

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPrice{
 
@@ -49,7 +50,21 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 	public void setLastPayment(Payment lastPayment) {
 		this.lastPayment = lastPayment;
 	}
+	
+	@Override
+	public boolean isInForce() {
+		boolean inForce=false;
+		Date date= new Date();
 
+		long diff = date.getTime() - lastPayment.getDateAndTime().getTime();
+
+		TimeUnit time = TimeUnit.DAYS; 
+		long difference = time.convert(diff, TimeUnit.MILLISECONDS);
+		if(difference<366) {
+			inForce=true;
+		}
+		return inForce;
+	}
 	@Override
 	public double calculatePaymentTotal() {
 		double paymentTotal=0;
