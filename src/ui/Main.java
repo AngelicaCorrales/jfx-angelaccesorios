@@ -16,13 +16,19 @@ public class Main extends Application{
 	private AngelaccesoriosGUI angelaccesoriosgui;
 	
 	public Main() {
-		angelaccesorios=new Angelaccesorios();
-		angelaccesoriosgui= new AngelaccesoriosGUI(angelaccesorios);
+		
+		Angelaccesorios ang=new Angelaccesorios(Angelaccesorios.PROGRAM);
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.PROGRAM);
 		
 		boolean loadData;
 		try {
-			loadData = angelaccesorios.loadDataAngelaccesorios(angelaccesorios);
-
+			angelaccesorios = angelaccesorios.loadDataAngelaccesorios(ang);
+			if(angelaccesorios.getFirstUser()!=null) {
+				loadData=true;
+			}else {
+				loadData=false;
+			}
+		
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 			loadData = false;
@@ -35,6 +41,8 @@ public class Main extends Application{
 			alert.setContentText("Error al cargar datos de archivo");
 			alert.showAndWait();
 		}
+		
+		angelaccesoriosgui= new AngelaccesoriosGUI(angelaccesorios);
 	}
 
 	public static void main(String[] args) {

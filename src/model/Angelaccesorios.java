@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import exceptions.EmailException;
+import exceptions.ExcessQuantityException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -34,8 +35,10 @@ public class Angelaccesorios implements Serializable{
 	private User firstUser;
 	private User lastUser;
 	private User loggedUser;
-
-	public final static String ANGELACCESORIOS_SAVE_PATH_FILE = "data/angelaccesorios.ackl";
+	
+	public final static int PROGRAM=0;
+	public final static int TEST=1;
+	public static String ANGELACCESORIOS_SAVE_PATH_FILE;
 	public final static String SEPARATOR = ";";
 	private ArrayList<Brand> brands;
 	private ArrayList<Product> products;
@@ -44,7 +47,13 @@ public class Angelaccesorios implements Serializable{
 	private Supplier supplierRoot;
 	private List<Client> clients;
 
-	public Angelaccesorios() {
+	public Angelaccesorios(int num) {
+		if(num==PROGRAM) {
+			ANGELACCESORIOS_SAVE_PATH_FILE = "data/angelaccesorios.ackl";
+		}
+		if(num==TEST) {
+			ANGELACCESORIOS_SAVE_PATH_FILE ="data/testFiles/angelaccesoriosTest.ackl";
+		}
 		brands = new ArrayList<Brand>();
 		products = new ArrayList<Product>();
 		clients=new ArrayList<Client>();
@@ -104,7 +113,7 @@ public class Angelaccesorios implements Serializable{
 	}
 
 
-	public void createUserAdmin(String id, String name, String lastName,String userName, String password,String email) throws EmailException, SpaceException {
+	public void createUserAdmin(String id, String name, String lastName,String userName, String password,String email) throws EmailException, SpaceException, IOException {
 
 		email=email.trim();
 		String parts[]=email.split("@");
@@ -130,7 +139,7 @@ public class Angelaccesorios implements Serializable{
 		lastUser=admin;
 
 
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 
 	}
 
@@ -303,7 +312,9 @@ public class Angelaccesorios implements Serializable{
 
 	public boolean deleteClient(Client client) {
 		boolean deleted=false;
-		if(searchClientInReceipt(client)==null) {
+		Receipt receipt=searchClientInReceipt(client);
+		if(receipt==null) {
+			
 			int i=clients.indexOf(client);
 			clients.remove(i);
 			deleted=true;
@@ -448,6 +459,7 @@ public class Angelaccesorios implements Serializable{
 		
 		Receipt receipt= new Receipt(listProd, listQ, buyer, loggedUser, observations, paymentMethod);
 		receipts.add(receipt);
+		receipt.restUnitsToAddedProducts();
 		
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.calculateTotalPrice());
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
@@ -491,12 +503,16 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) throws SameProductException, NoQuantityException, NegativeQuantityException {
+	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) throws SameProductException, NoQuantityException, NegativeQuantityException, ExcessQuantityException {
 		if(quantity==0) {
 			throw new NoQuantityException(quantity); 
 		}
 		if(quantity<0) {
 			throw new NegativeQuantityException(quantity);
+		}
+		
+		if(quantity>prod.getUnits()) {
+			throw new ExcessQuantityException();
 		}
 		boolean found=false;
 		for(int i=0;i<listProd.size() && !found;i++) {
@@ -1279,16 +1295,15 @@ public class Angelaccesorios implements Serializable{
 		oos.close();
 	}
 
-	public boolean loadDataAngelaccesorios(Angelaccesorios ang) throws IOException, ClassNotFoundException{
+	public Angelaccesorios loadDataAngelaccesorios(Angelaccesorios ang) throws IOException, ClassNotFoundException{
 		File f = new File(ANGELACCESORIOS_SAVE_PATH_FILE);
-		boolean loaded = false;
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 			ang = (Angelaccesorios)ois.readObject();
 			ois.close();
-			loaded = true;
+			
 		}
-		return loaded;
+		return ang;
 	}
 
 	//All related with the reports of the system

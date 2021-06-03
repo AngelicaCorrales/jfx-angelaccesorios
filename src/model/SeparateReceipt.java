@@ -28,6 +28,7 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 		
 		if(calculateUnpaidPrice()==0) {
 			state = State.ENTREGADO;
+			restUnitsToAddedProducts();
 		}
 	}
 	

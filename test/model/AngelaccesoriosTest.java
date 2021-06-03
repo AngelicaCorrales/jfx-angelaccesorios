@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import exceptions.EmailException;
+import exceptions.ExcessQuantityException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -27,27 +28,27 @@ public class AngelaccesoriosTest {
 	//Scenarios
 
 	public void setupScenary1() {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 	}
 
 	//All the scenarios related with User
 
-	public void setupScenary2() throws  EmailException, SpaceException {
-		angelaccesorios=new Angelaccesorios();
+	public void setupScenary2() throws  EmailException, SpaceException, IOException {
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 
 	}
 
-	public void setupScenary3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
-		angelaccesorios=new Angelaccesorios();
+	public void setupScenary3() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createUser("16348023", "PARK", "JIMIN", "jimin", "lachim0lala");
 	}
 
-	public void setupScenary7() throws EmailException, SpaceException, SameIDException, SameUserNameException {
-		angelaccesorios=new Angelaccesorios();
+	public void setupScenary7() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createUser("16348023", "PARK", "JIMIN", "jimin", "lachim0lala");
@@ -57,7 +58,7 @@ public class AngelaccesoriosTest {
 	//All the scenarios related with Brand
 
 	public void setupScenary4() throws IOException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.addBrand("Samsung");
 		angelaccesorios.addBrand("Motorola");
 		angelaccesorios.addBrand("Apple");
@@ -65,7 +66,7 @@ public class AngelaccesoriosTest {
 	}
 
 	public void setupScenary5() throws IOException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.addBrand("Samsung");
 		angelaccesorios.addBrand("Motorola");
 		angelaccesorios.addBrand("Apple");
@@ -77,7 +78,7 @@ public class AngelaccesoriosTest {
 
 	//All the scenarios related with Client
 	public void setupScenary6() throws EmailException, SpaceException, SameIDException, SameUserNameException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.createClient("RINGO", "STARR", "16357453", "CC", "819 McCullough Lights Suite 240", "3183345631");
 		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "TI", "57265 Vernon Mission Apt. 527", "4394578");
 		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16377753", "CE", "58030 Nitzsche Circles Apt. 311", "3172456368");
@@ -88,7 +89,7 @@ public class AngelaccesoriosTest {
 
 	//All the scenarios related with Supplier
 	public void setupScenary8() throws IOException{
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.addSupplier("AntaresTech", "3118925687");
 		angelaccesorios.addSupplier("MundoDigital", "3145678222");
 		angelaccesorios.addSupplier("TecnoPunto", "3112563351");
@@ -97,7 +98,7 @@ public class AngelaccesoriosTest {
 
 	//All the scenarios related with TypeOfProduct
 	public void setupScenary9() throws IOException{
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
 		angelaccesorios.addTypeOfProduct("Audifonos", "Accesorio");
@@ -105,7 +106,7 @@ public class AngelaccesoriosTest {
 	}
 
 	public void setupScenary10() throws IOException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
 		angelaccesorios.addSupplier("AntaresTech", "3118925687");
 		angelaccesorios.addSupplier("MundoDigital", "3145678222");
@@ -117,7 +118,7 @@ public class AngelaccesoriosTest {
 	//All the scenarios related with Product
 
 	public void setupScenary11() throws IOException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.addTypeOfProduct("Tablet", "Equipo electronico");
 		angelaccesorios.addBrand("Samsung");
 		angelaccesorios.addTypeOfProduct("Audifonos", "Accesorio");
@@ -125,7 +126,7 @@ public class AngelaccesoriosTest {
 	}
 
 	public void setupScenary12() throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
 		angelaccesorios.addBrand("Apple");
@@ -140,7 +141,7 @@ public class AngelaccesoriosTest {
 
 	//Method: CreateUserAdmin
 	@Test
-	public void testCreateUserAdmin1() throws EmailException, SpaceException {
+	public void testCreateUserAdmin1() throws EmailException, SpaceException, IOException {
 		setupScenary1();
 		String id ="1007793567";
 		String name= "ANGELA";
@@ -169,7 +170,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUserAdmin2() throws EmailException, SpaceException {
+	public void testCreateUserAdmin2() throws EmailException, SpaceException, IOException {
 		setupScenary1();
 		String id ="1007793567";
 		String name= "ANGELA";
@@ -191,7 +192,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUserAdmin3() throws EmailException, SpaceException {
+	public void testCreateUserAdmin3() throws EmailException, SpaceException, IOException {
 		setupScenary1();
 		String id ="1007793567";
 		String name= "ANGELA";
@@ -216,7 +217,7 @@ public class AngelaccesoriosTest {
 
 	//Method: CreateUser
 	@Test
-	public void testCreateUser1() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser1() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary2();
 		String id ="16704327";
 		String name= "GEORGE";
@@ -249,7 +250,7 @@ public class AngelaccesoriosTest {
 
 
 	@Test
-	public void testCreateUser2() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser2() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary2();
 		String id ="16704327";
 		String name= "GEORGE";
@@ -273,7 +274,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUser3() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser3() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		String id ="31689300";
 		String name= "MITSKI";
@@ -303,7 +304,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		String id ="16348023";
 		String name= "MITSKI";
@@ -325,7 +326,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testCreateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		String id ="31689300";
 		String name= "MITSKI";
@@ -350,21 +351,21 @@ public class AngelaccesoriosTest {
 	//Method: SearchUser
 
 	@Test
-	public void testSearchUser1() throws EmailException, SpaceException {
+	public void testSearchUser1() throws EmailException, SpaceException, IOException {
 		setupScenary2();
 		User u=angelaccesorios.searchUser("1007793567");
 		assertFalse(u==null);
 	}
 
 	@Test
-	public void testSearchUser2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUser2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.searchUser("16348023");
 		assertFalse(u==null);
 	}
 
 	@Test
-	public void testSearchUser3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUser3() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.searchUser("31689300");
 		assertEquals(u,null);
@@ -372,7 +373,7 @@ public class AngelaccesoriosTest {
 
 	//Method: searchUserName
 	@Test
-	public void testSearchUserName1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUserName1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.searchUserName("jimin");
 
@@ -380,7 +381,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchUserName2() throws  EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchUserName2() throws  EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.searchUserName("alvinsch");
 		assertEquals(u,null);
@@ -389,7 +390,7 @@ public class AngelaccesoriosTest {
 
 	//Method: deleteUser
 	@Test
-	public void testdeleteUser1() throws  EmailException, SpaceException {
+	public void testdeleteUser1() throws  EmailException, SpaceException, IOException {
 		setupScenary2();
 		User u=angelaccesorios.getFirstUser();
 		boolean deleted=angelaccesorios.deleteUser(u);
@@ -399,7 +400,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testdeleteUser2() throws  EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testdeleteUser2() throws  EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 		boolean deleted=angelaccesorios.deleteUser(u);
@@ -410,7 +411,7 @@ public class AngelaccesoriosTest {
 
 	//Method: updateUser
 	@Test
-	public void testUpdateUser1() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser1() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 
@@ -434,7 +435,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateUser2() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser2() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 
@@ -456,7 +457,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateUser3() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser3() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 
@@ -480,7 +481,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser4() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 		User u=angelaccesorios.getFirstUser().getNext();
 
@@ -503,7 +504,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser5() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary2();
 		User u=angelaccesorios.getFirstUser();
 
@@ -527,7 +528,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateUser6() throws SpaceException, EmailException, SameIDException, SameUserNameException {
+	public void testUpdateUser6() throws SpaceException, EmailException, SameIDException, SameUserNameException, IOException {
 		setupScenary2();
 		User u=angelaccesorios.getFirstUser();
 
@@ -552,7 +553,7 @@ public class AngelaccesoriosTest {
 
 	//Method: logInUser
 	@Test
-	public void testLogInUser1() throws EmailException, SpaceException {
+	public void testLogInUser1() throws EmailException, SpaceException, IOException {
 		setupScenary2();
 
 		boolean logIn=angelaccesorios.logInUser("alvinsch","h4yunc0d1g0qu3n0est4nb1nari0");
@@ -561,7 +562,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testLogInUser2() throws EmailException, SpaceException {
+	public void testLogInUser2() throws EmailException, SpaceException, IOException {
 		setupScenary2();
 
 		boolean logIn=angelaccesorios.logInUser("angelaccesorios", "4ng3laACC");
@@ -570,7 +571,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testLogInUser3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testLogInUser3() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 
 		boolean logIn=angelaccesorios.logInUser("jimin", "LACHIM0LALA");
@@ -579,7 +580,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testLogInUser4() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testLogInUser4() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 
 		boolean logIn=angelaccesorios.logInUser("angelacesorios@gmail.com", "4ng3laACC");
@@ -588,7 +589,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testLogInUser5() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testLogInUser5() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 
 		boolean logIn=angelaccesorios.logInUser("angelaccesorios@gmail.com", "4ng3laacc");
@@ -597,7 +598,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testLogInUser6() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testLogInUser6() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 
 		boolean logIn=angelaccesorios.logInUser("angelaccesorios@gmail.com", "4ng3laACC");
@@ -606,7 +607,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testLogInUser7() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testLogInUser7() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary3();
 
 		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
@@ -615,7 +616,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testLogInUser8() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testLogInUser8() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary7();
 
 		boolean logIn=angelaccesorios.logInUser("jimin", "lachim0lala");
@@ -1996,7 +1997,7 @@ public class AngelaccesoriosTest {
 
 
 	public void setupScenary13() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16399953", "CE", "2713 Adah Drive", "2883456");
@@ -2006,7 +2007,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
 		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
-		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 6, 2800000, true);
 		angelaccesorios.getProducts().get(0).setCode("ACC3202");
 		angelaccesorios.getProducts().get(1).setCode("EQE4503");
 		
@@ -2029,7 +2030,7 @@ public class AngelaccesoriosTest {
 	}
 
 	public void setupScenary14() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "CC", "57265 Vernon Mission Apt. 527", "4394578");
@@ -2039,7 +2040,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
 		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
-		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 6, 2800000, true);
 		angelaccesorios.getProducts().get(0).setCode("ACC3202");
 		angelaccesorios.getProducts().get(1).setCode("EQE4503");
 		
@@ -2059,7 +2060,7 @@ public class AngelaccesoriosTest {
 	}
 
 	public void setupScenary15() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "TI", "57265 Vernon Mission Apt. 527", "4394578");
@@ -2069,7 +2070,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addTypeOfProduct("Celular", "Equipo electronico");
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
-		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 13, 20000, false);
 		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
 		angelaccesorios.getProducts().get(0).setCode("ACC3202");
 		angelaccesorios.getProducts().get(1).setCode("EQE4503");
@@ -2091,7 +2092,7 @@ public class AngelaccesoriosTest {
 	}
 
 	public void setupScenary16() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createClient("PAUL", "MCCARTNEY", "16399953", "CE", "2713 Adah Drive", "2883456");
@@ -2122,7 +2123,7 @@ public class AngelaccesoriosTest {
 	}
 
 	public void setupScenary17() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
-		angelaccesorios=new Angelaccesorios();
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
 		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "CC", "57265 Vernon Mission Apt. 527", "4394578");
@@ -2132,7 +2133,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.addTypeOfProduct("Estuche", "Accesorio");
 		((ElectronicEquipment)angelaccesorios.getTypePRoot()).getSuppliers().add(angelaccesorios.getSupplierRoot());
 		angelaccesorios.addProduct(angelaccesorios.getTypePRoot().getLeft(), angelaccesorios.getBrands().get(0), "iPhone XS", 10, 20000, false);
-		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 5, 2800000, true);
+		angelaccesorios.addProduct(angelaccesorios.getTypePRoot(), angelaccesorios.getBrands().get(0), "iPhone XS", 6, 2800000, true);
 		angelaccesorios.getProducts().get(0).setCode("ACC3202");
 		angelaccesorios.getProducts().get(1).setCode("EQE4503");
 		
@@ -2162,18 +2163,31 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchClientInReceipt1() {
-
+	public void testSearchClientInReceipt1() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary13();
+		Client client =angelaccesorios.getClients().get(0);
+		Receipt receipt= angelaccesorios.searchClientInReceipt(client);
+		
+		assertTrue(receipt!=null);
 	}
 
 	@Test
-	public void testSearchClientInReceipt2() {
-
+	public void testSearchClientInReceipt2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary14();
+		Client client =angelaccesorios.getClients().get(0);
+		Receipt receipt= angelaccesorios.searchClientInReceipt(client);
+		
+		assertTrue(receipt==null);
 	}
 
 	@Test
-	public void testSearchClientInReceipt3() {
-
+	public void testSearchClientInReceipt3() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary15();
+		assertEquals(angelaccesorios.getProducts().get(0).getUnits(),10);
+		Client client =angelaccesorios.getClients().get(1);
+		Receipt receipt= angelaccesorios.searchClientInReceipt(client);
+		
+		assertTrue(receipt==null);
 	}
 
 	@Test
@@ -2231,6 +2245,8 @@ public class AngelaccesoriosTest {
 			assertTrue(angelaccesorios.getReceipts().get(1).getListOfProducts()==listProd);
 			assertEquals(angelaccesorios.getReceipts().get(1).getListOfQuantity().size(),2);
 			assertTrue(angelaccesorios.getReceipts().get(1).getListOfQuantity()==listQ);
+			assertEquals(angelaccesorios.getProducts().get(0).getUnits(),9);
+			assertEquals(angelaccesorios.getProducts().get(1).getUnits(),4);
 			
 		} catch (NoProductsAddedException npae) {
 			fail("NoProductsAddedException not expected");
@@ -2320,7 +2336,7 @@ public class AngelaccesoriosTest {
 			assertEquals(valuePayment,((SeparateReceipt)angelaccesorios.getReceipts().get(1)).getFirstPayment().getAmount());
 			assertEquals("TARJETA_DE_DEBITO",((SeparateReceipt)angelaccesorios.getReceipts().get(1)).getFirstPayment().getPaymentMethod().name());
 			assertTrue(angelaccesorios.getLoggedUser()==((SeparateReceipt)angelaccesorios.getReceipts().get(1)).getFirstPayment().getCreator());
-			
+			assertEquals(angelaccesorios.getProducts().get(1).getUnits(),5);
 		} catch (NoProductsAddedException npae) {
 			fail("NoProductsAddedException not expected");
 		} catch (UnderAgeException uae) {
@@ -2350,7 +2366,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testAddProductToAReceipt1() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testAddProductToAReceipt1() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessQuantityException {
 		setupScenary14();
 		
 		ArrayList<Product> listProd=new ArrayList<Product>();
@@ -2374,7 +2390,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testAddProductToAReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException  {
+	public void testAddProductToAReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessQuantityException  {
 		setupScenary16();
 		
 		ArrayList<Product> listProd=new ArrayList<Product>();
@@ -2448,6 +2464,7 @@ public class AngelaccesoriosTest {
 		assertEquals(angelaccesorios.getLoggedUser().getSumTotalReceipts(),2800000);
 		assertEquals(angelaccesorios.getLoggedUser().getNumberReceipts(),2);
 		assertEquals(sr.getState().name(),"ENTREGADO");
+		assertEquals(angelaccesorios.getProducts().get(1).getUnits(),4);
 	}
 
 	@Test
@@ -2504,8 +2521,26 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSaveDataAngelaccesorios1() {
+	public void testSaveDataAngelaccesorios1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ClassNotFoundException {
+		setupScenary17();
+		Angelaccesorios ang=angelaccesorios;
+		
+		angelaccesorios.saveDataAngelaccesorios();
+		
+		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
+		try {
+			angelaccesorios=angelaccesorios.loadDataAngelaccesorios(ang);
+			assertTrue(angelaccesorios.getClients().get(0)==angelaccesorios.getReceipts().get(0).getBuyer());
+			assertTrue(angelaccesorios.getProducts().get(1)==angelaccesorios.getReceipts().get(0).getListOfProducts().get(0));
+			assertTrue(angelaccesorios.getFirstUser()==angelaccesorios.getReceipts().get(0).getCreator());
+			assertTrue(angelaccesorios.getFirstUser()==((SeparateReceipt)angelaccesorios.getReceipts().get(0)).getFirstPayment().getCreator());
+			assertTrue(angelaccesorios.getFirstUser()==((SeparateReceipt)angelaccesorios.getReceipts().get(0)).getFirstPayment().getNext().getCreator());
+		}catch(ClassNotFoundException | IOException e) {
+			fail("Exceptions not excepted");
+		}
 
+		
+		
 	}
 
 
