@@ -151,7 +151,7 @@
                   </Button>
                </children>
             </VBox>
-            <VBox fx:id="typeOfProdForm">
+            <VBox fx:id="typeOfProdForm" visible="false">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para actualizar o eliminar un determinado tipo de producto seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <padding>
@@ -286,7 +286,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvAddedSuppliers" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedSuppliers" prefHeight="527.0" prefWidth="314.0">
+                        <TableView fx:id="tvAddedSuppliers" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedSuppliers" prefHeight="527.0" prefWidth="314.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colNameAddedSuppliers" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores existentes" />
                            </columns>
@@ -294,7 +294,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tvSuppliersInATypeOfProduct" blendMode="DARKEN" layoutX="313.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfSuppliersInAProduct" prefHeight="529.0" prefWidth="359.0">
+                        <TableView fx:id="tvSuppliersInATypeOfProduct" blendMode="DARKEN" layoutX="313.0" layoutY="-1.0" onMouseClicked="#clickOnTableViewOfSuppliersInAProduct" prefHeight="529.0" prefWidth="359.0" visible="false">
                            <columns>
                               <TableColumn fx:id="colNameSuppliersInATypeOfProduct" prefWidth="158.481689453125" sortable="false" text="Lista de proveedores del tipo de producto seleccionado" />
                            </columns>
