@@ -572,10 +572,14 @@ public class AngelaccesoriosGUI {
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		typeOfProdForm.setVisible(true);
 		tvTypeOfProducts.setVisible(true);
+		initializeCmbxOfCategory();
+	}
+	
+	private void initializeCmbxOfCategory() {
 		ObservableList<String> categoryList = FXCollections.observableArrayList("Accesorio","Equipo electronico");
-		cmbxCategory.setPromptText("Elija una categoria");
 		cmbxCategory.setItems(categoryList);
-
+		cmbxCategory.setValue(null);
+		cmbxCategory.setPromptText("Elija una categoria");
 	}
 
 	private void initializeTableViewOfTypesOfProducts() {
@@ -624,7 +628,8 @@ public class AngelaccesoriosGUI {
 				alert2.showAndWait();
 			}
 			txtTypeOfProductName.clear();
-			cmbxCategory.setValue(null);
+			initializeCmbxOfCategory();
+			cmbxCategory.setDisable(false);
 			tvTypeOfProducts.getItems().clear();
 			initializeTableViewOfTypesOfProducts();
 		}else {
@@ -641,12 +646,12 @@ public class AngelaccesoriosGUI {
 			if(selectedType instanceof ElectronicEquipment) {
 				cmbxCategory.setValue("Equipo electronico");
 				cmbxCategory.setDisable(true);
+				btAddSupplierToTypeOfProduct.setDisable(false);
 			}else {
 				cmbxCategory.setValue("Accesorio");
 				cmbxCategory.setDisable(true);
 			}
 			ckbxDisable.setSelected(!selectedType.isEnabled());
-			btAddSupplierToTypeOfProduct.setDisable(false);
 		}
 	}
 
@@ -670,13 +675,14 @@ public class AngelaccesoriosGUI {
 				alert2.showAndWait();
 			}
 			txtTypeOfProductName.clear();
-			cmbxCategory.setValue(null);
+			initializeCmbxOfCategory();
+			cmbxCategory.setDisable(false);
 			tvTypeOfProducts.getItems().clear();
 			initializeTableViewOfTypesOfProducts();
 			btDelete.setDisable(true);
 			btUpdate.setDisable(true);
 			btAdd.setDisable(false);
-			ckbxDisable.setSelected(false);
+			ckbxDisable.setDisable(true);
 			btAddSupplierToTypeOfProduct.setDisable(true);
 		}
 	}
@@ -704,9 +710,16 @@ public class AngelaccesoriosGUI {
 				alert2.showAndWait();
 			}
 			txtTypeOfProductName.clear();
-			cmbxCategory.setValue(null);
+			initializeCmbxOfCategory();
+			cmbxCategory.setDisable(false);
 			tvTypeOfProducts.getItems().clear();
 			initializeTableViewOfTypesOfProducts();
+			btDelete.setDisable(true);
+			btUpdate.setDisable(true);
+			btAdd.setDisable(false);
+			ckbxDisable.setSelected(false);
+			ckbxDisable.setDisable(true);
+			btAddSupplierToTypeOfProduct.setDisable(true);
 		}else {
 			showValidationErrorAlert();
 		}
@@ -714,24 +727,94 @@ public class AngelaccesoriosGUI {
 
 
 	@FXML
-	public void addSupplierToTypeOfProduct(ActionEvent event) {
-
+	public void addSupplierToTypeOfProduct(ActionEvent event) throws IOException {
+		ElectronicEquipment tp =  ((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem());
+    	Supplier selectedSupplier= tvAddedSuppliers.getSelectionModel().getSelectedItem();
+    	if(selectedSupplier!=null) {
+    		boolean added = angelaccesorios.addSupplierToEQE(tp, selectedSupplier);
+    		if(added==false) {
+    			Alert alert1 = new Alert(AlertType.ERROR);
+    			alert1.setTitle("Error de validacion");
+    			alert1.setHeaderText(null);
+    			alert1.setContentText("El proveedor seleccionado ya se encuentra agregado en la lista de proveedores del tipo de producto, intentelo nuevamente");
+    			alert1.showAndWait();
+    		}else {
+    			Alert alert2 = new Alert(AlertType.INFORMATION);
+        		alert2.setTitle("Informacion");
+        		alert2.setHeaderText(null);
+        		alert2.setContentText("El proveedor ha sido agregado exitosamente a la lista de proveedores del tipo producto");
+        		alert2.showAndWait();
+    		}
+    		txtSupplier.clear();
+    		initializeTableViewOfSuppliersInAProduct();
+    	}
+	}
+	
+	private void initializeTableViewOfAddedSuppliers() {
+		ObservableList<Supplier> observableList=FXCollections.observableArrayList();
+		if(angelaccesorios.getSupplierRoot()!=null) {
+			listSuppliersInorder(observableList, angelaccesorios.getSupplierRoot(), angelaccesorios.getSupplierRoot().getParent());
+			
+		}
+		tvAddedSuppliers.setItems(observableList);
+		colNameAddedSuppliers.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
+		tvAddedSuppliers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@FXML
 	public void clickOnTableViewOfAddedSuppliers(MouseEvent event) {
-
+		Supplier selectedSupplier= tvAddedSuppliers.getSelectionModel().getSelectedItem();
+		if (selectedSupplier!=null) {
+			btAddSupplierTP.setDisable(false);
+			btDeleteSupplierTP.setDisable(true);
+    		txtSupplier.setText(selectedSupplier.getName());
+    	}
+	}
+	
+	private void initializeTableViewOfSuppliersInAProduct() {
+    	ObservableList<Supplier> observableList;
+    	if(!((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem()).getSuppliers().isEmpty()) {
+    		observableList = FXCollections.observableArrayList(((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem()).getSuppliers());
+    		tvSuppliersInATypeOfProduct.setItems(observableList);
+    		colNameSuppliersInATypeOfProduct.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
+    		tvSuppliersInATypeOfProduct.setVisible(true);
+    		tvSuppliersInATypeOfProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	}
 	}
 
 	@FXML
 	public void clickOnTableViewOfSuppliersInAProduct(MouseEvent event) {
-
+		Supplier selectedSupplier= tvSuppliersInATypeOfProduct.getSelectionModel().getSelectedItem();
+		if (selectedSupplier!=null) {
+			btAddSupplierTP.setDisable(true);
+			btDeleteSupplierTP.setDisable(false);
+    		txtSupplier.setText(selectedSupplier.getName());
+    	}
 	}
 
 
 	@FXML
-	public void deleteSupplierFromTypeOfProduct(ActionEvent event) {
-
+	public void deleteSupplierFromTypeOfProduct(ActionEvent event) throws IOException {
+		ElectronicEquipment tp =  ((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem());
+    	Supplier selectedSupplier = tvSuppliersInATypeOfProduct.getSelectionModel().getSelectedItem();
+    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Confirmacion de proceso");
+    	alert1.setHeaderText(null);
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar este proveedor del tipo de producto seleccionado?");
+    	Optional<ButtonType> result = alert1.showAndWait();
+    	if (result.get() == ButtonType.OK && selectedSupplier !=null){
+    		angelaccesorios.deleteSupplierOfAnEQE(tp, selectedSupplier);;
+    		Alert alert2 = new Alert(AlertType.INFORMATION);
+    		alert2.setTitle("Informacion");
+    		alert2.setHeaderText(null);
+    		alert2.setContentText("El proveedor ha sido eliminado exitosamente de la lista de proveedores del tipo de producto seleccionado");
+    		alert2.showAndWait();
+    	}
+    	txtSupplier.clear();
+    	tvSuppliersInATypeOfProduct.getItems().clear();
+    	initializeTableViewOfSuppliersInAProduct();
+    	btDeleteSupplierTP.setDisable(true);
+    	btAddSupplierTP.setDisable(false);
 	}
 
 
@@ -742,6 +825,8 @@ public class AngelaccesoriosGUI {
 		tvSuppliersInATypeOfProduct.setVisible(true);
 		typeOfProdForm.setVisible(false);
 		supplierForm.setVisible(true);
+		initializeTableViewOfAddedSuppliers();
+		initializeTableViewOfSuppliersInAProduct();
 	}
 
 	@FXML
