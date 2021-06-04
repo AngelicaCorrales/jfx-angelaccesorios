@@ -77,7 +77,7 @@ public class AngelaccesoriosTest {
 	}
 
 	//All the scenarios related with Client
-	public void setupScenary6() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void setupScenary6() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 		angelaccesorios.createClient("RINGO", "STARR", "16357453", "CC", "819 McCullough Lights Suite 240", "3183345631");
 		angelaccesorios.createClient("WILLOW", "SMITH", "1005234865", "TI", "57265 Vernon Mission Apt. 527", "4394578");
@@ -626,7 +626,7 @@ public class AngelaccesoriosTest {
 
 	//Method: createClient
 	@Test
-	public void testCreateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testCreateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 
 		String name= "KIM";
@@ -652,7 +652,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testCreateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 
 		String name= "JOHN";
@@ -672,7 +672,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testAddSortedClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testAddSortedClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 
 		String name= "JOHN";
@@ -691,7 +691,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		Client c=angelaccesorios.searchClient("16377753");
 
@@ -699,7 +699,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		Client c=angelaccesorios.searchClient("16370053");
 
@@ -707,7 +707,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testDeleteClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testDeleteClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		Client c=angelaccesorios.getClients().get(3);
 		boolean deleted=angelaccesorios.deleteClient(c);
@@ -728,7 +728,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testUpdateClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 
 		Client c=angelaccesorios.getClients().get(3);
@@ -757,7 +757,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testUpdateClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 
 		Client c=angelaccesorios.getClients().get(3);
@@ -775,7 +775,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testBinarySearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testBinarySearchClient1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		int pos=angelaccesorios.binarySearchClient("KIM", "NAMJOON");
 
@@ -783,7 +783,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testBinarySearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testBinarySearchClient2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		int pos=angelaccesorios.binarySearchClient("PAUL", "MCCARTNEY");
 
@@ -791,7 +791,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testBinarySearchClient3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testBinarySearchClient3() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		int pos=angelaccesorios.binarySearchClient("WILLOW", "SMITH");
 
@@ -799,7 +799,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchClientByName1() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchClientByName1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		List<Client> list=angelaccesorios.searchClientByName("TOWA", "BIRD");
 
@@ -807,7 +807,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchClientByName2() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchClientByName2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		List<Client> list=angelaccesorios.searchClientByName("WILLOW", "SMITH");
 
@@ -816,7 +816,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchClientByName3() throws EmailException, SpaceException, SameIDException, SameUserNameException {
+	public void testSearchClientByName3() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
 		List<Client> list=angelaccesorios.searchClientByName("PAUL", "MCCARTNEY");
 

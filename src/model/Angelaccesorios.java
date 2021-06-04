@@ -81,7 +81,7 @@ public class Angelaccesorios implements Serializable{
 
 
 
-	public void createUser(String id, String name, String lastName,String userName, String password) throws SpaceException, SameIDException, SameUserNameException {
+	public void createUser(String id, String name, String lastName,String userName, String password) throws SpaceException, SameIDException, SameUserNameException, IOException {
 
 		userName=userName.trim();
 		String parts[]=userName.split(" ");
@@ -107,7 +107,7 @@ public class Angelaccesorios implements Serializable{
 		lastUser=user;
 
 
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 
 
 	}
@@ -179,7 +179,7 @@ public class Angelaccesorios implements Serializable{
 		return u;
 	}
 
-	public boolean deleteUser(User user) {
+	public boolean deleteUser(User user) throws IOException {
 		boolean deleted=false;
 
 		if(firstUser.getId()!=user.getId()) {
@@ -194,13 +194,13 @@ public class Angelaccesorios implements Serializable{
 			}
 			deleted=true;
 		}
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 		return deleted;
 
 	}
 
-	//CORREOOO
-	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled, String email) throws SameIDException, SameUserNameException, SpaceException, EmailException {
+	
+	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled, String email) throws SameIDException, SameUserNameException, SpaceException, EmailException, IOException {
 		userName=userName.trim();
 		String[] parts=userName.split(" ");
 		if(parts.length>1) {
@@ -238,7 +238,7 @@ public class Angelaccesorios implements Serializable{
 		user.setId(id);
 
 
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 
 	}
 
@@ -266,7 +266,7 @@ public class Angelaccesorios implements Serializable{
 		return logIn;
 	}
 
-	public void createClient(String name, String lastName, String id, String typeId, String address, String phone) throws SameIDException {
+	public void createClient(String name, String lastName, String id, String typeId, String address, String phone) throws SameIDException, IOException {
 
 		Client client= searchClient(id);
 		if(client!=null) {
@@ -276,7 +276,7 @@ public class Angelaccesorios implements Serializable{
 		client= new Client( name,  lastName,  id,  TypeId.valueOf(typeId),  address,  phone);
 		addSortedClient(client);
 
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 
 	}
 
@@ -310,7 +310,7 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-	public boolean deleteClient(Client client) {
+	public boolean deleteClient(Client client) throws IOException {
 		boolean deleted=false;
 		Receipt receipt=searchClientInReceipt(client);
 		if(receipt==null) {
@@ -318,7 +318,7 @@ public class Angelaccesorios implements Serializable{
 			int i=clients.indexOf(client);
 			clients.remove(i);
 			deleted=true;
-			//saveDataAngelaccesorios();
+			saveDataAngelaccesorios();
 
 
 		}
@@ -341,7 +341,7 @@ public class Angelaccesorios implements Serializable{
 		return receipt;
 	}
 
-	public void updateClient(Client client,String name, String lastName, String id, String typeId, String address, String phone, boolean enabled) throws SameIDException {
+	public void updateClient(Client client,String name, String lastName, String id, String typeId, String address, String phone, boolean enabled) throws SameIDException, IOException {
 
 		Client client2= searchClient(id);
 
@@ -371,7 +371,7 @@ public class Angelaccesorios implements Serializable{
 
 			Collections.sort(clients,Collections.reverseOrder(clientLastNameAndNameComparator));
 		}
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 
 	}
 
@@ -448,7 +448,7 @@ public class Angelaccesorios implements Serializable{
 	}
 
 
-	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) throws NoProductsAddedException, UnderAgeException {
+	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) throws NoProductsAddedException, UnderAgeException, IOException {
 		if(listProd.isEmpty()) {
 			throw new NoProductsAddedException();
 		}
@@ -463,7 +463,7 @@ public class Angelaccesorios implements Serializable{
 		
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.calculateTotalPrice());
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 	}
 	
 	private boolean findElectronicEquipmentProductOnReceiptToBeCreated(ArrayList<Product> listProd) {
@@ -478,7 +478,7 @@ public class Angelaccesorios implements Serializable{
 	}
 
 	
-	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException, NoPriceException, NegativePriceException {
+	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException, NoPriceException, NegativePriceException, IOException {
 		if(valuePayment==0) {
 			throw new NoPriceException(valuePayment); 
 		}
@@ -498,7 +498,7 @@ public class Angelaccesorios implements Serializable{
 		
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayment);
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 
 
 	}
@@ -535,7 +535,7 @@ public class Angelaccesorios implements Serializable{
 		listQ.remove(i);
 	}
 
-	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) throws NoPriceException, NegativePriceException {
+	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) throws NoPriceException, NegativePriceException, IOException {
 		if(valuePayable==0) {
 			throw new NoPriceException(valuePayable); 
 		}
@@ -545,14 +545,14 @@ public class Angelaccesorios implements Serializable{
 		((SeparateReceipt)receipt).addPayment(valuePayable, paymentMethod, loggedUser);
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayable);
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 	}
 
 	public void generateReceipt(Receipt receipt) {
 		
 	}
 
-	public boolean deleteReceipt(Receipt receipt) {
+	public boolean deleteReceipt(Receipt receipt) throws IOException {
 		boolean deleted=false;
 		if(receipt.findElectronicEquipmentProduct()) {
 			if(!receipt.isInForce()) {
@@ -566,7 +566,7 @@ public class Angelaccesorios implements Serializable{
 			deleted=true;
 		}
 		
-		//saveDataAngelaccesorios();
+		saveDataAngelaccesorios();
 		return deleted;
 	}
 

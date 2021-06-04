@@ -1482,7 +1482,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void createClient(ActionEvent event) {
+	public void createClient(ActionEvent event) throws IOException {
 		if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() && !cmbxIdType.getSelectionModel().getSelectedItem().isEmpty()) {
 		
     		try {
@@ -1517,7 +1517,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void deleteClient(ActionEvent event) {
+	public void deleteClient(ActionEvent event) throws IOException {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
     	alert1.setTitle("Confirmacion de proceso");
     	alert1.setHeaderText(null);
@@ -1556,7 +1556,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void updateClient(ActionEvent event) {
+	public void updateClient(ActionEvent event) throws IOException {
 		if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() &&  !cmbxIdType.getSelectionModel().getSelectedItem().isEmpty()) {
 
     		try {
@@ -1701,7 +1701,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void createUser(ActionEvent event) {
+	public void createUser(ActionEvent event) throws IOException {
 		if (!txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtId.getText().isEmpty() && !txtUserName.getText().isEmpty() && !passwordField.getText().isEmpty()) {
 			Alert alert2 = new Alert(AlertType.ERROR);
 			alert2.setTitle("Error de validacion");
@@ -1739,7 +1739,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void deleteUser(ActionEvent event) {
+	public void deleteUser(ActionEvent event) throws IOException {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
 		alert1.setTitle("Confirmacion de proceso");
 		alert1.setHeaderText(null);
@@ -1774,7 +1774,7 @@ public class AngelaccesoriosGUI {
 
 
 	@FXML
-	public void updateUser(ActionEvent event) {
+	public void updateUser(ActionEvent event) throws IOException {
 		boolean update=true;
 		if(tvListUsers.getSelectionModel().getSelectedItem() instanceof Admin && txtEmail.getText().isEmpty()) {
 			update=false;
