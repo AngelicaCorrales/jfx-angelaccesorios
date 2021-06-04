@@ -1,11 +1,15 @@
 package ui;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import exceptions.EmailException;
+import exceptions.HigherDateAndHour;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -42,6 +46,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Admin;
@@ -1373,9 +1378,10 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void sortingPricesOfProducts(ActionEvent event) {
-
+		ArrayList<Product> products = angelaccesorios.sortingPricesOfProducts();
+		tvOfProducts.getItems().clear();
+		initializeTableViewOfProducts(products);
 	}
-
 
 	@FXML
 	public void manageReceipt(ActionEvent event) throws IOException {
@@ -2056,11 +2062,19 @@ public class AngelaccesoriosGUI {
 	}
 
 	private void initializeComboBoxOfHours() {
-
+		ObservableList<String> hoursList = FXCollections.observableArrayList(angelaccesorios.getHours());
+		cmbxInitialHour.setItems(hoursList);
+		cmbxInitialHour.setValue("00");
+		cmbxFinalHour.setItems(hoursList);
+		cmbxFinalHour.setValue("23");
 	}
 
 	private void initializeComboBoxOfMinutes() {
-
+		ObservableList<String> minutesList = FXCollections.observableArrayList(angelaccesorios.getMinutes());
+		cmbxInitialMinute.setItems(minutesList);
+		cmbxInitialMinute.setValue("00");
+		cmbxFinalMinute.setItems(minutesList);
+		cmbxFinalMinute.setValue("59");
 	}
 
 	@FXML
@@ -2081,7 +2095,41 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void generateUsersReport(ActionEvent event) {
-
+		if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null) {
+    		LocalDate initialDate = dtPickerInitialDate.getValue();
+    		LocalDate finalDate = dtPickerFinalDate.getValue();
+    		String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
+    		String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
+    		String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
+    		String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
+    		FileChooser fileChooser = new FileChooser();
+        	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
+        	File fExp= fileChooser.showSaveDialog(mainPane.getScene().getWindow());
+        	if(fExp!=null) {
+        		Alert alert = new Alert(AlertType.INFORMATION);
+    		    alert.setTitle("Exportar reporte sobre usuarios");
+    		    try {
+    				angelaccesorios.exportUsersReport(fExp.getAbsolutePath(),initialTime,finalTime);
+    			    alert.setHeaderText(null);
+    			    alert.setContentText("El reporte de usuarios ha sido exportado exitosamente");
+    			    alert.showAndWait();
+    			} catch (IOException e) {
+    				alert.setHeaderText(null);
+    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+e.getMessage());
+    			    alert.showAndWait();
+    			} catch (ParseException p) {
+    				alert.setHeaderText(null);
+    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
+    			    alert.showAndWait();
+				} catch (HigherDateAndHour h) {
+					alert.setHeaderText(null);
+    			    alert.setContentText(h.getMessage());
+    			    alert.showAndWait();
+				}
+        	}
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
 
 	@FXML

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import exceptions.EmailException;
 import exceptions.ExcessQuantityException;
+import exceptions.HigherDateAndHour;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -1328,35 +1330,23 @@ public class Angelaccesorios implements Serializable{
 		return copyOfReceipts;
 	}
 
-	public ArrayList<Receipt> selectedReceipts(String initialTime, String finalTime) throws ParseException{
-		boolean correct = false;
+	public ArrayList<Receipt> selectGeneratedReceipts(Date initialDate, Date finalDate) throws ParseException{
+		String strFormat = "yyyy-MM-dd HH:mm";
+		Date dateOrder = null;
+		int result1 = 0;
+		int result2 = 0;
+		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
 		ArrayList<Receipt> selectedReceipts = new ArrayList<Receipt>();
 		ArrayList<Receipt> sortingReceipts = sortByDateAndTime();
 		for(int k=0; k<sortingReceipts.size();k++) {
-			correct = compareWithInitialAndFinalDate(sortingReceipts.get(k),initialTime,finalTime);
-			if(correct==true){
+			dateOrder = formato.parse(sortingReceipts.get(k).getDateAndHour());
+			result1 = dateOrder.compareTo(initialDate);
+			result2 = dateOrder.compareTo(finalDate);
+			if((result1>0 || result1==0)&&(result2<0||result2==0)) {
 				selectedReceipts.add(sortingReceipts.get(k));
 			}
 		}
 		return selectedReceipts;
-	}
-
-	public boolean compareWithInitialAndFinalDate(Receipt receipt, String initialTime, String finalTime) throws ParseException {
-		boolean correct = false;
-		Date date1 = null;
-		Date date2 = null;
-		Date dateOrder = null;
-		String strFormat = "yyyy-MM-dd HH:mm";
-		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
-		date1 = formato.parse(initialTime);
-		date2 = formato.parse(finalTime);
-		dateOrder = formato.parse(receipt.getDateAndHour());
-		int result1 = dateOrder.compareTo(date1);
-		int result2 = dateOrder.compareTo(date2);
-		if((result1>0 || result1==0)&&(result2<0||result2==0)) {
-			correct = true;
-		}
-		return correct;
 	}
 
 	//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
@@ -1388,33 +1378,35 @@ public class Angelaccesorios implements Serializable{
 		pw.close();*/
 	}
 	
-	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
-		/*int totalOrders=0;
-		int totalMoney=0;
-		List<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
-		
-		PrintWriter pw = new PrintWriter(fn);
-		String nameColumns = "Empleado"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de ordenes entregadas"+SEPARATOR+"Precio total de las ordenes entregadas";
-		pw.println(nameColumns);
-		
-		for(int k=0;k<ordersS.size();k++) {
-			ordersS.get(k).getDeliverer().setCont(0);
-		}
-		for(int i=0;i<ordersS.size();i++){
-			Order objOrder = ordersS.get(i);
-			objOrder.getDeliverer().setCont((objOrder.getDeliverer().getCont())+1);
-
-			if(objOrder.getDeliverer().getCont()==1) {
-				pw.println(objOrder.getDeliverer().getName()+SEPARATOR+objOrder.getDeliverer().getId()+SEPARATOR+objOrder.getDeliverer().getNumberOrders()+SEPARATOR+objOrder.getDeliverer().getSumTotalOrders());
-				totalOrders+=objOrder.getDeliverer().getNumberOrders();
-				totalMoney+=objOrder.getDeliverer().getSumTotalOrders();
+	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
+		String strFormat = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
+		Date date1 = formato.parse(initialTime);
+		Date date2 = formato.parse(finalTime);
+		if(date1.after(date2)) {
+			throw new HigherDateAndHour();
+		}else {
+			int totalReceipts=0;
+			int totalMoney=0;
+			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2);
+			PrintWriter pw = new PrintWriter(fn);
+			String nameColumns = "Usuario"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de facturas generadas"+SEPARATOR+"Valor total de las facturas entregadas";
+			pw.println(nameColumns);
+			for(int k=0;k<receiptsS.size();k++) {
+				receiptsS.get(k).getCreator().setCont(0);
 			}
+			for(int i=0;i<receiptsS.size();i++){
+				Receipt objR = receiptsS.get(i);
+				objR.getCreator().setCont((objR.getCreator().getCont())+1);
+				if(objR.getCreator().getCont()==1) {
+					pw.println(objR.getCreator().getName()+SEPARATOR+objR.getCreator().getId()+SEPARATOR+objR.getCreator().getNumberReceipts()+SEPARATOR+objR.getCreator().getSumTotalReceipts());
+					totalReceipts+=objR.getCreator().getNumberReceipts();
+					totalMoney+=objR.getCreator().getSumTotalReceipts();
+				}
+			}
+			pw.println(SEPARATOR+"Total"+SEPARATOR+totalReceipts+SEPARATOR+totalMoney);
+			pw.close();
 		}
-		pw.println(SEPARATOR+"Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
-
-		pw.close();
-		
-		*/
 	}
 	
 	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
