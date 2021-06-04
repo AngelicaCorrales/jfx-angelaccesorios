@@ -2,10 +2,16 @@ package ui;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import exceptions.EmailException;
+import exceptions.NegativePriceException;
+import exceptions.NegativeQuantityException;
+import exceptions.NoPriceException;
+import exceptions.NoQuantityException;
 import exceptions.SameIDException;
+import exceptions.SameProductException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 import javafx.collections.FXCollections;
@@ -679,10 +685,7 @@ public class AngelaccesoriosGUI {
 			cmbxCategory.setDisable(false);
 			tvTypeOfProducts.getItems().clear();
 			initializeTableViewOfTypesOfProducts();
-			btDelete.setDisable(true);
-			btUpdate.setDisable(true);
-			btAdd.setDisable(false);
-			ckbxDisable.setDisable(true);
+			disableButtons();
 			btAddSupplierToTypeOfProduct.setDisable(true);
 		}
 	}
@@ -714,11 +717,8 @@ public class AngelaccesoriosGUI {
 			cmbxCategory.setDisable(false);
 			tvTypeOfProducts.getItems().clear();
 			initializeTableViewOfTypesOfProducts();
-			btDelete.setDisable(true);
-			btUpdate.setDisable(true);
-			btAdd.setDisable(false);
 			ckbxDisable.setSelected(false);
-			ckbxDisable.setDisable(true);
+			disableButtons();
 			btAddSupplierToTypeOfProduct.setDisable(true);
 		}else {
 			showValidationErrorAlert();
@@ -827,6 +827,7 @@ public class AngelaccesoriosGUI {
 		supplierForm.setVisible(true);
 		initializeTableViewOfAddedSuppliers();
 		initializeTableViewOfSuppliersInAProduct();
+		txtSupplier.setEditable(false);
 	}
 
 	@FXML
@@ -894,7 +895,6 @@ public class AngelaccesoriosGUI {
 			}
 			txtSupplierName.clear();
 			txtSupplierPhone.clear();
-			tvSuppliers.getItems().clear();
 			initializeTableViewOfSuppliers();
 		}else {
 			showValidationErrorAlert();
@@ -1026,7 +1026,6 @@ public class AngelaccesoriosGUI {
 				alert2.showAndWait();
 			}
 			txtBrandName.clear();
-			tvOfBrands.getItems().clear();
 			initializeTableViewOfBrands();
 		}else {
 			showValidationErrorAlert();
@@ -1107,34 +1106,243 @@ public class AngelaccesoriosGUI {
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		//createProductForm.setVisible(true);
-		initializeTableViewOfProducts();
+		initializeTableViewOfProducts(angelaccesorios.getProducts());
 		//showComboBoxOfTypesOfProducts();
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-
+		initializeCmbxTypeOfProduct();
+		initializeCmbxBrand(); 
 	}
 
-	private void initializeTableViewOfProducts() {
-
+	private void initializeTableViewOfProducts(ArrayList<Product> products) {
+		ObservableList<Product> observableList;
+    	observableList = FXCollections.observableArrayList(products);
+    	tvOfProducts.setItems(observableList);
+    	colCodeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Code"));
+    	colTypeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("TypeName"));
+    	colBrandProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("BrandName"));
+    	colModelProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Model"));
+    	colStatusProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("State"));
+    	colUnitsProduct.setCellValueFactory(new PropertyValueFactory<Product, Integer>("Units"));
+    	colPriceProduct.setCellValueFactory(new PropertyValueFactory<Product, Double>("Price"));
+    	colWarrantyProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Guarantee"));
+    	tvOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	if(!angelaccesorios.getProducts().isEmpty()) {
+    		btSortProductPrices.setDisable(false);
+    	}
+	}
+	
+	private void initializeCmbxTypeOfProduct() {
+		ObservableList<TypeOfProduct> typeList = FXCollections.observableArrayList();
+		if(angelaccesorios.getTypePRoot()!=null) {
+			listTypesPInorder(typeList, angelaccesorios.getTypePRoot(), angelaccesorios.getTypePRoot().getParent());	
+		}
+		cmbxTypeOfProduct.setItems(typeList);
+		cmbxTypeOfProduct.setValue(null);
+		cmbxTypeOfProduct.setPromptText("Elija un tipo de producto");
+	}
+	
+	private void initializeCmbxBrand() {
+		ObservableList<Brand> brandList = FXCollections.observableArrayList(angelaccesorios.getBrands());
+		cmbxBrand.setItems(brandList);
+		cmbxBrand.setValue(null);
+		cmbxBrand.setPromptText("Elija una marca");
 	}
 
 	@FXML
-	public void addProduct(ActionEvent event) {
-
+	public void addProduct(ActionEvent event) throws IOException {
+		if (cmbxTypeOfProduct.getValue()!=null && cmbxBrand.getValue()!=null && !txtModel.getText().equals("") && !txtUnits.getText().equals("") && !txtPrice.getText().equals("") && (rbYes.isSelected()||rbNo.isSelected())) {
+    		TypeOfProduct tp = cmbxTypeOfProduct.getValue();
+    		Brand b = cmbxBrand.getValue();
+    		String model = txtModel.getText();
+    		double price = 0;
+    		int units = 0;
+    		boolean guarantee = true;
+    		if(rbNo.isSelected()) {
+    			guarantee = false;
+    		}
+    		boolean stop = false;
+    		Alert alert1 = new Alert(AlertType.ERROR);
+			alert1.setTitle("Error de validacion");
+			alert1.setHeaderText(null);
+			try {
+				units = Integer.parseInt(txtUnits.getText());
+			}catch(NumberFormatException n) {
+				alert1.setContentText("Debe ingresar un valor numerico que represente las unidades del producto disponibles");
+				alert1.showAndWait();
+				stop = true;
+			}
+			try {
+				price = Double.parseDouble(txtPrice.getText());
+			}catch(NumberFormatException n) {
+				alert1.setContentText("Debe ingresar un valor numerico que represente el precio del producto");
+				alert1.showAndWait();
+				stop = true;
+			}
+			if(stop==false) {
+				try {
+					angelaccesorios.addProduct(tp, b, model, units, price, guarantee);
+					Alert alert2 = new Alert(AlertType.INFORMATION);
+	        		alert2.setTitle("Informacion");
+	        		alert2.setHeaderText(null);
+	        		alert2.setContentText("El producto ha sido creado exitosamente");
+	        		alert2.showAndWait();
+				}catch(NoQuantityException nq) {
+					alert1.setContentText(nq.getMessage());
+	    			alert1.showAndWait();
+				}catch(NegativeQuantityException ng) {
+					alert1.setContentText(ng.getMessage());
+	    			alert1.showAndWait();
+				}catch(NoPriceException p) {
+					alert1.setContentText(p.getMessage());
+	    			alert1.showAndWait();
+				}catch(NegativePriceException np) {
+					alert1.setContentText(np.getMessage());
+	    			alert1.showAndWait();
+				}catch(SameProductException s) {
+					alert1.setContentText(s.getMessage());
+	    			alert1.showAndWait();
+				}	
+			}
+			initializeCmbxTypeOfProduct();
+    		initializeCmbxBrand();
+    		txtModel.clear();
+    		txtUnits.clear();
+    		txtPrice.clear();
+    		rbYes.setSelected(false);
+    		rbNo.setSelected(false);
+    		ckbxDisable.setSelected(false);
+    		initializeTableViewOfProducts(angelaccesorios.getProducts());
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
-
+	
 	@FXML
 	public void clickOnTableViewOfProducts(MouseEvent event) {
-
+		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
+		if (selectedProduct!= null) {
+    		enableButtons();
+    		txtModel.setText(selectedProduct.getModel());
+    		txtUnits.setText(""+selectedProduct.getUnits());
+    		txtPrice.setText(""+selectedProduct.getPrice());
+    		cmbxBrand.setValue(selectedProduct.getBrand());
+    		cmbxTypeOfProduct.setValue(selectedProduct.getType());
+    		cmbxTypeOfProduct.setDisable(true);
+    		ckbxDisable.setSelected(!selectedProduct.isEnabled());
+    		if(selectedProduct.hasGuarantee()) {
+    			rbYes.setSelected(true);
+    		}else {
+    			rbNo.setSelected(true);	
+    		}
+    	}
 	}
 
 	@FXML
-	public void deleteProduct(ActionEvent event) {
-
+	public void deleteProduct(ActionEvent event) throws IOException {
+		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
+    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Confirmacion de proceso");
+    	alert1.setHeaderText(null);
+    	alert1.setContentText("¿Esta seguro de que quiere eliminar este producto?");
+    	Optional<ButtonType> result = alert1.showAndWait();
+    	if (result.get() == ButtonType.OK && selectedProduct!=null){
+        	boolean deleted = angelaccesorios.deleteProduct(selectedProduct);
+        	Alert alert2 = new Alert(AlertType.INFORMATION);
+    		alert2.setTitle("Informacion");
+    		alert2.setHeaderText(null);
+        	if(deleted==true) {
+        		alert2.setContentText("El producto ha sido eliminado exitosamente");
+        		alert2.showAndWait();
+        	}else {
+        		alert2.setContentText("El producto no pudo ser eliminado debido a que se encuentra dentro de una factura del sistema de separado con estado no entregado");
+        		alert2.showAndWait();
+        	}
+        	initializeCmbxTypeOfProduct();
+    		initializeCmbxBrand();
+    		txtModel.clear();
+    		txtUnits.clear();
+    		txtPrice.clear();
+    		rbYes.setSelected(false);
+    		rbNo.setSelected(false);
+    		ckbxDisable.setSelected(false);
+    		tvOfProducts.getItems().clear();
+    		initializeTableViewOfProducts(angelaccesorios.getProducts());
+        	disableButtons();
+    	} 
 	}
 
 	@FXML
-	public void updateProduct(ActionEvent event) {
-
+	public void updateProduct(ActionEvent event) throws IOException {
+		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
+    	if (cmbxBrand.getValue()!=null && !txtModel.getText().equals("") && !txtUnits.getText().equals("") && !txtPrice.getText().equals("") && (rbYes.isSelected()||rbNo.isSelected())) {
+    		Brand newBrand = cmbxBrand.getValue();
+    		String newModel = txtModel.getText();
+    		double newPrice = 0;
+    		int newUnits = 0;
+    		boolean guarantee = true;
+    		boolean enabled = true;
+    		if(ckbxDisable.isSelected()) {
+    			enabled = false;
+    		}
+    		if(rbNo.isSelected()) {
+    			guarantee = false;
+    		}
+    		boolean stop = false;
+    		Alert alert1 = new Alert(AlertType.ERROR);
+			alert1.setTitle("Error de validacion");
+			alert1.setHeaderText(null);
+			try {
+				newUnits = Integer.parseInt(txtUnits.getText());
+			}catch(NumberFormatException n) {
+				alert1.setContentText("Debe ingresar un valor numerico que represente las unidades del producto disponibles");
+				alert1.showAndWait();
+				stop = true;
+			}
+			try {
+				newPrice = Double.parseDouble(txtPrice.getText());
+			}catch(NumberFormatException n) {
+				alert1.setContentText("Debe ingresar un valor numerico que represente el precio del producto");
+				alert1.showAndWait();
+				stop = true;
+			}
+			if(stop==false) {
+				try {
+					angelaccesorios.updateProduct(selectedProduct, newBrand, newModel, newUnits, newPrice, guarantee, enabled);
+					Alert alert2 = new Alert(AlertType.INFORMATION);
+	        		alert2.setTitle("Informacion");
+	        		alert2.setHeaderText(null);
+	        		alert2.setContentText("El producto ha sido actualizado exitosamente");
+	        		alert2.showAndWait();
+				}catch(NoQuantityException nq) {
+					alert1.setContentText(nq.getMessage());
+	    			alert1.showAndWait();
+				}catch(NegativeQuantityException ng) {
+					alert1.setContentText(ng.getMessage());
+	    			alert1.showAndWait();
+				}catch(NoPriceException p) {
+					alert1.setContentText(p.getMessage());
+	    			alert1.showAndWait();
+				}catch(NegativePriceException np) {
+					alert1.setContentText(np.getMessage());
+	    			alert1.showAndWait();
+				}catch(SameProductException s) {
+					alert1.setContentText(s.getMessage());
+	    			alert1.showAndWait();
+				}	
+			}
+			initializeCmbxTypeOfProduct();
+    		initializeCmbxBrand();
+    		txtModel.clear();
+    		txtUnits.clear();
+    		txtPrice.clear();
+    		rbYes.setSelected(false);
+    		rbNo.setSelected(false);
+    		ckbxDisable.setSelected(false);
+    		tvOfProducts.getItems().clear();
+    		initializeTableViewOfProducts(angelaccesorios.getProducts());
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
 
 
@@ -1152,7 +1360,15 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void searchProductByTypeAndBrand(ActionEvent event) {
-
+		String type = txtTypeOfProduct.getText();
+		String brand = txtBrand.getText();
+		if(!type.equals("") && !brand.equals("")) {
+			ArrayList<Product> p = angelaccesorios.returnFoundProducts(type, brand);
+			tvOfProducts.getItems().clear();
+			initializeTableViewOfProducts(p);
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
