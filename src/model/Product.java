@@ -13,6 +13,7 @@ public class Product implements Serializable{
 	private String model;
 	private double price;
 	private boolean enabled;
+	private int cont;
 	
 	public Product(TypeOfProduct t, Brand b, int u, boolean g, String m, double p, String c) {
 		type = t;
@@ -23,6 +24,7 @@ public class Product implements Serializable{
 		price = p;
 		enabled = true;
 		code = c;
+		cont = 0;
 	}
 
 	public String getCode() {
@@ -125,6 +127,14 @@ public class Product implements Serializable{
 	
 	public String toString() {
 		return type+" "+brand+" "+model+" "+price+"c/u";
+	}
+
+	public int getCont() {
+		return cont;
+	}
+
+	public void setCont(int cont) {
+		this.cont = cont;
 	}
 	
 }

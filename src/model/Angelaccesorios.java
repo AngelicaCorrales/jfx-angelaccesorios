@@ -1381,24 +1381,15 @@ public class Angelaccesorios implements Serializable{
 		return allMinutes;
 	}
 
-	private ArrayList<Receipt> sortByDateAndTime() {
-		ArrayList<Receipt> copyOfReceipts = new ArrayList<Receipt>(receipts);
-		Collections.sort(copyOfReceipts);
-		return copyOfReceipts;
-	}
-
 	public ArrayList<Receipt> selectGeneratedReceipts(Date initialDate, Date finalDate) throws ParseException{
-		String strFormat = "yyyy-MM-dd HH:mm";
-		Date dateOrder = null;
 		int result1 = 0;
 		int result2 = 0;
-		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
 		ArrayList<Receipt> selectedReceipts = new ArrayList<Receipt>();
-		ArrayList<Receipt> sortingReceipts = sortByDateAndTime();
+		ArrayList<Receipt> sortingReceipts = new ArrayList<Receipt>(receipts);
+		Collections.sort(sortingReceipts);
 		for(int k=0; k<sortingReceipts.size();k++) {
-			dateOrder = formato.parse(sortingReceipts.get(k).getDateAndHour());
-			result1 = dateOrder.compareTo(initialDate);
-			result2 = dateOrder.compareTo(finalDate);
+			result1 = sortingReceipts.get(k).getDateAndTime().compareTo(initialDate);
+			result2 = sortingReceipts.get(k).getDateAndTime().compareTo(finalDate);
 			if((result1>0 || result1==0)&&(result2<0||result2==0)) {
 				selectedReceipts.add(sortingReceipts.get(k));
 			}
@@ -1408,32 +1399,40 @@ public class Angelaccesorios implements Serializable{
 
 	//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 
-	public void exportOrdersReport(String fn, String initialTime, String finalTime, String separator) throws FileNotFoundException {
-		/*ArrayList<Receipt> receiptsS = selectedReceipts(initialTime,finalTime);
-		PrintWriter pw = new PrintWriter(fn);
-		String info ="";
-		String nameColumns = "Código"+separator+"Estado"+separator+"Fecha y hora"+separator+"Observaciones"+separator+"Nombre del cliente"+separator+"Tipo de identificación"+separator+"Numero de identificación"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Nombre del Empleado"+separator+"Identificacion del empleado"+separator+"Producto(s): Nombre, cantidad y valor unitario";
-		for(int i=0;i<receiptsS.size();i++){
-			Receipt objReceipt = receiptsS.get(i);
-			info+=objReceipt.getCode()+separator+objReceipt.ge.name()+separator+objOrder.getDateAndHour()+separator+objOrder.getObservations()+separator+objOrder.getClientName()+separator+objOrder.getBuyer().getAddress()+separator+objOrder.getBuyer().getPhone()+separator+objOrder.getEmployeeName()+separator;
-			for(int k=0;k<objReceipt.getListOfProducts().size();k++) {
-				info += objReceipt.getListOfProducts().get(k).getName()+separator;
-				info += objReceipt.getListOfQuantity().get(k)+separator;
-				info += objReceipt.getListOfSizes().get(k).getName()+separator; 
-				info += objReceipt.getListOfSizes().get(k).getPrice(); 
-				int listSize = objOrder.getListOfProducts().size();
-				if(k<listSize) {
-					info+=separator;
+	/*public void exportReceiptsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
+		String strFormat = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
+		Date date1 = formato.parse(initialTime);
+		Date date2 = formato.parse(finalTime);
+		if(date1.after(date2)) {
+			throw new HigherDateAndHour();
+		}else {
+			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2);
+			PrintWriter pw = new PrintWriter(fn);
+			String info ="";
+			String nameColumns = "Código"+SEPARATOR+"Estado"+SEPARATOR+"Fecha y hora"+SEPARATOR+"Observaciones"+SEPARATOR+"Nombre del cliente"+SEPARATOR+"Tipo de identificación"+separator+"Numero de identificación"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Nombre del Empleado"+separator+"Identificacion del empleado"+separator+"Producto(s): Nombre, cantidad y valor unitario";
+			for(int i=0;i<receiptsS.size();i++){
+				Receipt objReceipt = receiptsS.get(i);
+				info+=objReceipt.getCode()+separator+objReceipt.ge.name()+separator+objOrder.getDateAndHour()+separator+objOrder.getObservations()+separator+objOrder.getClientName()+separator+objOrder.getBuyer().getAddress()+separator+objOrder.getBuyer().getPhone()+separator+objOrder.getEmployeeName()+separator;
+				for(int k=0;k<objReceipt.getListOfProducts().size();k++) {
+					info += objReceipt.getListOfProducts().get(k).getName()+separator;
+					info += objReceipt.getListOfQuantity().get(k)+separator;
+					info += objReceipt.getListOfSizes().get(k).getName()+separator; 
+					info += objReceipt.getListOfSizes().get(k).getPrice(); 
+					int listSize = objOrder.getListOfProducts().size();
+					if(k<listSize) {
+						info+=separator;
+					}
+				}
+				if(i!=ordersS.size()-1) {
+					info+="\n";
 				}
 			}
-			if(i!=ordersS.size()-1) {
-				info+="\n";
-			}
+			pw.println(nameColumns);
+			pw.print(info);
+			pw.close();	
 		}
-		pw.println(nameColumns);
-		pw.print(info);
-		pw.close();*/
-	}
+	}*/
 	
 	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
 		String strFormat = "yyyy-MM-dd HH:mm";
@@ -1447,7 +1446,7 @@ public class Angelaccesorios implements Serializable{
 			int totalMoney=0;
 			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2);
 			PrintWriter pw = new PrintWriter(fn);
-			String nameColumns = "Usuario"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de facturas generadas"+SEPARATOR+"Valor total de las facturas entregadas";
+			String nameColumns = "Usuario"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de facturas generadas"+SEPARATOR+"Valor total de las facturas generadas";
 			pw.println(nameColumns);
 			for(int k=0;k<receiptsS.size();k++) {
 				receiptsS.get(k).getCreator().setCont(0);
@@ -1466,37 +1465,45 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 	
-	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException {
-		/*int totalOrders=0;
-		int totalMoney=0;
-		List<Order> ordersS = selectDeliveredOrders(initialTime,finalTime);
-		PrintWriter pw = new PrintWriter(fn);
-		String nameColumns = "Nombre del producto"+SEPARATOR+"Numero total de veces que fue pedido"+SEPARATOR+"Cantidad de total de dinero recaudado";
-		pw.println(nameColumns);
-		for(int i=0;i<ordersS.size();i++){
-			Order objOrder = ordersS.get(i);
-			for(int k=0;k<objOrder.getListOfProducts().size();k++) {
-				Product pd = objOrder.getListOfProducts().get(k);
-				pd.setCont((pd.getCont())+1);
-				if(pd.getCont()==1) {
-					pw.println(pd.getName()+SEPARATOR+pd.getNumTimesAddedOrders()+SEPARATOR+pd.getTotalPriceAddedOrders());
-					totalOrders+=pd.getNumTimesAddedOrders();
-					totalMoney+=pd.getTotalPriceAddedOrders();
+	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
+		String strFormat = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
+		Date date1 = formato.parse(initialTime);
+		Date date2 = formato.parse(finalTime);
+		if(date1.after(date2)) {
+			throw new HigherDateAndHour();
+		}else {
+			int totalOrders=0;
+			int totalMoney=0;
+			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2);
+			PrintWriter pw = new PrintWriter(fn);
+			String nameColumns = "Nombre del producto"+SEPARATOR+"Numero total de veces que fue pedido"+SEPARATOR+"Cantidad de total de dinero recaudado";
+			pw.println(nameColumns);
+			for(int i=0;i<receiptsS.size();i++){
+				Receipt objR = receiptsS.get(i);
+				for(int k=0;k<objR.getListOfProducts().size();k++) {
+					Product pd = objR.getListOfProducts().get(k);
+					pd.setCont((pd.getCont())+1);
+					if(pd.getCont()==1) {
+						pw.println(pd.getTypeName()+SEPARATOR+pd.getBrandName()+SEPARATOR+pd.getModel()+SEPARATOR+pd.getNumTimesAddedOrders()+SEPARATOR+pd.getTotalPriceAddedOrders());
+						totalOrders+=pd.getNumTimesAddedOrders();
+						totalMoney+=pd.getTotalPriceAddedOrders();
+					}
 				}
 			}
-		}
-		pw.println("Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
+			pw.println("Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
 
-		pw.close();
-		for(int j=0;j<ordersS.size();j++) {
-			Order ord = ordersS.get(j);
-			for(int k=0;k<ord.getListOfProducts().size();k++) {
-				Product p = ord.getListOfProducts().get(k);
-				p.setNumTimesAddedOrders(0);
-				p.setTotalPriceAddedOrders(0);
-				p.setCont(0);
-			}
-		} */
+			pw.close();
+			for(int j=0;j<ordersS.size();j++) {
+				Order ord = ordersS.get(j);
+				for(int k=0;k<ord.getListOfProducts().size();k++) {
+					Product p = ord.getListOfProducts().get(k);
+					p.setNumTimesAddedOrders(0);
+					p.setTotalPriceAddedOrders(0);
+					p.setCont(0);
+				}
+			}	
+		}
 	}
 
 	//Sort products by ascending price

@@ -9,11 +9,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import exceptions.EmailException;
-<<<<<<< HEAD
 import exceptions.HigherDateAndHour;
-=======
 import exceptions.ExcessQuantityException;
->>>>>>> 8418179c679d049c51c7338387f21cadd4af43fd
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -2334,7 +2331,41 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void generateProductsReport(ActionEvent event) {
-
+		if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null) {
+    		LocalDate initialDate = dtPickerInitialDate.getValue();
+    		LocalDate finalDate = dtPickerFinalDate.getValue();
+    		String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
+    		String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
+    		String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
+    		String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
+    		FileChooser fileChooser = new FileChooser();
+        	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
+        	File fExp= fileChooser.showSaveDialog(mainPane.getScene().getWindow());
+        	if(fExp!=null) {
+        		Alert alert = new Alert(AlertType.INFORMATION);
+    		    alert.setTitle("Exportar reporte sobre productos");
+    		    try {
+    				angelaccesorios.exportProductsReport(fExp.getAbsolutePath(),initialTime,finalTime);
+    			    alert.setHeaderText(null);
+    			    alert.setContentText("El reporte de productos ha sido exportado exitosamente");
+    			    alert.showAndWait();
+    			} catch (IOException e) {
+    				alert.setHeaderText(null);
+    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+e.getMessage());
+    			    alert.showAndWait();
+    			} catch (ParseException p) {
+    				alert.setHeaderText(null);
+    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
+    			    alert.showAndWait();
+				} catch (HigherDateAndHour h) {
+					alert.setHeaderText(null);
+    			    alert.setContentText(h.getMessage());
+    			    alert.showAndWait();
+				}
+        	}
+    	}else {
+    		showValidationErrorAlert();
+    	}
 	}
 
 	public void showValidationErrorAlert() {
