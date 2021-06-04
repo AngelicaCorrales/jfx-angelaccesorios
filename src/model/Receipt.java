@@ -27,6 +27,16 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 		observations = obs;
 		paymentMethod=stringToPaymentMethod(pm);
 	}
+	
+	public void restUnitsToAddedProducts() {
+		for(int i=0;i<listOfProducts.size();i++) {
+			listOfProducts.get(i).setUnits(listOfProducts.get(i).getUnits()-listOfQuantity.get(i));
+			if(listOfProducts.get(i).getUnits()==0) {
+				listOfProducts.get(i).setEnabled(false);
+			}
+		}
+	}
+	
 	public PaymentMethod stringToPaymentMethod(String pm) {
 		PaymentMethod pMT = null;
 		switch(pm) {
