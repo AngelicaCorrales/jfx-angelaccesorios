@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Payment implements Serializable{
@@ -64,6 +65,17 @@ public class Payment implements Serializable{
 
 	public void setPrev(Payment prev) {
 		this.prev = prev;
-	}	
+	}
+	
+	public String getDateAndHour() {
+		String strDateFormat = "yyyy-MM-dd HH:mm"; 
+		SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+		String dateAndHour = objSDF.format(dateAndTime);
+		return dateAndHour;
+	}
+	
+	public String toString() {
+		return getDateAndHour()+" $"+amount+" "+paymentMethod+" - "+creator.getUserName();
+	}
 	
 }

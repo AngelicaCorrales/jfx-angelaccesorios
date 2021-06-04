@@ -46,6 +46,12 @@ public class Angelaccesorios implements Serializable{
 	private TypeOfProduct typePRoot;
 	private Supplier supplierRoot;
 	private List<Client> clients;
+	
+	
+	private ArrayList<Product> receiptProducts;
+	private ArrayList<Integer> receiptQuantitiesProducts;
+	
+	
 
 	public Angelaccesorios(int num) {
 		if(num==PROGRAM) {
@@ -58,7 +64,35 @@ public class Angelaccesorios implements Serializable{
 		products = new ArrayList<Product>();
 		clients=new ArrayList<Client>();
 		receipts = new ArrayList<Receipt>(); 
+		
+		receiptProducts= new ArrayList<Product>();
+		receiptQuantitiesProducts= new ArrayList<Integer>();
 	}
+	
+	public ArrayList<Product> getReceiptProducts() {
+		return receiptProducts;
+	}
+	public void setReceiptProducts(ArrayList<Product> receiptProducts) {
+		this.receiptProducts = receiptProducts;
+	}
+	public ArrayList<Integer> getReceiptQuantitiesProducts() {
+		return receiptQuantitiesProducts;
+	}
+	public void setReceiptQuantitiesProducts(ArrayList<Integer> receiptQuantitiesProducts) {
+		this.receiptQuantitiesProducts = receiptQuantitiesProducts;
+	}
+	
+	public ArrayList<Product> returnEnabledProducts(){
+		ArrayList<Product> list= new ArrayList<Product>();
+		for(int i=0;i<products.size();i++) {
+			if(products.get(i).isEnabled()) {
+				list.add(products.get(i));
+			}
+		}
+		return list;
+	}
+	
+	
 	public List<Client> getClients() {
 		return clients;	
 	}
@@ -447,7 +481,26 @@ public class Angelaccesorios implements Serializable{
 		this.receipts = receipts;
 	}
 
-
+	public ArrayList<Receipt> returnCashReceipts(){
+		ArrayList<Receipt> list=new ArrayList<Receipt>();
+		for(int i=0;i<receipts.size();i++) {
+			if(!(receipts.get(i) instanceof SeparateReceipt)) {
+				list.add(receipts.get(i));
+			}
+		}
+		return list;
+	}
+	
+	public ArrayList<SeparateReceipt> returnSeparateReceipts(){
+		ArrayList<SeparateReceipt> list=new ArrayList<SeparateReceipt>();
+		for(int i=0;i<receipts.size();i++) {
+			if(receipts.get(i) instanceof SeparateReceipt) {
+				list.add((SeparateReceipt) receipts.get(i));
+			}
+		}
+		return list;
+	}
+	
 	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) throws NoProductsAddedException, UnderAgeException, IOException {
 		if(listProd.isEmpty()) {
 			throw new NoProductsAddedException();
@@ -463,6 +516,10 @@ public class Angelaccesorios implements Serializable{
 		
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.calculateTotalPrice());
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
+		
+		
+		setReceiptProducts(new ArrayList<Product>());
+		setReceiptQuantitiesProducts(new ArrayList<Integer>());
 		saveDataAngelaccesorios();
 	}
 	

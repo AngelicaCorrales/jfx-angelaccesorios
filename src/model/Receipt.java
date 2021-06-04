@@ -93,6 +93,14 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 		String dateAndHour = objSDF.format(dateAndTime);
 		return dateAndHour;
 	}
+	
+	public String getAllProducts() {
+		String allProducts = "";
+		for(int k=0; k<listOfProducts.size();k++) {
+			allProducts += listOfQuantity.get(k)+" "+listOfProducts.get(k)+"\n";
+		}
+		return allProducts;
+	}
 
 	public String getObservations() {
 		return observations;
@@ -121,11 +129,6 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 
 	public void setBuyer(Client buyer) {
 		this.buyer = buyer;
-	}
-
-	public String getClientName() {
-		String name = buyer.toString();
-		return name;
 	}
 
 	public PaymentMethod getPaymentMethod() {

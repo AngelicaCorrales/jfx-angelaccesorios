@@ -6,14 +6,17 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import exceptions.EmailException;
+import exceptions.ExcessQuantityException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
+import exceptions.NoProductsAddedException;
 import exceptions.NoQuantityException;
 import exceptions.SameIDException;
 import exceptions.SameProductException;
 import exceptions.SameUserNameException;
 import exceptions.SpaceException;
+import exceptions.UnderAgeException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,6 +54,7 @@ import model.Client;
 import model.ElectronicEquipment;
 import model.Product;
 import model.Receipt;
+import model.SeparateReceipt;
 import model.Supplier;
 import model.TypeOfProduct;
 import model.User;
@@ -416,7 +420,7 @@ public class AngelaccesoriosGUI {
 	private TableColumn<Integer, Integer> colQuantityRProduct;
 
 	@FXML
-	private TableView<Receipt> tvOfSeparateReceipts;
+	private TableView<SeparateReceipt> tvOfSeparateReceipts;
 
 	@FXML
 	private TableColumn<Receipt, String> colCodeS;
@@ -489,6 +493,9 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private VBox receiptMenu;
+	
+	@FXML
+	private Button btAddSR;
 
 	//Suppliers-----
 	@FXML
@@ -1397,11 +1404,74 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void addProductToAReceipt(ActionEvent event) {
-
+		Product selectedProduct= tvOfAddedProducts.getSelectionModel().getSelectedItem();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+				
+		try {
+				int quantity=Integer.parseInt(txtQuantityProduct.getText());
+				angelaccesorios.addProductToAReceipt(selectedProduct, quantity, angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts());
+				
+				initializeTableViewOfReceiptProducts();
+				
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Información");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Producto agregado");
+				alert1.showAndWait();
+		} catch (NumberFormatException e) {
+				alert.setContentText("Digite la cantidad en formato numérico");
+				alert.showAndWait();
+			}catch (SameProductException e) {
+				alert.setContentText("El producto ya había sido agregado");
+				alert.showAndWait();
+			} catch (NoQuantityException e) {
+				alert.setContentText("La cantidad del producto no puede ser cero");
+				alert.showAndWait();
+			} catch (NegativeQuantityException e) {
+				alert.setContentText("La cantidad del producto no puede ser negativa");
+				alert.showAndWait();
+			} catch (ExcessQuantityException e) {
+				alert.setContentText("La cantidad del producto excede a las unidades disponibles");
+				alert.showAndWait();
+			}
+		
 	}
 
 	@FXML
-	public void addReceipt(ActionEvent event) {
+	public void addReceipt(ActionEvent event) throws IOException {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		try {
+			if(cmbxClients.getValue()!=null && !txtObsevations.getText().isEmpty() && cbPaymentMethod.getValue()!=null) {
+				angelaccesorios.createCashReceipt(angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts(), cmbxClients.getValue(), txtObsevations.getText(), cbPaymentMethod.getValue());
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Información");
+				alert1.setHeaderText(null);
+				alert1.setContentText("La factura se ha creado con exito");
+				alert1.showAndWait();
+				
+				cmbxClients.setValue(null);
+				cbPaymentMethod.setValue(null);
+				txtObsevations.setText("");
+				
+				
+			}else {
+				showValidationErrorAlert();
+			}
+		} catch (NoProductsAddedException e) {
+			alert.setContentText("No se han añadido productos a la factura");
+			alert.showAndWait();
+		} catch (UnderAgeException e) {
+			alert.setContentText("El cliente es menor de edad, no puede adquirir el equipo electrónico");
+			alert.showAndWait();
+		} 
+	}
+	
+	@FXML
+	public void addSeparateReceipt(ActionEvent event) {
 
 	}
 
@@ -1422,26 +1492,84 @@ public class AngelaccesoriosGUI {
 		tvOfAddedProducts.setVisible(true);
 		tvOfReceiptProducts.setVisible(true);
 		tvOfQuantities.setVisible(true);
+		initializeTableViewOfAddedProducts();
+		initializeTableViewOfReceiptProducts();
+		initializeTableViewOfQuantitiesProducts();
+	}
+	
+	private void initializeTableViewOfAddedProducts() {
+		ObservableList<Product> observableList;
+    	observableList = FXCollections.observableArrayList(angelaccesorios.returnEnabledProducts());
+    	tvOfAddedProducts.setItems(observableList);
+    	
+    	colNameAddedProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Info"));
+  
+
+    	tvOfAddedProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
+	
+	private void initializeTableViewOfReceiptProducts() {
+		ObservableList<Product> observableList;
+    	observableList = FXCollections.observableArrayList(angelaccesorios.getReceiptProducts());
+    	tvOfReceiptProducts.setItems(observableList);
+    	
+    	colNameRProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Info"));
+  
+
+    	tvOfReceiptProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	}
+	
+	private void initializeTableViewOfQuantitiesProducts() {
+		ObservableList<Integer> observableList;
+    	observableList = FXCollections.observableArrayList(angelaccesorios.getReceiptQuantitiesProducts());
+    	tvOfQuantities.setItems(observableList);
+    	
+    	colQuantityRProduct.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("intValue"));
+  
+
+    	tvOfQuantities.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@FXML
 	public void clickOnTableViewOfAddedProducts(MouseEvent event) {
-
+		Product selectedProduct= tvOfAddedProducts.getSelectionModel().getSelectedItem();
+		if (selectedProduct!=null) {
+			txtNameProduct.setText(selectedProduct.getInfo());
+			txtQuantityProduct.setText("");
+			txtQuantityProduct.setEditable(true);
+			btAddProductR.setDisable(false);
+		}
 	}
 
 	@FXML
-	public void clickOnTableViewOfOrderProducts(MouseEvent event) {
-
+	public void clickOnTableViewOfReceiptProducts(MouseEvent event) {
+		Product selectedProduct= tvOfReceiptProducts.getSelectionModel().getSelectedItem();
+		if (selectedProduct!=null) {
+			txtNameProduct.setText(selectedProduct.getInfo());
+			int i=angelaccesorios.getReceiptProducts().indexOf(selectedProduct);
+			txtQuantityProduct.setText(angelaccesorios.getReceiptQuantitiesProducts().get(i)+"");
+		}
 	}
 
 	@FXML
-	public void clickOnTableViewOfOrders(MouseEvent event) {
+	public void clickOnTableViewOfReceipts(MouseEvent event) {
+
+	}
+	@FXML
+	public void clickOnTableViewOfSeparateReceipts(MouseEvent event) {
 
 	}
 
 	@FXML
 	public void deleteProductOfAReceipt(ActionEvent event) {
-
+		Product selectedProduct= tvOfReceiptProducts.getSelectionModel().getSelectedItem();
+		angelaccesorios.deleteProductFromAReceipt(selectedProduct, angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts());
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Información");
+		alert.setHeaderText(null);
+		alert.setContentText("El producto ha sido eliminado de la lista");
+		alert.showAndWait();
 	}
 
 	@FXML
@@ -1469,7 +1597,25 @@ public class AngelaccesoriosGUI {
 	}
 
 	private void initializeTableViewOfCountedReceipts() {
+		
+		ObservableList<Receipt> observableList;
+    	observableList = FXCollections.observableArrayList(angelaccesorios.returnCashReceipts());
+    	tvOfCountedReceipts.setItems(observableList);
+    	
+    	colCodeC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Code"));
+    	colDateandTimeC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("DateAndHour"));
+    	colClientC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
+    	colUserC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
+    	colProductsInCR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
+    	//colSubtotalPriceC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("typeId"));
+    	//colIVAC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
+    	//colTotalValueC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
+    	colPaymentMC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("PaymentMethod"));
+    	colObservationsC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
+    	
 
+    	tvOfCountedReceipts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		 
 	}
 
 	@FXML
@@ -1487,7 +1633,23 @@ public class AngelaccesoriosGUI {
 	}
 
 	private void initializeTableViewOfSeparateReceipts() {
-
+		ObservableList<SeparateReceipt> observableList;
+    	observableList = FXCollections.observableArrayList(angelaccesorios.returnSeparateReceipts());
+    	tvOfSeparateReceipts.setItems(observableList);
+    	
+    	colCodeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Code"));
+    	colDateandTimeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("DateAndHour"));
+    	colClientS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
+    	colUserS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
+    	colProductsInSR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
+    	//colSubtotalPriceS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("typeId"));
+    	//colIVAS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
+    	//colTotalValueS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
+    	colPayments.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllPayments"));
+    	//colToPay.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("PaymentMethod"));
+    	colObservationsS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
+    	
+    	tvOfSeparateReceipts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@FXML
