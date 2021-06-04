@@ -119,7 +119,7 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	}
 
 	public String getUserName() {
-		String name = creator.toString();
+		String name = creator.getUserName();
 		return name;
 	}
 

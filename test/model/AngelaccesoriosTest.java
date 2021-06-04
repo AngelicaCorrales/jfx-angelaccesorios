@@ -2467,15 +2467,6 @@ public class AngelaccesoriosTest {
 		assertEquals(angelaccesorios.getProducts().get(1).getUnits(),4);
 	}
 
-	@Test
-	public void testGenerateReceipt1() {
-
-	}
-
-	@Test
-	public void testGenerateReceipt2() {
-
-	}
 
 	@Test
 	public void testDeleteReceipt1() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {

@@ -360,6 +360,12 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private ComboBox<String> cbPaymentMethod;
+	
+	@FXML
+	private ComboBox<Client> cmbxClientsSR;
+
+	@FXML
+	private ComboBox<String> cbPaymentMethodSR;
 
 	@FXML
 	private TextField txtClientSearchedName;
@@ -1401,6 +1407,8 @@ public class AngelaccesoriosGUI {
 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		receiptMenu.setVisible(true);
+		initializeComboBoxClients();
+		initializeComboBoxPaymentMethods();
 	}
 
 	@FXML
@@ -1416,16 +1424,26 @@ public class AngelaccesoriosGUI {
 		alert.setHeaderText(null);
 				
 		try {
+			if(!txtQuantityProduct.getText().isEmpty()) {
 				int quantity=Integer.parseInt(txtQuantityProduct.getText());
 				angelaccesorios.addProductToAReceipt(selectedProduct, quantity, angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts());
-				
+
 				initializeTableViewOfReceiptProducts();
-				
+				initializeTableViewOfQuantitiesProducts();
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setTitle("Información");
 				alert1.setHeaderText(null);
 				alert1.setContentText("Producto agregado");
 				alert1.showAndWait();
+
+				btAddProductR.setDisable(true);
+				txtNameProduct.setText("");
+				txtQuantityProduct.setText("");
+				txtQuantityProduct.setEditable(false);
+				btDeleteProductR.setDisable(true);
+			}else {
+				showValidationErrorAlert();
+			}
 		} catch (NumberFormatException e) {
 				alert.setContentText("Digite la cantidad en formato numérico");
 				alert.showAndWait();
@@ -1462,7 +1480,7 @@ public class AngelaccesoriosGUI {
 				cmbxClients.setValue(null);
 				cbPaymentMethod.setValue(null);
 				txtObsevations.setText("");
-				
+				initializeTableViewOfCountedReceipts();
 				
 			}else {
 				showValidationErrorAlert();
@@ -1477,8 +1495,46 @@ public class AngelaccesoriosGUI {
 	}
 	
 	@FXML
-	public void addSeparateReceipt(ActionEvent event) {
-
+	public void addSeparateReceipt(ActionEvent event) throws IOException {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		try {
+			if(cmbxClientsSR.getValue()!=null && !txtPaymentValue.getText().isEmpty() && cbPaymentMethodSR.getValue()!=null) {
+				double value=Double.parseDouble(txtPaymentValue.getText());
+				
+				angelaccesorios.createSeparateReceipt(angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts(), cmbxClientsSR.getValue(), cbPaymentMethodSR.getValue(),value);
+				
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Información");
+				alert1.setHeaderText(null);
+				alert1.setContentText("La factura se ha creado con exito");
+				alert1.showAndWait();
+				
+				cmbxClientsSR.setValue(null);
+				cbPaymentMethodSR.setValue(null);
+				txtPaymentValue.setText("");
+				initializeTableViewOfSeparateReceipts();
+				
+			}else {
+				showValidationErrorAlert();
+			}
+		} catch (NoProductsAddedException e) {
+			alert.setContentText("No se han añadido productos a la factura");
+			alert.showAndWait();
+		} catch (UnderAgeException e) {
+			alert.setContentText("El cliente es menor de edad, no puede adquirir el equipo electrónico");
+			alert.showAndWait();
+		} catch (NoPriceException e) {
+			alert.setContentText("El valor del abono no puede ser cero");
+			alert.showAndWait();
+		} catch (NegativePriceException e) {
+			alert.setContentText("El valor del abono no puede ser negativo");
+			alert.showAndWait();
+		}catch (NumberFormatException e) {
+			alert.setContentText("Digite el valor del abono en formato numérico");
+			alert.showAndWait();
+		}
 	}
 
 	@FXML
@@ -1501,8 +1557,23 @@ public class AngelaccesoriosGUI {
 		initializeTableViewOfAddedProducts();
 		initializeTableViewOfReceiptProducts();
 		initializeTableViewOfQuantitiesProducts();
+		
 	}
 	
+	private void initializeComboBoxClients() {
+		ObservableList<Client> options = 
+			    FXCollections.observableArrayList(angelaccesorios.returnEnabledClients());
+		cmbxClients.setItems(options);
+		cmbxClientsSR.setItems(options);
+	}
+
+	private void initializeComboBoxPaymentMethods() {
+		ObservableList<String> options = 
+			    FXCollections.observableArrayList("Efectivo","Tarjeta de debito","Tarjeta de credito","Transferencia bancaria");
+		cbPaymentMethod.setItems(options);
+		cbPaymentMethodSR.setItems(options);
+	}
+
 	private void initializeTableViewOfAddedProducts() {
 		ObservableList<Product> observableList;
     	observableList = FXCollections.observableArrayList(angelaccesorios.returnEnabledProducts());
@@ -1554,6 +1625,10 @@ public class AngelaccesoriosGUI {
 			txtNameProduct.setText(selectedProduct.getInfo());
 			int i=angelaccesorios.getReceiptProducts().indexOf(selectedProduct);
 			txtQuantityProduct.setText(angelaccesorios.getReceiptQuantitiesProducts().get(i)+"");
+			
+			btAddProductR.setDisable(true);
+			txtQuantityProduct.setEditable(false);
+			btDeleteProductR.setDisable(false);
 		}
 	}
 
@@ -1576,6 +1651,14 @@ public class AngelaccesoriosGUI {
 		alert.setHeaderText(null);
 		alert.setContentText("El producto ha sido eliminado de la lista");
 		alert.showAndWait();
+		
+		btAddProductR.setDisable(true);
+		txtNameProduct.setText("");
+		txtQuantityProduct.setText("");
+		btDeleteProductR.setDisable(true);
+		
+		initializeTableViewOfReceiptProducts();
+		initializeTableViewOfQuantitiesProducts();
 	}
 
 	@FXML
@@ -1660,6 +1743,11 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void returnToReceiptForm(ActionEvent event) {
+		btAddProductR.setDisable(true);
+		txtNameProduct.setText("");
+		txtQuantityProduct.setText("");
+		txtQuantityProduct.setEditable(false);
+		btDeleteProductR.setDisable(true);
 		addProductsToAReceipt.setVisible(false);
 		tvOfAddedProducts.setVisible(false);
 		tvOfReceiptProducts.setVisible(false);
@@ -1696,7 +1784,7 @@ public class AngelaccesoriosGUI {
 
     			alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
         		alert.showAndWait();
-        		initializeTableViewClients();
+        		initializeComboBoxClients();
         		txtClientSearchedName.clear();
         		txtClientSearchedLastName.clear();
 
@@ -1713,7 +1801,7 @@ public class AngelaccesoriosGUI {
     		
     		alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
     		alert.showAndWait();
-    		initializeTableViewClients();
+    		initializeComboBoxClients();
 
     	}
 	}

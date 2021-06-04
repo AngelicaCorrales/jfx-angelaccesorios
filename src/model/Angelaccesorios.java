@@ -94,6 +94,15 @@ public class Angelaccesorios implements Serializable{
 		return list;
 	}
 	
+	public ArrayList<Client> returnEnabledClients(){
+		ArrayList<Client> list= new ArrayList<Client>();
+		for(int i=0;i<clients.size();i++) {
+			if(clients.get(i).isEnabled()) {
+				list.add(clients.get(i));
+			}
+		}
+		return list;
+	}
 	
 	public List<Client> getClients() {
 		return clients;	
