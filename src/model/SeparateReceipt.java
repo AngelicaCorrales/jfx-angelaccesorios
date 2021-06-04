@@ -32,6 +32,21 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 		}
 	}
 	
+	public String getAllPayments() {
+		String payments="";
+		return getAllPayments(firstPayment, payments);
+	}
+	
+	private String getAllPayments(Payment current, String payments) {
+		if(current==null) {
+			return "";
+		}else {
+			payments+=current+"\n";
+			return getAllPayments(current.getNext(),payments);
+		}
+		
+	}
+	
 	public State getState() {
 		return state;
 	}

@@ -119,4 +119,12 @@ public class Product implements Serializable{
 		this.enabled = enabled;
 	}
 	
+	public String getInfo() {
+		return type+" "+brand+" "+model;
+	}
+	
+	public String toString() {
+		return type+" "+brand+" "+model+" "+price+"c/u";
+	}
+	
 }
