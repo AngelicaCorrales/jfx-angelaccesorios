@@ -56,6 +56,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -504,6 +506,9 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private Button btAddProductR;
+	
+	 @FXML
+	private HBox hBoxSearchReceipt;
 
 	@FXML
 	private Button btGenerateR;
@@ -516,6 +521,13 @@ public class AngelaccesoriosGUI {
 	
 	@FXML
 	private VBox vBoxListViewQ;
+	
+	@FXML
+    private GridPane gridPaneR;
+
+	@FXML
+    private GridPane gridPaneSR;
+
 
 
 	//Suppliers-----
@@ -1384,6 +1396,7 @@ public class AngelaccesoriosGUI {
 
 		mainPane.setCenter(clientPane);
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
+		initializeTableViewOfProducts(angelaccesorios.getProducts());
 	}
 
 	@FXML
@@ -1393,9 +1406,21 @@ public class AngelaccesoriosGUI {
 		if(!type.equals("") && !brand.equals("")) {
 			ArrayList<Product> p = angelaccesorios.returnFoundProducts(type, brand);
 			tvOfProducts.getItems().clear();
-			initializeTableViewOfProducts(p);
+			
+			if(p.isEmpty()) {
+				initializeTableViewOfProducts(angelaccesorios.getProducts());
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText(null);
+				alert.setHeaderText(null);
+				alert.setContentText("No se encontró el producto con tipo "+type+" y marca "+brand);
+				alert.showAndWait();
+			}else {
+				initializeTableViewOfProducts(p);
+			}
 		}else {
 			showValidationErrorAlert();
+			initializeTableViewOfProducts(angelaccesorios.getProducts());
 		}
 	}
 
@@ -1569,6 +1594,8 @@ public class AngelaccesoriosGUI {
 		initializeTableViewOfReceiptProducts();
 		initializeListViewOfQuantitiesProducts();
 		
+		hBoxSearchReceipt.setVisible(false);
+		
 	}
 	
 	private void initializeComboBoxClients() {
@@ -1643,11 +1670,21 @@ public class AngelaccesoriosGUI {
 		Receipt selectedReceipt = tvOfCountedReceipts.getSelectionModel().getSelectedItem();
 		if(selectedReceipt!=null) {
 			btGenerateR.setDisable(false);
+			btDelete.setDisable(false);
+			btAdd.setDisable(true);
+			gridPaneR.setDisable(true);
+
 		}
 	}
 	@FXML
 	public void clickOnTableViewOfSeparateReceipts(MouseEvent event) {
-
+		Receipt selectedReceipt = tvOfSeparateReceipts.getSelectionModel().getSelectedItem();
+		if(selectedReceipt!=null) {
+			btGenerateR.setDisable(false);
+			btDelete.setDisable(false);
+			btAddSR.setDisable(true);
+			gridPaneSR.setDisable(true);
+		}
 	}
 
 	@FXML
@@ -1671,8 +1708,43 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void deleteReceipt(ActionEvent event) {
-
+	public void deleteReceipt(ActionEvent event) throws IOException {
+		Receipt r=null;
+		boolean deleted;
+		if(lbWindow.getText().equals("C")) {
+			 r = tvOfCountedReceipts.getSelectionModel().getSelectedItem();
+		}else if(lbWindow.getText().equals("S")) {
+			r = tvOfSeparateReceipts.getSelectionModel().getSelectedItem();
+		}
+		
+		deleted=angelaccesorios.deleteReceipt(r);
+		if(deleted) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Información");
+			alert.setHeaderText(null);
+			alert.setContentText("La factura se ha eliminado exitosamente");
+			alert.showAndWait();
+			
+			if(lbWindow.getText().equals("C")) {
+				tvOfCountedReceipts.getItems().clear();
+    			initializeTableViewOfCountedReceipts();
+    		}else {
+    			tvOfSeparateReceipts.getItems().clear();
+    			initializeTableViewOfSeparateReceipts();
+    		}
+		}else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("La factura no pudo eliminarse");
+			alert.showAndWait();
+		}
+		btGenerateR.setDisable(true);
+	    btDelete.setDisable(true);
+	    btAdd.setDisable(false);
+	    btAddSR.setDisable(false);
+	    gridPaneSR.setDisable(false);
+	    gridPaneR.setDisable(false);
 	}
 
 	@FXML
@@ -1706,6 +1778,12 @@ public class AngelaccesoriosGUI {
 				    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso");
 					e.printStackTrace();
 				}
+			    btGenerateR.setDisable(true);
+			    btDelete.setDisable(true);
+			    btAdd.setDisable(false);
+			    btAddSR.setDisable(false);
+			    gridPaneSR.setDisable(false);
+			    gridPaneR.setDisable(false);
 	    	}	
 		}
 	}
@@ -1720,8 +1798,8 @@ public class AngelaccesoriosGUI {
 		btGenerateR.setVisible(true);
 		btGenerateR.setDisable(true);
 		btDelete.setVisible(true);
-		btDelete.setDisable(true);
 		initializeTableViewOfCountedReceipts();
+		hBoxSearchReceipt.setVisible(true);
 	}
 
 	private void initializeTableViewOfCountedReceipts() {
@@ -1758,6 +1836,7 @@ public class AngelaccesoriosGUI {
 		btDelete.setVisible(true);
 		btDelete.setDisable(true);
 		initializeTableViewOfSeparateReceipts();
+		hBoxSearchReceipt.setVisible(true);
 	}
 
 	private void initializeTableViewOfSeparateReceipts() {
@@ -1791,6 +1870,7 @@ public class AngelaccesoriosGUI {
 		tvOfAddedProducts.setVisible(false);
 		tvOfReceiptProducts.setVisible(false);
 		vBoxListViewQ.setVisible(false);
+		hBoxSearchReceipt.setVisible(true);
 		if(lbWindow.getText().equals("C")) {
 			manageCountedReceipt(null);
 		}else {
@@ -1809,6 +1889,7 @@ public class AngelaccesoriosGUI {
 		btDelete.setVisible(false);
 		receiptMenu.setVisible(true);
 		angelaccesorios.resetReceiptProductsAndQuantities();
+		hBoxSearchReceipt.setVisible(false);
 	}
 
 	@FXML
@@ -1848,7 +1929,64 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void searchReceiptByCode(ActionEvent event) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		if(!txtCode.getText().isEmpty()) {
+			Receipt receipt=angelaccesorios.searchReceipt(txtCode.getText());
+			boolean found=false;
+			if(lbWindow.getText().equals("C")) {
+				if(receipt!=null && !(receipt instanceof SeparateReceipt)) {
+					ObservableList<Receipt> receiptList = FXCollections.observableArrayList(receipt);
+					tvOfCountedReceipts.setItems(receiptList);
+					found=true;
+				}
+			}else {
+				if(receipt!=null && receipt instanceof SeparateReceipt) {
+					ObservableList<SeparateReceipt> receiptList = FXCollections.observableArrayList((SeparateReceipt)receipt);
+					tvOfSeparateReceipts.setItems(receiptList);
+					found=true;
+				}
+			}
+			
+			
+			if(!found) {
+				String r="";
+				if(lbWindow.getText().equals("C")) {
+					r="factura de contado";
+				}else {
+					r="factura de separado";
+				}
+					
+    			alert.setContentText("No se encontró la factura con código "+txtCode.getText()+" como "+r);
+        		alert.showAndWait();
+        		if(lbWindow.getText().equals("C")) {
+        			initializeTableViewOfCountedReceipts();
+        		}else {
+        			initializeTableViewOfSeparateReceipts();
+        		}
+    		}else {
+    			Alert alert1 = new Alert(AlertType.INFORMATION);
+    			alert1.setTitle("Información");
+    			alert1.setHeaderText(null);
+    			alert1.setContentText("Factura encontrada");
+        		alert1.showAndWait();
+    		}
+    		
+			txtCode.clear();    		
+    		
+    	}else {
+    		
+    		alert.setContentText("Debe ingresar código de la factura para buscarla");
+    		alert.showAndWait();
+    		if(lbWindow.getText().equals("C")) {
+    			initializeTableViewOfCountedReceipts();
+    		}else {
+    			initializeTableViewOfSeparateReceipts();
+    		}
+    		
 
+    	}
 	}
 
 	@FXML

@@ -62,7 +62,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </HBox>
-      <TableView prefHeight="468.0" prefWidth="1019.0">
+      <TableView fx:id="tvOfProducts" prefHeight="468.0" prefWidth="1019.0">
         <columns>
           <TableColumn fx:id="colCodeProduct" prefWidth="75.0" text="Codigo" />
           <TableColumn fx:id="colTypeProduct" prefWidth="75.0" text="Tipo de producto" />
@@ -87,7 +87,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#sortingPricesOfProducts" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Ordenar precios ascendentemente">
+            <Button fx:id="btSortProductPrices" mnemonicParsing="false" onAction="#sortingPricesOfProducts" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Ordenar precios ascendentemente">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
