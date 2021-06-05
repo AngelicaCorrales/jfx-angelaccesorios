@@ -70,7 +70,10 @@ public class Angelaccesorios implements Serializable{
 		receiptProducts= new ArrayList<Product>();
 		receiptQuantitiesProducts= new ArrayList<Integer>();
 	}
-	
+	public void resetReceiptProductsAndQuantities() {
+		receiptProducts= new ArrayList<Product>();
+		receiptQuantitiesProducts= new ArrayList<Integer>();
+	}
 	public ArrayList<Product> getReceiptProducts() {
 		return receiptProducts;
 	}
@@ -524,13 +527,15 @@ public class Angelaccesorios implements Serializable{
 		Receipt receipt= new Receipt(listProd, listQ, buyer, loggedUser, observations, paymentMethod);
 		receipts.add(receipt);
 		receipt.restUnitsToAddedProducts();
+		int codeNum = ThreadLocalRandom.current().nextInt(10000, 100000);
+		String code = codeNum+"-"+receipts.size();
+		receipt.setCode(code);
 		
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.calculateTotalPrice());
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
 		
 		
-		setReceiptProducts(new ArrayList<Product>());
-		setReceiptQuantitiesProducts(new ArrayList<Integer>());
+		resetReceiptProductsAndQuantities();
 		saveDataAngelaccesorios();
 	}
 	
@@ -563,9 +568,13 @@ public class Angelaccesorios implements Serializable{
 	
 		Receipt receipt= new SeparateReceipt(listProd, listQ, buyer, loggedUser, paymentMethod, valuePayment);
 		receipts.add(receipt);
+		int codeNum = ThreadLocalRandom.current().nextInt(10000, 100000);
+		String code = codeNum+"-"+receipts.size();
+		receipt.setCode(code);
 		
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayment);
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
+		resetReceiptProductsAndQuantities();
 		saveDataAngelaccesorios();
 
 
