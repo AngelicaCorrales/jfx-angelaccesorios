@@ -262,11 +262,8 @@
                 <AnchorPane maxWidth="-Infinity" minHeight="300.0" prefHeight="449.0" prefWidth="1490.0">
                      <children>
                         <TableView fx:id="tvOfCountedReceipts" onMouseClicked="#clickOnTableViewOfReceipts" prefHeight="451.0" prefWidth="1500.0" visible="false">
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
                            <columns>
-                              <TableColumn fx:id="colCodeC" maxWidth="113.0" prefWidth="86.0" sortable="false" text="Código" />
+                              <TableColumn fx:id="colCodeC" maxWidth="3000.0" prefWidth="86.0" sortable="false" text="Código" />
                               <TableColumn fx:id="colDateandTimeC" maxWidth="3000.0" minWidth="0.0" prefWidth="25.0" sortable="false" text="Fecha y hora" />
                               <TableColumn fx:id="colClientC" prefWidth="69.0" sortable="false" text="Cliente" />
                               <TableColumn fx:id="colUserC" prefWidth="131.66668701171875" sortable="false" text="Usuario" />
@@ -277,6 +274,9 @@
                               <TableColumn fx:id="colPaymentMC" prefWidth="75.0" sortable="false" text="Medio de pago" />
                               <TableColumn fx:id="colObservationsC" prefWidth="75.0" sortable="false" text="Observaciones" />
                            </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <TableView fx:id="tvOfAddedProducts" blendMode="DARKEN" onMouseClicked="#clickOnTableViewOfAddedProducts" prefHeight="489.0" prefWidth="239.0" visible="false">
                            <columns>
@@ -299,7 +299,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                            <columns>
-                              <TableColumn fx:id="colCodeS" maxWidth="113.0" prefWidth="93.0" sortable="false" text="Código" />
+                              <TableColumn fx:id="colCodeS" maxWidth="3000.0" prefWidth="93.0" sortable="false" text="Código" />
                               <TableColumn fx:id="colDateandTimeS" minWidth="0.0" prefWidth="76.0" sortable="false" text="Fecha y hora" />
                               <TableColumn fx:id="colClientS" prefWidth="69.0" sortable="false" text="Cliente" />
                               <TableColumn fx:id="colUserS" prefWidth="131.66668701171875" sortable="false" text="Usuario" />

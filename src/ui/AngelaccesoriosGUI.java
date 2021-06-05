@@ -1417,6 +1417,7 @@ public class AngelaccesoriosGUI {
 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		receiptMenu.setVisible(true);
+		angelaccesorios.resetReceiptProductsAndQuantities();
 		initializeComboBoxClients();
 		initializeComboBoxPaymentMethods();
 	}
@@ -1807,6 +1808,7 @@ public class AngelaccesoriosGUI {
 		btGenerateR.setVisible(false);
 		btDelete.setVisible(false);
 		receiptMenu.setVisible(true);
+		angelaccesorios.resetReceiptProductsAndQuantities();
 	}
 
 	@FXML
