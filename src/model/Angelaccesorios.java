@@ -53,7 +53,7 @@ public class Angelaccesorios implements Serializable{
 	private User firstUser;
 	private User lastUser;
 	private User loggedUser;
-	
+
 	public final static int PROGRAM=0;
 	public final static int TEST=1;
 	public static String ANGELACCESORIOS_SAVE_PATH_FILE;
@@ -64,12 +64,12 @@ public class Angelaccesorios implements Serializable{
 	private TypeOfProduct typePRoot;
 	private Supplier supplierRoot;
 	private List<Client> clients;
-	
-	
+
+
 	private ArrayList<Product> receiptProducts;
 	private ArrayList<Integer> receiptQuantitiesProducts;
-	
-	
+
+
 
 	public Angelaccesorios(int num) {
 		if(num==PROGRAM) {
@@ -82,7 +82,7 @@ public class Angelaccesorios implements Serializable{
 		products = new ArrayList<Product>();
 		clients=new ArrayList<Client>();
 		receipts = new ArrayList<Receipt>(); 
-		
+
 		receiptProducts= new ArrayList<Product>();
 		receiptQuantitiesProducts= new ArrayList<Integer>();
 	}
@@ -102,7 +102,7 @@ public class Angelaccesorios implements Serializable{
 	public void setReceiptQuantitiesProducts(ArrayList<Integer> receiptQuantitiesProducts) {
 		this.receiptQuantitiesProducts = receiptQuantitiesProducts;
 	}
-	
+
 	public ArrayList<Product> returnEnabledProducts(){
 		ArrayList<Product> list= new ArrayList<Product>();
 		for(int i=0;i<products.size();i++) {
@@ -112,7 +112,7 @@ public class Angelaccesorios implements Serializable{
 		}
 		return list;
 	}
-	
+
 	public ArrayList<Client> returnEnabledClients(){
 		ArrayList<Client> list= new ArrayList<Client>();
 		for(int i=0;i<clients.size();i++) {
@@ -122,7 +122,7 @@ public class Angelaccesorios implements Serializable{
 		}
 		return list;
 	}
-	
+
 	public List<Client> getClients() {
 		return clients;	
 	}
@@ -263,7 +263,7 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-	
+
 	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled, String email) throws SameIDException, SameUserNameException, SpaceException, EmailException, IOException {
 		userName=userName.trim();
 		String[] parts=userName.split(" ");
@@ -378,7 +378,7 @@ public class Angelaccesorios implements Serializable{
 		boolean deleted=false;
 		Receipt receipt=searchClientInReceipt(client);
 		if(receipt==null) {
-			
+
 			int i=clients.indexOf(client);
 			clients.remove(i);
 			deleted=true;
@@ -401,7 +401,7 @@ public class Angelaccesorios implements Serializable{
 			}
 
 		}
-		
+
 		return receipt;
 	}
 
@@ -520,7 +520,7 @@ public class Angelaccesorios implements Serializable{
 		}
 		return list;
 	}
-	
+
 	public ArrayList<SeparateReceipt> returnSeparateReceipts(){
 		ArrayList<SeparateReceipt> list=new ArrayList<SeparateReceipt>();
 		for(int i=0;i<receipts.size();i++) {
@@ -530,31 +530,31 @@ public class Angelaccesorios implements Serializable{
 		}
 		return list;
 	}
-	
+
 	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) throws NoProductsAddedException, UnderAgeException, IOException {
 		if(listProd.isEmpty()) {
 			throw new NoProductsAddedException();
 		}
-		
+
 		if(buyer.getTypeId().name().equals("TI") && findElectronicEquipmentProductOnReceiptToBeCreated(listProd)) {
 			throw new UnderAgeException();
 		}
-		
+
 		Receipt receipt= new Receipt(listProd, listQ, buyer, loggedUser, observations, paymentMethod);
 		receipts.add(receipt);
 		receipt.restUnitsToAddedProducts();
 		int codeNum = ThreadLocalRandom.current().nextInt(10000, 100000);
 		String code = codeNum+"-"+receipts.size();
 		receipt.setCode(code);
-		
+
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.calculateTotalPrice());
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
-		
-		
+
+
 		resetReceiptProductsAndQuantities();
 		saveDataAngelaccesorios();
 	}
-	
+
 	private boolean findElectronicEquipmentProductOnReceiptToBeCreated(ArrayList<Product> listProd) {
 		boolean found=false;
 		for(int i=0; i<listProd.size() && !found;i++) {
@@ -563,10 +563,10 @@ public class Angelaccesorios implements Serializable{
 			}
 		}
 		return found;
-		
+
 	}
 
-	
+
 	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException, NoPriceException, NegativePriceException, IOException {
 		if(valuePayment==0) {
 			throw new NoPriceException(valuePayment); 
@@ -577,17 +577,17 @@ public class Angelaccesorios implements Serializable{
 		if(listProd.isEmpty()) {
 			throw new NoProductsAddedException();
 		}
-		
+
 		if(buyer.getTypeId().name().equals("TI") && findElectronicEquipmentProductOnReceiptToBeCreated(listProd)) {
 			throw new UnderAgeException();
 		}
-	
+
 		Receipt receipt= new SeparateReceipt(listProd, listQ, buyer, loggedUser, paymentMethod, valuePayment);
 		receipts.add(receipt);
 		int codeNum = ThreadLocalRandom.current().nextInt(10000, 100000);
 		String code = codeNum+"-"+receipts.size();
 		receipt.setCode(code);
-		
+
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayment);
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
 		resetReceiptProductsAndQuantities();
@@ -603,7 +603,7 @@ public class Angelaccesorios implements Serializable{
 		if(quantity<0) {
 			throw new NegativeQuantityException(quantity);
 		}
-		
+
 		if(quantity>prod.getUnits()) {
 			throw new ExcessQuantityException();
 		}
@@ -613,11 +613,11 @@ public class Angelaccesorios implements Serializable{
 				found=true;
 			}
 		}
-		
+
 		if(found) {
 			throw new SameProductException();
 		}
-		
+
 		listProd.add(prod);
 		listQ.add(quantity);
 	}
@@ -642,7 +642,7 @@ public class Angelaccesorios implements Serializable{
 	}
 
 	public void generateReceipt(Receipt receipt) {
-		
+
 	}
 
 	public boolean deleteReceipt(Receipt receipt) throws IOException {
@@ -658,7 +658,7 @@ public class Angelaccesorios implements Serializable{
 			receipts.remove(i);
 			deleted=true;
 		}
-		
+
 		saveDataAngelaccesorios();
 		return deleted;
 	}
@@ -669,7 +669,7 @@ public class Angelaccesorios implements Serializable{
 			if(receipts.get(i).getCode().equalsIgnoreCase(code)) {
 				receipt=receipts.get(i);
 			}
-				
+
 		}
 		return receipt;
 	}
@@ -1394,7 +1394,7 @@ public class Angelaccesorios implements Serializable{
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 			ang = (Angelaccesorios)ois.readObject();
 			ois.close();
-			
+
 		}
 		return ang;
 	}
@@ -1438,7 +1438,7 @@ public class Angelaccesorios implements Serializable{
 		}
 		return selectedReceipts;
 	}
-	
+
 	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
 		String strFormat = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
@@ -1469,7 +1469,7 @@ public class Angelaccesorios implements Serializable{
 			pw.close();
 		}
 	}
-	
+
 	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
 		String strFormat = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
@@ -1509,8 +1509,8 @@ public class Angelaccesorios implements Serializable{
 			}	
 		}
 	}
-	
-	public void generatePDFReceipt(OutputStream txt, Receipt r, String type) throws DocumentException {
+
+	public void generatePDFCountedReceipt(OutputStream txt, Receipt r, String type) throws DocumentException {
 		Document doc = new Document(PageSize.LETTER);
 		PdfWriter.getInstance(doc, txt);
 		doc.open();
@@ -1519,61 +1519,72 @@ public class Angelaccesorios implements Serializable{
 		PdfPTable tbl_client = new PdfPTable(2);
 		Paragraph texto = null;
 		PdfPCell celda = null;
-		
+
 		texto = new Paragraph(type, negrilla);
 		texto.setAlignment(Element.ALIGN_CENTER);
 		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
-		
+
+		texto = new Paragraph("Fecha: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph(r.getDateAndHour(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+
 		texto = new Paragraph("Cliente: ", negrilla);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph(r.getBuyer().getNameAndLastName(), normal);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		celda.setColspan(3);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph("Documento de identidad: ", negrilla);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph(r.getBuyer().getTypeId().name()+". "+r.getBuyer().getId(), normal);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		celda.setColspan(3);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph("Dirección: ", negrilla);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph(r.getBuyer().getAddress(), normal);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		celda.setColspan(3);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph("Telefono: ", negrilla);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph(r.getBuyer().getPhone(), normal);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph("Medio de pago: ", negrilla);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		texto = new Paragraph(r.getPaymentMString(), normal);
 		texto.add(new Phrase(Chunk.NEWLINE));
 		celda = new PdfPCell(texto);
@@ -1586,39 +1597,207 @@ public class Angelaccesorios implements Serializable{
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
 		
-		PdfPTable table = new PdfPTable(5);
-        table.setWidths(new int[]{1, 2, 1, 1, 1});
-        table.addCell(createCell("SKU", 2, 1, Element.ALIGN_LEFT));
-        table.addCell(createCell("Description", 2, 1, Element.ALIGN_LEFT));
-        table.addCell(createCell("Unit Price", 2, 1, Element.ALIGN_LEFT));
-        table.addCell(createCell("Quantity", 2, 1, Element.ALIGN_LEFT));
-        table.addCell(createCell("Extension", 2, 1, Element.ALIGN_LEFT));
-        String[][] data = {
-            {"ABC123", "The descriptive text may be more than one line and the text should wrap automatically", "$5.00", "10", "$50.00"},
-            {"QRS557", "Another description", "$100.00", "15", "$1,500.00"},
-            {"XYZ999", "Some stuff", "$1.00", "2", "$2.00"}
-        };
-        for (String[] row : data) {
-            table.addCell(createCell(row[0], 1, 1, Element.ALIGN_LEFT));
-            table.addCell(createCell(row[1], 1, 1, Element.ALIGN_LEFT));
-            table.addCell(createCell(row[2], 1, 1, Element.ALIGN_RIGHT));
-            table.addCell(createCell(row[3], 1, 1, Element.ALIGN_RIGHT));
-            table.addCell(createCell(row[4], 1, 1, Element.ALIGN_RIGHT));
-        }
-        table.addCell(createCell("Totals", 2, 4, Element.ALIGN_LEFT));
-        table.addCell(createCell("$1,552.00", 2, 1, Element.ALIGN_RIGHT));
-        
-		doc.add(table);
+		texto = new Paragraph("Listado de productos", negrilla);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+		
+		PdfPTable tbl_products = new PdfPTable(5);
+		tbl_products.setWidths(new int[]{1, 1, 2, 1, 1});
+		tbl_products.addCell(createCell("Codigo", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Cantidad", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Descripcion", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Valor unitario", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Importe", negrilla, 2, 1, Element.ALIGN_LEFT));
+		String[][] data = new String[r.getListOfProducts().size()][5];
+		for (int x=0; x < data.length; x++) {
+			Product p = r.getListOfProducts().get(x);
+			for (int y=0; y < data[x].length; y++) {
+				if(y==0) {
+					data[x][y] = p.getCode();
+				}else if(y==1) {
+					data[x][y] = ""+r.getListOfQuantity().get(x);
+				}else if(y==2) {
+					data[x][y] = p.getTypeName()+" "+p.getBrandName()+" "+p.getModel();
+				}else if(y==3) {
+					data[x][y] = ""+p.getPrice();
+				}else {
+					data[x][y] = ""+(p.getPrice()*r.getListOfQuantity().get(x));
+				}
+			}
+		}
+		for (String[] row : data) {
+			tbl_products.addCell(createCell(row[0], normal, 1, 1, Element.ALIGN_LEFT));
+			tbl_products.addCell(createCell(row[1], normal, 1, 1, Element.ALIGN_LEFT));
+			tbl_products.addCell(createCell(row[2], normal, 1, 1, Element.ALIGN_RIGHT));
+			tbl_products.addCell(createCell(row[3], normal, 1, 1, Element.ALIGN_RIGHT));
+			tbl_products.addCell(createCell(row[4], normal, 1, 1, Element.ALIGN_RIGHT));
+		}
+		tbl_products.addCell(createCell("Subtotal", negrilla, 2, 4, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell("IVA", negrilla, 2, 4, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell("Total", negrilla, 2, 4, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell("Entregado por: "+r.getCreator().getName()+" "+r.getCreator().getLastName(), normal, 1, 5, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Observaciones:\n"+r.getObservations(), normal, 1, 5, Element.ALIGN_LEFT));
+		doc.add(tbl_products);
 		doc.close();
 	}
 	
-	public PdfPCell createCell(String content, float borderWidth, int colspan, int alignment) {
-        PdfPCell cell = new PdfPCell(new Phrase(content));
-        cell.setBorderWidth(borderWidth);
-        cell.setColspan(colspan);
-        cell.setHorizontalAlignment(alignment);
-        return cell;
-    }
+	public void generatePDFSeparateReceipt(OutputStream txt, Receipt r, String type) throws DocumentException {
+		Document doc = new Document(PageSize.LETTER);
+		PdfWriter.getInstance(doc, txt);
+		doc.open();
+		Font negrilla = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+		Font normal = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+		PdfPTable tbl_client = new PdfPTable(2);
+		Paragraph texto = null;
+		PdfPCell celda = null;
+
+		texto = new Paragraph(type, negrilla);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+
+		texto = new Paragraph("Fecha: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph(r.getDateAndHour(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph("Cliente: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph(r.getBuyer().getNameAndLastName(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph("Documento de identidad: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph(r.getBuyer().getTypeId().name()+". "+r.getBuyer().getId(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph("Dirección: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph(r.getBuyer().getAddress(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph("Telefono: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph(r.getBuyer().getPhone(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph("Medio de pago: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+
+		texto = new Paragraph(r.getPaymentMString(), normal);
+		texto.add(new Phrase(Chunk.NEWLINE));
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		doc.add(tbl_client);
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+		
+		texto = new Paragraph("Listado de Abonos", negrilla);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+		
+		PdfPTable tbl_Payments = new PdfPTable(5);
+		tbl_products.setWidths(new int[]{1, 1, 2, 1, 1});
+		
+		texto = new Paragraph("Listado de productos", negrilla);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+		
+		PdfPTable tbl_products = new PdfPTable(5);
+		tbl_products.setWidths(new int[]{1, 1, 2, 1, 1});
+		tbl_products.addCell(createCell("Codigo", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Cantidad", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Descripcion", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Valor unitario", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Importe", negrilla, 2, 1, Element.ALIGN_LEFT));
+		String[][] data = new String[r.getListOfProducts().size()][5];
+		for (int x=0; x < data.length; x++) {
+			Product p = r.getListOfProducts().get(x);
+			for (int y=0; y < data[x].length; y++) {
+				if(y==0) {
+					data[x][y] = p.getCode();
+				}else if(y==1) {
+					data[x][y] = ""+r.getListOfQuantity().get(x);
+				}else if(y==2) {
+					data[x][y] = p.getTypeName()+" "+p.getBrandName()+" "+p.getModel();
+				}else if(y==3) {
+					data[x][y] = ""+p.getPrice();
+				}else {
+					data[x][y] = ""+(p.getPrice()*r.getListOfQuantity().get(x));
+				}
+			}
+		}
+		for (String[] row : data) {
+			tbl_products.addCell(createCell(row[0], normal, 1, 1, Element.ALIGN_LEFT));
+			tbl_products.addCell(createCell(row[1], normal, 1, 1, Element.ALIGN_LEFT));
+			tbl_products.addCell(createCell(row[2], normal, 1, 1, Element.ALIGN_RIGHT));
+			tbl_products.addCell(createCell(row[3], normal, 1, 1, Element.ALIGN_RIGHT));
+			tbl_products.addCell(createCell(row[4], normal, 1, 1, Element.ALIGN_RIGHT));
+		}
+		tbl_products.addCell(createCell("Subtotal", negrilla, 2, 4, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell("IVA", negrilla, 2, 4, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell("Total", negrilla, 2, 4, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell("Entregado por: "+r.getCreator().getName()+" "+r.getCreator().getLastName(), normal, 1, 5, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell("Observaciones:\n"+r.getObservations(), normal, 1, 5, Element.ALIGN_LEFT));
+		doc.add(tbl_products);
+		doc.close();
+	}
+
+	public PdfPCell createCell(String content, Font f, float borderWidth, int colspan, int alignment) {
+		PdfPCell cell = new PdfPCell(new Phrase(content, f));
+		cell.setBorderWidth(borderWidth);
+		cell.setColspan(colspan);
+		cell.setHorizontalAlignment(alignment);
+		return cell;
+	}
 
 	//Sort products by ascending price
 
@@ -1667,7 +1846,7 @@ public class Angelaccesorios implements Serializable{
 			line = br.readLine();
 		}
 		br.close();
-		*/
+		 */
 	}
 
 
@@ -1702,7 +1881,7 @@ public class Angelaccesorios implements Serializable{
 		}
 		br.close();
 		saveDataIngredients();
-	*/
+		 */
 	}
 
 }

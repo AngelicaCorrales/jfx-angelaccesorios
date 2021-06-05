@@ -1692,11 +1692,11 @@ public class AngelaccesoriosGUI {
 			    	if(r!=null) {
 			    		type = "FACTURA DEL SISTEMA DE CONTADO\nANGELACCESORIOS\n";
 			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura#"+r.getCode()+".pdf");
-			    		angelaccesorios.generatePDFReceipt(text_exit, r, type);
+			    		angelaccesorios.generatePDFCountedReceipt(text_exit, r, type);
 			    	}else {
 			    		type = "FACTURA DEL SISTEMA DE SEPARADO\n\nANGELACCESORIOS";
 			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura #"+sr.getCode()+".pdf");
-			    		angelaccesorios.generatePDFReceipt(text_exit, sr, type);	
+			    		angelaccesorios.generatePDFSeparateReceipt(text_exit, sr, type);	
 			    	}
 				    alert.setHeaderText(null);
 				    alert.setContentText("La factura ha sido exportada exitosamente");
