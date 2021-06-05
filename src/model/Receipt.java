@@ -184,4 +184,22 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 		return totalPrice;
 	}
 
+	public String getPaymentMString() {
+		String pMT = "";
+		switch(paymentMethod) {
+		case EFECTIVO: 
+			pMT = "Efectivo";
+			break;
+		case TARJETA_DE_DEBITO:
+			pMT = "Tarjeta de debito";
+			break;
+		case TARJETA_DE_CREDITO:
+			pMT = "Tarjeta de credito";
+			break;
+		case TRANSFERENCIA_BANCARIA:
+			pMT = "Transferencia bancaria";
+			break;
+		}
+		return pMT;
+	}
 }

@@ -1678,6 +1678,7 @@ public class AngelaccesoriosGUI {
 	public void generateReceipt(ActionEvent event) {
 		Receipt r = tvOfCountedReceipts.getSelectionModel().getSelectedItem();
 		SeparateReceipt sr = tvOfSeparateReceipts.getSelectionModel().getSelectedItem();
+		String type = "";
 		if(r!=null || sr!=null) {
 			JFileChooser fileChooser = new JFileChooser();
 	    	fileChooser.setDialogTitle("Elija la carpeta en donde quiere guardar la factura a generar");
@@ -1688,11 +1689,13 @@ public class AngelaccesoriosGUI {
 			    alert.setTitle("Generar factura");
 			    try {
 			    	if(r!=null) {
+			    		type = "FACTURA DEL SISTEMA DE CONTADO\nANGELACCESORIOS\n";
 			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura#"+r.getCode()+".pdf");
-			    		angelaccesorios.generatePDFReceipt(text_exit, r);
+			    		angelaccesorios.generatePDFReceipt(text_exit, r, type);
 			    	}else {
+			    		type = "FACTURA DEL SISTEMA DE SEPARADO\n\nANGELACCESORIOS";
 			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura #"+sr.getCode()+".pdf");
-			    		angelaccesorios.generatePDFReceipt(text_exit, sr);	
+			    		angelaccesorios.generatePDFReceipt(text_exit, sr, type);	
 			    	}
 				    alert.setHeaderText(null);
 				    alert.setContentText("La factura ha sido exportada exitosamente");

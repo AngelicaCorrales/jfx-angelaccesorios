@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -1500,7 +1501,7 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 	
-	public void generatePDFReceipt(OutputStream txt, Receipt r) throws DocumentException {
+	public void generatePDFReceipt(OutputStream txt, Receipt r, String type) throws DocumentException {
 		Document doc = new Document(PageSize.LETTER);
 		PdfWriter.getInstance(doc, txt);
 		doc.open();
@@ -1509,6 +1510,12 @@ public class Angelaccesorios implements Serializable{
 		PdfPTable tbl_client = new PdfPTable(2);
 		Paragraph texto = null;
 		PdfPCell celda = null;
+		
+		texto = new Paragraph(type, negrilla);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
 		
 		texto = new Paragraph("Cliente: ", negrilla);
 		celda = new PdfPCell(texto);
@@ -1551,8 +1558,24 @@ public class Angelaccesorios implements Serializable{
 		texto = new Paragraph(r.getBuyer().getPhone(), normal);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
-		celda.setColspan(3);
 		tbl_client.addCell(celda);
+		
+		texto = new Paragraph("Medio de pago: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getPaymentMString(), normal);
+		texto.add(new Phrase(Chunk.NEWLINE));
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		doc.add(tbl_client);
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
 		
 		PdfPTable table = new PdfPTable(5);
         table.setWidths(new int[]{1, 2, 1, 1, 1});
@@ -1576,7 +1599,6 @@ public class Angelaccesorios implements Serializable{
         table.addCell(createCell("Totals", 2, 4, Element.ALIGN_LEFT));
         table.addCell(createCell("$1,552.00", 2, 1, Element.ALIGN_RIGHT));
         
-		doc.add(tbl_client);
 		doc.add(table);
 		doc.close();
 	}
