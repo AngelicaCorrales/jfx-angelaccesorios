@@ -14,6 +14,8 @@ public class Product implements Serializable{
 	private double price;
 	private boolean enabled;
 	private int cont;
+	private int numTimesAddedOrders;
+	private double totalPriceAddedOrders;
 	
 	public Product(TypeOfProduct t, Brand b, int u, boolean g, String m, double p, String c) {
 		type = t;
@@ -25,6 +27,8 @@ public class Product implements Serializable{
 		enabled = true;
 		code = c;
 		cont = 0;
+		setNumTimesAddedOrders(0);
+		setTotalPriceAddedOrders(0);
 	}
 
 	public String getCode() {
@@ -135,6 +139,22 @@ public class Product implements Serializable{
 
 	public void setCont(int cont) {
 		this.cont = cont;
+	}
+
+	public int getNumTimesAddedOrders() {
+		return numTimesAddedOrders;
+	}
+
+	public void setNumTimesAddedOrders(int numTimesAddedOrders) {
+		this.numTimesAddedOrders = numTimesAddedOrders;
+	}
+
+	public double getTotalPriceAddedOrders() {
+		return totalPriceAddedOrders;
+	}
+
+	public void setTotalPriceAddedOrders(double totalPriceAddedOrders) {
+		this.totalPriceAddedOrders = totalPriceAddedOrders;
 	}
 	
 }

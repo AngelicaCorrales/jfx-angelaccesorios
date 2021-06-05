@@ -1,12 +1,19 @@
 package ui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import javax.swing.JFileChooser;
+
+import com.itextpdf.text.DocumentException;
 
 import exceptions.EmailException;
 import exceptions.HigherDateAndHour;
@@ -68,7 +75,7 @@ import thread.ClockThread;
 public class AngelaccesoriosGUI {
 
 	private Angelaccesorios angelaccesorios;
-
+	
 	@FXML
 	private BorderPane mainPane;
 	
@@ -1585,7 +1592,34 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void generateReceipt(ActionEvent event) {
-
+		Receipt r = tvOfCountedReceipts.getSelectionModel().getSelectedItem();
+		SeparateReceipt sr = tvOfSeparateReceipts.getSelectionModel().getSelectedItem();
+		if(r!=null || sr!=null) {
+			JFileChooser fileChooser = new JFileChooser();
+	    	fileChooser.setDialogTitle("Elija la carpeta en donde quiere guardar la factura a generar");
+	    	fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    	fileChooser.setAcceptAllFileFilterUsed(false);
+	    	if(fileChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
+	    		Alert alert = new Alert(AlertType.INFORMATION);
+			    alert.setTitle("Generar factura");
+			    try {
+			    	if(r!=null) {
+			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"factura#"+r.getCode()+".pdf");
+			    		angelaccesorios.generatePDFReceipt(text_exit, r);
+			    	}else {
+			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"factura #"+sr.getCode()+".pdf");
+			    		angelaccesorios.generatePDFReceipt(text_exit, sr);	
+			    	}
+				    alert.setHeaderText(null);
+				    alert.setContentText("La factura ha sido exportada exitosamente");
+				    alert.showAndWait();
+				} catch (DocumentException | FileNotFoundException e) {
+					alert.setHeaderText(null);
+				    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso");
+					e.printStackTrace();
+				}
+	    	}	
+		}
 	}
 
 	@FXML
@@ -2292,26 +2326,6 @@ public class AngelaccesoriosGUI {
     	}else {
     		showValidationErrorAlert();
     	}
-	}
-
-	@FXML
-	public void exportReceiptsReport(ActionEvent event) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportReceiptsReport.fxml"));
-		fxmlLoader.setController(this);
-		Parent menuPane = fxmlLoader.load();
-		
-		mainPane.setCenter(menuPane);
-		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		//initializeComboBoxOfHours();
-		//initializeComboBoxOfMinutes();
-		dtPickerInitialDate.setValue(LocalDate.now());
-		dtPickerFinalDate.setValue(LocalDate.now());
-		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-	}
-
-	@FXML
-	public void generateReceiptsReport(ActionEvent event) {
-
 	}
 
 	@FXML
