@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -18,6 +19,20 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import exceptions.EmailException;
 import exceptions.ExcessQuantityException;
 import exceptions.HigherDateAndHour;
@@ -1399,58 +1414,29 @@ public class Angelaccesorios implements Serializable{
 		return allMinutes;
 	}
 
-	public ArrayList<Receipt> selectGeneratedReceipts(Date initialDate, Date finalDate) throws ParseException{
+	public ArrayList<Receipt> selectGeneratedReceipts(Date initialDate, Date finalDate, int numReport) throws ParseException{
 		int result1 = 0;
 		int result2 = 0;
 		ArrayList<Receipt> selectedReceipts = new ArrayList<Receipt>();
 		ArrayList<Receipt> sortingReceipts = new ArrayList<Receipt>(receipts);
 		Collections.sort(sortingReceipts);
 		for(int k=0; k<sortingReceipts.size();k++) {
-			result1 = sortingReceipts.get(k).getDateAndTime().compareTo(initialDate);
-			result2 = sortingReceipts.get(k).getDateAndTime().compareTo(finalDate);
+			Receipt r = sortingReceipts.get(k);
+			result1 = r.getDateAndTime().compareTo(initialDate);
+			result2 = r.getDateAndTime().compareTo(finalDate);
 			if((result1>0 || result1==0)&&(result2<0||result2==0)) {
-				selectedReceipts.add(sortingReceipts.get(k));
+				if(numReport==2) {
+					for(int j=0;j<r.getListOfProducts().size();j++) {
+						Product p = r.getListOfProducts().get(j);
+						p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+(r.getListOfQuantity().get(j)));
+						p.setTotalPriceAddedOrders((p.getTotalPriceAddedOrders())+(r.getListOfQuantity().get(j)*p.getPrice()));
+					}	
+				}
+				selectedReceipts.add(r);
 			}
 		}
 		return selectedReceipts;
 	}
-
-	//AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-
-	/*public void exportReceiptsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
-		String strFormat = "yyyy-MM-dd HH:mm";
-		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
-		Date date1 = formato.parse(initialTime);
-		Date date2 = formato.parse(finalTime);
-		if(date1.after(date2)) {
-			throw new HigherDateAndHour();
-		}else {
-			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2);
-			PrintWriter pw = new PrintWriter(fn);
-			String info ="";
-			String nameColumns = "Código"+SEPARATOR+"Estado"+SEPARATOR+"Fecha y hora"+SEPARATOR+"Observaciones"+SEPARATOR+"Nombre del cliente"+SEPARATOR+"Tipo de identificación"+separator+"Numero de identificación"+separator+"Direccion del cliente"+separator+"Telefono del cliente"+separator+"Nombre del Empleado"+separator+"Identificacion del empleado"+separator+"Producto(s): Nombre, cantidad y valor unitario";
-			for(int i=0;i<receiptsS.size();i++){
-				Receipt objReceipt = receiptsS.get(i);
-				info+=objReceipt.getCode()+separator+objReceipt.ge.name()+separator+objOrder.getDateAndHour()+separator+objOrder.getObservations()+separator+objOrder.getClientName()+separator+objOrder.getBuyer().getAddress()+separator+objOrder.getBuyer().getPhone()+separator+objOrder.getEmployeeName()+separator;
-				for(int k=0;k<objReceipt.getListOfProducts().size();k++) {
-					info += objReceipt.getListOfProducts().get(k).getName()+separator;
-					info += objReceipt.getListOfQuantity().get(k)+separator;
-					info += objReceipt.getListOfSizes().get(k).getName()+separator; 
-					info += objReceipt.getListOfSizes().get(k).getPrice(); 
-					int listSize = objOrder.getListOfProducts().size();
-					if(k<listSize) {
-						info+=separator;
-					}
-				}
-				if(i!=ordersS.size()-1) {
-					info+="\n";
-				}
-			}
-			pw.println(nameColumns);
-			pw.print(info);
-			pw.close();	
-		}
-	}*/
 	
 	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
 		String strFormat = "yyyy-MM-dd HH:mm";
@@ -1462,7 +1448,7 @@ public class Angelaccesorios implements Serializable{
 		}else {
 			int totalReceipts=0;
 			int totalMoney=0;
-			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2);
+			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2, 1);
 			PrintWriter pw = new PrintWriter(fn);
 			String nameColumns = "Usuario"+SEPARATOR+"Identificacion"+SEPARATOR+"Número de facturas generadas"+SEPARATOR+"Valor total de las facturas generadas";
 			pw.println(nameColumns);
@@ -1493,9 +1479,9 @@ public class Angelaccesorios implements Serializable{
 		}else {
 			int totalOrders=0;
 			int totalMoney=0;
-			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2);
+			ArrayList<Receipt> receiptsS = selectGeneratedReceipts(date1,date2, 2);
 			PrintWriter pw = new PrintWriter(fn);
-			String nameColumns = "Nombre del producto"+SEPARATOR+"Numero total de veces que fue pedido"+SEPARATOR+"Cantidad de total de dinero recaudado";
+			String nameColumns = "Tipo de producto"+SEPARATOR+"Marca"+SEPARATOR+"Modelo"+SEPARATOR+"Numero total de veces que fue incluido en una factura"+SEPARATOR+"Cantidad de total de dinero recaudado";
 			pw.println(nameColumns);
 			for(int i=0;i<receiptsS.size();i++){
 				Receipt objR = receiptsS.get(i);
@@ -1510,12 +1496,11 @@ public class Angelaccesorios implements Serializable{
 				}
 			}
 			pw.println("Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
-
 			pw.close();
-			for(int j=0;j<ordersS.size();j++) {
-				Order ord = ordersS.get(j);
-				for(int k=0;k<ord.getListOfProducts().size();k++) {
-					Product p = ord.getListOfProducts().get(k);
+			for(int j=0;j<receiptsS.size();j++) {
+				Receipt r = receiptsS.get(j);
+				for(int k=0;k<r.getListOfProducts().size();k++) {
+					Product p = r.getListOfProducts().get(k);
 					p.setNumTimesAddedOrders(0);
 					p.setTotalPriceAddedOrders(0);
 					p.setCont(0);
@@ -1523,6 +1508,95 @@ public class Angelaccesorios implements Serializable{
 			}	
 		}
 	}
+	
+	public void generatePDFReceipt(OutputStream txt, Receipt r) throws DocumentException {
+		Document doc = new Document(PageSize.LETTER);
+		PdfWriter.getInstance(doc, txt);
+		doc.open();
+		Font negrilla = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+		Font normal = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+		PdfPTable tbl_client = new PdfPTable(2);
+		Paragraph texto = null;
+		PdfPCell celda = null;
+		
+		texto = new Paragraph("Cliente: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getBuyer().getNameAndLastName(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph("Documento de identidad: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getBuyer().getTypeId().name()+". "+r.getBuyer().getId(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph("Dirección: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getBuyer().getAddress(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph("Telefono: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getBuyer().getPhone(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+		
+		PdfPTable table = new PdfPTable(5);
+        table.setWidths(new int[]{1, 2, 1, 1, 1});
+        table.addCell(createCell("SKU", 2, 1, Element.ALIGN_LEFT));
+        table.addCell(createCell("Description", 2, 1, Element.ALIGN_LEFT));
+        table.addCell(createCell("Unit Price", 2, 1, Element.ALIGN_LEFT));
+        table.addCell(createCell("Quantity", 2, 1, Element.ALIGN_LEFT));
+        table.addCell(createCell("Extension", 2, 1, Element.ALIGN_LEFT));
+        String[][] data = {
+            {"ABC123", "The descriptive text may be more than one line and the text should wrap automatically", "$5.00", "10", "$50.00"},
+            {"QRS557", "Another description", "$100.00", "15", "$1,500.00"},
+            {"XYZ999", "Some stuff", "$1.00", "2", "$2.00"}
+        };
+        for (String[] row : data) {
+            table.addCell(createCell(row[0], 1, 1, Element.ALIGN_LEFT));
+            table.addCell(createCell(row[1], 1, 1, Element.ALIGN_LEFT));
+            table.addCell(createCell(row[2], 1, 1, Element.ALIGN_RIGHT));
+            table.addCell(createCell(row[3], 1, 1, Element.ALIGN_RIGHT));
+            table.addCell(createCell(row[4], 1, 1, Element.ALIGN_RIGHT));
+        }
+        table.addCell(createCell("Totals", 2, 4, Element.ALIGN_LEFT));
+        table.addCell(createCell("$1,552.00", 2, 1, Element.ALIGN_RIGHT));
+        
+		doc.add(tbl_client);
+		doc.add(table);
+		doc.close();
+	}
+	
+	public PdfPCell createCell(String content, float borderWidth, int colspan, int alignment) {
+        PdfPCell cell = new PdfPCell(new Phrase(content));
+        cell.setBorderWidth(borderWidth);
+        cell.setColspan(colspan);
+        cell.setHorizontalAlignment(alignment);
+        return cell;
+    }
 
 	//Sort products by ascending price
 
