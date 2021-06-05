@@ -37,6 +37,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -425,10 +426,8 @@ public class AngelaccesoriosGUI {
 	private TableColumn<Product, String> colNameRProduct;
 
 	@FXML
-	private TableView<Integer> tvOfQuantities;
+	private ListView<Integer> lvOfQuantities;
 
-	@FXML
-	private TableColumn<Integer, Integer> colQuantityRProduct;
 
 	@FXML
 	private TableView<SeparateReceipt> tvOfSeparateReceipts;
@@ -507,6 +506,10 @@ public class AngelaccesoriosGUI {
 	
 	@FXML
 	private Button btAddSR;
+	
+	@FXML
+	private VBox vBoxListViewQ;
+
 
 	//Suppliers-----
 	@FXML
@@ -1429,7 +1432,7 @@ public class AngelaccesoriosGUI {
 				angelaccesorios.addProductToAReceipt(selectedProduct, quantity, angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts());
 
 				initializeTableViewOfReceiptProducts();
-				initializeTableViewOfQuantitiesProducts();
+				initializeListViewOfQuantitiesProducts();
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setTitle("Información");
 				alert1.setHeaderText(null);
@@ -1553,10 +1556,10 @@ public class AngelaccesoriosGUI {
 		addProductsToAReceipt.setVisible(true);
 		tvOfAddedProducts.setVisible(true);
 		tvOfReceiptProducts.setVisible(true);
-		tvOfQuantities.setVisible(true);
+		vBoxListViewQ.setVisible(true);
 		initializeTableViewOfAddedProducts();
 		initializeTableViewOfReceiptProducts();
-		initializeTableViewOfQuantitiesProducts();
+		initializeListViewOfQuantitiesProducts();
 		
 	}
 	
@@ -1596,15 +1599,10 @@ public class AngelaccesoriosGUI {
     	tvOfReceiptProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 	
-	private void initializeTableViewOfQuantitiesProducts() {
+	private void initializeListViewOfQuantitiesProducts() {
 		ObservableList<Integer> observableList;
     	observableList = FXCollections.observableArrayList(angelaccesorios.getReceiptQuantitiesProducts());
-    	tvOfQuantities.setItems(observableList);
-    	
-    	colQuantityRProduct.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("intValue"));
-  
-
-    	tvOfQuantities.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	lvOfQuantities.setItems(observableList);
 	}
 
 	@FXML
@@ -1658,7 +1656,7 @@ public class AngelaccesoriosGUI {
 		btDeleteProductR.setDisable(true);
 		
 		initializeTableViewOfReceiptProducts();
-		initializeTableViewOfQuantitiesProducts();
+		initializeListViewOfQuantitiesProducts();
 	}
 
 	@FXML
@@ -1751,7 +1749,7 @@ public class AngelaccesoriosGUI {
 		addProductsToAReceipt.setVisible(false);
 		tvOfAddedProducts.setVisible(false);
 		tvOfReceiptProducts.setVisible(false);
-		tvOfQuantities.setVisible(false);
+		vBoxListViewQ.setVisible(false);
 		if(lbWindow.getText().equals("C")) {
 			manageCountedReceipt(null);
 		}else {
