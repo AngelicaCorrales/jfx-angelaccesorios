@@ -1506,7 +1506,7 @@ public class Angelaccesorios implements Serializable{
 		doc.open();
 		Font negrilla = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 		Font normal = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
-		PdfPTable tbl_client = new PdfPTable(4);
+		PdfPTable tbl_client = new PdfPTable(2);
 		Paragraph texto = null;
 		PdfPCell celda = null;
 		
@@ -1515,7 +1515,40 @@ public class Angelaccesorios implements Serializable{
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
 		
-		texto = new Paragraph(r.getBuyer().getName()+" "+r.getBuyer().getLastName(), normal);
+		texto = new Paragraph(r.getBuyer().getNameAndLastName(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph("Documento de identidad: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getBuyer().getTypeId().name()+". "+r.getBuyer().getId(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph("Dirección: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getBuyer().getAddress(), normal);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		celda.setColspan(3);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph("Telefono: ", negrilla);
+		celda = new PdfPCell(texto);
+		celda.setBorder(Rectangle.NO_BORDER);
+		tbl_client.addCell(celda);
+		
+		texto = new Paragraph(r.getBuyer().getPhone(), normal);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		celda.setColspan(3);

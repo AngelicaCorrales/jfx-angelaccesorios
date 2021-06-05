@@ -1639,7 +1639,10 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void clickOnTableViewOfReceipts(MouseEvent event) {
-
+		Receipt selectedReceipt = tvOfCountedReceipts.getSelectionModel().getSelectedItem();
+		if(selectedReceipt!=null) {
+			btGenerateR.setDisable(false);
+		}
 	}
 	@FXML
 	public void clickOnTableViewOfSeparateReceipts(MouseEvent event) {
@@ -1685,10 +1688,10 @@ public class AngelaccesoriosGUI {
 			    alert.setTitle("Generar factura");
 			    try {
 			    	if(r!=null) {
-			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"factura#"+r.getCode()+".pdf");
+			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura#"+r.getCode()+".pdf");
 			    		angelaccesorios.generatePDFReceipt(text_exit, r);
 			    	}else {
-			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"factura #"+sr.getCode()+".pdf");
+			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura #"+sr.getCode()+".pdf");
 			    		angelaccesorios.generatePDFReceipt(text_exit, sr);	
 			    	}
 				    alert.setHeaderText(null);
