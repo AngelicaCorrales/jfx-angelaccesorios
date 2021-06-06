@@ -224,5 +224,4 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		return pMT;
 	}
 
-	
 }
