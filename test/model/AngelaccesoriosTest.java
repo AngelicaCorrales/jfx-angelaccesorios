@@ -1666,12 +1666,35 @@ public class AngelaccesoriosTest {
 	//	Method: deleteProduct
 
 	@Test
-	public void testDeleteProduct1() {
-
+	public void testDeleteProduct1() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary13();
+		boolean deleted = angelaccesorios.deleteProduct(angelaccesorios.getProducts().get(0));
+		assertTrue(deleted);
+		assertEquals(1, angelaccesorios.getProducts().size());
 	}
 
-	public void testDeleteProduct2() {
-
+	@Test
+	public void testDeleteProduct2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+		setupScenary13();
+		boolean deleted = angelaccesorios.deleteProduct(angelaccesorios.getProducts().get(1));
+		assertTrue(deleted);
+		assertEquals(1, angelaccesorios.getProducts().size());
+	}
+	
+	@Test
+	public void testDeleteProduct3() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
+		setupScenary16();
+		boolean deleted = angelaccesorios.deleteProduct(angelaccesorios.getProducts().get(1));
+		assertFalse(deleted);
+		assertEquals(2, angelaccesorios.getProducts().size());
+	}
+	
+	@Test
+	public void testDeleteProduct4() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
+		setupScenary17();
+		boolean deleted = angelaccesorios.deleteProduct(angelaccesorios.getProducts().get(1));
+		assertTrue(deleted);
+		assertEquals(1, angelaccesorios.getProducts().size());
 	}
 
 	//Method: updateProduct

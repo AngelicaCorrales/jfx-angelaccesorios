@@ -37,7 +37,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import exceptions.EmailException;
 import exceptions.ExcessQuantityException;
 import exceptions.ExcessValueException;
-import exceptions.HigherDateAndHour;
+import exceptions.HigherDateAndHourException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -650,10 +650,6 @@ public class Angelaccesorios implements Serializable{
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayable);
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
 		saveDataAngelaccesorios();
-	}
-
-	public void generateReceipt(Receipt receipt) {
-
 	}
 
 	public boolean deleteReceipt(Receipt receipt) throws IOException {
@@ -1438,10 +1434,12 @@ public class Angelaccesorios implements Serializable{
 			result2 = r.getDateAndTime().compareTo(finalDate);
 			if((result1>0 || result1==0)&&(result2<0||result2==0)) {
 				if(numReport==2) {
-					for(int j=0;j<r.getListOfProducts().size();j++) {
-						Product p = r.getListOfProducts().get(j);
-						p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+(r.getListOfQuantity().get(j)));
-						p.setTotalPriceAddedOrders((p.getTotalPriceAddedOrders())+(r.getListOfQuantity().get(j)*p.getPrice()));
+					if(!(r instanceof SeparateReceipt)){
+						for(int j=0;j<r.getListOfProducts().size();j++) {
+							Product p = r.getListOfProducts().get(j);
+							p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+(r.getListOfQuantity().get(j)));
+							p.setTotalPriceAddedOrders((p.getTotalPriceAddedOrders())+(r.getListOfQuantity().get(j)*p.getPrice()));
+						}
 					}	
 				}
 				selectedReceipts.add(r);
@@ -1450,13 +1448,13 @@ public class Angelaccesorios implements Serializable{
 		return selectedReceipts;
 	}
 
-	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
+	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHourException {
 		String strFormat = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
 		Date date1 = formato.parse(initialTime);
 		Date date2 = formato.parse(finalTime);
 		if(date1.after(date2)) {
-			throw new HigherDateAndHour();
+			throw new HigherDateAndHourException();
 		}else {
 			int totalReceipts=0;
 			int totalMoney=0;
@@ -1481,13 +1479,13 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
-	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHour {
+	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHourException {
 		String strFormat = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
 		Date date1 = formato.parse(initialTime);
 		Date date2 = formato.parse(finalTime);
 		if(date1.after(date2)) {
-			throw new HigherDateAndHour();
+			throw new HigherDateAndHourException();
 		}else {
 			int totalOrders=0;
 			int totalMoney=0;
@@ -1507,7 +1505,7 @@ public class Angelaccesorios implements Serializable{
 					}
 				}
 			}
-			pw.println("Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
+			pw.println(""+SEPARATOR+""+SEPARATOR+"Total"+SEPARATOR+totalOrders+SEPARATOR+totalMoney);
 			pw.close();
 			for(int j=0;j<receiptsS.size();j++) {
 				Receipt r = receiptsS.get(j);

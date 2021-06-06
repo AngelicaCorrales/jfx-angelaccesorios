@@ -16,7 +16,7 @@ import javax.swing.JFileChooser;
 import com.itextpdf.text.DocumentException;
 
 import exceptions.EmailException;
-import exceptions.HigherDateAndHour;
+import exceptions.HigherDateAndHourException;
 import exceptions.ExcessQuantityException;
 import exceptions.ExcessValueException;
 import exceptions.NegativePriceException;
@@ -447,6 +447,9 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TableColumn<Receipt, String> colCodeS;
+	
+    @FXML
+    private TableColumn<Receipt, String> colState;
 
 	@FXML
 	private TableColumn<Receipt, String> colDateandTimeS;
@@ -1303,6 +1306,7 @@ public class AngelaccesoriosGUI {
         	}
         	initializeCmbxTypeOfProduct();
     		initializeCmbxBrand();
+    		cmbxTypeOfProduct.setDisable(false);
     		txtModel.clear();
     		txtUnits.clear();
     		txtPrice.clear();
@@ -1911,6 +1915,7 @@ public class AngelaccesoriosGUI {
     	tvOfSeparateReceipts.setItems(observableList);
     	
     	colCodeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Code"));
+    	colState.setCellValueFactory(new PropertyValueFactory<Receipt, String>("StateString"));
     	colDateandTimeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("DateAndHour"));
     	colClientS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
     	colUserS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
@@ -2639,7 +2644,7 @@ public class AngelaccesoriosGUI {
     				alert.setHeaderText(null);
     			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
     			    alert.showAndWait();
-				} catch (HigherDateAndHour h) {
+				} catch (HigherDateAndHourException h) {
 					alert.setHeaderText(null);
     			    alert.setContentText(h.getMessage());
     			    alert.showAndWait();
@@ -2658,8 +2663,8 @@ public class AngelaccesoriosGUI {
 		
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
-		//initializeComboBoxOfHours();
-		//initializeComboBoxOfMinutes();
+		initializeComboBoxOfHours();
+		initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());
 		dtPickerFinalDate.setValue(LocalDate.now());
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
@@ -2693,7 +2698,7 @@ public class AngelaccesoriosGUI {
     				alert.setHeaderText(null);
     			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
     			    alert.showAndWait();
-				} catch (HigherDateAndHour h) {
+				} catch (HigherDateAndHourException h) {
 					alert.setHeaderText(null);
     			    alert.setContentText(h.getMessage());
     			    alert.showAndWait();
