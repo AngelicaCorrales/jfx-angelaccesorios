@@ -47,6 +47,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
@@ -75,6 +76,7 @@ import model.Supplier;
 import model.TypeOfProduct;
 import model.User;
 import thread.ClockThread;
+import thread.ProgressThread;
 
 public class AngelaccesoriosGUI {
 
@@ -82,6 +84,9 @@ public class AngelaccesoriosGUI {
 	
 	@FXML
 	private BorderPane mainPane;
+	
+	 @FXML
+	 private ProgressBar progressBar;
 	
 	@FXML
     private Label lbClock;
@@ -594,6 +599,10 @@ public class AngelaccesoriosGUI {
 	
 	public boolean getRunClock() {
 		return runClock;
+	}
+	
+	public ProgressBar getProgressBar() {
+		return progressBar;
 	}
 	
 	public void initialize() {
@@ -2587,14 +2596,20 @@ public class AngelaccesoriosGUI {
 			alert.setTitle("Importar clientes");
     		
     		try {
-    			
+    			angelaccesorios.setNumProgress(0);
+    			double num=angelaccesorios.numberOfLinesOfFile(f.getAbsolutePath());
+    			ProgressThread progressThread=new ProgressThread(this,angelaccesorios, num);
+    			progressThread.start();
     			angelaccesorios.importClientsData(f.getAbsolutePath());
-        		alert.setContentText("Los clientes fueron importados exitosamente");
+
+    			alert.setContentText("Los clientes fueron importados exitosamente");
         		alert.showAndWait();
+        		
     		}catch(IOException e){
         		alert.setContentText("Los clientes no se importaron. Ocurrió un error");
         		alert.showAndWait();
     		}
+    		progressBar.setProgress(0);
     	}
 	}
 
@@ -2611,7 +2626,10 @@ public class AngelaccesoriosGUI {
 			alert.setTitle("Importar productos");
     		
     		try {
-    			
+    			angelaccesorios.setNumProgress(0);
+    			int num=angelaccesorios.numberOfLinesOfFile(f.getAbsolutePath());
+    			ProgressThread progressThread=new ProgressThread(this,angelaccesorios, num);
+    			progressThread.start();
     			angelaccesorios.importProductsData(f.getAbsolutePath());
         		alert.setContentText("Los productos fueron importados exitosamente");
         		alert.showAndWait();
@@ -2619,6 +2637,7 @@ public class AngelaccesoriosGUI {
         		alert.setContentText("Los productos no se importaron. Ocurrió un error");
         		alert.showAndWait();
     		}
+    		progressBar.setProgress(0);
     	}
 	}
 
