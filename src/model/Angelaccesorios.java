@@ -1,9 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -1869,54 +1871,61 @@ public class Angelaccesorios implements Serializable{
 	//Import data from csv files
 
 	public void importClientsData(String fileName) throws IOException{
-		/*BufferedReader br = new BufferedReader(new FileReader(fileName));
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
 		while(line!=null){
-			String[] parts = line.split(";");
-			if(!parts[0].equals("id")) {
+			String[] parts = line.split(SEPARATOR);
+			if(parts.length!=6) {
+				br.close();
+				throw new IOException();
+			}
+			if(!parts[0].equals("Nombres")) {
 
-				createClient( parts[0],  parts[1].toUpperCase(),  parts[2].toUpperCase(),  parts[3],  parts[4],  parts[5],  "");
+				try {
+					createClient(parts[0].toUpperCase(),  parts[1].toUpperCase(),  parts[2],  parts[3],  parts[4], parts[5]);
+				} catch (SameIDException e) {
+				} 
 			}
 
 			line = br.readLine();
 		}
 		br.close();
-		 */
+		 saveDataAngelaccesorios();
 	}
 
 
 	public void importProductsData(String fileName) throws IOException{
-		/*BufferedReader br = new BufferedReader(new FileReader(fileName));
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
-		String creator="";
 		while(line!=null){
-			String[] parts = line.split(";");
-			if(!parts[0].equals("productName")) {
-				addTypeOfProduct(parts[1],creator);
-				TypeOfProduct top=searchTypeOfProductByName(parts[1]);
-				Product prod=new Product(parts[0], null, top, idProduct);
-				this.products.add(prod);
-				idProduct++;
-				String[] ingredients=parts[2].split("-");
-
-				for(int i=0; i<ingredients.length;i++) {
-					Ingredient ing= new Ingredient(ingredients[i], null, idIngredient);
-					this.ingredients.add(ing);
-					idIngredient++;
-
-					addIngredientToAProduct( prod,  ing,  creator);
-
+			String[] parts = line.split(SEPARATOR);
+			if(parts.length!=7) {
+				br.close();
+				throw new IOException();
+			}
+			if(!parts[0].equals("Modelo")) {
+				addTypeOfProduct(parts[1],parts[2]);
+				TypeOfProduct top=searchTypeOfProduct(typePRoot,parts[1]);
+				
+				addBrand(parts[3]);
+				Brand brand= searchBrand(parts[3]);
+				boolean warranty=false;
+				if(parts[6].equalsIgnoreCase("si")) {
+					warranty=true;
 				}
-				double price= Double.parseDouble(parts[4]);
-				addSizeOfAProduct( prod,  parts[3],  price,creator); 
-
+				try {
+					int units=Integer.parseInt(parts[4]);
+					double price= Double.parseDouble(parts[5]);
+					addProduct(top, brand, parts[0], units, price, warranty);
+				} catch (NoQuantityException |NegativeQuantityException | NoPriceException | NegativePriceException | SameProductException |NumberFormatException e) {
+				}
 			}
 
 			line = br.readLine();
 		}
 		br.close();
-		saveDataIngredients();
-		 */
+		saveDataAngelaccesorios();
+		 
 	}
 
 }
