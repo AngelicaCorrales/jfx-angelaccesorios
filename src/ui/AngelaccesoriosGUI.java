@@ -1839,8 +1839,8 @@ public class AngelaccesoriosGUI {
 				    alert.showAndWait();
 				} catch (DocumentException | FileNotFoundException e) {
 					alert.setHeaderText(null);
-				    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso");
-					e.printStackTrace();
+				    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso, intentelo nuevamente.");
+				    alert.showAndWait();
 				}
 			    btGenerateR.setDisable(true);
 			    btDelete.setDisable(true);

@@ -590,7 +590,7 @@ public class Angelaccesorios implements Serializable{
 			receipt=null;
 			throw new ExcessValueException();
 		}
-		
+
 		receipts.add(receipt);
 		int codeNum = ThreadLocalRandom.current().nextInt(10000, 100000);
 		String code = codeNum+"-"+receipts.size();
@@ -647,7 +647,7 @@ public class Angelaccesorios implements Serializable{
 			receipt=null;
 			throw new ExcessValueException();
 		}
-		
+
 		((SeparateReceipt)receipt).addPayment(valuePayable, paymentMethod, loggedUser);
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayable);
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
@@ -1603,19 +1603,19 @@ public class Angelaccesorios implements Serializable{
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		doc.add(tbl_client);
 		texto = new Paragraph();
 		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
-		
+
 		texto = new Paragraph("Listado de productos", negrilla);
 		texto.setAlignment(Element.ALIGN_CENTER);
 		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
-		
+
 		PdfPTable tbl_products = new PdfPTable(5);
 		tbl_products.setWidths(new int[]{1, 1, 2, 1, 1});
 		tbl_products.addCell(createCell("Codigo", negrilla, 2, 1, Element.ALIGN_LEFT));
@@ -1648,17 +1648,17 @@ public class Angelaccesorios implements Serializable{
 			tbl_products.addCell(createCell(row[4], normal, 1, 1, Element.ALIGN_RIGHT));
 		}
 		tbl_products.addCell(createCell("Subtotal", negrilla, 2, 4, Element.ALIGN_LEFT));
-		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell(""+r.getSubtotal(), normal, 2, 1, Element.ALIGN_RIGHT));
 		tbl_products.addCell(createCell("IVA", negrilla, 2, 4, Element.ALIGN_LEFT));
-		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell(""+r.getIVA(), normal, 2, 1, Element.ALIGN_RIGHT));
 		tbl_products.addCell(createCell("Total", negrilla, 2, 4, Element.ALIGN_LEFT));
-		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell(""+r.getTotal(), normal, 2, 1, Element.ALIGN_RIGHT));
 		tbl_products.addCell(createCell("Entregado por: "+r.getCreator().getName()+" "+r.getCreator().getLastName(), normal, 1, 5, Element.ALIGN_LEFT));
 		tbl_products.addCell(createCell("Observaciones:\n"+r.getObservations(), normal, 1, 5, Element.ALIGN_LEFT));
 		doc.add(tbl_products);
 		doc.close();
 	}
-	
+
 	public void generatePDFSeparateReceipt(OutputStream txt, Receipt r, String type) throws DocumentException {
 		Document doc = new Document(PageSize.LETTER);
 		PdfWriter.getInstance(doc, txt);
@@ -1674,17 +1674,6 @@ public class Angelaccesorios implements Serializable{
 		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
-
-		texto = new Paragraph("Fecha: ", negrilla);
-		celda = new PdfPCell(texto);
-		celda.setBorder(Rectangle.NO_BORDER);
-		tbl_client.addCell(celda);
-
-		texto = new Paragraph(r.getDateAndHour(), normal);
-		celda = new PdfPCell(texto);
-		celda.setBorder(Rectangle.NO_BORDER);
-		celda.setColspan(3);
-		tbl_client.addCell(celda);
 
 		texto = new Paragraph("Cliente: ", negrilla);
 		celda = new PdfPCell(texto);
@@ -1729,38 +1718,70 @@ public class Angelaccesorios implements Serializable{
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
 
-		texto = new Paragraph("Medio de pago: ", negrilla);
+		texto = new Paragraph("Estado de la factura: ", negrilla);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
 
-		texto = new Paragraph(r.getPaymentMString(), normal);
-		texto.add(new Phrase(Chunk.NEWLINE));
+		texto = new Paragraph(((SeparateReceipt)r).getStateString(), normal);
 		celda = new PdfPCell(texto);
 		celda.setBorder(Rectangle.NO_BORDER);
 		tbl_client.addCell(celda);
-		
+
 		doc.add(tbl_client);
 		texto = new Paragraph();
 		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
-		
+
 		texto = new Paragraph("Listado de Abonos", negrilla);
 		texto.setAlignment(Element.ALIGN_CENTER);
 		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
-		
-		PdfPTable tbl_Payments = new PdfPTable(5);
-		tbl_products.setWidths(new int[]{1, 1, 2, 1, 1});
-		
+
+		PdfPTable tbl_payments = new PdfPTable(4);
+		tbl_payments.setWidths(new int[]{2, 1, 2, 2});
+		tbl_payments.addCell(createCell("Fecha", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_payments.addCell(createCell("Valor", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_payments.addCell(createCell("Medio de pago", negrilla, 2, 1, Element.ALIGN_LEFT));
+		tbl_payments.addCell(createCell("Recibido por", negrilla, 2, 1, Element.ALIGN_LEFT));
+		String[][] dataPay = new String[((SeparateReceipt)r).getNumPayments()][4];
+		System.out.println(((SeparateReceipt)r).getNumPayments());
+		Payment py = ((SeparateReceipt)r).getFirstPayment();
+		for (int x=0; x < dataPay.length; x++) {
+			for (int y=0; y < dataPay[x].length && py!=null; y++) {
+				if(y==0) {
+					dataPay[x][y] = py.getDateAndHour();
+				}else if(y==1) {
+					dataPay[x][y] = ""+py.getAmount();
+				}else if(y==2) {
+					dataPay[x][y] = py.getPaymentMString();
+				}else {
+					dataPay[x][y] = py.getCreator().getName()+" "+py.getCreator().getLastName();
+				}
+			}
+			py = py.getNext();
+		}
+		for (String[] row : dataPay) {
+			tbl_payments.addCell(createCell(row[0], normal, 1, 1, Element.ALIGN_LEFT));
+			tbl_payments.addCell(createCell(row[1], normal, 1, 1, Element.ALIGN_LEFT));
+			tbl_payments.addCell(createCell(row[2], normal, 1, 1, Element.ALIGN_RIGHT));
+			tbl_payments.addCell(createCell(row[3], normal, 1, 1, Element.ALIGN_RIGHT));
+		}
+		doc.add(tbl_payments);
+
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
+
 		texto = new Paragraph("Listado de productos", negrilla);
 		texto.setAlignment(Element.ALIGN_CENTER);
 		texto.add(new Phrase(Chunk.NEWLINE));
 		texto.add(new Phrase(Chunk.NEWLINE));
 		doc.add(texto);
-		
+
 		PdfPTable tbl_products = new PdfPTable(5);
 		tbl_products.setWidths(new int[]{1, 1, 2, 1, 1});
 		tbl_products.addCell(createCell("Codigo", negrilla, 2, 1, Element.ALIGN_LEFT));
@@ -1793,13 +1814,18 @@ public class Angelaccesorios implements Serializable{
 			tbl_products.addCell(createCell(row[4], normal, 1, 1, Element.ALIGN_RIGHT));
 		}
 		tbl_products.addCell(createCell("Subtotal", negrilla, 2, 4, Element.ALIGN_LEFT));
-		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell(""+r.getSubtotal(), normal, 2, 1, Element.ALIGN_RIGHT));
 		tbl_products.addCell(createCell("IVA", negrilla, 2, 4, Element.ALIGN_LEFT));
-		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
+		tbl_products.addCell(createCell(""+r.getIVA(), normal, 2, 1, Element.ALIGN_RIGHT));
 		tbl_products.addCell(createCell("Total", negrilla, 2, 4, Element.ALIGN_LEFT));
-		tbl_products.addCell(createCell("$1,552.00", normal, 2, 1, Element.ALIGN_RIGHT));
-		tbl_products.addCell(createCell("Entregado por: "+r.getCreator().getName()+" "+r.getCreator().getLastName(), normal, 1, 5, Element.ALIGN_LEFT));
-		tbl_products.addCell(createCell("Observaciones:\n"+r.getObservations(), normal, 1, 5, Element.ALIGN_LEFT));
+		tbl_products.addCell(createCell(""+r.getTotal(), normal, 2, 1, Element.ALIGN_RIGHT));
+		if(((SeparateReceipt)r).getState()==State.ENTREGADO) {
+			tbl_products.addCell(createCell("Entregado por: "+((SeparateReceipt)r).getLastPayment().getCreator().getName()+" "+((SeparateReceipt)r).getLastPayment().getCreator().getLastName(), normal, 1, 5, Element.ALIGN_LEFT));
+			tbl_products.addCell(createCell("Observaciones:\n"+r.getObservations(), normal, 1, 5, Element.ALIGN_LEFT));	
+		}else {
+			tbl_products.addCell(createCell("Por pagar", negrilla, 2, 4, Element.ALIGN_LEFT));
+			tbl_products.addCell(createCell(""+((SeparateReceipt)r).calculateUnpaidPrice(), normal, 2, 1, Element.ALIGN_RIGHT));
+		}
 		doc.add(tbl_products);
 		doc.close();
 	}

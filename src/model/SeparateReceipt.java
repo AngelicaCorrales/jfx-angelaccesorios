@@ -9,6 +9,7 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 	private static final long serialVersionUID = 1;
 	private Payment firstPayment;
 	private Payment lastPayment;
+	private int numPayments;
 	private State state;
 
 	public SeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c,String pm, double vp) {
@@ -17,11 +18,13 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 		firstPayment = new Payment(vp, stringToPaymentMethod(pm),getDateAndTime(), c);
 		lastPayment=firstPayment;
 		state = State.NO_ENTREGADO;
+		numPayments = 1;
 	}
 	
 	public void addPayment(double vp,String pm, User c ) {
 		Date date=new Date();
 		Payment payment=new Payment(vp, stringToPaymentMethod(pm), date, c);
+		numPayments +=1;
 		lastPayment.setNext(payment);
 		payment.setPrev(lastPayment);
 		lastPayment=payment;
@@ -110,6 +113,21 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 		return calculateUnpaidPrice();
 	}
 
-	
+	public int getNumPayments() {
+		return numPayments;
+	}
 
+	public void setNumPayments(int numPayments) {
+		this.numPayments = numPayments;
+	}
+
+	public String getStateString() {
+		String s  = "";
+		if(state==State.ENTREGADO) {
+			s = state.name();
+		}else {
+			s = "NO ENTREGADO";
+		}
+		return s;
+	}
 }
