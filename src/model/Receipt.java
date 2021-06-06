@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
+public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Receipt>{
 
 	private static final long serialVersionUID = 1;
 	private String code;
@@ -176,12 +176,33 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 	}
 
 	@Override
-	public double calculateTotalPrice() {
+	public double calculateSubtotalPrice() {
 		double totalPrice=0;
 		for(int i=0; i<listOfProducts.size();i++) {
 			totalPrice+=listOfProducts.get(i).getPrice() *listOfQuantity.get(i);
 		}
 		return totalPrice;
+	}
+	
+	@Override
+	public double calculateIVA() {
+		double iva=0;
+		for(int i=0; i<listOfProducts.size();i++) {
+			iva+=listOfProducts.get(i).calculateIVA() *listOfQuantity.get(i);
+		}
+		return iva;
+	}
+	
+	public double getSubtotal() {
+		return calculateSubtotalPrice();
+	}
+	
+	public double getIVA() {
+		return calculateIVA();
+	}
+	
+	public double getTotal() {
+		return calculateSubtotalPrice()+calculateIVA();
 	}
 
 	public String getPaymentMString() {
@@ -202,4 +223,6 @@ public class Receipt implements TotalPrice,Serializable, Comparable<Receipt>{
 		}
 		return pMT;
 	}
+
+	
 }

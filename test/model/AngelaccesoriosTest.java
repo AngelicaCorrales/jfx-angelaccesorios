@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.EmailException;
 import exceptions.ExcessQuantityException;
+import exceptions.ExcessValueException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -2091,7 +2092,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.getReceipts().get(0).setDateAndTime(f);
 	}
 
-	public void setupScenary16() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void setupScenary16() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
@@ -2122,7 +2123,7 @@ public class AngelaccesoriosTest {
 		angelaccesorios.getReceipts().get(0).setDateAndTime(f);
 	}
 
-	public void setupScenary17() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void setupScenary17() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		angelaccesorios=new Angelaccesorios(Angelaccesorios.TEST);
 
 		angelaccesorios.createUserAdmin("1007793567", "ANGELA", "LOPEZ", "angelaccesorios", "4ng3laACC", "angelaccesorios@gmail.com");
@@ -2219,7 +2220,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateCashReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testCreateCashReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary16();
 		
 		ArrayList<Product> listProd=new ArrayList<Product>();
@@ -2280,7 +2281,7 @@ public class AngelaccesoriosTest {
 
 
 	@Test
-	public void testCreateSeparateReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testCreateSeparateReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary15();
 		
 
@@ -2308,7 +2309,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testCreateSeparateReceipt2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testCreateSeparateReceipt2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary13();
 		
 		ArrayList<Product> listProd=new ArrayList<Product>();
@@ -2344,7 +2345,7 @@ public class AngelaccesoriosTest {
 		}
 	}
 	@Test
-	public void testCreateSeparateReceipt3() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testCreateSeparateReceipt3() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary14();
 
 		ArrayList<Product> listProd=new ArrayList<Product>();
@@ -2390,7 +2391,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testAddProductToAReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessQuantityException  {
+	public void testAddProductToAReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessQuantityException, ExcessValueException  {
 		setupScenary16();
 		
 		ArrayList<Product> listProd=new ArrayList<Product>();
@@ -2413,7 +2414,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testDeleteProductFromAReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testDeleteProductFromAReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary17();
 		ArrayList<Product> listProd=new ArrayList<Product>();
 		ArrayList<Integer> listQ=new ArrayList<Integer>();
@@ -2434,7 +2435,7 @@ public class AngelaccesoriosTest {
 
 	@Test
 
-	public void testUpdateSeparateReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testUpdateSeparateReceipt1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary16();
 		SeparateReceipt sr=(SeparateReceipt)angelaccesorios.getReceipts().get(0);
 		String paymentMethod= "Efectivo";
@@ -2451,7 +2452,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testUpdateSeparateReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testUpdateSeparateReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary16();
 		SeparateReceipt sr=(SeparateReceipt)angelaccesorios.getReceipts().get(0);
 		String paymentMethod= "Tarjeta de debito";
@@ -2478,7 +2479,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testDeleteReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testDeleteReceipt2() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary17();
 		Receipt toBeDeleted=angelaccesorios.getReceipts().get(0);
 		boolean deleted=angelaccesorios.deleteReceipt(toBeDeleted);
@@ -2504,7 +2505,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSearchReceipt2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException {
+	public void testSearchReceipt2() throws EmailException, SpaceException, SameIDException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, NoProductsAddedException, UnderAgeException, SameProductException, ExcessValueException {
 		setupScenary16();
 		String code="76543-2";
 		Receipt receipt=angelaccesorios.searchReceipt(code);
@@ -2512,7 +2513,7 @@ public class AngelaccesoriosTest {
 	}
 
 	@Test
-	public void testSaveDataAngelaccesorios1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ClassNotFoundException {
+	public void testSaveDataAngelaccesorios1() throws EmailException, SpaceException, IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameIDException, NoProductsAddedException, UnderAgeException, SameProductException, ClassNotFoundException, ExcessValueException {
 		setupScenary17();
 		Angelaccesorios ang=angelaccesorios;
 		

@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Product implements Serializable{
+public class Product implements Serializable, taxIVA{
 	
 	private static final long serialVersionUID = 1;
 	private String code;
@@ -155,6 +155,15 @@ public class Product implements Serializable{
 
 	public void setTotalPriceAddedOrders(double totalPriceAddedOrders) {
 		this.totalPriceAddedOrders = totalPriceAddedOrders;
+	}
+
+	@Override
+	public double calculateIVA() {
+		double iva=0;
+		if(type instanceof ElectronicEquipment && price>783000) {
+			iva=price*0.19;
+		}
+		return iva;
 	}
 	
 }

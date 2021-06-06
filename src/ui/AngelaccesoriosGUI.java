@@ -18,6 +18,7 @@ import com.itextpdf.text.DocumentException;
 import exceptions.EmailException;
 import exceptions.HigherDateAndHour;
 import exceptions.ExcessQuantityException;
+import exceptions.ExcessValueException;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
 import exceptions.NoPriceException;
@@ -370,6 +371,9 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private ComboBox<String> cbPaymentMethod;
+	
+	@FXML
+	private ComboBox<String> cbPaymentMethodP;
 	
 	@FXML
 	private ComboBox<Client> cmbxClientsSR;
@@ -1448,8 +1452,49 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void addPaymentToAReceipt(ActionEvent event) {
-
+	public void addPaymentToAReceipt(ActionEvent event) throws IOException {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		if(!txtNewPayment.getText().isEmpty() && cbPaymentMethodP.getValue()!=null) {
+			try {
+				double value= Double.parseDouble(txtNewPayment.getText());
+				angelaccesorios.updateSeparateReceipt(tvOfSeparateReceipts.getSelectionModel().getSelectedItem(), cbPaymentMethodP.getValue(), value);
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Error");
+				alert1.setHeaderText(null);
+				alert1.setContentText("El abono ha sido agregado a la factura "+tvOfSeparateReceipts.getSelectionModel().getSelectedItem().getCode()+" exitosamente");
+				alert1.showAndWait();
+				
+				
+				txtNewPayment.setText("");
+				cbPaymentMethodP.setValue(null);
+				
+				if(tvOfSeparateReceipts.getSelectionModel().getSelectedItem().getState().name().equals("ENTREGADO")) {
+					addPaymentForm.setVisible(false);
+					addObservationsForm.setVisible(true);
+					separateReceiptObs.setDisable(false);
+				}else {
+					tvOfSeparateReceipts.getItems().clear();
+					initializeTableViewOfSeparateReceipts();
+				}
+				
+			} catch (NoPriceException e) {
+				alert.setContentText("El valor del abono no puede ser cero");
+				alert.showAndWait();
+			} catch (NegativePriceException e) {
+				alert.setContentText("El valor del abono no puede ser negativo");
+				alert.showAndWait();
+			} catch (NumberFormatException e) {
+				alert.setContentText("Digite el valor del abono en formato numérico");
+				alert.showAndWait();
+			} catch (ExcessValueException e) {
+				alert.setContentText("El valor del abono excede a lo que hace falta por pagar");
+				alert.showAndWait();
+			}
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
@@ -1570,12 +1615,30 @@ public class AngelaccesoriosGUI {
 		}catch (NumberFormatException e) {
 			alert.setContentText("Digite el valor del abono en formato numérico");
 			alert.showAndWait();
+		} catch (ExcessValueException e) {
+			alert.setContentText("El valor del abono excede a lo que hay que pagar");
+			alert.showAndWait();
 		}
 	}
 
 	@FXML
 	public void addSeparateReceiptObs(ActionEvent event) {
-
+		if(!separateReceiptObs.getText().isEmpty()) {
+			tvOfSeparateReceipts.getSelectionModel().getSelectedItem().setObservations(separateReceiptObs.getText());
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Información");
+			alert.setHeaderText(null);
+			alert.setContentText("Se agregaron las observaciones de la factura con código "+tvOfSeparateReceipts.getSelectionModel().getSelectedItem().getCode());
+			alert.showAndWait();
+			separateReceiptObs.setText("");
+			separateReceiptObs.setDisable(true);
+			
+			tvOfSeparateReceipts.getItems().clear();
+			initializeTableViewOfSeparateReceipts();
+			
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
@@ -1610,6 +1673,7 @@ public class AngelaccesoriosGUI {
 			    FXCollections.observableArrayList("Efectivo","Tarjeta de debito","Tarjeta de credito","Transferencia bancaria");
 		cbPaymentMethod.setItems(options);
 		cbPaymentMethodSR.setItems(options);
+		cbPaymentMethodP.setItems(options);
 	}
 
 	private void initializeTableViewOfAddedProducts() {
@@ -1684,6 +1748,7 @@ public class AngelaccesoriosGUI {
 			btDelete.setDisable(false);
 			btAddSR.setDisable(true);
 			gridPaneSR.setDisable(true);
+			btUpdate.setDisable(false);
 		}
 	}
 
@@ -1798,6 +1863,7 @@ public class AngelaccesoriosGUI {
 		btGenerateR.setVisible(true);
 		btGenerateR.setDisable(true);
 		btDelete.setVisible(true);
+		btDelete.setDisable(true);
 		initializeTableViewOfCountedReceipts();
 		hBoxSearchReceipt.setVisible(true);
 	}
@@ -1813,9 +1879,9 @@ public class AngelaccesoriosGUI {
     	colClientC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
     	colUserC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
     	colProductsInCR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
-    	//colSubtotalPriceC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("typeId"));
-    	//colIVAC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
-    	//colTotalValueC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
+    	colSubtotalPriceC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Subtotal"));
+    	colIVAC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("IVA"));
+    	colTotalValueC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Total"));
     	colPaymentMC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("PaymentMethod"));
     	colObservationsC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
     	
@@ -1849,11 +1915,11 @@ public class AngelaccesoriosGUI {
     	colClientS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
     	colUserS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
     	colProductsInSR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
-    	//colSubtotalPriceS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("typeId"));
-    	//colIVAS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
-    	//colTotalValueS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("status"));
+    	colSubtotalPriceS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Subtotal"));
+    	colIVAS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("IVA"));
+    	colTotalValueS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Total"));
     	colPayments.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllPayments"));
-    	//colToPay.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("PaymentMethod"));
+    	colToPay.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("UnpaidPrice"));
     	colObservationsS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
     	
     	tvOfSeparateReceipts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -1871,6 +1937,7 @@ public class AngelaccesoriosGUI {
 		tvOfReceiptProducts.setVisible(false);
 		vBoxListViewQ.setVisible(false);
 		hBoxSearchReceipt.setVisible(true);
+		
 		if(lbWindow.getText().equals("C")) {
 			manageCountedReceipt(null);
 		}else {
@@ -1880,6 +1947,8 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void returnToReceiptMenu(ActionEvent event) {
+		addObservationsForm.setVisible(false);
+		addPaymentForm.setVisible(false);
 		createCountedReceipt.setVisible(false);
 		createSeparateReceipt.setVisible(false);
 		scrollPaneTableviews.setVisible(false);
@@ -1890,6 +1959,14 @@ public class AngelaccesoriosGUI {
 		receiptMenu.setVisible(true);
 		angelaccesorios.resetReceiptProductsAndQuantities();
 		hBoxSearchReceipt.setVisible(false);
+		
+		btUpdate.setDisable(true);
+		btGenerateR.setDisable(true);
+		btDelete.setDisable(true);
+		btAdd.setDisable(false);
+		gridPaneR.setDisable(false);
+		btAddSR.setDisable(false);
+		gridPaneSR.setDisable(false);
 	}
 
 	@FXML
@@ -1991,7 +2068,20 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void updateReceipt(ActionEvent event) {
-
+		btGenerateR.setVisible(false);
+		btDelete.setVisible(false);
+		hBoxSearchReceipt.setVisible(false);
+		
+		btGenerateR.setDisable(true);
+		btDelete.setDisable(true);
+		btAdd.setDisable(false);
+		gridPaneR.setDisable(false);
+		btAddSR.setDisable(false);
+		gridPaneSR.setDisable(false);
+		createSeparateReceipt.setVisible(false);
+		scrollPaneTableviews.setVisible(false);
+		addPaymentForm.setVisible(true);
+		initializeComboBoxPaymentMethods();
 	}
 
 	@FXML

@@ -307,7 +307,7 @@
                               <TableColumn fx:id="colSubtotalPriceS" prefWidth="75.0" sortable="false" text="Subtotal" />
                               <TableColumn fx:id="colIVAS" prefWidth="200.0" sortable="false" text="IVA 19%" />
                               <TableColumn fx:id="colTotalValueS" prefWidth="75.0" sortable="false" text="Valor total" />
-                              <TableColumn fx:id="colPayments" prefWidth="200.0" sortable="false" text="Abonos" />
+                              <TableColumn fx:id="colPayments" maxWidth="6500.0" prefWidth="200.0" sortable="false" text="Abonos" />
                               <TableColumn fx:id="colToPay" prefWidth="75.0" sortable="false" text="Por pagar" />
                               <TableColumn fx:id="colObservationsS" prefWidth="75.0" sortable="false" text="Observaciones" />
                            </columns>
@@ -364,7 +364,7 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="txtNewPayment" editable="false" prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="1">
+                        <TextField fx:id="txtNewPayment" prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="30.0" />
                            </GridPane.margin>
@@ -377,7 +377,7 @@
                               <Insets left="35.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cbPaymentMethod" prefHeight="31.0" prefWidth="155.0" promptText="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cbPaymentMethodP" prefHeight="31.0" prefWidth="155.0" promptText="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" top="30.0" />

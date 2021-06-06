@@ -102,8 +102,12 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 
 	@Override
 	public double calculateUnpaidPrice() {
-		double unpaidPrice=calculateTotalPrice()-calculatePaymentTotal();
+		double unpaidPrice=getTotal()-calculatePaymentTotal();
 		return unpaidPrice;
+	}
+	
+	public double getUnpaidPrice() {
+		return calculateUnpaidPrice();
 	}
 
 	

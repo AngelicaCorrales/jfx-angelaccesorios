@@ -36,6 +36,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import exceptions.EmailException;
 import exceptions.ExcessQuantityException;
+import exceptions.ExcessValueException;
 import exceptions.HigherDateAndHour;
 import exceptions.NegativePriceException;
 import exceptions.NegativeQuantityException;
@@ -547,7 +548,7 @@ public class Angelaccesorios implements Serializable{
 		String code = codeNum+"-"+receipts.size();
 		receipt.setCode(code);
 
-		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.calculateTotalPrice());
+		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+receipt.getTotal());
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
 
 
@@ -567,7 +568,7 @@ public class Angelaccesorios implements Serializable{
 	}
 
 
-	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException, NoPriceException, NegativePriceException, IOException {
+	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException, NoPriceException, NegativePriceException, IOException, ExcessValueException {
 		if(valuePayment==0) {
 			throw new NoPriceException(valuePayment); 
 		}
@@ -583,6 +584,11 @@ public class Angelaccesorios implements Serializable{
 		}
 
 		Receipt receipt= new SeparateReceipt(listProd, listQ, buyer, loggedUser, paymentMethod, valuePayment);
+		if(((SeparateReceipt)receipt).calculateUnpaidPrice()<=0) {
+			receipt=null;
+			throw new ExcessValueException();
+		}
+		
 		receipts.add(receipt);
 		int codeNum = ThreadLocalRandom.current().nextInt(10000, 100000);
 		String code = codeNum+"-"+receipts.size();
@@ -628,13 +634,18 @@ public class Angelaccesorios implements Serializable{
 		listQ.remove(i);
 	}
 
-	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) throws NoPriceException, NegativePriceException, IOException {
+	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) throws NoPriceException, NegativePriceException, IOException, ExcessValueException {
 		if(valuePayable==0) {
 			throw new NoPriceException(valuePayable); 
 		}
 		if(valuePayable<0) {
 			throw new NegativePriceException(valuePayable);
 		}
+		if(((SeparateReceipt)receipt).calculateUnpaidPrice()<valuePayable) {
+			receipt=null;
+			throw new ExcessValueException();
+		}
+		
 		((SeparateReceipt)receipt).addPayment(valuePayable, paymentMethod, loggedUser);
 		loggedUser.setSumTotalReceipts(loggedUser.getSumTotalReceipts()+valuePayable);
 		loggedUser.setNumberReceipts(loggedUser.getNumberReceipts()+1);
