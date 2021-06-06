@@ -1475,8 +1475,7 @@ public class AngelaccesoriosGUI {
 					addObservationsForm.setVisible(true);
 					separateReceiptObs.setDisable(false);
 				}else {
-					tvOfSeparateReceipts.getItems().clear();
-					initializeTableViewOfSeparateReceipts();
+					
 				}
 				
 			} catch (NoPriceException e) {
@@ -1947,6 +1946,12 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void returnToReceiptMenu(ActionEvent event) {
+		tvOfSeparateReceipts.getItems().clear();
+		initializeTableViewOfSeparateReceipts();
+		
+		tvOfCountedReceipts.getItems().clear();
+		initializeTableViewOfCountedReceipts();
+		
 		addObservationsForm.setVisible(false);
 		addPaymentForm.setVisible(false);
 		createCountedReceipt.setVisible(false);
@@ -2571,12 +2576,50 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	public void importClientsData(ActionEvent event) {
-
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Abrir el archivo");
+    	File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
+    	if(f!=null) {
+    		
+			alert.setTitle("Importar clientes");
+    		
+    		try {
+    			
+    			angelaccesorios.importClientsData(f.getAbsolutePath());
+        		alert.setContentText("Los clientes fueron importados exitosamente");
+        		alert.showAndWait();
+    		}catch(IOException e){
+        		alert.setContentText("Los clientes no se importaron. Ocurrió un error");
+        		alert.showAndWait();
+    		}
+    	}
 	}
 
 	@FXML
 	public void importProductsData(ActionEvent event) {
-
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Abrir el archivo");
+    	File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
+    	if(f!=null) {
+    		
+			alert.setTitle("Importar productos");
+    		
+    		try {
+    			
+    			angelaccesorios.importProductsData(f.getAbsolutePath());
+        		alert.setContentText("Los productos fueron importados exitosamente");
+        		alert.showAndWait();
+    		}catch(IOException e){
+        		alert.setContentText("Los productos no se importaron. Ocurrió un error");
+        		alert.showAndWait();
+    		}
+    	}
 	}
 
 	private void initializeComboBoxOfHours() {
