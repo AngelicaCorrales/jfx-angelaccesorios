@@ -12,6 +12,14 @@ public class Supplier implements Serializable{
 	private Supplier right;
 	private Supplier parent;
 	
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> Supplier.<br>
+	*<b>pre</b>: the variables n and ph are already initialized. <br>
+	*<b>post:</b> the attributes of the class have been initialized.<br>
+	*@param n Is a String variable that contains the name of a supplier. n!=null and n!="".<br>
+	*@param ph Is a String variable that contains the phone number of a supplier. ph!=null and ph!="".<br>
+	*/
 	public Supplier(String n, String ph) {
 		name = n;
 		phoneNumber = ph;

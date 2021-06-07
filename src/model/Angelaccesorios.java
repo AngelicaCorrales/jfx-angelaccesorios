@@ -865,6 +865,19 @@ public class Angelaccesorios implements Serializable{
 
 	//All related with Brand
 
+	/**
+	* This method adds a brand to the systems's list of brands.<br>
+	* <b>name</b>: addBrand <br>
+	* <b>pre</b>: The variable name is already initialized. <br>
+	* <b>post</b>: The brand was added successfully or not. <br>
+	* @param name Is a String variable that contains the name of a brand. name!="" and name!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying added, a variable that indicates if the brand was added successfully or not.  
+	*/
 	public boolean addBrand(String name) throws IOException {
 		Brand b = searchBrand(name);
 		boolean added = false;
@@ -877,6 +890,18 @@ public class Angelaccesorios implements Serializable{
 		return added;
 	}
 
+	/**
+	* This method deletes a brand from the system's list of brands.<br>
+	* <b>name</b>: deleteBrand <br>
+	* <b>post</b>: The brand was deleted successfully or not. <br>
+	* @param brand Is a Brand object that represents a brand of the system. brand!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying deleted, a variable that indicates if the brand was deleted successfully or not.  
+	*/
 	public boolean deleteBrand(Brand brand) throws IOException {
 		boolean deleted = false;
 		if(!searchBrandInProducts(brand)){
@@ -887,6 +912,20 @@ public class Angelaccesorios implements Serializable{
 		return deleted;
 	}
 
+	/**
+	* This method updates a brand from the system's list of brands.<br>
+	* <b>name</b>: updateBrand <br>
+	* <b>post</b>: The brand was updated successfully or not. <br>
+	* @param brand Is a Brand object that represents a brand of the system. brand!=null.<br>
+	* @param newName Is a String variable that contains the new name of a brand. newName!=null and newName!="".<br>
+	* @param enabled Is a boolean variable that represents the new state of a brand.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying updated, a variable that indicates if the brand was updated successfully or not.  
+	*/
 	public boolean updateBrand(Brand b, String newName, boolean enabled) throws IOException {
 		Brand brand = searchBrand(newName);
 		boolean updated=false;
@@ -905,6 +944,13 @@ public class Angelaccesorios implements Serializable{
 		return updated;
 	}
 
+	/**
+	* This method searches for a specific brand within the system's list of products. <br>
+	* <b>name</b>: searchBrandInProducts <br>
+	* <b>post</b>: True or false was returned depending of the search result. <br>
+	* @param b Is a Brand object that represents a brand of the system. brand!=null.<br>
+	* @return a <code> boolean </code> specifying found, a variable that indicates if a certain brand is related with a product of the system. 
+	*/
 	private boolean searchBrandInProducts(Brand b) {
 		boolean found = false;
 		for(int i=0; i<products.size() && !found;i++) {
@@ -915,6 +961,14 @@ public class Angelaccesorios implements Serializable{
 		return found;
 	}
 
+	/**
+	* This method searches for a specific brand within the system's list of brands. <br>
+	* <b>name</b>: searchBrand <br>
+	* <b>pre</b>: the variable brandName is already initialized.   <br>
+	* <b>post</b>: the searched brand could have been found. <br>
+	* @param brandName Is a String variable that contains the name of a brand.  brandName!=null and brandName!="".<br>
+	* @return a <code> Brand </code> object specifying b, that might correspond to the searched brand. 
+	*/
 	public Brand searchBrand(String brandName) {
 		boolean found = false;
 		Brand b = null;
@@ -927,6 +981,12 @@ public class Angelaccesorios implements Serializable{
 		return b;
 	}
 
+	/**
+	* This method returns a list of brands that have their state as "enabled". <br>
+	* <b>name</b>: returnEnabledBrands <br>
+	* <b>post</b>: A list with the enabled brands of the system was returned. <br>
+	* @return an ArrayList of Brand <code> list </code> that contains all the brands that are enabled in the system. 
+	*/
 	public ArrayList<Brand> returnEnabledBrands(){
 		ArrayList<Brand> list = new ArrayList<Brand>();
 		for(int k=0; k<brands.size();k++) {
@@ -947,6 +1007,20 @@ public class Angelaccesorios implements Serializable{
 
 	//All related with Supplier
 
+	/**
+	* This method adds a supplier to the system.<br>
+	* <b>name</b>: addSupplier <br>
+	* <b>pre</b>: The variables name and phoneN are already initialized. <br>
+	* <b>post</b>: The supplier was added successfully or not. <br>
+	*@param name Is a String variable that contains the name of a supplier. name!=null and name!="".<br>
+	*@param phoneN Is a String variable that contains the phone number of a supplier. phoneN!=null and phoneN!="".<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying added, a variable that indicates if the supplier was added successfully or not.
+	*/
 	public boolean addSupplier(String name, String phoneN) throws IOException {
 		Supplier s = searchSupplier(supplierRoot, name);
 		boolean added = false;
@@ -964,6 +1038,14 @@ public class Angelaccesorios implements Serializable{
 		return added;
 	}
 
+	/**
+	* This method adds a supplier to the systems's binary tree of suppliers in case its root has a value assigned to it.<br>
+	* <b>name</b>: addSupplier <br>
+	* <b>pre</b>: The objects current and newSupplier are already initialized. <br>
+	* <b>post</b>: The supplier was added. <br>
+	* @param current Is a Supplier object that represents the root of the binary tree of winners. current!=null.<br>
+	* @param newWinner Is a Supplier object that represents the new supplier that is going to be added to the binary tree. newSupplier!=null.<br>
+	*/
 	private void addSupplier(Supplier current, Supplier newSupplier) {
 		if(newSupplier.getName().compareTo(current.getName())<0){
 			if(current.getRight()==null){
@@ -983,6 +1065,18 @@ public class Angelaccesorios implements Serializable{
 		}	
 	}
 
+	/**
+	* This method deletes a supplier of the system.<br>
+	* <b>name</b>: deleteSupplier <br>
+	* <b>post</b>: The supplier was deleted successfully or not. <br>
+	* @param s Is a Supplier object that represents a supplier of the system. s!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying deleted, a variable that indicates if the supplier was deleted successfully or not.  
+	*/
 	public boolean deleteSupplier(Supplier s) throws IOException {
 		boolean deleted = false;
 		if(!searchSupplierInTypesOfProducts(typePRoot, s)){
@@ -993,6 +1087,13 @@ public class Angelaccesorios implements Serializable{
 		return deleted;
 	}
 
+	/**
+	* This method deletes a supplier from the system's binary tree of suppliers.<br>
+	* <b>name</b>: removeSupplier <br>
+	* <b>pre</b>: The object s is already initialized. <br>
+	* <b>post</b>: The supplier was removed from the binary tree. <br>
+	* @param s Is a Supplier object that represents a supplier of the system. s!=null.<br>
+	*/
 	private void removeSupplier(Supplier s) {
 		if(s.getLeft()==null && s.getRight()==null){
 			if(s==supplierRoot){
@@ -1032,6 +1133,13 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method searches the minimum value in the left child of a node.<br>
+	* <b>name</b>: min <br>
+	* <b>pre</b>: The object current is already initialized. <br>
+	* <b>post</b>: The minimum value of the left child of a node was returned. <br>
+	* @param current Is a Supplier object that represents a node of the binary tree of suppliers. current!=null.<br>
+	*/
 	private Supplier min(Supplier current){
 		if(current.getLeft()!=null){
 			return min(current.getLeft());
@@ -1040,6 +1148,20 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method updates a supplier from the system's binary tree of suppliers.<br>
+	* <b>name</b>: updateSupplier <br>
+	* <b>post</b>: The supplier was updated successfully or not. <br>
+	* @param s Is a Supplier object that represents a supplier of the system. s!=null.<br>
+	* @param newName Is a String variable that contains the new name of a supplier. newName!=null and newName!="".<br>
+	* @param newPhone Is a String variable that contains the new phone of a supplier. newPhone!=null and newPhone!="".<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying updated, a variable that indicates if the supplier was updated successfully or not.  
+	*/
 	public boolean updateSupplier(Supplier s, String newName, String newPhone) throws IOException {
 		Supplier supplier = searchSupplier(supplierRoot, newName);
 		boolean updated=false;
@@ -1058,6 +1180,15 @@ public class Angelaccesorios implements Serializable{
 		return updated;
 	}
 
+	/**
+	* This method searches for a specific supplier within the system's binary tree of suppliers. <br>
+	* <b>name</b>: searchSupplier <br>
+	* <b>pre</b>: the object current and the variable name are already initialized. <br>
+	* <b>post</b>: the searched supplier could have been found. <br>
+	* @param current Is a Supplier object that represents the root of the binary tree of suppliers. current!=null.<br>
+	* @param name Is a String variable that contains the name of a supplier. name!=null and name!="".<br>
+	* @return a <code> Supplier </code> object that might correspond to the searched supplier. 
+	*/
 	public Supplier searchSupplier(Supplier current, String name) {
 		if(current==null || current.getName().equalsIgnoreCase(name)) {
 			return current;
@@ -1070,6 +1201,14 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method searches for a specific supplier within the system's binary tree of types of products. <br>
+	* <b>name</b>: searchSupplierInTypesOfProducts <br>
+	* <b>post</b>: True or false was returned depending of the search result. <br>
+	* @param current Is a TypeOfProduct object that represents the root of the binary tree of types of products. current!=null.<br>
+	* @param s Is a Supplier object that represents a supplier of the system. s!=null.<br>
+	* @return a <code> boolean </code> specifying found, a variable that indicates if a certain supplier is related with a type of product of the system. 
+	*/
 	private boolean searchSupplierInTypesOfProducts(TypeOfProduct current, Supplier s) {
 		boolean found = false;
 		if(current!=null && current instanceof ElectronicEquipment) {
@@ -1108,6 +1247,20 @@ public class Angelaccesorios implements Serializable{
 
 	//All related with TypeOfProduct
 
+	/**
+	* This method adds a type of product to the system.<br>
+	* <b>name</b>: addTypeOfProduct <br>
+	* <b>pre</b>: The variables name and category are already initialized. <br>
+	* <b>post</b>: The type of product was added successfully or not. <br>
+	*@param name Is a String variable that contains the name of a type of product. name!=null and name!="".<br>
+	*@param category Is a String variable that contains the category of a type of product (accessory or electronic equipment). category!=null and category!="".<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying added, a variable that indicates if the type of product was added successfully or not.
+	*/
 	public boolean addTypeOfProduct(String name, String category) throws IOException {
 		TypeOfProduct ty = searchTypeOfProduct(typePRoot, name);
 		boolean added = false;
@@ -1129,6 +1282,14 @@ public class Angelaccesorios implements Serializable{
 		return added;
 	}
 
+	/**
+	* This method adds a type of product to the systems's binary tree of types of products in case its root has a value assigned to it.<br>
+	* <b>name</b>: addTypeOfProduct <br>
+	* <b>pre</b>: The objects current and newType are already initialized. <br>
+	* <b>post</b>: The type of product was added. <br>
+	* @param current Is a TypeOfProduct object that represents the root of the binary tree of types of products. current!=null.<br>
+	* @param newType Is a TypeOfProduct object that represents the new type of product that is going to be added to the binary tree. newType!=null.<br>
+	*/
 	private void addTypeOfProduct(TypeOfProduct current, TypeOfProduct newType) {
 		if(newType.getName().compareTo(current.getName())<0){
 			if(current.getRight()==null){
@@ -1147,6 +1308,20 @@ public class Angelaccesorios implements Serializable{
 		}	
 	}
 
+	/**
+	* This method adds a supplier to an ElectronicEquipment type of product of the system.<br>
+	* <b>name</b>: addSupplierToEQE <br>
+	* <b>pre</b>: The objects tp and sp are already initialized. <br>
+	* <b>post</b>: The supplier was added successfully or not to an ElectronicEquipment type of product. <br>
+	*@param tp Is an ElectronicEquipment object that represents a system's type of product. tp!=null.<br>
+	*@param sp Is a Supplier object that represents a supplier of the system. sp!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying added, a variable that indicates if the supplier was added successfully or not to a type of product.
+	*/
 	public boolean addSupplierToEQE(ElectronicEquipment tp, Supplier sp) throws IOException{
 		boolean find = tp.findSupplier(sp.getName());
 		boolean added = false;
@@ -1158,11 +1333,36 @@ public class Angelaccesorios implements Serializable{
 		return added;
 	}
 
+	/**
+	* This method deletes a supplier of an ElectronicEquipment type of product.<br>
+	* <b>name</b>: deleteSupplierOfAnEQE <br>
+	* <b>pre</b>: The objects tp and sp are already initialized. <br>
+	* <b>post</b>: The supplier was deleted successfully or not of an ElectronicEquipment type of product. <br>
+	*@param tp Is an ElectronicEquipment object that represents a system's type of product. tp!=null.<br>
+	*@param sp Is a Supplier object that represents a supplier of the system. sp!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public void deleteSupplierOfAnEQE(ElectronicEquipment tp, Supplier sp) throws IOException {
 		tp.getSuppliers().remove(tp.getSuppliers().indexOf(sp));
 		saveDataAngelaccesorios();
 	}
 
+	/**
+	* This method deletes a type of product of the system.<br>
+	* <b>name</b>: deleteTypeOfProduct <br>
+	* <b>post</b>: The type of product was deleted successfully or not. <br>
+	* @param type Is a TypeOfProduct object that represents a type of product of the system. type!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying deleted, a variable that indicates if the type of product was deleted successfully or not.  
+	*/
 	public boolean deleteTypeOfProduct(TypeOfProduct type) throws IOException {
 		boolean deleted = false;
 		boolean found = false;
@@ -1179,6 +1379,13 @@ public class Angelaccesorios implements Serializable{
 		return deleted;
 	}
 
+	/**
+	* This method deletes a type of product from the system's binary tree of types of products.<br>
+	* <b>name</b>: removeType <br>
+	* <b>pre</b>: The object t is already initialized. <br>
+	* <b>post</b>: The type of product was removed from the binary tree. <br>
+	* @param t Is a TypeOfProduct object that represents a system's type of product. t!=null.<br>
+	*/
 	private void removeType(TypeOfProduct t) {
 		if(t.getLeft()==null && t.getRight()==null){
 			if(t==typePRoot){
@@ -1218,6 +1425,13 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method searches the minimum value in the left child of a node.<br>
+	* <b>name</b>: min <br>
+	* <b>pre</b>: The object current is already initialized. <br>
+	* <b>post</b>: The minimum value of the left child of a node was returned. <br>
+	* @param current Is a TypeOfProduct object that represents a node of the binary tree of types of products. current!=null.<br>
+	*/
 	private TypeOfProduct min(TypeOfProduct current){
 		if(current.getLeft()!=null){
 			return min(current.getLeft());
@@ -1226,6 +1440,20 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method updates a type of product from the system's binary tree of types of products.<br>
+	* <b>name</b>: updateTypeOfProduct <br>
+	* <b>post</b>: The type of product was updated successfully or not. <br>
+	* @param ty Is a TypeOfProduct object that represents a type of product of the system. ty!=null.<br>
+	* @param newName Is a String variable that contains the new name of a type of product. newName!=null and newName!="".<br>
+	* @param enabled Is a boolean variable that represents the new state of a type of product.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying updated, a variable that indicates if the type of product was updated successfully or not.  
+	*/
 	public boolean updateTypeOfProduct(TypeOfProduct ty, String newName, boolean enabled) throws IOException {
 		TypeOfProduct type = searchTypeOfProduct(typePRoot, newName);
 		boolean updated=false;
@@ -1244,6 +1472,15 @@ public class Angelaccesorios implements Serializable{
 		return updated;
 	}
 
+	/**
+	* This method searches for a specific type of product within the system's binary tree of types of products. <br>
+	* <b>name</b>: searchTypeOfProduct <br>
+	* <b>pre</b>: the object current and the variable name are already initialized. <br>
+	* <b>post</b>: the searched type of product could have been found. <br>
+	* @param current Is a TypeOfProduct object that represents the root of the binary tree of types of products. current!=null.<br>
+	* @param name Is a String variable that contains the name of a type of product. name!=null and name!="".<br>
+	* @return a <code> TypeOfProduct </code> object that might correspond to the searched type of product. 
+	*/
 	public TypeOfProduct searchTypeOfProduct(TypeOfProduct current, String name) {
 		if(current==null || current.getName().equalsIgnoreCase(name)) {
 			return current;
@@ -1266,6 +1503,33 @@ public class Angelaccesorios implements Serializable{
 
 	//All related with Product
 
+	/**
+	* This method adds a product to the system's list of products.<br>
+	* <b>name</b>: addProduct <br>
+	* <b>pre</b>: The objects type, brand, and the variables such as model, units, price and guarantee are already initialized. <br>
+	* <b>post</b>: The product was added successfully or not. <br>
+	*@param type Is a TypeOfProduct object that represents a type of product of the system. type!=null.<br>
+	*@param b Is a Brand object that represents a brand of the system. b!=null.<br>
+	*@param units Is an integer variable that contains the number of available units of a product.<br>
+	*@param guarantee Is a boolean variable that indicates if a product has guarantee or not.<br>
+	*@param model Is a String variable that contains the model of a product. model!=null and model!="".<br>
+	*@param price Is a double variable that contains the price of a product.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @throws NoQuantityException <br>
+    *		thrown if units==0. <br> 
+    * @throws NegativeQuantityException <br>
+    *		thrown if units<0. <br> 
+    * @throws NoPriceException <br>
+    *		thrown if price==0. <br> 
+    * @throws NegativePriceException <br>
+    *		thrown if price<0. <br> 
+    * @throws SameProductException <br>
+    *		thrown if there is another product in the system with the same type, brand and model entered. <br> 
+	*/
 	public void addProduct(TypeOfProduct type, Brand b, String model, int units, double price, boolean guarantee) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
 		Product p = searchProduct(type, b, model);
 		if(p==null && units>0 && price>0) {
@@ -1309,6 +1573,18 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method deletes a product of the system.<br>
+	* <b>name</b>: deleteProduct <br>
+	* <b>post</b>: The product was deleted successfully or not. <br>
+	* @param p Is a Product object that represents product of the system. p!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @return a <code> boolean </code> specifying deleted, a variable that indicates if the product was deleted successfully or not.  
+	*/
 	public boolean deleteProduct(Product p) throws IOException {
 		boolean deleted = false; 
 		boolean find = false;
@@ -1325,6 +1601,34 @@ public class Angelaccesorios implements Serializable{
 		return deleted;
 	}
 
+	/**
+	* This method updates a product of the system's list of products.<br>
+	* <b>name</b>: updateProduct <br>
+	* <b>pre</b>: The objects p, brand, and the variables such as model, units, price, guarantee and enabled are already initialized. <br>
+	* <b>post</b>: The product was updated successfully or not. <br>
+	*@param p Is a Product object that represents a product of the system. p!=null.<br>
+	*@param b Is a Brand object that represents a brand of the system. b!=null.<br>
+	*@param units Is an integer variable that contains the number of available units of a product.<br>
+	*@param guarantee Is a boolean variable that indicates if a product has guarantee or not.<br>
+	*@param model Is a String variable that contains the model of a product. model!=null and model!="".<br>
+	*@param price Is a double variable that contains the price of a product.<br>
+	*@param enabled Is a boolean variable that represents the state of a product.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @throws NoQuantityException <br>
+    *		thrown if units==0. <br> 
+    * @throws NegativeQuantityException <br>
+    *		thrown if units<0. <br> 
+    * @throws NoPriceException <br>
+    *		thrown if price==0. <br> 
+    * @throws NegativePriceException <br>
+    *		thrown if price<0. <br> 
+    * @throws SameProductException <br>
+    *		thrown if there is another product in the system with the same type, brand and model entered. <br> 
+	*/
 	public void updateProduct(Product p, Brand b, String model, int units, double price, boolean guarantee, boolean enabled) throws IOException, NoQuantityException, NegativeQuantityException, NoPriceException, NegativePriceException, SameProductException {
 		Product product = searchProduct(p.getType(), b, model);
 		boolean findProduct = false;
@@ -1358,6 +1662,16 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method searches for a specific product within the system's list of products. <br>
+	* <b>name</b>: searchProduct <br>
+	* <b>pre</b>: the objects ty, brand and the variable model are already initialized. <br>
+	* <b>post</b>: the searched product could have been found. <br>
+	* @param ty Is a TypeOfProduct object that represents a type of product of the system. ty!=null.<br>
+	* @param b Is a Brand object that represents a brand of the system. b!=null.<br>
+	* @param model Is a String variable that contains the model of a product. model!=null and model!="".<br>
+	* @return a <code> Product </code> object specifying p, that might correspond to the searched product. 
+	*/
 	public Product searchProduct(TypeOfProduct ty, Brand b, String model) {
 		boolean found = false;
 		Product p = null;

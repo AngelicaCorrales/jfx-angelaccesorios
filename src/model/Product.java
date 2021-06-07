@@ -17,6 +17,20 @@ public class Product implements Serializable, taxIVA{
 	private int numTimesAddedOrders;
 	private double totalPriceAddedOrders;
 	
+	/**
+	*This is the constructor of the class. <br>
+	* <b>name</b>: Product <br>
+	* <b>pre</b>: the variables t, b, u, g, m, p and c are already initialized. <br>
+	* <b>post</b>: All the attributes of the class were initialized. <br>
+	* @param t Is a TypeOfProduct object that contains the type of product related with a product. t!=null.<br>
+	* @param b Is a Brand object that contains the brand of a product. b!=null.<br>
+	* @param u Is an integer variable that contains the number of available units of a product. u!=0.<br>
+	* @param g Is a boolean variable that indicates if a product has guarantee or not.<br>
+	* @param m Is a String variable that contains the model of a product. m!=null and m!="".<br>
+	* @param p Is a double variable that contains the price of a product. p is greater than 0.<br>
+	* @param c Is a String variable that contains the code of a product. c!=null, c!="".<br>
+	*/
+	
 	public Product(TypeOfProduct t, Brand b, int u, boolean g, String m, double p, String c) {
 		type = t;
 		brand = b;
@@ -73,6 +87,12 @@ public class Product implements Serializable, taxIVA{
 		this.units = units;
 	}
 
+	/**
+	* This method obtains a String with the guarantee of a product. <br>
+	* <b>name</b>: getGuarantee.<br>
+ 	* <b>post</b>: the guarantee of a product has been obtained. <br>
+ 	* @return a <code> String </code> specifying g, the guarantee of a product.
+ 	*/
 	public String getGuarantee() {
 		String g = "";
 		if(guarantee==true) {
@@ -107,6 +127,12 @@ public class Product implements Serializable, taxIVA{
 		this.price = price;
 	}
 
+	/**
+	* This method obtains a String with the state of a product. <br>
+	* <b>name</b>: getState.<br>
+ 	* <b>post</b>: the state of a product has been obtained. <br>
+ 	* @return a <code> String </code> specifying state, the state of a product.
+ 	*/
 	public String getState() {
 		String state = "";
 		if(enabled==true) {
@@ -129,6 +155,12 @@ public class Product implements Serializable, taxIVA{
 		return type+" "+brand+" "+model;
 	}
 	
+	/**
+	* This method obtains a String with the type of product, brand, model and price of a product. <br>
+	* <b>name</b>: toString.<br>
+ 	* <b>post</b>: the type of product, brand, model and price of a product has been obtained. <br>
+ 	* @return a <code> String </code> with the type of product, brand, model and price of a product.
+ 	*/
 	public String toString() {
 		return type+" "+brand+" "+model+" "+price+"c/u";
 	}
@@ -157,6 +189,12 @@ public class Product implements Serializable, taxIVA{
 		this.totalPriceAddedOrders = totalPriceAddedOrders;
 	}
 
+	/**
+	* This method returns the IVA tax of a product if its type is ElectronicEquipment and its price is greater than 783000. <br>
+	* <b>name</b>: calculateIVA <br>
+	* <b>post</b>: the IVA tax of a product of an ElectronicEquipment type has been gotten. <br>
+	* @return an <code> double </code> specifying iva, the IVA tax of a product of an ElectronicEquipment type.
+	*/
 	@Override
 	public double calculateIVA() {
 		double iva=0;
