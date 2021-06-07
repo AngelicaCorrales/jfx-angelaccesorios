@@ -39,6 +39,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -60,36 +61,46 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
+import model.CircleFigure;
 import model.Client;
 import model.ElectronicEquipment;
 import model.Product;
 import model.Receipt;
+import model.RectangleFigure;
 import model.SeparateReceipt;
 import model.Supplier;
 import model.TypeOfProduct;
 import model.User;
 import thread.ClockThread;
+import thread.Graphic1Thread;
+import thread.PointerThread;
 import thread.ProgressThread;
 
 public class AngelaccesoriosGUI {
 
 	private Angelaccesorios angelaccesorios;
-	
+
 	@FXML
 	private BorderPane mainPane;
-	
-	 @FXML
-	 private ProgressBar progressBar;
-	
+
 	@FXML
-    private Label lbClock;
+	private Pane animation1;
+
+	@FXML
+	private ProgressBar progressBar;
+
+	@FXML
+	private Label lbClock;
 
 	@FXML
 	private TextField txtUserName;
@@ -117,6 +128,36 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private Button btManageSupplier;
+
+	//1st animation
+
+	private CircleFigure pointer;
+	private RectangleFigure one;
+	private RectangleFigure two;
+	private RectangleFigure three;
+	private RectangleFigure four;
+	private RectangleFigure five;
+
+	@FXML
+	private Circle circle;
+
+	@FXML
+	private Rectangle firstRectangle;
+
+	@FXML
+	private Rectangle secondRectangle;
+
+	@FXML
+	private Rectangle fourthRectangle;
+
+	@FXML
+	private ImageView appsImageV;
+
+	@FXML
+	private Rectangle thirdRectangle;
+
+	@FXML
+	private Rectangle fifthRectangle;
 
 	//Brand------------
 
@@ -376,10 +417,10 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private ComboBox<String> cbPaymentMethod;
-	
+
 	@FXML
 	private ComboBox<String> cbPaymentMethodP;
-	
+
 	@FXML
 	private ComboBox<Client> cmbxClientsSR;
 
@@ -452,9 +493,9 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TableColumn<Receipt, String> colCodeS;
-	
-    @FXML
-    private TableColumn<Receipt, String> colState;
+
+	@FXML
+	private TableColumn<Receipt, String> colState;
 
 	@FXML
 	private TableColumn<Receipt, String> colDateandTimeS;
@@ -518,8 +559,8 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private Button btAddProductR;
-	
-	 @FXML
+
+	@FXML
 	private HBox hBoxSearchReceipt;
 
 	@FXML
@@ -527,18 +568,18 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private VBox receiptMenu;
-	
-	@FXML
-	private Button btAddSR;
-	
-	@FXML
-	private VBox vBoxListViewQ;
-	
-	@FXML
-    private GridPane gridPaneR;
 
 	@FXML
-    private GridPane gridPaneSR;
+	private Button btAddSR;
+
+	@FXML
+	private VBox vBoxListViewQ;
+
+	@FXML
+	private GridPane gridPaneR;
+
+	@FXML
+	private GridPane gridPaneSR;
 
 
 
@@ -595,30 +636,29 @@ public class AngelaccesoriosGUI {
 	public void setStage(Stage st) {
 		window=st;
 	}
-	
+
 	public Label getLbClock() {
 		return lbClock;
 	}
-	
+
 	public boolean getRunClock() {
 		return runClock;
 	}
-	
+
 	public ProgressBar getProgressBar() {
 		return progressBar;
 	}
-	
+
 	public void initialize() {
 		ClockThread clock=new ClockThread(this);
 		clock.start();
 		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
-					
-					@Override
-					public void handle(WindowEvent event) {
-						runClock = false;
-					}
-				});
-		
+
+			@Override
+			public void handle(WindowEvent event) {
+				runClock = false;
+			}
+		});
 	}
 
 
@@ -627,7 +667,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-type-of-product.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfTypesOfProducts(); 
@@ -636,7 +676,7 @@ public class AngelaccesoriosGUI {
 		tvTypeOfProducts.setVisible(true);
 		initializeCmbxOfCategory();
 	}
-	
+
 	private void initializeCmbxOfCategory() {
 		ObservableList<String> categoryList = FXCollections.observableArrayList("Accesorio","Equipo electronico");
 		cmbxCategory.setItems(categoryList);
@@ -655,7 +695,7 @@ public class AngelaccesoriosGUI {
 		colNameTypeOfProduct.setCellValueFactory(new PropertyValueFactory<TypeOfProduct, String>("Name"));
 		tvTypeOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
-	
+
 	private void listTypesPInorder(ObservableList<TypeOfProduct> list, TypeOfProduct current, TypeOfProduct parent) {
 		if(current!=null) {
 			if(current.getLeft()!=parent) {
@@ -751,9 +791,9 @@ public class AngelaccesoriosGUI {
 		if (!txtTypeOfProductName.getText().equals("")) {
 			String newName = txtTypeOfProductName.getText();
 			boolean enabled = true;
-    		if(ckbxDisable.isSelected()) {
-    			enabled = false;
-    		} 
+			if(ckbxDisable.isSelected()) {
+				enabled = false;
+			} 
 			boolean updated = angelaccesorios.updateTypeOfProduct(tvTypeOfProducts.getSelectionModel().getSelectedItem(), newName, enabled);
 			if(updated==false) {
 				Alert alert1 = new Alert(AlertType.ERROR);
@@ -785,32 +825,32 @@ public class AngelaccesoriosGUI {
 	@FXML
 	public void addSupplierToTypeOfProduct(ActionEvent event) throws IOException {
 		ElectronicEquipment tp =  ((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem());
-    	Supplier selectedSupplier= tvAddedSuppliers.getSelectionModel().getSelectedItem();
-    	if(selectedSupplier!=null) {
-    		boolean added = angelaccesorios.addSupplierToEQE(tp, selectedSupplier);
-    		if(added==false) {
-    			Alert alert1 = new Alert(AlertType.ERROR);
-    			alert1.setTitle("Error de validacion");
-    			alert1.setHeaderText(null);
-    			alert1.setContentText("El proveedor seleccionado ya se encuentra agregado en la lista de proveedores del tipo de producto, intentelo nuevamente");
-    			alert1.showAndWait();
-    		}else {
-    			Alert alert2 = new Alert(AlertType.INFORMATION);
-        		alert2.setTitle("Informacion");
-        		alert2.setHeaderText(null);
-        		alert2.setContentText("El proveedor ha sido agregado exitosamente a la lista de proveedores del tipo producto");
-        		alert2.showAndWait();
-    		}
-    		txtSupplier.clear();
-    		initializeTableViewOfSuppliersInAProduct();
-    	}
+		Supplier selectedSupplier= tvAddedSuppliers.getSelectionModel().getSelectedItem();
+		if(selectedSupplier!=null) {
+			boolean added = angelaccesorios.addSupplierToEQE(tp, selectedSupplier);
+			if(added==false) {
+				Alert alert1 = new Alert(AlertType.ERROR);
+				alert1.setTitle("Error de validacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("El proveedor seleccionado ya se encuentra agregado en la lista de proveedores del tipo de producto, intentelo nuevamente");
+				alert1.showAndWait();
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Informacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("El proveedor ha sido agregado exitosamente a la lista de proveedores del tipo producto");
+				alert2.showAndWait();
+			}
+			txtSupplier.clear();
+			initializeTableViewOfSuppliersInAProduct();
+		}
 	}
-	
+
 	private void initializeTableViewOfAddedSuppliers() {
 		ObservableList<Supplier> observableList=FXCollections.observableArrayList();
 		if(angelaccesorios.getSupplierRoot()!=null) {
 			listSuppliersInorder(observableList, angelaccesorios.getSupplierRoot(), angelaccesorios.getSupplierRoot().getParent());
-			
+
 		}
 		tvAddedSuppliers.setItems(observableList);
 		colNameAddedSuppliers.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
@@ -823,19 +863,19 @@ public class AngelaccesoriosGUI {
 		if (selectedSupplier!=null) {
 			btAddSupplierTP.setDisable(false);
 			btDeleteSupplierTP.setDisable(true);
-    		txtSupplier.setText(selectedSupplier.getName());
-    	}
+			txtSupplier.setText(selectedSupplier.getName());
+		}
 	}
-	
+
 	private void initializeTableViewOfSuppliersInAProduct() {
-    	ObservableList<Supplier> observableList;
-    	if(!((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem()).getSuppliers().isEmpty()) {
-    		observableList = FXCollections.observableArrayList(((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem()).getSuppliers());
-    		tvSuppliersInATypeOfProduct.setItems(observableList);
-    		colNameSuppliersInATypeOfProduct.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
-    		tvSuppliersInATypeOfProduct.setVisible(true);
-    		tvSuppliersInATypeOfProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-    	}
+		ObservableList<Supplier> observableList;
+		if(!((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem()).getSuppliers().isEmpty()) {
+			observableList = FXCollections.observableArrayList(((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem()).getSuppliers());
+			tvSuppliersInATypeOfProduct.setItems(observableList);
+			colNameSuppliersInATypeOfProduct.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
+			tvSuppliersInATypeOfProduct.setVisible(true);
+			tvSuppliersInATypeOfProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		}
 	}
 
 	@FXML
@@ -844,33 +884,33 @@ public class AngelaccesoriosGUI {
 		if (selectedSupplier!=null) {
 			btAddSupplierTP.setDisable(true);
 			btDeleteSupplierTP.setDisable(false);
-    		txtSupplier.setText(selectedSupplier.getName());
-    	}
+			txtSupplier.setText(selectedSupplier.getName());
+		}
 	}
 
 
 	@FXML
 	public void deleteSupplierFromTypeOfProduct(ActionEvent event) throws IOException {
 		ElectronicEquipment tp =  ((ElectronicEquipment) tvTypeOfProducts.getSelectionModel().getSelectedItem());
-    	Supplier selectedSupplier = tvSuppliersInATypeOfProduct.getSelectionModel().getSelectedItem();
-    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
-    	alert1.setTitle("Confirmacion de proceso");
-    	alert1.setHeaderText(null);
-    	alert1.setContentText("¿Esta seguro de que quiere eliminar este proveedor del tipo de producto seleccionado?");
-    	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.OK && selectedSupplier !=null){
-    		angelaccesorios.deleteSupplierOfAnEQE(tp, selectedSupplier);;
-    		Alert alert2 = new Alert(AlertType.INFORMATION);
-    		alert2.setTitle("Informacion");
-    		alert2.setHeaderText(null);
-    		alert2.setContentText("El proveedor ha sido eliminado exitosamente de la lista de proveedores del tipo de producto seleccionado");
-    		alert2.showAndWait();
-    	}
-    	txtSupplier.clear();
-    	tvSuppliersInATypeOfProduct.getItems().clear();
-    	initializeTableViewOfSuppliersInAProduct();
-    	btDeleteSupplierTP.setDisable(true);
-    	btAddSupplierTP.setDisable(false);
+		Supplier selectedSupplier = tvSuppliersInATypeOfProduct.getSelectionModel().getSelectedItem();
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar este proveedor del tipo de producto seleccionado?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK && selectedSupplier !=null){
+			angelaccesorios.deleteSupplierOfAnEQE(tp, selectedSupplier);;
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
+			alert2.setContentText("El proveedor ha sido eliminado exitosamente de la lista de proveedores del tipo de producto seleccionado");
+			alert2.showAndWait();
+		}
+		txtSupplier.clear();
+		tvSuppliersInATypeOfProduct.getItems().clear();
+		initializeTableViewOfSuppliersInAProduct();
+		btDeleteSupplierTP.setDisable(true);
+		btAddSupplierTP.setDisable(false);
 	}
 
 
@@ -896,7 +936,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-supplier.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfSuppliers(); 
@@ -908,14 +948,14 @@ public class AngelaccesoriosGUI {
 		ObservableList<Supplier> observableList=FXCollections.observableArrayList();
 		if(angelaccesorios.getSupplierRoot()!=null) {
 			listSuppliersInorder(observableList, angelaccesorios.getSupplierRoot(), angelaccesorios.getSupplierRoot().getParent());
-			
+
 		}
 		tvSuppliers.setItems(observableList);
 		colNameSupplier.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
 		colPhoneSupplier.setCellValueFactory(new PropertyValueFactory<Supplier, String>("PhoneNumber"));
 		tvSuppliers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
-	
+
 	private void listSuppliersInorder(ObservableList<Supplier> list, Supplier current, Supplier parent) {
 		if(current!=null) {
 			if(current.getLeft()!=parent) {
@@ -1034,7 +1074,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-brand.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfBrands();
@@ -1149,8 +1189,8 @@ public class AngelaccesoriosGUI {
 	@FXML
 	public void sortListBrands(ActionEvent event) {
 		ObservableList<Brand> observableList;
-    	observableList = FXCollections.observableArrayList(angelaccesorios.sortingBrandNames());
-    	tvOfBrands.setItems(observableList);
+		observableList = FXCollections.observableArrayList(angelaccesorios.sortingBrandNames());
+		tvOfBrands.setItems(observableList);
 	}
 
 	@FXML
@@ -1158,7 +1198,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-product.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		//createProductForm.setVisible(true);
@@ -1171,22 +1211,22 @@ public class AngelaccesoriosGUI {
 
 	private void initializeTableViewOfProducts(ArrayList<Product> products) {
 		ObservableList<Product> observableList;
-    	observableList = FXCollections.observableArrayList(products);
-    	tvOfProducts.setItems(observableList);
-    	colCodeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Code"));
-    	colTypeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("TypeName"));
-    	colBrandProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("BrandName"));
-    	colModelProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Model"));
-    	colStatusProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("State"));
-    	colUnitsProduct.setCellValueFactory(new PropertyValueFactory<Product, Integer>("Units"));
-    	colPriceProduct.setCellValueFactory(new PropertyValueFactory<Product, Double>("Price"));
-    	colWarrantyProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Guarantee"));
-    	tvOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-    	if(!angelaccesorios.getProducts().isEmpty()) {
-    		btSortProductPrices.setDisable(false);
-    	}
+		observableList = FXCollections.observableArrayList(products);
+		tvOfProducts.setItems(observableList);
+		colCodeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Code"));
+		colTypeProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("TypeName"));
+		colBrandProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("BrandName"));
+		colModelProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Model"));
+		colStatusProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("State"));
+		colUnitsProduct.setCellValueFactory(new PropertyValueFactory<Product, Integer>("Units"));
+		colPriceProduct.setCellValueFactory(new PropertyValueFactory<Product, Double>("Price"));
+		colWarrantyProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Guarantee"));
+		tvOfProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		if(!angelaccesorios.getProducts().isEmpty()) {
+			btSortProductPrices.setDisable(false);
+		}
 	}
-	
+
 	private void initializeCmbxTypeOfProduct() {
 		ObservableList<TypeOfProduct> typeList = FXCollections.observableArrayList();
 		if(angelaccesorios.getTypePRoot()!=null) {
@@ -1196,7 +1236,7 @@ public class AngelaccesoriosGUI {
 		cmbxTypeOfProduct.setValue(null);
 		cmbxTypeOfProduct.setPromptText("Elija un tipo de producto");
 	}
-	
+
 	private void initializeCmbxBrand() {
 		ObservableList<Brand> brandList = FXCollections.observableArrayList(angelaccesorios.getBrands());
 		cmbxBrand.setItems(brandList);
@@ -1207,17 +1247,17 @@ public class AngelaccesoriosGUI {
 	@FXML
 	public void addProduct(ActionEvent event) throws IOException {
 		if (cmbxTypeOfProduct.getValue()!=null && cmbxBrand.getValue()!=null && !txtModel.getText().equals("") && !txtUnits.getText().equals("") && !txtPrice.getText().equals("") && (rbYes.isSelected()||rbNo.isSelected())) {
-    		TypeOfProduct tp = cmbxTypeOfProduct.getValue();
-    		Brand b = cmbxBrand.getValue();
-    		String model = txtModel.getText();
-    		double price = 0;
-    		int units = 0;
-    		boolean guarantee = true;
-    		if(rbNo.isSelected()) {
-    			guarantee = false;
-    		}
-    		boolean stop = false;
-    		Alert alert1 = new Alert(AlertType.ERROR);
+			TypeOfProduct tp = cmbxTypeOfProduct.getValue();
+			Brand b = cmbxBrand.getValue();
+			String model = txtModel.getText();
+			double price = 0;
+			int units = 0;
+			boolean guarantee = true;
+			if(rbNo.isSelected()) {
+				guarantee = false;
+			}
+			boolean stop = false;
+			Alert alert1 = new Alert(AlertType.ERROR);
 			alert1.setTitle("Error de validacion");
 			alert1.setHeaderText(null);
 			try {
@@ -1238,114 +1278,114 @@ public class AngelaccesoriosGUI {
 				try {
 					angelaccesorios.addProduct(tp, b, model, units, price, guarantee);
 					Alert alert2 = new Alert(AlertType.INFORMATION);
-	        		alert2.setTitle("Informacion");
-	        		alert2.setHeaderText(null);
-	        		alert2.setContentText("El producto ha sido creado exitosamente");
-	        		alert2.showAndWait();
+					alert2.setTitle("Informacion");
+					alert2.setHeaderText(null);
+					alert2.setContentText("El producto ha sido creado exitosamente");
+					alert2.showAndWait();
 				}catch(NoQuantityException nq) {
 					alert1.setContentText(nq.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(NegativeQuantityException ng) {
 					alert1.setContentText(ng.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(NoPriceException p) {
 					alert1.setContentText(p.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(NegativePriceException np) {
 					alert1.setContentText(np.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(SameProductException s) {
 					alert1.setContentText(s.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}	
 			}
 			initializeCmbxTypeOfProduct();
-    		initializeCmbxBrand();
-    		txtModel.clear();
-    		txtUnits.clear();
-    		txtPrice.clear();
-    		rbYes.setSelected(false);
-    		rbNo.setSelected(false);
-    		ckbxDisable.setSelected(false);
-    		initializeTableViewOfProducts(angelaccesorios.getProducts());
-    	}else {
-    		showValidationErrorAlert();
-    	}
+			initializeCmbxBrand();
+			txtModel.clear();
+			txtUnits.clear();
+			txtPrice.clear();
+			rbYes.setSelected(false);
+			rbNo.setSelected(false);
+			ckbxDisable.setSelected(false);
+			initializeTableViewOfProducts(angelaccesorios.getProducts());
+		}else {
+			showValidationErrorAlert();
+		}
 	}
-	
+
 	@FXML
 	public void clickOnTableViewOfProducts(MouseEvent event) {
 		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
 		if (selectedProduct!= null) {
-    		enableButtons();
-    		txtModel.setText(selectedProduct.getModel());
-    		txtUnits.setText(""+selectedProduct.getUnits());
-    		txtPrice.setText(""+selectedProduct.getPrice());
-    		cmbxBrand.setValue(selectedProduct.getBrand());
-    		cmbxTypeOfProduct.setValue(selectedProduct.getType());
-    		cmbxTypeOfProduct.setDisable(true);
-    		ckbxDisable.setSelected(!selectedProduct.isEnabled());
-    		if(selectedProduct.hasGuarantee()) {
-    			rbYes.setSelected(true);
-    		}else {
-    			rbNo.setSelected(true);	
-    		}
-    	}
+			enableButtons();
+			txtModel.setText(selectedProduct.getModel());
+			txtUnits.setText(""+selectedProduct.getUnits());
+			txtPrice.setText(""+selectedProduct.getPrice());
+			cmbxBrand.setValue(selectedProduct.getBrand());
+			cmbxTypeOfProduct.setValue(selectedProduct.getType());
+			cmbxTypeOfProduct.setDisable(true);
+			ckbxDisable.setSelected(!selectedProduct.isEnabled());
+			if(selectedProduct.hasGuarantee()) {
+				rbYes.setSelected(true);
+			}else {
+				rbNo.setSelected(true);	
+			}
+		}
 	}
 
 	@FXML
 	public void deleteProduct(ActionEvent event) throws IOException {
 		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
-    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
-    	alert1.setTitle("Confirmacion de proceso");
-    	alert1.setHeaderText(null);
-    	alert1.setContentText("¿Esta seguro de que quiere eliminar este producto?");
-    	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.OK && selectedProduct!=null){
-        	boolean deleted = angelaccesorios.deleteProduct(selectedProduct);
-        	Alert alert2 = new Alert(AlertType.INFORMATION);
-    		alert2.setTitle("Informacion");
-    		alert2.setHeaderText(null);
-        	if(deleted==true) {
-        		alert2.setContentText("El producto ha sido eliminado exitosamente");
-        		alert2.showAndWait();
-        	}else {
-        		alert2.setContentText("El producto no pudo ser eliminado debido a que se encuentra dentro de una factura del sistema de separado con estado no entregado");
-        		alert2.showAndWait();
-        	}
-        	initializeCmbxTypeOfProduct();
-    		initializeCmbxBrand();
-    		cmbxTypeOfProduct.setDisable(false);
-    		txtModel.clear();
-    		txtUnits.clear();
-    		txtPrice.clear();
-    		rbYes.setSelected(false);
-    		rbNo.setSelected(false);
-    		ckbxDisable.setSelected(false);
-    		tvOfProducts.getItems().clear();
-    		initializeTableViewOfProducts(angelaccesorios.getProducts());
-        	disableButtons();
-    	} 
+		Alert alert1 = new Alert(AlertType.CONFIRMATION);
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar este producto?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK && selectedProduct!=null){
+			boolean deleted = angelaccesorios.deleteProduct(selectedProduct);
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
+			if(deleted==true) {
+				alert2.setContentText("El producto ha sido eliminado exitosamente");
+				alert2.showAndWait();
+			}else {
+				alert2.setContentText("El producto no pudo ser eliminado debido a que se encuentra dentro de una factura del sistema de separado con estado no entregado");
+				alert2.showAndWait();
+			}
+			initializeCmbxTypeOfProduct();
+			initializeCmbxBrand();
+			cmbxTypeOfProduct.setDisable(false);
+			txtModel.clear();
+			txtUnits.clear();
+			txtPrice.clear();
+			rbYes.setSelected(false);
+			rbNo.setSelected(false);
+			ckbxDisable.setSelected(false);
+			tvOfProducts.getItems().clear();
+			initializeTableViewOfProducts(angelaccesorios.getProducts());
+			disableButtons();
+		} 
 	}
 
 	@FXML
 	public void updateProduct(ActionEvent event) throws IOException {
 		Product selectedProduct = tvOfProducts.getSelectionModel().getSelectedItem();
-    	if (cmbxBrand.getValue()!=null && !txtModel.getText().equals("") && !txtUnits.getText().equals("") && !txtPrice.getText().equals("") && (rbYes.isSelected()||rbNo.isSelected())) {
-    		Brand newBrand = cmbxBrand.getValue();
-    		String newModel = txtModel.getText();
-    		double newPrice = 0;
-    		int newUnits = 0;
-    		boolean guarantee = true;
-    		boolean enabled = true;
-    		if(ckbxDisable.isSelected()) {
-    			enabled = false;
-    		}
-    		if(rbNo.isSelected()) {
-    			guarantee = false;
-    		}
-    		boolean stop = false;
-    		Alert alert1 = new Alert(AlertType.ERROR);
+		if (cmbxBrand.getValue()!=null && !txtModel.getText().equals("") && !txtUnits.getText().equals("") && !txtPrice.getText().equals("") && (rbYes.isSelected()||rbNo.isSelected())) {
+			Brand newBrand = cmbxBrand.getValue();
+			String newModel = txtModel.getText();
+			double newPrice = 0;
+			int newUnits = 0;
+			boolean guarantee = true;
+			boolean enabled = true;
+			if(ckbxDisable.isSelected()) {
+				enabled = false;
+			}
+			if(rbNo.isSelected()) {
+				guarantee = false;
+			}
+			boolean stop = false;
+			Alert alert1 = new Alert(AlertType.ERROR);
 			alert1.setTitle("Error de validacion");
 			alert1.setHeaderText(null);
 			try {
@@ -1366,40 +1406,40 @@ public class AngelaccesoriosGUI {
 				try {
 					angelaccesorios.updateProduct(selectedProduct, newBrand, newModel, newUnits, newPrice, guarantee, enabled);
 					Alert alert2 = new Alert(AlertType.INFORMATION);
-	        		alert2.setTitle("Informacion");
-	        		alert2.setHeaderText(null);
-	        		alert2.setContentText("El producto ha sido actualizado exitosamente");
-	        		alert2.showAndWait();
+					alert2.setTitle("Informacion");
+					alert2.setHeaderText(null);
+					alert2.setContentText("El producto ha sido actualizado exitosamente");
+					alert2.showAndWait();
 				}catch(NoQuantityException nq) {
 					alert1.setContentText(nq.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(NegativeQuantityException ng) {
 					alert1.setContentText(ng.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(NoPriceException p) {
 					alert1.setContentText(p.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(NegativePriceException np) {
 					alert1.setContentText(np.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}catch(SameProductException s) {
 					alert1.setContentText(s.getMessage());
-	    			alert1.showAndWait();
+					alert1.showAndWait();
 				}	
 			}
 			initializeCmbxTypeOfProduct();
-    		initializeCmbxBrand();
-    		txtModel.clear();
-    		txtUnits.clear();
-    		txtPrice.clear();
-    		rbYes.setSelected(false);
-    		rbNo.setSelected(false);
-    		ckbxDisable.setSelected(false);
-    		tvOfProducts.getItems().clear();
-    		initializeTableViewOfProducts(angelaccesorios.getProducts());
-    	}else {
-    		showValidationErrorAlert();
-    	}
+			initializeCmbxBrand();
+			txtModel.clear();
+			txtUnits.clear();
+			txtPrice.clear();
+			rbYes.setSelected(false);
+			rbNo.setSelected(false);
+			ckbxDisable.setSelected(false);
+			tvOfProducts.getItems().clear();
+			initializeTableViewOfProducts(angelaccesorios.getProducts());
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 
@@ -1423,7 +1463,7 @@ public class AngelaccesoriosGUI {
 		if(!type.equals("") && !brand.equals("")) {
 			ArrayList<Product> p = angelaccesorios.returnFoundProducts(type, brand);
 			tvOfProducts.getItems().clear();
-			
+
 			if(p.isEmpty()) {
 				initializeTableViewOfProducts(angelaccesorios.getProducts());
 				Alert alert = new Alert(AlertType.ERROR);
@@ -1453,7 +1493,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-receipt.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 
@@ -1462,6 +1502,26 @@ public class AngelaccesoriosGUI {
 		angelaccesorios.resetReceiptProductsAndQuantities();
 		initializeComboBoxClients();
 		initializeComboBoxPaymentMethods();
+		pointer = new CircleFigure(circle.getLayoutX(), circle.getLayoutY(), circle.getRadius());
+		one = new RectangleFigure(firstRectangle.getLayoutX(), firstRectangle.getLayoutY());
+		two = new RectangleFigure(secondRectangle.getLayoutX(), secondRectangle.getLayoutY());
+		three = new RectangleFigure(fourthRectangle.getLayoutX(), fourthRectangle.getLayoutY());
+		four = new RectangleFigure(thirdRectangle.getLayoutX(), thirdRectangle.getLayoutY());
+		five = new RectangleFigure(fifthRectangle.getLayoutX(), fifthRectangle.getLayoutY());
+		Graphic1Thread thread1 = new Graphic1Thread(one, two, three, four, five, this);
+		PointerThread thread2 = new PointerThread(pointer, this);
+		thread1.start();
+		thread2.start();
+	}
+//????
+	public ImageView getAppsImageV() {
+		return appsImageV;
+	}
+
+	public void updateGUI() {
+		circle.setLayoutX(pointer.getxCoordinate());
+		circle.setLayoutY(pointer.getyCoordinate());
+		circle.setRadius(pointer.getRadius());
 	}
 
 	@FXML
@@ -1478,19 +1538,19 @@ public class AngelaccesoriosGUI {
 				alert1.setHeaderText(null);
 				alert1.setContentText("El abono ha sido agregado a la factura "+tvOfSeparateReceipts.getSelectionModel().getSelectedItem().getCode()+" exitosamente");
 				alert1.showAndWait();
-				
-				
+
+
 				txtNewPayment.setText("");
 				cbPaymentMethodP.setValue(null);
-				
+
 				if(tvOfSeparateReceipts.getSelectionModel().getSelectedItem().getState().name().equals("ENTREGADO")) {
 					addPaymentForm.setVisible(false);
 					addObservationsForm.setVisible(true);
 					separateReceiptObs.setDisable(false);
 				}else {
-					
+
 				}
-				
+
 			} catch (NoPriceException e) {
 				alert.setContentText("El valor del abono no puede ser cero");
 				alert.showAndWait();
@@ -1515,7 +1575,7 @@ public class AngelaccesoriosGUI {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
-				
+
 		try {
 			if(!txtQuantityProduct.getText().isEmpty()) {
 				int quantity=Integer.parseInt(txtQuantityProduct.getText());
@@ -1538,22 +1598,22 @@ public class AngelaccesoriosGUI {
 				showValidationErrorAlert();
 			}
 		} catch (NumberFormatException e) {
-				alert.setContentText("Digite la cantidad en formato numérico");
-				alert.showAndWait();
-			}catch (SameProductException e) {
-				alert.setContentText("El producto ya había sido agregado");
-				alert.showAndWait();
-			} catch (NoQuantityException e) {
-				alert.setContentText("La cantidad del producto no puede ser cero");
-				alert.showAndWait();
-			} catch (NegativeQuantityException e) {
-				alert.setContentText("La cantidad del producto no puede ser negativa");
-				alert.showAndWait();
-			} catch (ExcessQuantityException e) {
-				alert.setContentText("La cantidad del producto excede a las unidades disponibles");
-				alert.showAndWait();
-			}
-		
+			alert.setContentText("Digite la cantidad en formato numérico");
+			alert.showAndWait();
+		}catch (SameProductException e) {
+			alert.setContentText("El producto ya había sido agregado");
+			alert.showAndWait();
+		} catch (NoQuantityException e) {
+			alert.setContentText("La cantidad del producto no puede ser cero");
+			alert.showAndWait();
+		} catch (NegativeQuantityException e) {
+			alert.setContentText("La cantidad del producto no puede ser negativa");
+			alert.showAndWait();
+		} catch (ExcessQuantityException e) {
+			alert.setContentText("La cantidad del producto excede a las unidades disponibles");
+			alert.showAndWait();
+		}
+
 	}
 
 	@FXML
@@ -1569,12 +1629,12 @@ public class AngelaccesoriosGUI {
 				alert1.setHeaderText(null);
 				alert1.setContentText("La factura se ha creado con exito");
 				alert1.showAndWait();
-				
+
 				cmbxClients.setValue(null);
 				cbPaymentMethod.setValue(null);
 				txtObsevations.setText("");
 				initializeTableViewOfCountedReceipts();
-				
+
 			}else {
 				showValidationErrorAlert();
 			}
@@ -1586,7 +1646,7 @@ public class AngelaccesoriosGUI {
 			alert.showAndWait();
 		} 
 	}
-	
+
 	@FXML
 	public void addSeparateReceipt(ActionEvent event) throws IOException {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -1595,20 +1655,20 @@ public class AngelaccesoriosGUI {
 		try {
 			if(cmbxClientsSR.getValue()!=null && !txtPaymentValue.getText().isEmpty() && cbPaymentMethodSR.getValue()!=null) {
 				double value=Double.parseDouble(txtPaymentValue.getText());
-				
+
 				angelaccesorios.createSeparateReceipt(angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts(), cmbxClientsSR.getValue(), cbPaymentMethodSR.getValue(),value);
-				
+
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setTitle("Información");
 				alert1.setHeaderText(null);
 				alert1.setContentText("La factura se ha creado con exito");
 				alert1.showAndWait();
-				
+
 				cmbxClientsSR.setValue(null);
 				cbPaymentMethodSR.setValue(null);
 				txtPaymentValue.setText("");
 				initializeTableViewOfSeparateReceipts();
-				
+
 			}else {
 				showValidationErrorAlert();
 			}
@@ -1644,10 +1704,10 @@ public class AngelaccesoriosGUI {
 			alert.showAndWait();
 			separateReceiptObs.setText("");
 			separateReceiptObs.setDisable(true);
-			
+
 			tvOfSeparateReceipts.getItems().clear();
 			initializeTableViewOfSeparateReceipts();
-			
+
 		}else {
 			showValidationErrorAlert();
 		}
@@ -1668,21 +1728,21 @@ public class AngelaccesoriosGUI {
 		initializeTableViewOfAddedProducts();
 		initializeTableViewOfReceiptProducts();
 		initializeListViewOfQuantitiesProducts();
-		
+
 		hBoxSearchReceipt.setVisible(false);
-		
+
 	}
-	
+
 	private void initializeComboBoxClients() {
 		ObservableList<Client> options = 
-			    FXCollections.observableArrayList(angelaccesorios.returnEnabledClients());
+				FXCollections.observableArrayList(angelaccesorios.returnEnabledClients());
 		cmbxClients.setItems(options);
 		cmbxClientsSR.setItems(options);
 	}
 
 	private void initializeComboBoxPaymentMethods() {
 		ObservableList<String> options = 
-			    FXCollections.observableArrayList("Efectivo","Tarjeta de debito","Tarjeta de credito","Transferencia bancaria");
+				FXCollections.observableArrayList("Efectivo","Tarjeta de debito","Tarjeta de credito","Transferencia bancaria");
 		cbPaymentMethod.setItems(options);
 		cbPaymentMethodSR.setItems(options);
 		cbPaymentMethodP.setItems(options);
@@ -1690,30 +1750,30 @@ public class AngelaccesoriosGUI {
 
 	private void initializeTableViewOfAddedProducts() {
 		ObservableList<Product> observableList;
-    	observableList = FXCollections.observableArrayList(angelaccesorios.returnEnabledProducts());
-    	tvOfAddedProducts.setItems(observableList);
-    	
-    	colNameAddedProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Info"));
-  
+		observableList = FXCollections.observableArrayList(angelaccesorios.returnEnabledProducts());
+		tvOfAddedProducts.setItems(observableList);
 
-    	tvOfAddedProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		colNameAddedProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Info"));
+
+
+		tvOfAddedProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
-	
+
 	private void initializeTableViewOfReceiptProducts() {
 		ObservableList<Product> observableList;
-    	observableList = FXCollections.observableArrayList(angelaccesorios.getReceiptProducts());
-    	tvOfReceiptProducts.setItems(observableList);
-    	
-    	colNameRProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Info"));
-  
+		observableList = FXCollections.observableArrayList(angelaccesorios.getReceiptProducts());
+		tvOfReceiptProducts.setItems(observableList);
 
-    	tvOfReceiptProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		colNameRProduct.setCellValueFactory(new PropertyValueFactory<Product, String>("Info"));
+
+
+		tvOfReceiptProducts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
-	
+
 	private void initializeListViewOfQuantitiesProducts() {
 		ObservableList<Integer> observableList;
-    	observableList = FXCollections.observableArrayList(angelaccesorios.getReceiptQuantitiesProducts());
-    	lvOfQuantities.setItems(observableList);
+		observableList = FXCollections.observableArrayList(angelaccesorios.getReceiptQuantitiesProducts());
+		lvOfQuantities.setItems(observableList);
 	}
 
 	@FXML
@@ -1734,7 +1794,7 @@ public class AngelaccesoriosGUI {
 			txtNameProduct.setText(selectedProduct.getInfo());
 			int i=angelaccesorios.getReceiptProducts().indexOf(selectedProduct);
 			txtQuantityProduct.setText(angelaccesorios.getReceiptQuantitiesProducts().get(i)+"");
-			
+
 			btAddProductR.setDisable(true);
 			txtQuantityProduct.setEditable(false);
 			btDeleteProductR.setDisable(false);
@@ -1768,18 +1828,18 @@ public class AngelaccesoriosGUI {
 	public void deleteProductOfAReceipt(ActionEvent event) {
 		Product selectedProduct= tvOfReceiptProducts.getSelectionModel().getSelectedItem();
 		angelaccesorios.deleteProductFromAReceipt(selectedProduct, angelaccesorios.getReceiptProducts(), angelaccesorios.getReceiptQuantitiesProducts());
-		
+
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Información");
 		alert.setHeaderText(null);
 		alert.setContentText("El producto ha sido eliminado de la lista");
 		alert.showAndWait();
-		
+
 		btAddProductR.setDisable(true);
 		txtNameProduct.setText("");
 		txtQuantityProduct.setText("");
 		btDeleteProductR.setDisable(true);
-		
+
 		initializeTableViewOfReceiptProducts();
 		initializeListViewOfQuantitiesProducts();
 	}
@@ -1789,11 +1849,11 @@ public class AngelaccesoriosGUI {
 		Receipt r=null;
 		boolean deleted;
 		if(lbWindow.getText().equals("C")) {
-			 r = tvOfCountedReceipts.getSelectionModel().getSelectedItem();
+			r = tvOfCountedReceipts.getSelectionModel().getSelectedItem();
 		}else if(lbWindow.getText().equals("S")) {
 			r = tvOfSeparateReceipts.getSelectionModel().getSelectedItem();
 		}
-		
+
 		deleted=angelaccesorios.deleteReceipt(r);
 		if(deleted) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -1801,14 +1861,14 @@ public class AngelaccesoriosGUI {
 			alert.setHeaderText(null);
 			alert.setContentText("La factura se ha eliminado exitosamente");
 			alert.showAndWait();
-			
+
 			if(lbWindow.getText().equals("C")) {
 				tvOfCountedReceipts.getItems().clear();
-    			initializeTableViewOfCountedReceipts();
-    		}else {
-    			tvOfSeparateReceipts.getItems().clear();
-    			initializeTableViewOfSeparateReceipts();
-    		}
+				initializeTableViewOfCountedReceipts();
+			}else {
+				tvOfSeparateReceipts.getItems().clear();
+				initializeTableViewOfSeparateReceipts();
+			}
 		}else {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
@@ -1817,11 +1877,11 @@ public class AngelaccesoriosGUI {
 			alert.showAndWait();
 		}
 		btGenerateR.setDisable(true);
-	    btDelete.setDisable(true);
-	    btAdd.setDisable(false);
-	    btAddSR.setDisable(false);
-	    gridPaneSR.setDisable(false);
-	    gridPaneR.setDisable(false);
+		btDelete.setDisable(true);
+		btAdd.setDisable(false);
+		btAddSR.setDisable(false);
+		gridPaneSR.setDisable(false);
+		gridPaneR.setDisable(false);
 	}
 
 	@FXML
@@ -1831,37 +1891,37 @@ public class AngelaccesoriosGUI {
 		String type = "";
 		if(r!=null || sr!=null) {
 			JFileChooser fileChooser = new JFileChooser();
-	    	fileChooser.setDialogTitle("Elija la carpeta en donde quiere guardar la factura a generar");
-	    	fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	    	fileChooser.setAcceptAllFileFilterUsed(false);
-	    	if(fileChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
-	    		Alert alert = new Alert(AlertType.INFORMATION);
-			    alert.setTitle("Generar factura");
-			    try {
-			    	if(r!=null) {
-			    		type = "FACTURA DEL SISTEMA DE CONTADO\nANGELACCESORIOS\n";
-			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura#"+r.getCode()+".pdf");
-			    		angelaccesorios.generatePDFCountedReceipt(text_exit, r, type);
-			    	}else {
-			    		type = "FACTURA DEL SISTEMA DE SEPARADO\n\nANGELACCESORIOS";
-			    		OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura #"+sr.getCode()+".pdf");
-			    		angelaccesorios.generatePDFSeparateReceipt(text_exit, sr, type);	
-			    	}
-				    alert.setHeaderText(null);
-				    alert.setContentText("La factura ha sido exportada exitosamente");
-				    alert.showAndWait();
+			fileChooser.setDialogTitle("Elija la carpeta en donde quiere guardar la factura a generar");
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			if(fileChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Generar factura");
+				try {
+					if(r!=null) {
+						type = "FACTURA DEL SISTEMA DE CONTADO\nANGELACCESORIOS\n";
+						OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura#"+r.getCode()+".pdf");
+						angelaccesorios.generatePDFCountedReceipt(text_exit, r, type);
+					}else {
+						type = "FACTURA DEL SISTEMA DE SEPARADO\n\nANGELACCESORIOS";
+						OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura #"+sr.getCode()+".pdf");
+						angelaccesorios.generatePDFSeparateReceipt(text_exit, sr, type);	
+					}
+					alert.setHeaderText(null);
+					alert.setContentText("La factura ha sido exportada exitosamente");
+					alert.showAndWait();
 				} catch (DocumentException | FileNotFoundException e) {
 					alert.setHeaderText(null);
-				    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso, intentelo nuevamente.");
-				    alert.showAndWait();
+					alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso, intentelo nuevamente.");
+					alert.showAndWait();
 				}
-			    btGenerateR.setDisable(true);
-			    btDelete.setDisable(true);
-			    btAdd.setDisable(false);
-			    btAddSR.setDisable(false);
-			    gridPaneSR.setDisable(false);
-			    gridPaneR.setDisable(false);
-	    	}	
+				btGenerateR.setDisable(true);
+				btDelete.setDisable(true);
+				btAdd.setDisable(false);
+				btAddSR.setDisable(false);
+				gridPaneSR.setDisable(false);
+				gridPaneR.setDisable(false);
+			}	
 		}
 	}
 
@@ -1881,25 +1941,25 @@ public class AngelaccesoriosGUI {
 	}
 
 	private void initializeTableViewOfCountedReceipts() {
-		
-		ObservableList<Receipt> observableList;
-    	observableList = FXCollections.observableArrayList(angelaccesorios.returnCashReceipts());
-    	tvOfCountedReceipts.setItems(observableList);
-    	
-    	colCodeC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Code"));
-    	colDateandTimeC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("DateAndHour"));
-    	colClientC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
-    	colUserC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
-    	colProductsInCR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
-    	colSubtotalPriceC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Subtotal"));
-    	colIVAC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("IVA"));
-    	colTotalValueC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Total"));
-    	colPaymentMC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("PaymentMethod"));
-    	colObservationsC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
-    	
 
-    	tvOfCountedReceipts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		 
+		ObservableList<Receipt> observableList;
+		observableList = FXCollections.observableArrayList(angelaccesorios.returnCashReceipts());
+		tvOfCountedReceipts.setItems(observableList);
+
+		colCodeC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Code"));
+		colDateandTimeC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("DateAndHour"));
+		colClientC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
+		colUserC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
+		colProductsInCR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
+		colSubtotalPriceC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Subtotal"));
+		colIVAC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("IVA"));
+		colTotalValueC.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Total"));
+		colPaymentMC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("PaymentMethod"));
+		colObservationsC.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
+
+
+		tvOfCountedReceipts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
 	}
 
 	@FXML
@@ -1919,23 +1979,23 @@ public class AngelaccesoriosGUI {
 
 	private void initializeTableViewOfSeparateReceipts() {
 		ObservableList<SeparateReceipt> observableList;
-    	observableList = FXCollections.observableArrayList(angelaccesorios.returnSeparateReceipts());
-    	tvOfSeparateReceipts.setItems(observableList);
-    	
-    	colCodeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Code"));
-    	colState.setCellValueFactory(new PropertyValueFactory<Receipt, String>("StateString"));
-    	colDateandTimeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("DateAndHour"));
-    	colClientS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
-    	colUserS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
-    	colProductsInSR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
-    	colSubtotalPriceS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Subtotal"));
-    	colIVAS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("IVA"));
-    	colTotalValueS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Total"));
-    	colPayments.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllPayments"));
-    	colToPay.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("UnpaidPrice"));
-    	colObservationsS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
-    	
-    	tvOfSeparateReceipts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		observableList = FXCollections.observableArrayList(angelaccesorios.returnSeparateReceipts());
+		tvOfSeparateReceipts.setItems(observableList);
+
+		colCodeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Code"));
+		colState.setCellValueFactory(new PropertyValueFactory<Receipt, String>("StateString"));
+		colDateandTimeS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("DateAndHour"));
+		colClientS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Buyer"));
+		colUserS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("UserName"));
+		colProductsInSR.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllProducts"));
+		colSubtotalPriceS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Subtotal"));
+		colIVAS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("IVA"));
+		colTotalValueS.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("Total"));
+		colPayments.setCellValueFactory(new PropertyValueFactory<Receipt, String>("AllPayments"));
+		colToPay.setCellValueFactory(new PropertyValueFactory<Receipt, Double>("UnpaidPrice"));
+		colObservationsS.setCellValueFactory(new PropertyValueFactory<Receipt, String>("Observations"));
+
+		tvOfSeparateReceipts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@FXML
@@ -1950,7 +2010,7 @@ public class AngelaccesoriosGUI {
 		tvOfReceiptProducts.setVisible(false);
 		vBoxListViewQ.setVisible(false);
 		hBoxSearchReceipt.setVisible(true);
-		
+
 		if(lbWindow.getText().equals("C")) {
 			manageCountedReceipt(null);
 		}else {
@@ -1962,10 +2022,10 @@ public class AngelaccesoriosGUI {
 	public void returnToReceiptMenu(ActionEvent event) {
 		tvOfSeparateReceipts.getItems().clear();
 		initializeTableViewOfSeparateReceipts();
-		
+
 		tvOfCountedReceipts.getItems().clear();
 		initializeTableViewOfCountedReceipts();
-		
+
 		addObservationsForm.setVisible(false);
 		addPaymentForm.setVisible(false);
 		createCountedReceipt.setVisible(false);
@@ -1978,7 +2038,7 @@ public class AngelaccesoriosGUI {
 		receiptMenu.setVisible(true);
 		angelaccesorios.resetReceiptProductsAndQuantities();
 		hBoxSearchReceipt.setVisible(false);
-		
+
 		btUpdate.setDisable(true);
 		btGenerateR.setDisable(true);
 		btDelete.setDisable(true);
@@ -1993,34 +2053,34 @@ public class AngelaccesoriosGUI {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
-    	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
-    	   
-    		ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
-    		cmbxClients.setItems(clientsList);
-    		if(clientsList.isEmpty()) {
+		if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
 
-    			alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
-        		alert.showAndWait();
-        		initializeComboBoxClients();
-        		txtClientSearchedName.clear();
-        		txtClientSearchedLastName.clear();
+			ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+			cmbxClients.setItems(clientsList);
+			if(clientsList.isEmpty()) {
 
-    		}else {
-    			Alert alert2 = new Alert(AlertType.INFORMATION);
-    		    alert2.setTitle("Cliente(s) encontrado(s)");
-    		    alert2.setHeaderText(null);
-    		    alert2.setContentText("Puede desplegar la lista para seleccionar al cliente buscado");
-    		    alert2.showAndWait();
-    			txtClientSearchedName.clear();
-        		txtClientSearchedLastName.clear();
-    		}
-    	}else {
-    		
-    		alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
-    		alert.showAndWait();
-    		initializeComboBoxClients();
+				alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
+				alert.showAndWait();
+				initializeComboBoxClients();
+				txtClientSearchedName.clear();
+				txtClientSearchedLastName.clear();
 
-    	}
+			}else {
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Cliente(s) encontrado(s)");
+				alert2.setHeaderText(null);
+				alert2.setContentText("Puede desplegar la lista para seleccionar al cliente buscado");
+				alert2.showAndWait();
+				txtClientSearchedName.clear();
+				txtClientSearchedLastName.clear();
+			}
+		}else {
+
+			alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
+			alert.showAndWait();
+			initializeComboBoxClients();
+
+		}
 	}
 
 	@FXML
@@ -2044,8 +2104,8 @@ public class AngelaccesoriosGUI {
 					found=true;
 				}
 			}
-			
-			
+
+
 			if(!found) {
 				String r="";
 				if(lbWindow.getText().equals("C")) {
@@ -2053,36 +2113,36 @@ public class AngelaccesoriosGUI {
 				}else {
 					r="factura de separado";
 				}
-					
-    			alert.setContentText("No se encontró la factura con código "+txtCode.getText()+" como "+r);
-        		alert.showAndWait();
-        		if(lbWindow.getText().equals("C")) {
-        			initializeTableViewOfCountedReceipts();
-        		}else {
-        			initializeTableViewOfSeparateReceipts();
-        		}
-    		}else {
-    			Alert alert1 = new Alert(AlertType.INFORMATION);
-    			alert1.setTitle("Información");
-    			alert1.setHeaderText(null);
-    			alert1.setContentText("Factura encontrada");
-        		alert1.showAndWait();
-    		}
-    		
-			txtCode.clear();    		
-    		
-    	}else {
-    		
-    		alert.setContentText("Debe ingresar código de la factura para buscarla");
-    		alert.showAndWait();
-    		if(lbWindow.getText().equals("C")) {
-    			initializeTableViewOfCountedReceipts();
-    		}else {
-    			initializeTableViewOfSeparateReceipts();
-    		}
-    		
 
-    	}
+				alert.setContentText("No se encontró la factura con código "+txtCode.getText()+" como "+r);
+				alert.showAndWait();
+				if(lbWindow.getText().equals("C")) {
+					initializeTableViewOfCountedReceipts();
+				}else {
+					initializeTableViewOfSeparateReceipts();
+				}
+			}else {
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Información");
+				alert1.setHeaderText(null);
+				alert1.setContentText("Factura encontrada");
+				alert1.showAndWait();
+			}
+
+			txtCode.clear();    		
+
+		}else {
+
+			alert.setContentText("Debe ingresar código de la factura para buscarla");
+			alert.showAndWait();
+			if(lbWindow.getText().equals("C")) {
+				initializeTableViewOfCountedReceipts();
+			}else {
+				initializeTableViewOfSeparateReceipts();
+			}
+
+
+		}
 	}
 
 	@FXML
@@ -2090,7 +2150,7 @@ public class AngelaccesoriosGUI {
 		btGenerateR.setVisible(false);
 		btDelete.setVisible(false);
 		hBoxSearchReceipt.setVisible(false);
-		
+
 		btGenerateR.setDisable(true);
 		btDelete.setDisable(true);
 		btAdd.setDisable(false);
@@ -2118,7 +2178,7 @@ public class AngelaccesoriosGUI {
 
 		fxmlLoader.setController(this);
 		Parent login= fxmlLoader.load();
-		
+
 		mainPane.setCenter(login);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 
@@ -2137,7 +2197,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		if(angelaccesorios.getLoggedUser() instanceof Admin) {
@@ -2159,7 +2219,7 @@ public class AngelaccesoriosGUI {
 
 		Parent clientPane = fxmlLoader.load();
 
-	
+
 
 		mainPane.setCenter(clientPane);
 
@@ -2167,189 +2227,189 @@ public class AngelaccesoriosGUI {
 		initializeTableViewClients();
 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
-		
+
 		initializeComboBoxIdType();
 
 	}
-	
+
 	@FXML
 	public void searchClientByNameInClient(ActionEvent event) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
-    	if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
-    	   
-    		ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
-    		tvListClients.setItems(clientsList);
-    		if(clientsList.isEmpty()) {
+		if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
 
-    			alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
-        		alert.showAndWait();
-        		initializeTableViewClients();
-    		}
-    		
-    		txtClientSearchedName.clear();
-    		txtClientSearchedLastName.clear();
-    	}else {
-    		
-    		alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
-    		alert.showAndWait();
-    		initializeTableViewClients();
+			ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+			tvListClients.setItems(clientsList);
+			if(clientsList.isEmpty()) {
 
-    	}
+				alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
+				alert.showAndWait();
+				initializeTableViewClients();
+			}
+
+			txtClientSearchedName.clear();
+			txtClientSearchedLastName.clear();
+		}else {
+
+			alert.setContentText("Debe ingresar nombre y apellido para buscar el cliente");
+			alert.showAndWait();
+			initializeTableViewClients();
+
+		}
 	}
 
 	private void initializeComboBoxIdType() {
 		ObservableList<String> options = 
-			    FXCollections.observableArrayList("TI","CC","PP","CE");
+				FXCollections.observableArrayList("TI","CC","PP","CE");
 		cmbxIdType.setItems(options);
 	}
-	
+
 
 	private void initializeTableViewClients() {
 		ObservableList<Client> observableList;
-    	observableList = FXCollections.observableArrayList(angelaccesorios.getClients());
-    	tvListClients.setItems(observableList);
-    	
-    	colNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
-    	colLastNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("lastName"));
-    	colIdClient.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
-    	colAddressClient.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
-    	colPhoneClient.setCellValueFactory(new PropertyValueFactory<Client, String>("phone"));
-    	colIdTypeClient.setCellValueFactory(new PropertyValueFactory<Client, String>("typeId"));
-    	colEnabledClient.setCellValueFactory(new PropertyValueFactory<Client, String>("status"));
-    
+		observableList = FXCollections.observableArrayList(angelaccesorios.getClients());
+		tvListClients.setItems(observableList);
 
-    	tvListClients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		colNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+		colLastNameClient.setCellValueFactory(new PropertyValueFactory<Client, String>("lastName"));
+		colIdClient.setCellValueFactory(new PropertyValueFactory<Client, String>("id"));
+		colAddressClient.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
+		colPhoneClient.setCellValueFactory(new PropertyValueFactory<Client, String>("phone"));
+		colIdTypeClient.setCellValueFactory(new PropertyValueFactory<Client, String>("typeId"));
+		colEnabledClient.setCellValueFactory(new PropertyValueFactory<Client, String>("status"));
+
+
+		tvListClients.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@FXML
 	public void clickOnTableViewClients(MouseEvent event) {
 		if (tvListClients.getSelectionModel().getSelectedItem() != null) {
-    		enableButtons();
-    		Client selectedClient = tvListClients.getSelectionModel().getSelectedItem();
-    		txtName.setText(selectedClient.getName());
-    		txtLastName.setText(selectedClient.getLastName());
-    		txtId.setText(selectedClient.getId());
-    		txtAddress.setText(selectedClient.getAddress());
-    		txtPhone.setText(selectedClient.getPhone());
-    		cmbxIdType.setValue(selectedClient.getTypeId().name());
+			enableButtons();
+			Client selectedClient = tvListClients.getSelectionModel().getSelectedItem();
+			txtName.setText(selectedClient.getName());
+			txtLastName.setText(selectedClient.getLastName());
+			txtId.setText(selectedClient.getId());
+			txtAddress.setText(selectedClient.getAddress());
+			txtPhone.setText(selectedClient.getPhone());
+			cmbxIdType.setValue(selectedClient.getTypeId().name());
 
-   		
-    		ckbxDisable.setSelected(!selectedClient.isEnabled());
-    	}
+
+			ckbxDisable.setSelected(!selectedClient.isEnabled());
+		}
 	}
 
 	@FXML
 	public void createClient(ActionEvent event) throws IOException {
 		if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() && !cmbxIdType.getSelectionModel().getSelectedItem().isEmpty()) {
-		
-    		try {
+
+			try {
 				angelaccesorios.createClient(txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtId.getText(),cmbxIdType.getSelectionModel().getSelectedItem(), txtAddress.getText().toUpperCase(),txtPhone.getText());
-				
+
 				Alert alert1 = new Alert(AlertType.INFORMATION);
-    			alert1.setTitle("Informacion");
-    			alert1.setHeaderText(null);
-    			alert1.setContentText("El cliente ha sido creado exitosamente!");
-    			alert1.showAndWait();
+				alert1.setTitle("Informacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("El cliente ha sido creado exitosamente!");
+				alert1.showAndWait();
 
-    			txtName.clear();
-    			txtLastName.clear();
-    			txtId.clear();
-    			txtAddress.clear();
-    			txtPhone.clear();
-    			cmbxIdType.setValue(null);
+				txtName.clear();
+				txtLastName.clear();
+				txtId.clear();
+				txtAddress.clear();
+				txtPhone.clear();
+				cmbxIdType.setValue(null);
 
-    			initializeTableViewClients();
-    		} catch (SameIDException e) {
+				initializeTableViewClients();
+			} catch (SameIDException e) {
 
-    			Alert alert2 = new Alert(AlertType.ERROR);
-    			alert2.setTitle("Error de validacion");
-    			alert2.setHeaderText(null);
-    			alert2.setContentText("No se pudo crear el cliente, ya existe uno con el mismo número de identificación");
-    			alert2.showAndWait();
+				Alert alert2 = new Alert(AlertType.ERROR);
+				alert2.setTitle("Error de validacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("No se pudo crear el cliente, ya existe uno con el mismo número de identificación");
+				alert2.showAndWait();
 			}
-			
-    	}else {
-    		showValidationErrorAlert();
-    	}
+
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
 	public void deleteClient(ActionEvent event) throws IOException {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
-    	alert1.setTitle("Confirmacion de proceso");
-    	alert1.setHeaderText(null);
-    	alert1.setContentText("¿Esta seguro de que quiere eliminar el cliente "+tvListClients.getSelectionModel().getSelectedItem()+"?");
-    	Optional<ButtonType> result = alert1.showAndWait();
-    	if (result.get() == ButtonType.OK){
-        	
-    		boolean deleted= angelaccesorios.deleteClient(tvListClients.getSelectionModel().getSelectedItem() );
-        	Alert alert2 = new Alert(AlertType.INFORMATION);
-        	alert2.setTitle("Informacion");
-        	alert2.setHeaderText(null);
-        	
-        	if(deleted) {
-        		alert2.setContentText("El cliente ha sido eliminado exitosamente");
-        		txtName.clear();
-        		txtLastName.clear();
-            	txtId.clear();
-            	txtPhone.clear();
-            	txtAddress.clear();
-            	cmbxIdType.setValue(null);
+		alert1.setTitle("Confirmacion de proceso");
+		alert1.setHeaderText(null);
+		alert1.setContentText("¿Esta seguro de que quiere eliminar el cliente "+tvListClients.getSelectionModel().getSelectedItem()+"?");
+		Optional<ButtonType> result = alert1.showAndWait();
+		if (result.get() == ButtonType.OK){
 
-            	disableButtons();
+			boolean deleted= angelaccesorios.deleteClient(tvListClients.getSelectionModel().getSelectedItem() );
+			Alert alert2 = new Alert(AlertType.INFORMATION);
+			alert2.setTitle("Informacion");
+			alert2.setHeaderText(null);
 
-            	
-            	initializeTableViewClients();
-            	
-            	           	
-        	}else {
-        		alert2.setContentText("El cliente no se pudo eliminar");
+			if(deleted) {
+				alert2.setContentText("El cliente ha sido eliminado exitosamente");
+				txtName.clear();
+				txtLastName.clear();
+				txtId.clear();
+				txtPhone.clear();
+				txtAddress.clear();
+				cmbxIdType.setValue(null);
 
-        	}
-        	alert2.showAndWait();
-        	
-        	disableButtons();
-    	}
+				disableButtons();
+
+
+				initializeTableViewClients();
+
+
+			}else {
+				alert2.setContentText("El cliente no se pudo eliminar");
+
+			}
+			alert2.showAndWait();
+
+			disableButtons();
+		}
 	}
 
 	@FXML
 	public void updateClient(ActionEvent event) throws IOException {
 		if (!txtId.getText().isEmpty() && !txtName.getText().isEmpty() && !txtLastName.getText().isEmpty() && !txtAddress.getText().isEmpty() && !txtPhone.getText().isEmpty() &&  !cmbxIdType.getSelectionModel().getSelectedItem().isEmpty()) {
 
-    		try {
+			try {
 				angelaccesorios.updateClient(tvListClients.getSelectionModel().getSelectedItem(),txtName.getText().toUpperCase(),txtLastName.getText().toUpperCase(),txtId.getText(),cmbxIdType.getSelectionModel().getSelectedItem(), txtAddress.getText().toUpperCase(),txtPhone.getText(), !ckbxDisable.isSelected());
 				Alert alert1 = new Alert(AlertType.INFORMATION);
-        		alert1.setTitle("Informacion");
-        		alert1.setHeaderText(null);
-        		alert1.setContentText("El empleado ha sido actualizado exitosamente!");
-        		alert1.showAndWait();
-        		
-        		txtName.clear();
-        		txtLastName.clear();
-            	txtId.clear();
-            	txtPhone.clear();
-            	txtAddress.clear();
-            	cmbxIdType.setValue(null);
+				alert1.setTitle("Informacion");
+				alert1.setHeaderText(null);
+				alert1.setContentText("El empleado ha sido actualizado exitosamente!");
+				alert1.showAndWait();
 
-            	disableButtons();
-            	tvListClients.getItems().clear();
+				txtName.clear();
+				txtLastName.clear();
+				txtId.clear();
+				txtPhone.clear();
+				txtAddress.clear();
+				cmbxIdType.setValue(null);
 
-            	initializeTableViewClients();
-    		} catch (SameIDException e) {
-    			Alert alert2 = new Alert(AlertType.ERROR);
-    			alert2.setTitle("Error de validacion");
-    			alert2.setHeaderText(null);
-    			alert2.setContentText("No se pudo actualizar el empleado, intentelo nuevamente");
-    			alert2.showAndWait();
-    		
+				disableButtons();
+				tvListClients.getItems().clear();
+
+				initializeTableViewClients();
+			} catch (SameIDException e) {
+				Alert alert2 = new Alert(AlertType.ERROR);
+				alert2.setTitle("Error de validacion");
+				alert2.setHeaderText(null);
+				alert2.setContentText("No se pudo actualizar el empleado, intentelo nuevamente");
+				alert2.showAndWait();
+
 			}
 
 
-    	}else {
-    		showValidationErrorAlert();
-    	}
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	public void loadRegisterAdmin() throws IOException	{
@@ -2357,8 +2417,8 @@ public class AngelaccesoriosGUI {
 		fxmlLoader.setController(this);
 
 		Parent clientPane = fxmlLoader.load();
-	
-		
+
+
 
 		mainPane.setCenter(clientPane);
 
@@ -2407,7 +2467,7 @@ public class AngelaccesoriosGUI {
 
 		Parent clientPane = fxmlLoader.load();
 
-		
+
 
 		mainPane.setCenter(clientPane);
 
@@ -2592,58 +2652,58 @@ public class AngelaccesoriosGUI {
 	public void importClientsData(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
-		
-    	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Abrir el archivo");
-    	File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
-    	if(f!=null) {
-    		
-			alert.setTitle("Importar clientes");
-    		
-    		try {
-    			angelaccesorios.setNumProgress(0);
-    			double num=angelaccesorios.numberOfLinesOfFile(f.getAbsolutePath());
-    			ProgressThread progressThread=new ProgressThread(this,angelaccesorios, num);
-    			progressThread.start();
-    			angelaccesorios.importClientsData(f.getAbsolutePath());
 
-    			alert.setContentText("Los clientes fueron importados exitosamente");
-        		alert.showAndWait();
-        		
-    		}catch(IOException e){
-        		alert.setContentText("Los clientes no se importaron. Ocurrió un error");
-        		alert.showAndWait();
-    		}
-    		progressBar.setProgress(0);
-    	}
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Abrir el archivo");
+		File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
+		if(f!=null) {
+
+			alert.setTitle("Importar clientes");
+
+			try {
+				angelaccesorios.setNumProgress(0);
+				double num=angelaccesorios.numberOfLinesOfFile(f.getAbsolutePath());
+				ProgressThread progressThread=new ProgressThread(this,angelaccesorios, num);
+				progressThread.start();
+				angelaccesorios.importClientsData(f.getAbsolutePath());
+
+				alert.setContentText("Los clientes fueron importados exitosamente");
+				alert.showAndWait();
+
+			}catch(IOException e){
+				alert.setContentText("Los clientes no se importaron. Ocurrió un error");
+				alert.showAndWait();
+			}
+			progressBar.setProgress(0);
+		}
 	}
 
 	@FXML
 	public void importProductsData(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
-		
-    	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("Abrir el archivo");
-    	File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
-    	if(f!=null) {
-    		
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Abrir el archivo");
+		File f=fileChooser.showOpenDialog(mainPane.getScene().getWindow());
+		if(f!=null) {
+
 			alert.setTitle("Importar productos");
-    		
-    		try {
-    			angelaccesorios.setNumProgress(0);
-    			int num=angelaccesorios.numberOfLinesOfFile(f.getAbsolutePath());
-    			ProgressThread progressThread=new ProgressThread(this,angelaccesorios, num);
-    			progressThread.start();
-    			angelaccesorios.importProductsData(f.getAbsolutePath());
-        		alert.setContentText("Los productos fueron importados exitosamente");
-        		alert.showAndWait();
-    		}catch(IOException e){
-        		alert.setContentText("Los productos no se importaron. Ocurrió un error");
-        		alert.showAndWait();
-    		}
-    		progressBar.setProgress(0);
-    	}
+
+			try {
+				angelaccesorios.setNumProgress(0);
+				int num=angelaccesorios.numberOfLinesOfFile(f.getAbsolutePath());
+				ProgressThread progressThread=new ProgressThread(this,angelaccesorios, num);
+				progressThread.start();
+				angelaccesorios.importProductsData(f.getAbsolutePath());
+				alert.setContentText("Los productos fueron importados exitosamente");
+				alert.showAndWait();
+			}catch(IOException e){
+				alert.setContentText("Los productos no se importaron. Ocurrió un error");
+				alert.showAndWait();
+			}
+			progressBar.setProgress(0);
+		}
 	}
 
 	private void initializeComboBoxOfHours() {
@@ -2667,7 +2727,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportUsersReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeComboBoxOfHours();
@@ -2681,40 +2741,40 @@ public class AngelaccesoriosGUI {
 	@FXML
 	public void generateUsersReport(ActionEvent event) {
 		if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null) {
-    		LocalDate initialDate = dtPickerInitialDate.getValue();
-    		LocalDate finalDate = dtPickerFinalDate.getValue();
-    		String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
-    		String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
-    		String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
-    		String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
-    		FileChooser fileChooser = new FileChooser();
-        	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
-        	File fExp= fileChooser.showSaveDialog(mainPane.getScene().getWindow());
-        	if(fExp!=null) {
-        		Alert alert = new Alert(AlertType.INFORMATION);
-    		    alert.setTitle("Exportar reporte sobre usuarios");
-    		    try {
-    				angelaccesorios.exportUsersReport(fExp.getAbsolutePath(),initialTime,finalTime);
-    			    alert.setHeaderText(null);
-    			    alert.setContentText("El reporte de usuarios ha sido exportado exitosamente");
-    			    alert.showAndWait();
-    			} catch (IOException e) {
-    				alert.setHeaderText(null);
-    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+e.getMessage());
-    			    alert.showAndWait();
-    			} catch (ParseException p) {
-    				alert.setHeaderText(null);
-    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
-    			    alert.showAndWait();
+			LocalDate initialDate = dtPickerInitialDate.getValue();
+			LocalDate finalDate = dtPickerFinalDate.getValue();
+			String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
+			String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
+			String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
+			String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
+			File fExp= fileChooser.showSaveDialog(mainPane.getScene().getWindow());
+			if(fExp!=null) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Exportar reporte sobre usuarios");
+				try {
+					angelaccesorios.exportUsersReport(fExp.getAbsolutePath(),initialTime,finalTime);
+					alert.setHeaderText(null);
+					alert.setContentText("El reporte de usuarios ha sido exportado exitosamente");
+					alert.showAndWait();
+				} catch (IOException e) {
+					alert.setHeaderText(null);
+					alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+e.getMessage());
+					alert.showAndWait();
+				} catch (ParseException p) {
+					alert.setHeaderText(null);
+					alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
+					alert.showAndWait();
 				} catch (HigherDateAndHourException h) {
 					alert.setHeaderText(null);
-    			    alert.setContentText(h.getMessage());
-    			    alert.showAndWait();
+					alert.setContentText(h.getMessage());
+					alert.showAndWait();
 				}
-        	}
-    	}else {
-    		showValidationErrorAlert();
-    	}
+			}
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	@FXML
@@ -2722,7 +2782,7 @@ public class AngelaccesoriosGUI {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("exportProductsReport.fxml"));
 		fxmlLoader.setController(this);
 		Parent menuPane = fxmlLoader.load();
-		
+
 		mainPane.setCenter(menuPane);
 		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeComboBoxOfHours();
@@ -2735,40 +2795,40 @@ public class AngelaccesoriosGUI {
 	@FXML
 	public void generateProductsReport(ActionEvent event) {
 		if(dtPickerInitialDate.getValue()!=null && dtPickerFinalDate.getValue()!=null && cmbxInitialHour.getValue()!=null && cmbxInitialMinute.getValue()!=null && cmbxFinalHour.getValue()!=null && cmbxFinalMinute.getValue()!=null) {
-    		LocalDate initialDate = dtPickerInitialDate.getValue();
-    		LocalDate finalDate = dtPickerFinalDate.getValue();
-    		String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
-    		String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
-    		String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
-    		String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
-    		FileChooser fileChooser = new FileChooser();
-        	fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
-        	File fExp= fileChooser.showSaveDialog(mainPane.getScene().getWindow());
-        	if(fExp!=null) {
-        		Alert alert = new Alert(AlertType.INFORMATION);
-    		    alert.setTitle("Exportar reporte sobre productos");
-    		    try {
-    				angelaccesorios.exportProductsReport(fExp.getAbsolutePath(),initialTime,finalTime);
-    			    alert.setHeaderText(null);
-    			    alert.setContentText("El reporte de productos ha sido exportado exitosamente");
-    			    alert.showAndWait();
-    			} catch (IOException e) {
-    				alert.setHeaderText(null);
-    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+e.getMessage());
-    			    alert.showAndWait();
-    			} catch (ParseException p) {
-    				alert.setHeaderText(null);
-    			    alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
-    			    alert.showAndWait();
+			LocalDate initialDate = dtPickerInitialDate.getValue();
+			LocalDate finalDate = dtPickerFinalDate.getValue();
+			String iniDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(initialDate).toString();
+			String finDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(finalDate).toString();
+			String initialTime = iniDate+" "+cmbxInitialHour.getValue().toString()+":"+cmbxInitialMinute.getValue().toString();
+			String finalTime = finDate+" "+cmbxFinalHour.getValue().toString()+":"+cmbxFinalMinute.getValue().toString();
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Elija el archivo en donde se va a guardar el reporte");
+			File fExp= fileChooser.showSaveDialog(mainPane.getScene().getWindow());
+			if(fExp!=null) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Exportar reporte sobre productos");
+				try {
+					angelaccesorios.exportProductsReport(fExp.getAbsolutePath(),initialTime,finalTime);
+					alert.setHeaderText(null);
+					alert.setContentText("El reporte de productos ha sido exportado exitosamente");
+					alert.showAndWait();
+				} catch (IOException e) {
+					alert.setHeaderText(null);
+					alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+e.getMessage());
+					alert.showAndWait();
+				} catch (ParseException p) {
+					alert.setHeaderText(null);
+					alert.setContentText("Lo sentimos, ha ocurrido un error en el proceso\n"+p.getMessage());
+					alert.showAndWait();
 				} catch (HigherDateAndHourException h) {
 					alert.setHeaderText(null);
-    			    alert.setContentText(h.getMessage());
-    			    alert.showAndWait();
+					alert.setContentText(h.getMessage());
+					alert.showAndWait();
 				}
-        	}
-    	}else {
-    		showValidationErrorAlert();
-    	}
+			}
+		}else {
+			showValidationErrorAlert();
+		}
 	}
 
 	public void showValidationErrorAlert() {
