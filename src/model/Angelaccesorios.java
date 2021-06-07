@@ -1675,7 +1675,7 @@ public class Angelaccesorios implements Serializable{
 	/**
 	* This method searches for a specific product within the system's list of products. <br>
 	* <b>name</b>: searchProduct <br>
-	* <b>pre</b>: the objects ty, brand and the variable model are already initialized. <br>
+	* <b>pre</b>: the objects ty, b and the variable model are already initialized. <br>
 	* <b>post</b>: the searched product could have been found. <br>
 	* @param ty Is a TypeOfProduct object that represents a type of product of the system. ty!=null.<br>
 	* @param b Is a Brand object that represents a brand of the system. b!=null.<br>
@@ -1702,7 +1702,15 @@ public class Angelaccesorios implements Serializable{
 		this.products = products;
 	}
 
-	//Searches products in the list of products of the system from a type and brand name
+	/**
+	* This method searches products in the list of products of the system with the names of a type and brand. <br>
+	* <b>name</b>: returnFoundProducts <br>
+	* <b>pre</b>: the variables type and brand are already initialized. <br>
+	* <b>post</b>: A list of products with the same type and brand has been returned. <br>
+	* @param type Is a String variable that contains the name of a system's type of product. type!=null and type!="".<br>
+	* @param brand Is a String variable that contains the name of a system's brand. brand!=null and brand!="".<br>
+	* @return an ArrayList of Product <code> found </code> that contains all the products of the system that have the same type and brand. 
+	*/
 	public ArrayList<Product> returnFoundProducts(String type, String brand){
 		ArrayList<Product> found = new ArrayList<Product>();
 		for(int k = 0; k<products.size() ; k++) {
@@ -1715,12 +1723,37 @@ public class Angelaccesorios implements Serializable{
 
 	//Serializable Methods
 
+	/**
+	* This method serializes or saves all the information of the system.<br>
+	* <b>name</b>: saveDataAngelaccesorios <br>
+	* <b>post</b>: All the information of the system was saved. <br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public void saveDataAngelaccesorios() throws IOException{
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ANGELACCESORIOS_SAVE_PATH_FILE));
 		oos.writeObject(this);
 		oos.close();
 	}
 
+	/**
+	* This method loads all the information that has been stored on the system.<br>
+	* <b>name</b>: loadDataAngelaccesorios <br>
+	* <b>pre</b>: the object ang is already initialized. <br>
+	* <b>post</b>: The information of the systems was loaded. <br>
+	* @param ang Is an Angelaccesorios object that will contain all the information of the system. ang!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+    * @throws ClassNotFoundException <br>
+    *		thrown if the path of the file wasn't found. <br> 
+    * @return a <code> Angelaccesorios </code> object specifying ang, that contains all the information of the system.  
+	*/
 	public Angelaccesorios loadDataAngelaccesorios(Angelaccesorios ang) throws IOException, ClassNotFoundException{
 		File f = new File(ANGELACCESORIOS_SAVE_PATH_FILE);
 		if(f.exists()){
@@ -1734,6 +1767,12 @@ public class Angelaccesorios implements Serializable{
 
 	//All related with the reports of the system
 
+	/**
+	* This method returns a list with numbers that represents the hours. <br>
+	* <b>name</b>: getHours <br>
+	* <b>post</b>: A list with numbers has been returned. <br>
+	* @return a List of String <code> allHours </code> that contains all the numbers related with hours. 
+	*/
 	public List<String> getHours(){
 		List<String> allHours = new ArrayList<String>();
 		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
@@ -1741,6 +1780,12 @@ public class Angelaccesorios implements Serializable{
 		return allHours;
 	}
 
+	/**
+	* This method returns a list with numbers that represents minutes. <br>
+	* <b>name</b>: getMinutes <br>
+	* <b>post</b>: A list with numbers has been returned. <br>
+	* @return a List of String <code> allMinutes </code> that contains all the numbers related with minutes. 
+	*/
 	public List<String> getMinutes(){
 		List<String> allMinutes = new ArrayList<String>();
 		String[] minutes = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"};
@@ -1748,6 +1793,18 @@ public class Angelaccesorios implements Serializable{
 		return allMinutes;
 	}
 
+	/**
+	* This method searches the receipts that fall in a specific date range. <br>
+	* <b>name</b>: selectGeneratedReceipts <br>
+	* <b>pre</b>: The objects initialDate, finalDate and the variable numReport are already initialized. <br>
+	* <b>post</b>: A list of receipts that are in the date range entered was returned. <br>
+	* @param initialDate Is a Date object that contains the initial date of a report. initiaDate!=null.<br>
+	* @param finalDate Is a Date object that contains the final date of a report. finalDate!=null.<br>
+	* @param numReport Is an integer variable that indicates what kind of report wants the user (if it's about product or users of the system). numReport==1 or numReport==2.<br>
+	* @throws ParseException <br>
+    *		thrown if it fails to parse a string that should have a special format. <br> 
+	* @return an ArrayList of Receipt <code> selectedReceipts </code> that contains all the receipts of the system that are in the date range entered. 
+	*/
 	public ArrayList<Receipt> selectGeneratedReceipts(Date initialDate, Date finalDate, int numReport) throws ParseException{
 		int result1 = 0;
 		int result2 = 0;
@@ -1774,6 +1831,21 @@ public class Angelaccesorios implements Serializable{
 		return selectedReceipts;
 	}
 
+	/**
+	* This method generates a report of users based on their number of receipts generated in a specific date range. <br>
+	* <b>name</b>: exportsUsersReport <br>
+	* <b>pre</b>: The variables initialDate, finalDate and fn are already initialized. <br>
+	* <b>post</b>: A file with the report of users based on their number of receipts has been generated. <br>
+	* @param initialDate Is a String variable that contains the initial date of a report. initiaDate!=null and initialDate!="".<br>
+	* @param finalDate Is a String variable that contains the final date of a report. finalDate!=null and finalDate!="".<br>
+	* @param fn Is a String variable that contains the path file where the report is going to be stored. fn!=null and fn!="".<br>
+	* @throws FileNotFoundException<br>
+    *		thrown if an attempt to open the file denoted by a specified pathname has failed. <br> 
+	* @throws ParseException <br>
+    *		thrown if an attempt to parse a string that should have a special format has failed. <br> 
+    * @throws HigherDateAndHourException <br>
+    *		thrown if the start date and time chosen are greater than the end date and time given to generate the report. <br> 
+	*/
 	public void exportUsersReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHourException {
 		String strFormat = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
@@ -1805,6 +1877,21 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method generates a report of products based on the number of times that were added to a receipt in a specific date range. <br>
+	* <b>name</b>: exportProductsReport <br>
+	* <b>pre</b>: The variables initialDate, finalDate and fn are already initialized. <br>
+	* <b>post</b>: A file with the report of products based on the number of times that were added to a receipt has been generated. <br>
+	* @param initialDate Is a String variable that contains the initial date of a report. initiaDate!=null and initialDate!="".<br>
+	* @param finalDate Is a String variable that contains the final date of a report. finalDate!=null and finalDate!="".<br>
+	* @param fn Is a String variable that contains the path file where the report is going to be stored. fn!=null and fn!="".<br>
+	* @throws FileNotFoundException<br>
+    *		thrown if an attempt to open the file denoted by a specified pathname has failed. <br> 
+	* @throws ParseException <br>
+    *		thrown if an attempt to parse a string that should have a special format has failed. <br> 
+    * @throws HigherDateAndHourException <br>
+    *		thrown if the start date and time chosen are greater than the end date and time given to generate the report. <br> 
+	*/
 	public void exportProductsReport(String fn, String initialTime, String finalTime) throws FileNotFoundException, ParseException, HigherDateAndHourException {
 		String strFormat = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat formato = new SimpleDateFormat(strFormat);
@@ -1845,6 +1932,19 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
+	/**
+	* This method generates a counted receipt in pdf format. <br>
+	* <b>name</b>: generatePDFCountedReceipt <br>
+	* <b>pre</b>: The objects r, txt and the variable type are already initialized. <br>
+	* <b>post</b>: A pdf file of a counted receipt has been generated. <br>
+	* @param txt Is an OutputSream object that contains the path file where the pdf file is going to be saved. txt!=null.<br>
+	* @param r Is a Receipt object that represents the receipt that the user wants to generate. r!=null.<br>
+	* @param type Is a String variable that contains the title of the file. type!=null and type!="".<br>
+	* @throws documentException<br>
+	* 		thrown if...
+	* 		1. A bad PDF format has been used to construct a PdfObject.<br>
+    *       2. An unspecified problem happened while a PDF document was being constructed.<br>
+	*/
 	public void generatePDFCountedReceipt(OutputStream txt, Receipt r, String type) throws DocumentException {
 		Document doc = new Document(PageSize.LETTER);
 		PdfWriter.getInstance(doc, txt);
@@ -1981,6 +2081,19 @@ public class Angelaccesorios implements Serializable{
 		doc.close();
 	}
 
+	/**
+	* This method generates a separate receipt in pdf format. <br>
+	* <b>name</b>: generatePDFSeparateReceipt <br>
+	* <b>pre</b>: The objects r, txt and the variable type are already initialized. <br>
+	* <b>post</b>: A pdf file of a separate receipt has been generated. <br>
+	* @param txt Is an OutputSream object that contains the path file where the pdf file is going to be saved. txt!=null.<br>
+	* @param r Is a Receipt object that represents the receipt that the user wants to generate. r!=null.<br>
+	* @param type Is a String variable that contains the title of the file. type!=null and type!="".<br>
+	* @throws documentException<br>
+	* 		thrown if...
+	* 		1. A bad PDF format has been used to construct a PdfObject.<br>
+    *       2. An unspecified problem happened while a PDF document was being constructed.<br>
+	*/
 	public void generatePDFSeparateReceipt(OutputStream txt, Receipt r, String type) throws DocumentException {
 		Document doc = new Document(PageSize.LETTER);
 		PdfWriter.getInstance(doc, txt);
@@ -2152,6 +2265,18 @@ public class Angelaccesorios implements Serializable{
 		doc.close();
 	}
 
+	/**
+	* This method creates a cell of a PDFTable. <br>
+	* <b>name</b>: createCell <br>
+	* <b>pre</b>: The object f and the variables content, borderWidth, colspan and alignment are already initialized. <br>
+	* <b>post</b>: A new pdf cell has been generated. <br>
+	* @param content Is a String variable that contains the information of a cell. content!=null and content!="".<br>
+	* @param f Is a Font object that represents the type of font that is going to be used to create the cell. f!=null.<br>
+	* @param borderWidth Is a float variable that represents the border's thickness of a cell.<br>
+	* @param colspan Is an integer variable that represents the cell's size.<br>
+	* @param alignment Is an integer variable that represents the alignment that the information will have inside the cell.<br>
+	* @return a PdfPCell <code> cell </code> which is the cell that was created. 
+	*/
 	public PdfPCell createCell(String content, Font f, float borderWidth, int colspan, int alignment) {
 		PdfPCell cell = new PdfPCell(new Phrase(content, f));
 		cell.setBorderWidth(borderWidth);
@@ -2160,9 +2285,13 @@ public class Angelaccesorios implements Serializable{
 		return cell;
 	}
 
-	//Sort products by ascending price
-
 	//Bubble sorting
+	/**
+	* This method sorts the products of the system by ascending priced. <br>
+	* <b>name</b>: sortingPricesOfProducts <br>
+	* <b>post</b>: A list of products sorted ascending by their prices has been returned. <br>
+	* @return an ArrayList of Product <code> copyOfProducts </code> that contains all the products of the system sorted ascending by their prices. 
+	*/
 	public ArrayList<Product> sortingPricesOfProducts() {
 		ArrayList<Product> copyOfProducts = new ArrayList<Product>(products);
 		for(int i=1;i<copyOfProducts.size();i++) {
@@ -2177,9 +2306,13 @@ public class Angelaccesorios implements Serializable{
 		return copyOfProducts;
 	}
 
-	//Sort brands in descending alphabetical order
-
 	//Insertion sorting
+	/**
+	* This method sorts the brands in descending alphabetical order. <br>
+	* <b>name</b>: sortingBrandNames <br>
+	* <b>post</b>: A list of brands sorted descending by their names has been returned. <br>
+	* @return an ArrayList of Brand <code> listSorted </code> that contains all the brand of the system sorted descending by their names. 
+	*/
 	public ArrayList<Brand> sortingBrandNames() {
 		ArrayList<Brand> listSorted=new ArrayList<Brand>(brands);
 		for(int i=1;i<listSorted.size();i++) {
@@ -2194,6 +2327,18 @@ public class Angelaccesorios implements Serializable{
 
 	//Import data from csv files
 
+	/**
+	* This method imports data about clients to the system.<br>
+	* <b>name</b>: importClientsData <br>
+	* <b>pre</b>: The variable fileName is already initialized. <br>
+	* <b>post</b>: The data of the clients that was in a file was imported. <br>
+	* @param fileName Is a String variable that represents the path file from the clients are going to be imported. fileName!=null and fileName!="".<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public void importClientsData(String fileName) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
@@ -2218,6 +2363,18 @@ public class Angelaccesorios implements Serializable{
 		 saveDataAngelaccesorios();
 	}
 	
+	/**
+	* This method counts the number of lines in the file from which the information is going to be imported.<br>
+	* <b>name</b>: numberOfLinesOfFile <br>
+	* <b>pre</b>: The variable fileName is already initialized. <br>
+	* <b>post</b>: The number of lines of a file were counted. <br>
+	* @param fileName Is a String variable that represents the path file from the information is going to be imported. fileName!=null and fileName!="".<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public int numberOfLinesOfFile(String fileName) throws IOException {
 		int num=0;
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -2230,6 +2387,18 @@ public class Angelaccesorios implements Serializable{
 		return num;
 	}
 
+	/**
+	* This method imports data about products to the system.<br>
+	* <b>name</b>: importProductsData <br>
+	* <b>pre</b>: The variable fileName is already initialized. <br>
+	* <b>post</b>: The data of the products that was in a file was imported. <br>
+	* @param fileName Is a String variable that represents the path file from the products are going to be imported. fileName!=null and fileName!="".<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public void importProductsData(String fileName) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = br.readLine();
