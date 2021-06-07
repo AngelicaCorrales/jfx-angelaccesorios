@@ -8,6 +8,13 @@ public class Brand implements Serializable{
 	private String name;
 	private boolean enabled;
 	
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> Brand.<br>
+	*<b>pre</b>: the variable n is already initialized. <br>
+	*<b>post:</b> the attributes of the class have been initialized.<br>
+	*@param n Is a String variable that contains the name of a brand. n!=null and n!="".<br>
+	*/
 	public Brand(String n) {
 		name = n;
 		enabled = true;
@@ -20,6 +27,13 @@ public class Brand implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/**
+	* This method obtains a String with the state of a brand. <br>
+	* <b>name</b>: getState.<br>
+ 	* <b>post</b>: the state of a brand has been obtained. <br>
+ 	* @return a <code> String </code> specifying state, the state of a brand.
+ 	*/
 	
 	public String getState() {
 		String state = "";
@@ -39,6 +53,13 @@ public class Brand implements Serializable{
 		this.enabled = enabled;
 	}
 
+	/**
+	* This method obtains a String with the name of a brand. <br>
+	* <b>name</b>: toString.<br>
+ 	* <b>post</b>: the name of a brand has been obtained. <br>
+ 	* @return a <code> String </code> specifying name, the name of a brand.
+ 	*/
+	
 	public String toString() {
 		return name;
 	}

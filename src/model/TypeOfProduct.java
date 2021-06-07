@@ -12,6 +12,13 @@ public abstract class TypeOfProduct implements Serializable{
 	private TypeOfProduct right;
 	private TypeOfProduct parent;
 	
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> TypeOfProduct.<br>
+	*<b>pre</b>: the variable n is already initialized. <br>
+	*<b>post:</b> the attributes of the class have been initialized.<br>
+	*@param n Is a String variable that contains the name of a type of product. n!=null and n!="".<br>
+	*/		
 	public TypeOfProduct(String n) {
 		name = n;
 		enabled = true;
@@ -33,6 +40,12 @@ public abstract class TypeOfProduct implements Serializable{
 		this.enabled = enabled;
 	}
 
+	/**
+	* This method obtains a String with the state of a type of product. <br>
+	* <b>name</b>: getState.<br>
+ 	* <b>post</b>: the state of a type of product has been obtained. <br>
+ 	* @return a <code> String </code> specifying state, the state of a type of product.
+ 	*/
 	public String getState() {
 		String state = "";
 		if(enabled==true) {
@@ -43,6 +56,12 @@ public abstract class TypeOfProduct implements Serializable{
 		return state;
 	}
 	
+	/**
+	* This method obtains a String with the name of a type of product. <br>
+	* <b>name</b>: toString.<br>
+ 	* <b>post</b>: the name of a type of product has been obtained. <br>
+ 	* @return a <code> String </code> specifying name, the name of a type of product.
+ 	*/
 	public String toString() {
 		return name;
 	}
