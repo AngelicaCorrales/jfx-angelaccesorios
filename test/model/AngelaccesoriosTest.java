@@ -2479,13 +2479,13 @@ public class AngelaccesoriosTest {
 		setupScenary16();
 		SeparateReceipt sr=(SeparateReceipt)angelaccesorios.getReceipts().get(0);
 		String paymentMethod= "Tarjeta de debito";
-		double valuePayable=2700000;
+		double valuePayable=3232000;
 		
 		angelaccesorios.updateSeparateReceipt(sr, paymentMethod, valuePayable);
 		assertTrue(sr.getFirstPayment().getNext()!=null);
 		assertEquals(sr.getFirstPayment().getNext().getAmount(),valuePayable);
-		assertEquals(sr.calculatePaymentTotal(),2800000);
-		assertEquals(angelaccesorios.getLoggedUser().getSumTotalReceipts(),2800000);
+		assertEquals(sr.calculatePaymentTotal(),3332000);
+		assertEquals(angelaccesorios.getLoggedUser().getSumTotalReceipts(),3332000);
 		assertEquals(angelaccesorios.getLoggedUser().getNumberReceipts(),2);
 		assertEquals(sr.getState().name(),"ENTREGADO");
 		assertEquals(angelaccesorios.getProducts().get(1).getUnits(),4);

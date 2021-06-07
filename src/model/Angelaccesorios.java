@@ -72,8 +72,9 @@ public class Angelaccesorios implements Serializable{
 	private ArrayList<Product> receiptProducts;
 	private ArrayList<Integer> receiptQuantitiesProducts;
 
+	private double numProgress;
 
-
+	
 	public Angelaccesorios(int num) {
 		if(num==PROGRAM) {
 			ANGELACCESORIOS_SAVE_PATH_FILE = "data/angelaccesorios.ackl";
@@ -88,6 +89,15 @@ public class Angelaccesorios implements Serializable{
 
 		receiptProducts= new ArrayList<Product>();
 		receiptQuantitiesProducts= new ArrayList<Integer>();
+		
+		numProgress=0;
+	}
+	
+	public double getNumProgress() {
+		return numProgress;
+	}
+	public void setNumProgress(double numProgress) {
+		this.numProgress = numProgress;
 	}
 	public void resetReceiptProductsAndQuantities() {
 		receiptProducts= new ArrayList<Product>();
@@ -2200,13 +2210,25 @@ public class Angelaccesorios implements Serializable{
 				} catch (SameIDException e) {
 				} 
 			}
-
+			numProgress++;
+			
 			line = br.readLine();
 		}
 		br.close();
 		 saveDataAngelaccesorios();
 	}
-
+	
+	public int numberOfLinesOfFile(String fileName) throws IOException {
+		int num=0;
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		String line = br.readLine();
+		while(line!=null){
+			num++;
+			line = br.readLine();
+		}
+		br.close();
+		return num;
+	}
 
 	public void importProductsData(String fileName) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -2234,7 +2256,7 @@ public class Angelaccesorios implements Serializable{
 				} catch (NoQuantityException |NegativeQuantityException | NoPriceException | NegativePriceException | SameProductException |NumberFormatException e) {
 				}
 			}
-
+			numProgress++;
 			line = br.readLine();
 		}
 		br.close();
