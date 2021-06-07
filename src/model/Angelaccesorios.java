@@ -51,6 +51,12 @@ import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 import exceptions.UnderAgeException;
 
+/**
+ * This class contains attributes, relationships, and methods of a Angelaccesorios.
+ * @version 1
+ * @author Angelica Corrales Quevedo, https://github.com/AngelicaCorrales
+ * @author Keren Lopez Cordoba, https://github.com/KerenLopez
+ */
 public class Angelaccesorios implements Serializable{
 	private static final long serialVersionUID = 1;
 	private User firstUser;
@@ -74,7 +80,13 @@ public class Angelaccesorios implements Serializable{
 
 	private double numProgress;
 
-	
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> Angelaccesorios. <br>
+	*<b>pre</b>: the variable num is already initialized. <br>
+	*<b>post:</b> the attributes and relationships of the class have been initialized.<br>
+	*@param num Is an integer variable that indicates if the program execution is a test or not. num==0 or num==1<br>
+	*/
 	public Angelaccesorios(int num) {
 		if(num==PROGRAM) {
 			ANGELACCESORIOS_SAVE_PATH_FILE = "data/angelaccesorios.ackl";
@@ -116,6 +128,12 @@ public class Angelaccesorios implements Serializable{
 		this.receiptQuantitiesProducts = receiptQuantitiesProducts;
 	}
 
+	/**
+	* This method returns a list of products that have their state as "enabled". <br>
+	* <b>name</b>: returnEnabledProducts <br>
+	* <b>post</b>: A list with the enabled products of the system was returned. <br>
+	* @return an ArrayList of products <code> list </code> that contains all the products that are enabled in the system. 
+	*/
 	public ArrayList<Product> returnEnabledProducts(){
 		ArrayList<Product> list= new ArrayList<Product>();
 		for(int i=0;i<products.size();i++) {
@@ -126,6 +144,12 @@ public class Angelaccesorios implements Serializable{
 		return list;
 	}
 
+	/**
+	* This method returns a list of clients that have their state as "enabled". <br>
+	* <b>name</b>: returnEnabledClients <br>
+	* <b>post</b>: A list with the enabled clients of the system was returned. <br>
+	* @return an ArrayList of clients <code> list </code> that contains all the clients that are enabled in the system. 
+	*/
 	public ArrayList<Client> returnEnabledClients(){
 		ArrayList<Client> list= new ArrayList<Client>();
 		for(int i=0;i<clients.size();i++) {
@@ -481,7 +505,7 @@ public class Angelaccesorios implements Serializable{
 	* <b>pre</b>: The variable id, typeId, name, lastName, address, phone, are already initialized. <br>
 	*<b>post:</b> the client has been created. <br>
 	* @param id Is a String variable that contains the id number of the client. id!="" and id!=null.<br>
-	 @param typeId Is a String variable that contains the id type of the client. typeId=="TI", typeId=="CC",typeId=="PP", or typeId=="CE"<br>
+	* @param typeId Is a String variable that contains the id type of the client. typeId=="TI", typeId=="CC",typeId=="PP", or typeId=="CE"<br>
 	* @param name Is a String variable that contains the name of the client. name!="" and name!=null.<br>
 	* @param lastName Is a String variable that contains the lastName of the client. lastName!="" and lastName!=null.<br>
 	* @param address Is a String variable that contains the address of the client. address!="" and address!=null.<br>
@@ -752,6 +776,12 @@ public class Angelaccesorios implements Serializable{
 		this.receipts = receipts;
 	}
 
+	/**
+	* This method returns a list of the cash receipts.<br>
+	* <b>name</b>: returnCashReceipts <br>
+	*<b>post:</b> the list of cash receipts has been gotten. <br>
+	*@return an <code>ArrayList</code> of Receipt specifying list, that contains cash receipts.
+	*/
 	public ArrayList<Receipt> returnCashReceipts(){
 		ArrayList<Receipt> list=new ArrayList<Receipt>();
 		for(int i=0;i<receipts.size();i++) {
@@ -762,6 +792,12 @@ public class Angelaccesorios implements Serializable{
 		return list;
 	}
 
+	/**
+	* This method returns a list of the separate receipts.<br>
+	* <b>name</b>: returnSeparateReceipts <br>
+	*<b>post:</b> the list of separate receipts has been gotten. <br>
+	*@return an <code>ArrayList</code> of SeparateReceipt specifying list, that contains separate receipts.
+	*/
 	public ArrayList<SeparateReceipt> returnSeparateReceipts(){
 		ArrayList<SeparateReceipt> list=new ArrayList<SeparateReceipt>();
 		for(int i=0;i<receipts.size();i++) {
@@ -772,6 +808,28 @@ public class Angelaccesorios implements Serializable{
 		return list;
 	}
 
+	/**
+	* This method creates a cash receipt.<br>
+	* <b>name</b>: createCashReceipt <br>
+	* <b>pre</b>: The variable listProd, listQ, buyer, observations, paymentMethod, are already initialized. <br>
+	*<b>post:</b> the cash receipt has been created. <br>
+	*@param buyer Is a Client object that references the client that wants to be added to the receipt. client!=null<br>
+	* @param listProd Is an ArrayList of Product that contains the list of products for the receipt. listProd!=null.<br>
+	* @param listQ Is an ArrayList of Integer that contains the list of quantities of products for the receipt. listQ!=null.<br>
+	* @param observations Is a String variable that contains the observations of the receipt. observations!="", observations !=null<br>
+	* @param paymentMethod Is a String variable that contains the name of the client.  observations equals "Efectivo", observations equals "Tarjeta de debito", observations equals "Tarjeta de credito", or observations equals "Transferencia bancaria"<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws NoProductsAddedException <br>
+	* 		thrown if...
+	* 		1. The list of products is empty.<br>
+	* @throws UnderAgeException <br>
+	* 		thrown if...
+	* 		1. The buyer is under age and wants to buy an electronic equipment.<br>
+	*/
 	public void createCashReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String observations, String paymentMethod) throws NoProductsAddedException, UnderAgeException, IOException {
 		if(listProd.isEmpty()) {
 			throw new NoProductsAddedException();
@@ -795,7 +853,15 @@ public class Angelaccesorios implements Serializable{
 		resetReceiptProductsAndQuantities();
 		saveDataAngelaccesorios();
 	}
-
+	
+	/**
+	* This method indicates if the list of products has a electronic equipment.<br>
+	* <b>name</b>: findElectronicEquipmentProductOnReceiptToBeCreated <br>
+	* <b>pre</b>: The variable listProd is already initialized. <br>
+	*<b>post:</b> An electronic equipment has been found in the products list or not.<br>
+	* @param listProd Is an ArrayList of Product that contains the list of products for the receipt. listProd!=null.<br>
+	*@return a <code>boolean</code> specifying found, a variable that indicates if an electronic equipment has been found in the products list or not.
+	*/
 	private boolean findElectronicEquipmentProductOnReceiptToBeCreated(ArrayList<Product> listProd) {
 		boolean found=false;
 		for(int i=0; i<listProd.size() && !found;i++) {
@@ -807,7 +873,37 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-
+	/**
+	* This method creates a separate receipt.<br>
+	* <b>name</b>: createSeparateReceipt <br>
+	* <b>pre</b>: The variable listProd, listQ, buyer, paymentMethod, valuePayment, are already initialized. <br>
+	*<b>post:</b> the separate receipt has been created. <br>
+	*@param buyer Is a Client object that references the client that wants to be added to the receipt. client!=null<br>
+	* @param listProd Is an ArrayList of Product that contains the list of products for the receipt. listProd!=null.<br>
+	* @param listQ Is an ArrayList of Integer that contains the list of quantities of products for the receipt. listQ!=null.<br>
+	* @param paymentMethod Is a String variable that contains the payment method of the receipt.  paymentMethod equals "Efectivo", paymentMethod equals "Tarjeta de debito", paymentMethod equals "Tarjeta de credito", or paymentMethod equals "Transferencia bancaria"<br>
+	* @param valuePayment Is a double variable that contains the value of the first payment.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws NoProductsAddedException <br>
+	* 		thrown if...
+	* 		1. The list of products is empty.<br>
+	* @throws UnderAgeException <br>
+	* 		thrown if...
+	* 		1. The buyer is under age and wants to buy an electronic equipment.<br>
+	* @throws NoPriceException <br>
+	* 		thrown if...
+	* 		1. The value of the payment is zero.<br>
+	* @throws NegativePriceException <br>
+	* 		thrown if...
+	* 		1. The value of the payment is negative.<br>
+	* @throws ExcessValueException <br>
+	* 		thrown if...
+	* 		1. The value of the payment is greater than the total value of the products.<br>
+	*/
 	public void createSeparateReceipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client buyer, String paymentMethod, double valuePayment) throws NoProductsAddedException, UnderAgeException, NoPriceException, NegativePriceException, IOException, ExcessValueException {
 		if(valuePayment==0) {
 			throw new NoPriceException(valuePayment); 
@@ -842,6 +938,34 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
+	/**
+	* This method adds a product to a receipt to be created.<br>
+	* <b>name</b>: addProductToAReceipt <br>
+	* <b>pre</b>: The variable listProd, listQ, prod, quantity, are already initialized. <br>
+	*<b>post:</b> the product has been added to the receipt or not. <br>
+	* @param listProd Is an ArrayList of Product that contains the list of products for the receipt. listProd!=null.<br>
+	* @param listQ Is an ArrayList of Integer that contains the list of quantities of products for the receipt. listQ!=null.<br>
+	*@param prod Is a Product object that references the product that wants to be added to the receipt. product!=null<br>
+	* @param quantity Is an integer variable that contains the quantity of the product.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws SameProductException <br>
+	* 		thrown if...
+	* 		1. The product is already inn the list of products of the receipt.<br>
+	* @throws NoQuantityException <br>
+	* 		thrown if...
+	* 		1. The quantity of the product is zero.<br>
+	* @throws NegativeQuantityException <br>
+	* 		thrown if...
+	* 		1. The quantity of the product is negative.<br>
+	* @throws ExcessQuantityException <br>
+	* 		thrown if...
+	* 		1. The quantity of the product exceeds the quantity available.<br>
+	
+	*/
 	public void addProductToAReceipt(Product prod, int quantity,ArrayList<Product> listProd,ArrayList<Integer> listQ) throws SameProductException, NoQuantityException, NegativeQuantityException, ExcessQuantityException {
 		if(quantity==0) {
 			throw new NoQuantityException(quantity); 
@@ -867,13 +991,46 @@ public class Angelaccesorios implements Serializable{
 		listProd.add(prod);
 		listQ.add(quantity);
 	}
-
+	
+	
+	/**
+	* This method deletes a product from a receipt to be created.<br>
+	* <b>name</b>: deleteProductFromAReceipt <br>
+	* <b>pre</b>: The variable listProd, listQ, prod, are already initialized. <br>
+	*<b>post:</b> the product has been deleted from the receipt or not. <br>
+	* @param listProd Is an ArrayList of Product that contains the list of products for the receipt. listProd!=null.<br>
+	* @param listQ Is an ArrayList of Integer that contains the list of quantities of products for the receipt. listQ!=null.<br>
+	*@param prod Is a Product object that references the product that wants to be deleted from the receipt. product!=null<br>
+	*/
 	public void deleteProductFromAReceipt(Product prod, ArrayList<Product> listProd,ArrayList<Integer> listQ) {
 		int i=listProd.indexOf(prod);
 		listProd.remove(i);
 		listQ.remove(i);
 	}
 
+	/**
+	* This method updates a separate receipt.<br>
+	* <b>name</b>: updateSeparateReceipt <br>
+	* <b>pre</b>: The variable receipt, paymentMethod, valuePayment, are already initialized. <br>
+	*<b>post:</b> the separate receipt has been updated. <br>
+	* @param paymentMethod Is a String variable that contains the payment method of the receipt.  paymentMethod equals "Efectivo", paymentMethod equals "Tarjeta de debito", paymentMethod equals "Tarjeta de credito", or paymentMethod equals "Transferencia bancaria"<br>
+	* @param valuePayment Is a double variable that contains the value of the payment.<br>
+	*@param receipt Is a Receipt object that references the receipt that wants to be updated. receipt!=null<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws NoPriceException <br>
+	* 		thrown if...
+	* 		1. The value of the payment is zero.<br>
+	* @throws NegativePriceException <br>
+	* 		thrown if...
+	* 		1. The value of the payment is negative.<br>
+	* @throws ExcessValueException <br>
+	* 		thrown if...
+	* 		1. The value of the payment is greater than the unpaid price of the receipt of the products.<br>
+	*/
 	public void updateSeparateReceipt(Receipt receipt, String paymentMethod, double valuePayable) throws NoPriceException, NegativePriceException, IOException, ExcessValueException {
 		if(valuePayable==0) {
 			throw new NoPriceException(valuePayable); 
@@ -892,6 +1049,19 @@ public class Angelaccesorios implements Serializable{
 		saveDataAngelaccesorios();
 	}
 
+	/**
+	* This method deletes a receipt.<br>
+	* <b>name</b>: deleteReceipt <br>
+	* <b>pre</b>: The variable receipt is already initialized. <br>
+	*<b>post:</b> the  receipt has been deleted. <br>
+	*@param receipt Is a Receipt object that references the receipt that wants to be deleted. receipt!=null<br>
+	*@return a <code>boolean</code> specifying deleted, a variable that indicates if the receipt has been deleted or not.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public boolean deleteReceipt(Receipt receipt) throws IOException {
 		boolean deleted=false;
 		if(receipt.findElectronicEquipmentProduct()) {
@@ -910,6 +1080,14 @@ public class Angelaccesorios implements Serializable{
 		return deleted;
 	}
 
+	/**
+	* This method search a receipt by its code.<br>
+	* <b>name</b>: searchReceipt <br>
+	* <b>pre</b>: The variable code is already initialized. <br>
+	*<b>post:</b> the searched receipts could have been found. <br>
+	* @param code Is a String variable that contains the code of the receipt. code!="" and code!=null.<br>
+	*@return a <code>Receipt</code> specifying receipt, that might correspond to the searched receipt.
+	*/
 	public Receipt searchReceipt(String code) {
 		Receipt receipt=null;
 		for(int i=0;i<receipts.size() && receipt==null;i++) {

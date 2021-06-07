@@ -18,6 +18,18 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 	private Client buyer;
 	private PaymentMethod paymentMethod;
 
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> Receipt. <br>
+	*<b>pre</b>: the variables listProd, listQ, b, c, obs, pm, are already initialized. <br>
+	*<b>post:</b> the attributes and relationships of the class have been initialized.<br>
+	*@param b Is a Client object that references the client buyer of the receipt. b!=null<br>
+	*@param c Is a User object that references the user creator of the receipt. c!=null<br>
+	* @param listProd Is an ArrayList of Product that contains the list of products for the receipt. listProd!=null.<br>
+	* @param listQ Is an ArrayList of Integer that contains the list of quantities of products for the receipt. listQ!=null.<br>
+	* @param pm Is a String variable that contains the payment method of the receipt.  pm equals "Efectivo", pm equals "Tarjeta de debito", pm equals "Tarjeta de credito", or pm equals "Transferencia bancaria"<br>
+	* @param obs Is a String variable that contains the observations of the receipt. obs!=null<br>
+		*/
 	public Receipt(ArrayList<Product> listProd,ArrayList<Integer> listQ,Client b, User c, String obs, String pm) {
 		dateAndTime=new Date();
 		listOfProducts = listProd;
@@ -28,6 +40,12 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		paymentMethod=stringToPaymentMethod(pm);
 	}
 	
+
+	/**
+	* This method rests units available to the added products.<br>
+	* <b>name</b>: restUnitsToAddedProducts <br>
+	* <b>post</b>: the units have been rested. <br>
+	*/
 	public void restUnitsToAddedProducts() {
 		for(int i=0;i<listOfProducts.size();i++) {
 			listOfProducts.get(i).setUnits(listOfProducts.get(i).getUnits()-listOfQuantity.get(i));
@@ -94,6 +112,12 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		return dateAndHour;
 	}
 	
+	/**
+	* This method returns a string with all products of the receipt.<br>
+	* <b>name</b>: getAllProducts <br>
+	* <b>post</b>: all products have been gotten. <br>
+	* @return a <code> String </code> specifying allProducts, that contains all products of the receipt.
+	*/
 	public String getAllProducts() {
 		String allProducts = "";
 		for(int k=0; k<listOfProducts.size();k++) {
@@ -135,6 +159,13 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		return paymentMethod;
 	}
 
+	/**
+	* This method indicates if the receipt contains a product with the given code.<br>
+	* <b>name</b>: findProduct <br>
+	* <b>post</b>: the receipt has a product with the given code or not. <br>
+	*@param code Is a String variable that contains the code of the product. code!=null and code!="".<br>
+	* @return an <code> boolean </code> specifying found, a variable that indicates if the receipt contains the product or not.<br>
+	*/
 	public boolean findProduct(String code) {
 		boolean found=false;
 		for(int i=0; i<listOfProducts.size() && !found;i++ ) {
@@ -145,6 +176,12 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		return found;
 	}
 
+	/**
+	* This method indicates if the receipt contains an electronic equipment.<br>
+	* <b>name</b>: findElectronicEquipmentProduct <br>
+	* <b>post</b>: the receipt has an electronic equipment or not. <br>
+	* @return an <code> boolean </code> specifying found, a variable that indicates if the receipt contains an electronic equipment or not.<br>
+	*/
 	public boolean findElectronicEquipmentProduct() {
 		boolean found=false;
 		for(int i=0; i<listOfProducts.size() && !found;i++) {
@@ -154,7 +191,13 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		}
 		return found;
 	}
-
+	
+	/**
+	* This method indicates if the receipt is in force.<br>
+	* <b>name</b>: isInForce <br>
+	* <b>post</b>: the receipt is in force or not. <br>
+	* @return an <code> boolean </code> specifying inForce, a variable that indicates if the receipt is in force or not.<br>
+	*/
 	public boolean isInForce() {
 		boolean inForce=false;
 		Date date= new Date();
@@ -169,21 +212,39 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		return inForce;
 	}
 
-
+	/**
+	* This method compares the dates of two receipts.<br>
+	* <b>name</b>: compareTo <br>
+	* <b>post</b>: the receipts have been compared. <br>
+	*@param r Is a Receipt object that references the receipt that wants to be compared. r!=null<br>
+	* @return an <code> integer </code> a variable that indicates if the date of the receipt is greater than the other, equal, or less.
+	*/
 	@Override
 	public int compareTo(Receipt r) {
 		return dateAndTime.compareTo(r.getDateAndTime());
 	}
-
+	
+	/**
+	* This method returns the subtotal price of the receipt.<br>
+	* <b>name</b>: calculateSubtotalPrice <br>
+	* <b>post</b>: the subtotal price has been gotten. <br>
+	* @return an <code> double </code> specifying subtotalPrice, the subtotal price of the receipt.
+	*/
 	@Override
 	public double calculateSubtotalPrice() {
-		double totalPrice=0;
+		double subtotalPrice=0;
 		for(int i=0; i<listOfProducts.size();i++) {
-			totalPrice+=listOfProducts.get(i).getPrice() *listOfQuantity.get(i);
+			subtotalPrice+=listOfProducts.get(i).getPrice() *listOfQuantity.get(i);
 		}
-		return totalPrice;
+		return subtotalPrice;
 	}
 	
+	/**
+	* This method returns the IVA tax sum value of all products in the receipt.<br>
+	* <b>name</b>: calculateIVA <br>
+	* <b>post</b>: the IVA tax sum value has been gotten. <br>
+	* @return an <code> double </code> specifying iva, the IVA tax sum value of all products.
+	*/
 	@Override
 	public double calculateIVA() {
 		double iva=0;
@@ -201,6 +262,12 @@ public class Receipt implements SubtotalPrice,Serializable,taxIVA, Comparable<Re
 		return calculateIVA();
 	}
 	
+	/**
+	* This method returns the total price of the receipt.<br>
+	* <b>name</b>: getTotal <br>
+	* <b>post</b>: the total price has been gotten. <br>
+	* @return an <code> double </code> the total price of the receipt.
+	*/
 	public double getTotal() {
 		return calculateSubtotalPrice()+calculateIVA();
 	}
