@@ -15,7 +15,17 @@ public class Payment implements Serializable{
 	
 	private Payment next;
 	private Payment prev;
-	
+
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> Payment. <br>
+	*<b>pre</b>: the variables  c, d, pm, a, are already initialized. <br>
+	*<b>post:</b> the attributes and relationships of the class have been initialized.<br>
+	*@param c Is a User object that references the user creator of the payment. c!=null<br>
+	* @param pm Is a PaymentMethod variable that contains the payment method of the payment.  pm== EFECTIVO, pm==TARJETA_DE_DEBITO,	pm==TARJETA_DE_CREDITO,	or pm==TRANSFERENCIA_BANCARIA<br>
+	* @param d Is a Date variable that contains the date of the creation of the payment. d!=null<br>
+	* @param a Is a double variable that contains the value of the payment.<br>
+		*/
 	public Payment(double a, PaymentMethod pm, Date d, User c) {
 		amount = a;
 		paymentMethod = pm;

@@ -11,6 +11,17 @@ public class User extends Person{
 	private User next;
 	private User prev;
 	
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> User. <br>
+	* <b>pre</b>: The variable id, name, lastName, userName, password, are already initialized. <br>
+	*<b>post:</b> the attributes and relationships of the class have been initialized.<br>
+	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
+	* @param name Is a String variable that contains the name of the user. name!="" and name!=null.<br>
+	* @param lastName Is a String variable that contains the lastName of the user. lastName!="" and lastName!=null.<br>
+	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
+	* @param password Is a String variable that contains the password of the user. password!="" and password!=null.<br>
+	*/
 	public User(String name, String lastName, String id, String userName, String password) {
 		super(name, lastName, id);
 		this.userName=userName;

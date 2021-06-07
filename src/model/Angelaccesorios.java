@@ -51,6 +51,12 @@ import exceptions.SameUserNameException;
 import exceptions.SpaceException;
 import exceptions.UnderAgeException;
 
+/**
+ * This class contains attributes, relationships, and methods of a Angelaccesorios.
+ * @version 1
+ * @author Angelica Corrales Quevedo, https://github.com/AngelicaCorrales
+ * @author Keren Lopez Cordoba, https://github.com/KerenLopez
+ */
 public class Angelaccesorios implements Serializable{
 	private static final long serialVersionUID = 1;
 	private User firstUser;
@@ -74,7 +80,13 @@ public class Angelaccesorios implements Serializable{
 
 	private double numProgress;
 
-	
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> Angelaccesorios. <br>
+	*<b>pre</b>: the variable num is already initialized. <br>
+	*<b>post:</b> the attributes and relationships of the class have been initialized.<br>
+	*@param num Is an integer variable that indicates if the program execution is a test or not. num==0 or num==1<br>
+	*/
 	public Angelaccesorios(int num) {
 		if(num==PROGRAM) {
 			ANGELACCESORIOS_SAVE_PATH_FILE = "data/angelaccesorios.ackl";
@@ -116,6 +128,12 @@ public class Angelaccesorios implements Serializable{
 		this.receiptQuantitiesProducts = receiptQuantitiesProducts;
 	}
 
+	/**
+	* This method returns a list of products that have their state as "enabled". <br>
+	* <b>name</b>: returnEnabledProducts <br>
+	* <b>post</b>: A list with the enabled products of the system was returned. <br>
+	* @return an ArrayList of products <code> list </code> that contains all the products that are enabled in the system. 
+	*/
 	public ArrayList<Product> returnEnabledProducts(){
 		ArrayList<Product> list= new ArrayList<Product>();
 		for(int i=0;i<products.size();i++) {
@@ -126,6 +144,12 @@ public class Angelaccesorios implements Serializable{
 		return list;
 	}
 
+	/**
+	* This method returns a list of clients that have their state as "enabled". <br>
+	* <b>name</b>: returnEnabledClients <br>
+	* <b>post</b>: A list with the enabled clients of the system was returned. <br>
+	* @return an ArrayList of clients <code> list </code> that contains all the clients that are enabled in the system. 
+	*/
 	public ArrayList<Client> returnEnabledClients(){
 		ArrayList<Client> list= new ArrayList<Client>();
 		for(int i=0;i<clients.size();i++) {
@@ -857,7 +881,7 @@ public class Angelaccesorios implements Serializable{
 	*@param buyer Is a Client object that references the client that wants to be added to the receipt. client!=null<br>
 	* @param listProd Is an ArrayList of Product that contains the list of products for the receipt. listProd!=null.<br>
 	* @param listQ Is an ArrayList of Integer that contains the list of quantities of products for the receipt. listQ!=null.<br>
-	* @param paymentMethod Is a String variable that contains the name of the client.  observations equals "Efectivo", observations equals "Tarjeta de debito", observations equals "Tarjeta de credito", or observations equals "Transferencia bancaria"<br>
+	* @param paymentMethod Is a String variable that contains the payment method of the receipt.  paymentMethod equals "Efectivo", paymentMethod equals "Tarjeta de debito", paymentMethod equals "Tarjeta de credito", or paymentMethod equals "Transferencia bancaria"<br>
 	* @param valuePayment Is a double variable that contains the value of the first payment.<br>
 	* @throws IOException <br>
 	* 		thrown if...
@@ -989,7 +1013,7 @@ public class Angelaccesorios implements Serializable{
 	* <b>name</b>: updateSeparateReceipt <br>
 	* <b>pre</b>: The variable receipt, paymentMethod, valuePayment, are already initialized. <br>
 	*<b>post:</b> the separate receipt has been updated. <br>
-	* @param paymentMethod Is a String variable that contains the name of the client.  observations equals "Efectivo", observations equals "Tarjeta de debito", observations equals "Tarjeta de credito", or observations equals "Transferencia bancaria"<br>
+	* @param paymentMethod Is a String variable that contains the payment method of the receipt.  paymentMethod equals "Efectivo", paymentMethod equals "Tarjeta de debito", paymentMethod equals "Tarjeta de credito", or paymentMethod equals "Transferencia bancaria"<br>
 	* @param valuePayment Is a double variable that contains the value of the payment.<br>
 	*@param receipt Is a Receipt object that references the receipt that wants to be updated. receipt!=null<br>
 	* @throws IOException <br>

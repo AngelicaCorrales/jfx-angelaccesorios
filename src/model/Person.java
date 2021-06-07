@@ -10,6 +10,15 @@ public abstract class Person implements Serializable {
 	private String id;
 	private boolean enabled;
 	
+	/**
+	*This is the constructor of the class. <br>
+	*<b>name:</b> Person. <br>
+	* <b>pre</b>: The variable id, name, lastName, are already initialized. <br>
+	*<b>post:</b> the attributes and relationships of the class have been initialized.<br>
+	* @param id Is a String variable that contains the id number of the person. id!="" and id!=null.<br>
+	* @param name Is a String variable that contains the name of the person. name!="" and name!=null.<br>
+	* @param lastName Is a String variable that contains the lastName of the person. lastName!="" and lastName!=null.<br>
+	*/
 	public Person(String name, String lastName, String id) {
 		this.name = name;
 		this.lastName = lastName;
