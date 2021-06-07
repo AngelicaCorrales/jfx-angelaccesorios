@@ -160,7 +160,8 @@ public class Angelaccesorios implements Serializable{
 	/**
 	* This method creates a user.<br>
 	* <b>name</b>: createUser <br>
-	* <b>pre</b>: The variable id, name, lastName, userName, are already initialized. <br>
+	* <b>pre</b>: The variable id, name, lastName, userName, password, are already initialized. <br>
+	*<b>post:</b> the user has been created. <br>
 	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
 	* @param name Is a String variable that contains the name of the user. name!="" and name!=null.<br>
 	* @param lastName Is a String variable that contains the lastName of the user. lastName!="" and lastName!=null.<br>
@@ -215,7 +216,8 @@ public class Angelaccesorios implements Serializable{
 	/**
 	* This method creates the user administrator.<br>
 	* <b>name</b>: createUserAdmin <br>
-	* <b>pre</b>: The variable id, name, lastName, userName, are already initialized. <br>
+	* <b>pre</b>: The variable id, name, lastName, userName, password, email are already initialized. <br>
+	*<b>post:</b> the user administrator has been created. <br>
 	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
 	* @param name Is a String variable that contains the name of the user. name!="" and name!=null.<br>
 	* @param lastName Is a String variable that contains the lastName of the user. lastName!="" and lastName!=null.<br>
@@ -263,12 +265,29 @@ public class Angelaccesorios implements Serializable{
 		saveDataAngelaccesorios();
 
 	}
-
+	
+	/**
+	* This method search a user by its id number.<br>
+	* <b>name</b>: searchUser <br>
+	* <b>pre</b>: The variable id is already initialized. <br>
+	*<b>post:</b> the searched user could have been found. <br>
+	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
+	*@return a <code>User</code> that might correspond to the searched user.
+	*/
 	public User searchUser(String id) {
 
 		return searchUser( firstUser, id);
 	}
 
+	/**
+	*This method searches the user by its id number in the linked list of users.<br>
+	*<b>name:</b> searchUser.<br>
+	*<b>pre</b>: id is already initialized.   <br>
+	*<b>post:</b> the searched user could have been found. <br>
+	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
+	*@param current Is a User object that references a user in the linked list of users.<br>
+	*@return a <code>User</code> specifying u, that might correspond to the searched user.
+	*/
 	private User searchUser(User current, String id) {
 		User u=null;
 		if(current!=null && u==null) {
@@ -282,11 +301,28 @@ public class Angelaccesorios implements Serializable{
 		return u;
 	}
 
+	/**
+	* This method search a user by its username.<br>
+	* <b>name</b>: searchUserName <br>
+	* <b>pre</b>: The variable userName is already initialized. <br>
+	*<b>post:</b> the searched user could have been found. <br>
+	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
+	*@return a <code>User</code> that might correspond to the searched user.
+	*/
 	public User searchUserName(String userName) {
 
 		return searchUserName( firstUser, userName);
 	}
 
+	/**
+	*This method searches the user by its username in the linked list of users.<br>
+	*<b>name:</b> searchUserName.<br>
+	*<b>pre</b>: userName is already initialized.   <br>
+	*<b>post:</b> the searched user could have been found. <br>
+	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
+	*@param current Is a User object that references a user in the linked list of users.<br>
+	*@return a <code>User</code> specifying u, that might correspond to the searched user.
+	*/
 	private User searchUserName(User current, String userName) {
 		User u=null;
 		if(current!=null && u==null) {
@@ -299,7 +335,19 @@ public class Angelaccesorios implements Serializable{
 		}
 		return u;
 	}
-
+	/**
+	*This method deletes a user from the linked list of users. <br>
+	*<b>name:</b> deleteUser.<br>
+	*<b>pre</b>: user is already initialized.   <br>
+	*<b>post:</b> the user has been deleted. <br>
+	*@param user Is a User object that references the user that wants to be deleted. user!=null<br>
+	*@return a <code>boolean</code> specifying deleted, a variable that indicates if the user has been deleted.
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public boolean deleteUser(User user) throws IOException {
 		boolean deleted=false;
 
@@ -320,7 +368,37 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-
+	/**
+	* This method updates a user.<br>
+	* <b>name</b>: updateUser <br>
+	* <b>pre</b>: The variable user, id, name, lastName, userName, password, enabled, email, are already initialized. <br>
+	*<b>post:</b> the user has been created. <br>
+	*@param user Is a User object that references the user that wants to be updated. user!=null<br>
+	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
+	* @param name Is a String variable that contains the name of the user. name!="" and name!=null.<br>
+	* @param lastName Is a String variable that contains the lastName of the user. lastName!="" and lastName!=null.<br>
+	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
+	* @param password Is a String variable that contains the password of the user. password!="" and password!=null.<br>
+	* @param email Is a String variable that contains the email of the user. email!=null.<br>
+	* @param enabled Is a boolean variable that indicates if the user is enabled or not. enabled==true or enabled==false<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws SpaceException <br>
+	* 		thrown if...
+	* 		1. The userName has a space in between.<br>
+	* @throws SameIDException <br>
+	* 		thrown if...
+	* 		1. The id is the same as another user's.<br>
+	* @throws SameUserNameException <br>
+	* 		thrown if...
+	* 		1. The userName is the same as another user's.<br>
+	* @throws EmailException <br>
+	* 		thrown if...
+	* 		1. The user is the user administrator and the email does not have an at sign.<br>
+	*/
 	public void updateUser(User user,String id, String name, String lastName, String userName, String password, boolean enabled, String email) throws SameIDException, SameUserNameException, SpaceException, EmailException, IOException {
 		userName=userName.trim();
 		String[] parts=userName.split(" ");
@@ -362,7 +440,17 @@ public class Angelaccesorios implements Serializable{
 		saveDataAngelaccesorios();
 
 	}
-
+	
+	/**
+	* This method indicates if the user is logged in.<br>
+	* <b>name</b>: logInUser <br>
+	* <b>pre</b>: The variable userName, password, are already initialized. <br>
+	*<b>post:</b>  the user has logged in or not . <br>
+	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
+	* @param password Is a String variable that contains the password of the user. password!="" and password!=null.<br>
+	* @param enabled Is a boolean variable that indicates if the user is enabled or not. enabled==true or enabled==false<br>
+	*@return a <code>boolean</code> specifying logIn, a variable that indicates if the user logged in or not.
+	*/
 	public boolean logInUser(String userName, String password) {
 		boolean logIn=false;
 		String parts[]=userName.split("@");
@@ -387,6 +475,26 @@ public class Angelaccesorios implements Serializable{
 		return logIn;
 	}
 
+	/**
+	* This method creates a client.<br>
+	* <b>name</b>: createClient <br>
+	* <b>pre</b>: The variable id, typeId, name, lastName, address, phone, are already initialized. <br>
+	*<b>post:</b> the client has been created. <br>
+	* @param id Is a String variable that contains the id number of the client. id!="" and id!=null.<br>
+	 @param typeId Is a String variable that contains the id type of the client. typeId=="TI", typeId=="CC",typeId=="PP", or typeId=="CE"<br>
+	* @param name Is a String variable that contains the name of the client. name!="" and name!=null.<br>
+	* @param lastName Is a String variable that contains the lastName of the client. lastName!="" and lastName!=null.<br>
+	* @param address Is a String variable that contains the address of the client. address!="" and address!=null.<br>
+	* @param phone Is a String variable that contains the phone of the client. phone!="" and phone!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws SameIDException <br>
+	* 		thrown if...
+	* 		1. The id is the same as another client's.<br>
+	*/
 	public void createClient(String name, String lastName, String id, String typeId, String address, String phone) throws SameIDException, IOException {
 
 		Client client= searchClient(id);
@@ -400,7 +508,14 @@ public class Angelaccesorios implements Serializable{
 		saveDataAngelaccesorios();
 
 	}
-
+	
+	/**
+	* This method adds a client to the list in sorted order by its last name and name.<br>
+	* <b>name</b>: addSortedClient <br>
+	* <b>pre</b>: The variable client is already initialized. <br>
+	*<b>post:</b> the client has been added to the list. <br>
+	*@param client Is a Client object that references the client that wants to be added. client!=null<br>
+	*/
 	public void addSortedClient(Client client) {
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
 
@@ -417,6 +532,14 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
+	/**
+	* This method search a client by its id number.<br>
+	* <b>name</b>: searchClient <br>
+	* <b>pre</b>: The variable clientId is already initialized. <br>
+	*<b>post:</b> the searched client could have been found. <br>
+	* @param id Is a String variable that contains the id number of the client. clientId!="" and clientId!=null.<br>
+	*@return a <code>Client</code> specifying client, that might correspond to the searched client.
+	*/
 	public Client searchClient(String clientId) {
 		boolean found=false;
 
@@ -430,7 +553,20 @@ public class Angelaccesorios implements Serializable{
 		return client;
 
 	}
-
+	
+	/**
+	*This method deletes a client from the list of clients. <br>
+	*<b>name:</b> deleteClient.<br>
+	*<b>pre</b>: client is already initialized.   <br>
+	*<b>post:</b> the client has been deleted. <br>
+	*@param client Is a Client object that references the client that wants to be deleted. client!=null<br>
+	*@return a <code>boolean</code> specifying deleted, a variable that indicates if the client has been deleted.
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	*/
 	public boolean deleteClient(Client client) throws IOException {
 		boolean deleted=false;
 		Receipt receipt=searchClientInReceipt(client);
@@ -448,6 +584,14 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
+	/**
+	* This method search a client in a receipt that is in force.<br>
+	* <b>name</b>: searchClientInReceipt <br>
+	* <b>pre</b>: The variable clientId is already initialized. <br>
+	*<b>post:</b> the searched client could have been found. <br>
+	*@param client Is a Client object that references the client that wants to be searched in the receipts. client!=null<br>
+	*@return a <code>Receipt</code> specifying receipt, that might correspond to the receipt that contains the client.
+	*/
 	public Receipt searchClientInReceipt(Client client) {
 		Receipt receipt=null;
 		boolean found=false;
@@ -462,6 +606,28 @@ public class Angelaccesorios implements Serializable{
 		return receipt;
 	}
 
+	/**
+	* This method updates a client.<br>
+	* <b>name</b>: updateClient <br>
+	* <b>pre</b>: The variable client, id, typeId, name, lastName, address, phone, enabled, are already initialized. <br>
+	*<b>post:</b> the client has been updated. <br>
+	* @param id Is a String variable that contains the id number of the client. id!="" and id!=null.<br>
+	* @param typeId Is a String variable that contains the id type of the client. typeId=="TI", typeId=="CC",typeId=="PP", or typeId=="CE"<br>
+	* @param name Is a String variable that contains the name of the client. name!="" and name!=null.<br>
+	* @param lastName Is a String variable that contains the lastName of the client. lastName!="" and lastName!=null.<br>
+	* @param address Is a String variable that contains the address of the client. address!="" and address!=null.<br>
+	* @param phone Is a String variable that contains the phone of the client. phone!="" and phone!=null.<br>
+	*@param client Is a Client object that references the client that wants to be update. client!=null<br>
+	* @param enabled Is a boolean variable that indicates if the client is enabled or not. enabled==true or enabled==false<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws SameIDException <br>
+	* 		thrown if...
+	* 		1. The id is the same as another client's.<br>
+	*/
 	public void updateClient(Client client,String name, String lastName, String id, String typeId, String address, String phone, boolean enabled) throws SameIDException, IOException {
 
 		Client client2= searchClient(id);
@@ -496,6 +662,15 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
+	/**
+	* This method binary searches a client.<br>
+	* <b>name</b>: binarySearchClient <br>
+	* <b>pre</b>: The variable clientNames, clientLastNames, are already initialized. <br>
+	*<b>post:</b> the client position in the list has been found o not. <br>
+	* @param clientNames Is a String variable that contains the name of the client. clientNames!="" and clientNames!=null.<br>
+	* @param clientLastNames Is a String variable that contains the lastName of the client. clientLastNames!="" and clientLastNames!=null.<br>
+	*@return an <code>integer</code> specifying pos, that correspond to the client's position in the list.
+	*/
 	public int binarySearchClient(String clientNames, String clientLastNames) {
 
 		Client client= new Client(clientNames,clientLastNames,null,null,null,null);
@@ -519,7 +694,16 @@ public class Angelaccesorios implements Serializable{
 
 		return pos;
 	}
-
+	
+	/**
+	* This method searches the client or clients with the same name and last name.<br>
+	* <b>name</b>: searchClientByName <br>
+	* <b>pre</b>: The variable clientNames, clientLastNames, are already initialized. <br>
+	*<b>post:</b> the list of clients with the same name has been gotten o not. <br>
+	* @param clientNames Is a String variable that contains the name of the client. clientNames!="" and clientNames!=null.<br>
+	* @param clientLastNames Is a String variable that contains the lastName of the client. clientLastNames!="" and clientLastNames!=null.<br>
+	*@return a <code>List</code> of Client specifying clientsByName, that contains the clients with the same given name and last name.
+	*/
 	public List<Client> searchClientByName(String clientNames, String clientLastNames){
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
 		List<Client> clientsByName=new ArrayList<Client>();
