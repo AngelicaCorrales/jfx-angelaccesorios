@@ -157,9 +157,32 @@ public class Angelaccesorios implements Serializable{
 	}
 
 
-
+	/**
+	* This method creates a user.<br>
+	* <b>name</b>: createUser <br>
+	* <b>pre</b>: The variable id, name, lastName, userName, are already initialized. <br>
+	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
+	* @param name Is a String variable that contains the name of the user. name!="" and name!=null.<br>
+	* @param lastName Is a String variable that contains the lastName of the user. lastName!="" and lastName!=null.<br>
+	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
+	* @param password Is a String variable that contains the password of the user. password!="" and password!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws SpaceException <br>
+	* 		thrown if...
+	* 		1. The userName has a space in between.<br>
+	* @throws SameIDException <br>
+	* 		thrown if...
+	* 		1. The id is the same as another user's.<br>
+	* @throws SameUserNameException <br>
+	* 		thrown if...
+	* 		1. The userName is the same as another user's.<br>
+	*/
 	public void createUser(String id, String name, String lastName,String userName, String password) throws SpaceException, SameIDException, SameUserNameException, IOException {
-
+		
 		userName=userName.trim();
 		String parts[]=userName.split(" ");
 		if(parts.length>1) {
@@ -189,7 +212,28 @@ public class Angelaccesorios implements Serializable{
 
 	}
 
-
+	/**
+	* This method creates the user administrator.<br>
+	* <b>name</b>: createUserAdmin <br>
+	* <b>pre</b>: The variable id, name, lastName, userName, are already initialized. <br>
+	* @param id Is a String variable that contains the id number of the user. id!="" and id!=null.<br>
+	* @param name Is a String variable that contains the name of the user. name!="" and name!=null.<br>
+	* @param lastName Is a String variable that contains the lastName of the user. lastName!="" and lastName!=null.<br>
+	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
+	* @param password Is a String variable that contains the password of the user. password!="" and password!=null.<br>
+	* @param email Is a String variable that contains the email of the user. email!="" and email!=null.<br>
+	* @throws IOException <br>
+	* 		thrown if...
+	* 		1. A local file that was no longer available is being read.<br>
+    *       2. Any process closed the stream while a stream is being used to read data.<br>
+    *       3. The disk space was no longer available while trying to write to a file.<br>
+	* @throws SpaceException <br>
+	* 		thrown if...
+	* 		1. The userName has a space in between.<br>
+	* @throws EmailException <br>
+	* 		thrown if...
+	* 		1. The email does not have an at sign.<br>
+	*/
 	public void createUserAdmin(String id, String name, String lastName,String userName, String password,String email) throws EmailException, SpaceException, IOException {
 
 		email=email.trim();
