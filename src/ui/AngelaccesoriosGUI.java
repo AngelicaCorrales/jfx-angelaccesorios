@@ -66,12 +66,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model.Admin;
 import model.Angelaccesorios;
 import model.Brand;
-import model.CircleFigure;
 import model.Client;
 import model.ElectronicEquipment;
 import model.Product;
@@ -83,7 +81,6 @@ import model.TypeOfProduct;
 import model.User;
 import thread.ClockThread;
 import thread.Graphic1Thread;
-import thread.PointerThread;
 import thread.ProgressThread;
 
 public class AngelaccesoriosGUI {
@@ -130,16 +127,10 @@ public class AngelaccesoriosGUI {
 	private Button btManageSupplier;
 
 	//1st animation
-
-	private CircleFigure pointer;
 	private RectangleFigure one;
 	private RectangleFigure two;
 	private RectangleFigure three;
 	private RectangleFigure four;
-	private RectangleFigure five;
-
-	@FXML
-	private Circle circle;
 
 	@FXML
 	private Rectangle firstRectangle;
@@ -155,9 +146,6 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private Rectangle thirdRectangle;
-
-	@FXML
-	private Rectangle fifthRectangle;
 
 	//Brand------------
 
@@ -1502,26 +1490,53 @@ public class AngelaccesoriosGUI {
 		angelaccesorios.resetReceiptProductsAndQuantities();
 		initializeComboBoxClients();
 		initializeComboBoxPaymentMethods();
-		pointer = new CircleFigure(circle.getLayoutX(), circle.getLayoutY(), circle.getRadius());
-		one = new RectangleFigure(firstRectangle.getLayoutX(), firstRectangle.getLayoutY());
-		two = new RectangleFigure(secondRectangle.getLayoutX(), secondRectangle.getLayoutY());
-		three = new RectangleFigure(fourthRectangle.getLayoutX(), fourthRectangle.getLayoutY());
-		four = new RectangleFigure(thirdRectangle.getLayoutX(), thirdRectangle.getLayoutY());
-		five = new RectangleFigure(fifthRectangle.getLayoutX(), fifthRectangle.getLayoutY());
-		Graphic1Thread thread1 = new Graphic1Thread(one, two, three, four, five, this);
-		PointerThread thread2 = new PointerThread(pointer, this);
+		double firstRectangleX = 409;
+		double firstRectangleY = 138;
+		double secondRectangleX = 412;
+		double secondRectangleY = 138;
+		double thirdRectangleX = 411;
+		double thirdRectangleY = 136;
+		double fourthRectangleX = 412;
+		double fourthRectangleY = 138;
+		one = new RectangleFigure(firstRectangleX, firstRectangleY);
+		two = new RectangleFigure(secondRectangleX, secondRectangleY);
+		four = new RectangleFigure(thirdRectangleX, thirdRectangleY);
+		three = new RectangleFigure( fourthRectangleX,  fourthRectangleY);
+		appsImageV.setLayoutX(277);
+		appsImageV.setLayoutY(124);
+		Graphic1Thread thread1 = new Graphic1Thread(one, two, three, four, this);
 		thread1.start();
-		thread2.start();
 	}
 //????
 	public ImageView getAppsImageV() {
 		return appsImageV;
 	}
+	
+	public Rectangle getFirstRectangle() {
+		return firstRectangle;
+	}
+	
+	public Rectangle getSecondRectangle() {
+		return secondRectangle;
+	}
 
-	public void updateGUI() {
-		circle.setLayoutX(pointer.getxCoordinate());
-		circle.setLayoutY(pointer.getyCoordinate());
-		circle.setRadius(pointer.getRadius());
+	public Rectangle getFourthRectangle() {
+		return fourthRectangle;
+	}
+
+	public Rectangle getThirdRectangle() {
+		return thirdRectangle;
+	}
+
+	
+	public void updateGUI1() {
+		firstRectangle.setLayoutX(one.getxCoordinate());
+		firstRectangle.setLayoutY(one.getyCoordinate());
+	}
+	
+	public void updateGUI4() {
+		fourthRectangle.setLayoutX(four.getxCoordinate());
+		fourthRectangle.setLayoutY(four.getyCoordinate());
 	}
 
 	@FXML

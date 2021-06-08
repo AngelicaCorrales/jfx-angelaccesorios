@@ -26,14 +26,18 @@ public class RectangleFigure {
 	}
 
 	public void goUp() {
-		yCoordinate+=5;
+		yCoordinate-=2;
+	}
+	
+	public void goDown() {
+		yCoordinate+=6;
 	}
 	
 	public void goRight() {
-		xCoordinate+=5;
+		xCoordinate+=4;
 	}
 	
 	public void goLeft() {
-		xCoordinate-=5;
+		xCoordinate-=4;
 	}
 }
