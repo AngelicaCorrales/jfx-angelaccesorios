@@ -759,6 +759,30 @@
                   </Button>
                </children>
             </VBox>
+            <Pane fx:id="animation2" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" visible="false" GridPane.columnIndex="1">
+               <children>
+                  <ImageView fitHeight="186.0" fitWidth="419.0" layoutX="134.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/agujero%20completo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="ivHeadphones" fitHeight="160.0" fitWidth="194.0" layoutX="263.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@images/audifonos.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="ivSpeaker" fitHeight="157.0" fitWidth="161.0" layoutX="287.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@images/bafle.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="400.0" layoutX="143.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/agujero%20mitad.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
          <BorderPane.margin>
             <Insets bottom="5.0" right="15.0" top="10.0" />
