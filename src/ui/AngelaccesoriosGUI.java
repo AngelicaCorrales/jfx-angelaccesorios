@@ -81,6 +81,7 @@ import model.TypeOfProduct;
 import model.User;
 import thread.ClockThread;
 import thread.Graphic1Thread;
+import thread.Graphic2Thread;
 import thread.ProgressThread;
 
 public class AngelaccesoriosGUI {
@@ -146,6 +147,19 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private Rectangle thirdRectangle;
+
+	@FXML
+	private Rectangle fifthRectangle;
+	
+	//2nd animation
+	@FXML
+	private Pane animation2;
+
+	@FXML
+	private ImageView ivHeadphones;
+
+	@FXML
+	private ImageView ivSpeaker;
 
 	//Brand------------
 
@@ -645,6 +659,7 @@ public class AngelaccesoriosGUI {
 			@Override
 			public void handle(WindowEvent event) {
 				runClock = false;
+				go=false;
 			}
 		});
 	}
@@ -1953,6 +1968,8 @@ public class AngelaccesoriosGUI {
 		btDelete.setDisable(true);
 		initializeTableViewOfCountedReceipts();
 		hBoxSearchReceipt.setVisible(true);
+		
+		animation1.setVisible(false);
 	}
 
 	private void initializeTableViewOfCountedReceipts() {
@@ -1990,6 +2007,8 @@ public class AngelaccesoriosGUI {
 		btDelete.setDisable(true);
 		initializeTableViewOfSeparateReceipts();
 		hBoxSearchReceipt.setVisible(true);
+		
+		animation1.setVisible(false);
 	}
 
 	private void initializeTableViewOfSeparateReceipts() {
@@ -2061,6 +2080,15 @@ public class AngelaccesoriosGUI {
 		gridPaneR.setDisable(false);
 		btAddSR.setDisable(false);
 		gridPaneSR.setDisable(false);
+		
+		animation1.setVisible(true);
+		
+		go=false;
+		animation2.setVisible(false);
+		ivHeadphones.setLayoutY(280);
+		ivSpeaker.setLayoutY(280);
+		ivSpeaker.setVisible(false);
+		ivHeadphones.setVisible(false);
 	}
 
 	@FXML
@@ -2176,8 +2204,29 @@ public class AngelaccesoriosGUI {
 		scrollPaneTableviews.setVisible(false);
 		addPaymentForm.setVisible(true);
 		initializeComboBoxPaymentMethods();
+		
+		animation2.setVisible(true);
+		ivHeadphones.setLayoutY(280);
+		ivSpeaker.setLayoutY(280);
+		ivSpeaker.setVisible(false);
+		ivHeadphones.setVisible(false);
+		go=true;
+		
+		Graphic2Thread g2=new Graphic2Thread(this);
+		g2.start();
 	}
-
+	
+	public ImageView getIvHeadphones() {
+		return ivHeadphones;
+	}
+	
+	public ImageView getIvSpeaker() {
+		return ivSpeaker;
+	}
+	private boolean go;
+	public boolean getGo() {
+		return go;
+	}
 	@FXML
 	public void showAboutCreators(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
