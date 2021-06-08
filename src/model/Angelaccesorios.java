@@ -2126,6 +2126,76 @@ public class Angelaccesorios implements Serializable{
 		}
 		return found;
 	}
+	
+	//EN DESARROLLO 
+	public int binarySearchProduct(Product p,List<Product> productsSorted) {
+		int pos = -1;
+		int i=0;
+		int j=productsSorted.size()-1;
+		
+		while(i<=j && pos<0){
+			int m= (i+j)/2;
+
+			if(productsSorted.get(m).compareTo(p)==0){
+				pos =m;
+			}else if(productsSorted.get(m).compareTo(p)>0){
+				j=m-1;
+			}else{
+				i=m+1;
+			}
+		}
+
+		return pos;
+				
+	}
+
+	public List<Product> searchProductByTypeAndBrand(String type, String brand){
+		List<Product> productsSorted=new ArrayList<Product>(products);
+		Collections.sort(productsSorted);
+		List<Product> productsByTypeAndBrand=new ArrayList<Product>();
+		int pos;
+		TypeOfProduct tp=searchTypeOfProduct(typePRoot,type);
+		if(tp!=null) {
+			Brand b=searchBrand(brand);
+			
+			if(b!=null) {
+				Product p= new Product(tp, b, 0, false, null, 0, null);
+				pos=binarySearchProduct(p,productsSorted);
+				
+				int sameUp=1;
+				int sameDown=1;
+				if(pos>=0) {
+					if(productsSorted.get(pos).isEnabled()) {
+						productsByTypeAndBrand.add(productsSorted.get(pos));
+					}
+
+					boolean same=false;
+					do {
+						same=false;
+						if((pos-sameDown)>=0 && productsSorted.get(pos).compareTo(productsSorted.get(pos-sameDown))==0) {
+							
+								productsByTypeAndBrand.add(productsSorted.get(pos-sameDown));
+								sameDown++;
+								same=true;
+							
+						}
+
+						if((pos+sameUp)<=productsSorted.size()-1 && productsSorted.get(pos).compareTo(productsSorted.get(pos+sameUp))==0) {
+							
+								productsByTypeAndBrand.add(productsSorted.get(pos+sameUp));
+								sameUp++;
+								same=true;
+							
+						}
+					}while(same);
+
+				}
+			}
+		}
+		
+		
+		return productsByTypeAndBrand;
+	}
 
 	//Serializable Methods
 

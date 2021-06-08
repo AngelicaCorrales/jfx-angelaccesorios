@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public abstract class TypeOfProduct implements Serializable{
+public abstract class TypeOfProduct implements Serializable, Comparable<TypeOfProduct>{
 
 	private static final long serialVersionUID = 1;
 	private String name;
@@ -88,5 +88,10 @@ public abstract class TypeOfProduct implements Serializable{
 
 	public void setParent(TypeOfProduct parent) {
 		this.parent = parent;
+	}
+	
+	@Override
+	public int compareTo(TypeOfProduct tp) {
+		return name.compareTo(tp.getName());
 	}
 }

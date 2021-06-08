@@ -17,32 +17,37 @@ public class ProgressThread extends Thread{
 		numLines=num;
 	}
 	
-	public synchronized void run() {
+	public  void run() {
 		
 		while(angelaccesorios.getNumProgress()<numLines-1) {
-			
+			double numPr=angelaccesorios.getNumProgress();
+			try {
+				sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			Platform.runLater(new Thread() {
-				
+
 				public  void run() {
-					double progress=angelaccesorios.getNumProgress()/numLines;
+					double progress=numPr/numLines;
 
 					angelaccesoriosgui.getProgressBar().setProgress(progress);
 				}
 			});
-			
+
 			try {
 				sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			}
-		
-		
-			try {
-				sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		}
+
+		angelaccesoriosgui.getProgressBar().setProgress(1);
+		try {
+			sleep(50);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		angelaccesorios.setNumProgress(0);
 

@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Product implements Serializable, taxIVA{
+public class Product implements Serializable, taxIVA, Comparable<Product>{
 	
 	private static final long serialVersionUID = 1;
 	private String code;
@@ -202,6 +202,15 @@ public class Product implements Serializable, taxIVA{
 			iva=price*0.19;
 		}
 		return iva;
+	}
+
+	@Override
+	public int compareTo(Product p) {
+		int comparing= type.compareTo(p.getType());
+		if(comparing==0) {
+			comparing=brand.compareTo(p.getBrand());
+		}
+		return 0;
 	}
 	
 }

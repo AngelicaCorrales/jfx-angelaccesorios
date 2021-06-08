@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Brand implements Serializable{
+public class Brand implements Serializable,  Comparable<Brand>{
 
 	private static final long serialVersionUID = 1;
 	private String name;
@@ -62,5 +62,11 @@ public class Brand implements Serializable{
 	
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public int compareTo(Brand b) {
+		
+		return name.compareTo(b.getName());
 	}
 }
