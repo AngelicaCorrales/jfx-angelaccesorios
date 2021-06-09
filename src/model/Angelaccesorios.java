@@ -728,7 +728,7 @@ public class Angelaccesorios implements Serializable{
 	* @param clientLastNames Is a String variable that contains the lastName of the client. clientLastNames!="" and clientLastNames!=null.<br>
 	*@return a <code>List</code> of Client specifying clientsByName, that contains the clients with the same given name and last name.
 	*/
-	public List<Client> searchClientByName(String clientNames, String clientLastNames){
+	public List<Client> searchClientByName(String clientNames, String clientLastNames, int pane){
 		Comparator<Client> clientLastNameAndNameComparator=new ClientLastNameAndNameComparator();
 		List<Client> clientsByName=new ArrayList<Client>();
 		int pos;
@@ -736,8 +736,12 @@ public class Angelaccesorios implements Serializable{
 		pos=binarySearchClient(clientNames,clientLastNames);
 		int sameUp=1;
 		int sameDown=1;
+		System.out.println(pos);
 		if(pos>=0) {
-			if(clients.get(pos).isEnabled()) {
+			if(pane==1 && clients.get(pos).isEnabled()) {
+				clientsByName.add(clients.get(pos));
+			}
+			if(pane==0) {
 				clientsByName.add(clients.get(pos));
 			}
 
@@ -745,7 +749,12 @@ public class Angelaccesorios implements Serializable{
 			do {
 				same=false;
 				if((pos-sameDown)>=0 && clientLastNameAndNameComparator.compare(clients.get(pos), clients.get(pos-sameDown))==0) {
-					if(clients.get(pos-sameDown).isEnabled()) {
+					if(pane==1 && clients.get(pos-sameDown).isEnabled()) {
+						clientsByName.add(clients.get(pos-sameDown));
+						sameDown++;
+						same=true;
+					}
+					if(pane==0) {
 						clientsByName.add(clients.get(pos-sameDown));
 						sameDown++;
 						same=true;
@@ -753,7 +762,12 @@ public class Angelaccesorios implements Serializable{
 				}
 
 				if((pos+sameUp)<=clients.size()-1 && clientLastNameAndNameComparator.compare(clients.get(pos), clients.get(pos+sameUp))==0) {
-					if(clients.get(pos+sameUp).isEnabled()) {
+					if(pane==1 && clients.get(pos+sameUp).isEnabled()) {
+						clientsByName.add(clients.get(pos+sameUp));
+						sameUp++;
+						same=true;
+					}
+					if(pane==0) {
 						clientsByName.add(clients.get(pos+sameUp));
 						sameUp++;
 						same=true;
@@ -2109,26 +2123,15 @@ public class Angelaccesorios implements Serializable{
 	}
 
 	/**
-	* This method searches products in the list of products of the system with the names of a type and brand. <br>
-	* <b>name</b>: returnFoundProducts <br>
-	* <b>pre</b>: the variables type and brand are already initialized. <br>
-	* <b>post</b>: A list of products with the same type and brand has been returned. <br>
-	* @param type Is a String variable that contains the name of a system's type of product. type!=null and type!="".<br>
-	* @param brand Is a String variable that contains the name of a system's brand. brand!=null and brand!="".<br>
-	* @return an ArrayList of Product <code> found </code> that contains all the products of the system that have the same type and brand. 
-	*/
-	public ArrayList<Product> returnFoundProducts(String type, String brand){
-		ArrayList<Product> found = new ArrayList<Product>();
-		for(int k = 0; k<products.size() ; k++) {
-			if(products.get(k).getType().getName().equalsIgnoreCase(type) && products.get(k).getBrand().getName().equalsIgnoreCase(brand)) {
-				found.add(products.get(k));
-			}
-		}
-		return found;
-	}
-	
-	//EN DESARROLLO 
-	public int binarySearchProduct(Product p,List<Product> productsSorted) {
+	* This method binary searches a product.<br>
+	* <b>name</b>: binarySearchProduct <br>
+	* <b>pre</b>: The variable p, productsSorted, are already initialized. <br>
+	*<b>post:</b> the product position in the list has been found o not. <br>
+	*@param p Is a Product object that references the product with the type and brand that wants to be found. p!=null<br>
+	* @param productsSorted Is an ArrayList of Product that contains the list of products sorted. productsSorted!=null.<br>
+	*@return an <code>integer</code> specifying pos, that correspond to the product's position in the sorted list.
+	*/	
+	private int binarySearchProduct(Product p,ArrayList<Product> productsSorted) {
 		int pos = -1;
 		int i=0;
 		int j=productsSorted.size()-1;
@@ -2149,10 +2152,20 @@ public class Angelaccesorios implements Serializable{
 				
 	}
 
-	public List<Product> searchProductByTypeAndBrand(String type, String brand){
-		List<Product> productsSorted=new ArrayList<Product>(products);
+	/**
+	* This method searches products in the list of products of the system with the names of a type and brand. <br>
+	* <b>name</b>: searchProductByTypeAndBrand <br>
+	* <b>pre</b>: the variables type and brand are already initialized. <br>
+	* <b>post</b>: A list of products with the same type and brand has been returned. <br>
+	* @param type Is a String variable that contains the name of a system's type of product. type!=null and type!="".<br>
+	* @param brand Is a String variable that contains the name of a system's brand. brand!=null and brand!="".<br>
+	* @return an ArrayList of Product <code> found </code> that contains all the products of the system that have the same type and brand. 
+	*/
+	
+	public ArrayList<Product> searchProductByTypeAndBrand(String type, String brand){
+		ArrayList<Product> productsSorted=new ArrayList<Product>(products);
 		Collections.sort(productsSorted);
-		List<Product> productsByTypeAndBrand=new ArrayList<Product>();
+		ArrayList<Product> productsByTypeAndBrand=new ArrayList<Product>();
 		int pos;
 		TypeOfProduct tp=searchTypeOfProduct(typePRoot,type);
 		if(tp!=null) {
@@ -2165,9 +2178,9 @@ public class Angelaccesorios implements Serializable{
 				int sameUp=1;
 				int sameDown=1;
 				if(pos>=0) {
-					if(productsSorted.get(pos).isEnabled()) {
+					
 						productsByTypeAndBrand.add(productsSorted.get(pos));
-					}
+					
 
 					boolean same=false;
 					do {

@@ -434,6 +434,12 @@ public class AngelaccesoriosGUI {
 
 	@FXML
 	private TextField txtClientSearchedLastName;
+	
+	@FXML
+	private TextField txtClientSearchedName1;
+
+	@FXML
+	private TextField txtClientSearchedLastName1;
 
 	@FXML
 	private TextField txtPaymentValue;
@@ -1464,7 +1470,7 @@ public class AngelaccesoriosGUI {
 		String type = txtTypeOfProduct.getText();
 		String brand = txtBrand.getText();
 		if(!type.equals("") && !brand.equals("")) {
-			ArrayList<Product> p = angelaccesorios.returnFoundProducts(type, brand);
+			ArrayList<Product> p = angelaccesorios.searchProductByTypeAndBrand(type, brand);
 			tvOfProducts.getItems().clear();
 
 			if(p.isEmpty()) {
@@ -2096,13 +2102,25 @@ public class AngelaccesoriosGUI {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
 		alert.setHeaderText(null);
-		if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
+		String sName="";
+		String sLastName="";
+		if(lbWindow.getText().equals("S")) {
+			sName=txtClientSearchedName1.getText();
+			sLastName=txtClientSearchedLastName1.getText();
+		}else {
+			sName=txtClientSearchedName.getText();
+			sLastName=txtClientSearchedLastName.getText();
+		}
+		if(!sName.isEmpty() && !sLastName.isEmpty()) {
 
-			ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+			ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(sName.toUpperCase(),sLastName.toUpperCase(),1));
 			cmbxClients.setItems(clientsList);
+			if(lbWindow.getText().equals("S")) {
+				cmbxClientsSR.setItems(clientsList);
+			}
 			if(clientsList.isEmpty()) {
 
-				alert.setContentText("No se encontró al cliente "+txtClientSearchedName.getText().toUpperCase()+" "+txtClientSearchedLastName.getText().toUpperCase());
+				alert.setContentText("No se encontró al cliente "+sName.toUpperCase()+" "+sLastName.toUpperCase());
 				alert.showAndWait();
 				initializeComboBoxClients();
 				txtClientSearchedName.clear();
@@ -2303,7 +2321,7 @@ public class AngelaccesoriosGUI {
 		alert.setHeaderText(null);
 		if(!txtClientSearchedName.getText().isEmpty() && !txtClientSearchedLastName.getText().isEmpty()) {
 
-			ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase()));
+			ObservableList<Client> clientsList = FXCollections.observableArrayList(angelaccesorios.searchClientByName(txtClientSearchedName.getText().toUpperCase(),txtClientSearchedLastName.getText().toUpperCase(),0));
 			tvListClients.setItems(clientsList);
 			if(clientsList.isEmpty()) {
 

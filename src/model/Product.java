@@ -210,7 +210,7 @@ public class Product implements Serializable, taxIVA, Comparable<Product>{
 		if(comparing==0) {
 			comparing=brand.compareTo(p.getBrand());
 		}
-		return 0;
+		return comparing;
 	}
 	
 }

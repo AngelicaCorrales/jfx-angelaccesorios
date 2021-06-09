@@ -802,7 +802,7 @@ public class AngelaccesoriosTest {
 	@Test
 	public void testSearchClientByName1() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
-		List<Client> list=angelaccesorios.searchClientByName("TOWA", "BIRD");
+		List<Client> list=angelaccesorios.searchClientByName("TOWA", "BIRD",0);
 
 		assertTrue(list.isEmpty());
 	}
@@ -810,7 +810,7 @@ public class AngelaccesoriosTest {
 	@Test
 	public void testSearchClientByName2() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
-		List<Client> list=angelaccesorios.searchClientByName("WILLOW", "SMITH");
+		List<Client> list=angelaccesorios.searchClientByName("WILLOW", "SMITH",0);
 
 		assertEquals(list.size(),1);
 		assertEquals(angelaccesorios.getClients().get(1),list.get(0));
@@ -819,7 +819,7 @@ public class AngelaccesoriosTest {
 	@Test
 	public void testSearchClientByName3() throws EmailException, SpaceException, SameIDException, SameUserNameException, IOException {
 		setupScenary6();
-		List<Client> list=angelaccesorios.searchClientByName("PAUL", "MCCARTNEY");
+		List<Client> list=angelaccesorios.searchClientByName("PAUL", "MCCARTNEY",0);
 
 		assertEquals(list.size(),3);
 
