@@ -22,12 +22,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
@@ -2268,7 +2270,19 @@ public class Angelaccesorios implements Serializable{
 		PdfPTable tbl_client = new PdfPTable(2);
 		Paragraph texto = null;
 		PdfPCell celda = null;
-
+		
+		try {
+			Image imagen = Image.getInstance("src/ui/images/logo.png");
+			 imagen.setAlignment(Element.ALIGN_CENTER);
+			 imagen.scalePercent(20f);
+			 doc.add(imagen);
+		} catch (BadElementException | IOException e) {
+			e.printStackTrace();
+		} 
+		
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
 		texto = new Paragraph(type, negrilla);
 		texto.setAlignment(Element.ALIGN_CENTER);
 		texto.add(new Phrase(Chunk.NEWLINE));
@@ -2417,7 +2431,19 @@ public class Angelaccesorios implements Serializable{
 		PdfPTable tbl_client = new PdfPTable(2);
 		Paragraph texto = null;
 		PdfPCell celda = null;
-
+		
+		try {
+			Image imagen = Image.getInstance("src/ui/images/logo.png");
+			 imagen.setAlignment(Element.ALIGN_CENTER);
+			 imagen.scalePercent(20f);
+			 doc.add(imagen);
+		} catch (BadElementException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		texto = new Paragraph();
+		texto.add(new Phrase(Chunk.NEWLINE));
+		doc.add(texto);
 		texto = new Paragraph(type, negrilla);
 		texto.setAlignment(Element.ALIGN_CENTER);
 		texto.add(new Phrase(Chunk.NEWLINE));

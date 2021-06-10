@@ -274,7 +274,7 @@
                   </GridPane>
                   <HBox prefHeight="25.0" prefWidth="200.0">
                      <children>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" textFill="WHITE">
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar">
                            <HBox.margin>
                               <Insets left="120.0" top="5.0" />
                            </HBox.margin>

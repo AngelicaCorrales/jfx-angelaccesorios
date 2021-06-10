@@ -128,7 +128,6 @@ public class AngelaccesoriosGUI {
 	private Button btManageSupplier;
 
 	//1st animation
-	private boolean stop;
 	private RectangleFigure one;
 	private RectangleFigure two;
 
@@ -651,14 +650,6 @@ public class AngelaccesoriosGUI {
 	public Rectangle getThirdRectangle() {
 		return thirdRectangle;
 	}
-	
-	public boolean getStop() {
-		return stop;
-	}
-
-	public void setStop(boolean stop) {
-		this.stop = stop;
-	}
 
 	public void initialize() {
 		ClockThread clock=new ClockThread(this);
@@ -669,7 +660,6 @@ public class AngelaccesoriosGUI {
 			public void handle(WindowEvent event) {
 				runClock = false;
 				go=false;
-				setStop(true);
 			}
 		});
 	}
@@ -711,7 +701,6 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfTypesOfProducts(); 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		typeOfProdForm.setVisible(true);
@@ -794,6 +783,7 @@ public class AngelaccesoriosGUI {
 			}else {
 				cmbxCategory.setValue("Accesorio");
 				cmbxCategory.setDisable(true);
+				btAddSupplierToTypeOfProduct.setDisable(true);
 			}
 			ckbxDisable.setSelected(!selectedType.isEnabled());
 		}
@@ -980,7 +970,6 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfSuppliers(); 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
@@ -1118,7 +1107,6 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPanel.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeTableViewOfBrands();
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 
@@ -1242,10 +1230,7 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
-		//createProductForm.setVisible(true);
 		initializeTableViewOfProducts(angelaccesorios.getProducts());
-		//showComboBoxOfTypesOfProducts();
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		initializeCmbxTypeOfProduct();
 		initializeCmbxBrand(); 
@@ -1492,7 +1477,6 @@ public class AngelaccesoriosGUI {
 
 		Parent clientPane = fxmlLoader.load();
 
-
 		mainPane.setCenter(clientPane);
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		initializeTableViewOfProducts(angelaccesorios.getProducts());
@@ -1537,14 +1521,11 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
-
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		receiptMenu.setVisible(true);
 		angelaccesorios.resetReceiptProductsAndQuantities();
 		initializeComboBoxClients();
 		initializeComboBoxPaymentMethods();
-		setStop(false);
 		one = new RectangleFigure(412, 138);
 		two = new RectangleFigure(412, 138);
 		Graphic1Thread thread1 = new Graphic1Thread(one, two, this);
@@ -1936,11 +1917,11 @@ public class AngelaccesoriosGUI {
 				alert.setTitle("Generar factura");
 				try {
 					if(r!=null) {
-						type = "FACTURA DEL SISTEMA DE CONTADO\nANGELACCESORIOS\n";
+						type = "FACTURA DEL SISTEMA DE CONTADO\n";
 						OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura#"+r.getCode()+".pdf");
 						angelaccesorios.generatePDFCountedReceipt(text_exit, r, type);
 					}else {
-						type = "FACTURA DEL SISTEMA DE SEPARADO\n\nANGELACCESORIOS";
+						type = "FACTURA DEL SISTEMA DE SEPARADO\n";
 						OutputStream text_exit = new FileOutputStream(fileChooser.getSelectedFile()+"\\factura #"+sr.getCode()+".pdf");
 						angelaccesorios.generatePDFSeparateReceipt(text_exit, sr, type);	
 					}
@@ -1977,7 +1958,6 @@ public class AngelaccesoriosGUI {
 		hBoxSearchReceipt.setVisible(true);
 		
 		animation1.setVisible(false);
-		setStop(true);
 	}
 
 	private void initializeTableViewOfCountedReceipts() {
@@ -2002,6 +1982,7 @@ public class AngelaccesoriosGUI {
 
 	}
 
+
 	@FXML
 	public void manageSeparateReceipt(ActionEvent event) {
 		createSeparateReceipt.setVisible(true);
@@ -2017,7 +1998,6 @@ public class AngelaccesoriosGUI {
 		hBoxSearchReceipt.setVisible(true);
 		
 		animation1.setVisible(false);
-		setStop(true);
 	}
 
 	private void initializeTableViewOfSeparateReceipts() {
@@ -2093,13 +2073,11 @@ public class AngelaccesoriosGUI {
 		animation1.setVisible(true);
 		
 		go=false;
-		setStop(true);
 		animation2.setVisible(false);
 		ivHeadphones.setLayoutY(280);
 		ivSpeaker.setLayoutY(280);
 		ivSpeaker.setVisible(false);
 		ivHeadphones.setVisible(false);
-		manageReceipt(null);
 	}
 
 	@FXML
@@ -2257,8 +2235,6 @@ public class AngelaccesoriosGUI {
 		Parent login= fxmlLoader.load();
 
 		mainPane.setCenter(login);
-		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
-
 	}
 
 	@FXML
@@ -2276,7 +2252,6 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		if(angelaccesorios.getLoggedUser() instanceof Admin) {
 
 			btManageBrand.setDisable(false);
@@ -2285,7 +2260,6 @@ public class AngelaccesoriosGUI {
 			btManageUser.setDisable(false);
 			btManageSupplier.setDisable(false);
 		}
-		setStop(true);
 	}
 
 	@FXML
@@ -2294,12 +2268,7 @@ public class AngelaccesoriosGUI {
 		fxmlLoader.setController(this);
 
 		Parent clientPane = fxmlLoader.load();
-
-
-
 		mainPane.setCenter(clientPane);
-
-		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		initializeTableViewClients();
 
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
@@ -2494,11 +2463,7 @@ public class AngelaccesoriosGUI {
 
 		Parent clientPane = fxmlLoader.load();
 
-
-
 		mainPane.setCenter(clientPane);
-
-		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 	}
 
 	@FXML
@@ -2542,12 +2507,8 @@ public class AngelaccesoriosGUI {
 		fxmlLoader.setController(this);
 
 		Parent clientPane = fxmlLoader.load();
-
-
-
 		mainPane.setCenter(clientPane);
 
-		//mainPane.setStyle("-fx-background-image: url(/ui/fondo2.jpg)");
 		lbUserName.setText(angelaccesorios.getLoggedUser().getUserName());
 		initializeTableViewUsers(); 
 	}
@@ -2805,7 +2766,6 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeComboBoxOfHours();
 		initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());
@@ -2860,7 +2820,6 @@ public class AngelaccesoriosGUI {
 		Parent menuPane = fxmlLoader.load();
 
 		mainPane.setCenter(menuPane);
-		//mainPane.setStyle("-fx-background-image: url(/ui/.jpg)");
 		initializeComboBoxOfHours();
 		initializeComboBoxOfMinutes();
 		dtPickerInitialDate.setValue(LocalDate.now());

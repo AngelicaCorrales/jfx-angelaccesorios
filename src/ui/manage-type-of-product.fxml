@@ -37,7 +37,7 @@
                         <Insets left="800.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" textFill="WHITE">
+                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT">
                      <font>
                         <Font size="16.0" />
                      </font>

@@ -150,8 +150,8 @@
                   </Label>
                   <GridPane alignment="CENTER" maxHeight="404.0" minHeight="380.0" prefHeight="404.0" prefWidth="368.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="135.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="165.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="133.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="184.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -175,7 +175,7 @@
                         </Label>
                         <TextField fx:id="txtName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets right="30.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="13.0" />
@@ -183,7 +183,7 @@
                         </TextField>
                         <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateClient" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Actualizar" GridPane.rowIndex="7">
                            <GridPane.margin>
-                              <Insets left="45.0" />
+                              <Insets left="40.0" />
                            </GridPane.margin>
                            <font>
                               <Font name="System Bold" size="14.0" />
@@ -194,18 +194,18 @@
                               <Font size="14.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets top="10.0" />
+                              <Insets top="5.0" />
                            </GridPane.margin></CheckBox>
                         <HBox maxHeight="40.0" minHeight="25.0" prefHeight="40.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <children>
-                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteClient" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar">
+                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteClient" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets top="2.0" />
                                  </HBox.margin></Button>
-                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#createClient" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
+                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#createClient" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                                  <HBox.margin>
                                     <Insets left="8.0" top="2.0" />
                                  </HBox.margin>
@@ -232,7 +232,7 @@
                         </Label>
                         <TextField fx:id="txtLastName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets right="30.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="13.0" />
@@ -248,7 +248,7 @@
                         </Label>
                         <TextField fx:id="txtId" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets right="30.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="13.0" />
@@ -280,7 +280,7 @@
                         </Label>
                         <TextField fx:id="txtAddress" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets right="30.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="13.0" />
@@ -288,7 +288,7 @@
                         </TextField>
                         <TextField fx:id="txtPhone" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets right="30.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="13.0" />
