@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -32,13 +34,34 @@
             <Insets top="20.0" />
          </VBox.margin>
       </HBox>
-      <Label text="Lista de productos">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
+      <HBox alignment="CENTER">
          <VBox.margin>
             <Insets bottom="20.0" top="15.0" />
-         </VBox.margin></Label>
+         </VBox.margin>
+         <children>
+            <ImageView fitHeight="47.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/4647387.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label text="Lista de productos">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="47.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/4702661.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="1019.0">
          <children>
             <Button mnemonicParsing="false" onAction="#searchProductByTypeAndBrand" prefHeight="34.0" prefWidth="141.0" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Buscar producto" textAlignment="CENTER" wrapText="true">

@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -77,9 +79,17 @@
             </HBox>
             <HBox prefHeight="50.0" prefWidth="200.0">
                <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="60.0" right="10.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@images/4647245.png" />
+                     </image>
+                  </ImageView>
                   <Label text="Gestionar un cliente" textAlignment="CENTER">
                      <padding>
-                        <Insets left="120.0" top="10.0" />
+                        <Insets top="10.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -88,15 +98,23 @@
                         <Insets top="10.0" />
                      </HBox.margin>
                   </Label>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@images/4647238.png" />
+                     </image>
+                  </ImageView>
                   <Label text="Lista de clientes">
                      <padding>
-                        <Insets bottom="5.0" left="350.0" top="10.0" />
+                        <Insets bottom="5.0" top="10.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets left="320.0" top="10.0" />
                      </HBox.margin>
                   </Label>
                </children>
