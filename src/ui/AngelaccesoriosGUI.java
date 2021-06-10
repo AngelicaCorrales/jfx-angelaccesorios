@@ -128,28 +128,21 @@ public class AngelaccesoriosGUI {
 	private Button btManageSupplier;
 
 	//1st animation
+	private boolean stop;
 	private RectangleFigure one;
 	private RectangleFigure two;
-	private RectangleFigure three;
-	private RectangleFigure four;
 
 	@FXML
 	private Rectangle firstRectangle;
 
 	@FXML
 	private Rectangle secondRectangle;
-
-	@FXML
-	private Rectangle fourthRectangle;
-
-	@FXML
-	private ImageView appsImageV;
-
+	
 	@FXML
 	private Rectangle thirdRectangle;
 
 	@FXML
-	private Rectangle fifthRectangle;
+	private ImageView appsImageV;
 	
 	//2nd animation
 	@FXML
@@ -401,7 +394,7 @@ public class AngelaccesoriosGUI {
 	private TableColumn<User, String> colPassword;
 
 	//Receipts-------
-
+	
 	@FXML
 	private TextField txtCode;
 
@@ -655,12 +648,16 @@ public class AngelaccesoriosGUI {
 		return secondRectangle;
 	}
 
-	public Rectangle getFourthRectangle() {
-		return fourthRectangle;
-	}
-
 	public Rectangle getThirdRectangle() {
 		return thirdRectangle;
+	}
+	
+	public boolean getStop() {
+		return stop;
+	}
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
 	}
 
 	public void initialize() {
@@ -672,6 +669,7 @@ public class AngelaccesoriosGUI {
 			public void handle(WindowEvent event) {
 				runClock = false;
 				go=false;
+				setStop(true);
 			}
 		});
 	}
@@ -1546,21 +1544,10 @@ public class AngelaccesoriosGUI {
 		angelaccesorios.resetReceiptProductsAndQuantities();
 		initializeComboBoxClients();
 		initializeComboBoxPaymentMethods();
-		double firstRectangleX = 409;
-		double firstRectangleY = 138;
-		double secondRectangleX = 412;
-		double secondRectangleY = 138;
-		double thirdRectangleX = 411;
-		double thirdRectangleY = 136;
-		double fourthRectangleX = 412;
-		double fourthRectangleY = 138;
-		one = new RectangleFigure(firstRectangleX, firstRectangleY);
-		two = new RectangleFigure(secondRectangleX, secondRectangleY);
-		four = new RectangleFigure(thirdRectangleX, thirdRectangleY);
-		three = new RectangleFigure( fourthRectangleX,  fourthRectangleY);
-		appsImageV.setLayoutX(277);
-		appsImageV.setLayoutY(124);
-		Graphic1Thread thread1 = new Graphic1Thread(one, two, three, four, this);
+		setStop(false);
+		one = new RectangleFigure(412, 138);
+		two = new RectangleFigure(412, 138);
+		Graphic1Thread thread1 = new Graphic1Thread(one, two, this);
 		thread1.start();
 	}
 	
@@ -1569,9 +1556,9 @@ public class AngelaccesoriosGUI {
 		firstRectangle.setLayoutY(one.getyCoordinate());
 	}
 	
-	public void updateGUI4() {
-		fourthRectangle.setLayoutX(four.getxCoordinate());
-		fourthRectangle.setLayoutY(four.getyCoordinate());
+	public void updateGUI2() {
+		secondRectangle.setLayoutX(two.getxCoordinate());
+		secondRectangle.setLayoutY(two.getyCoordinate());
 	}
 
 	@FXML
@@ -1990,6 +1977,7 @@ public class AngelaccesoriosGUI {
 		hBoxSearchReceipt.setVisible(true);
 		
 		animation1.setVisible(false);
+		setStop(true);
 	}
 
 	private void initializeTableViewOfCountedReceipts() {
@@ -2029,6 +2017,7 @@ public class AngelaccesoriosGUI {
 		hBoxSearchReceipt.setVisible(true);
 		
 		animation1.setVisible(false);
+		setStop(true);
 	}
 
 	private void initializeTableViewOfSeparateReceipts() {
@@ -2073,7 +2062,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	@FXML
-	public void returnToReceiptMenu(ActionEvent event) {
+	public void returnToReceiptMenu(ActionEvent event) throws IOException {
 		tvOfSeparateReceipts.getItems().clear();
 		initializeTableViewOfSeparateReceipts();
 
@@ -2104,11 +2093,13 @@ public class AngelaccesoriosGUI {
 		animation1.setVisible(true);
 		
 		go=false;
+		setStop(true);
 		animation2.setVisible(false);
 		ivHeadphones.setLayoutY(280);
 		ivSpeaker.setLayoutY(280);
 		ivSpeaker.setVisible(false);
 		ivHeadphones.setVisible(false);
+		manageReceipt(null);
 	}
 
 	@FXML
@@ -2294,8 +2285,7 @@ public class AngelaccesoriosGUI {
 			btManageUser.setDisable(false);
 			btManageSupplier.setDisable(false);
 		}
-
-
+		setStop(true);
 	}
 
 	@FXML
