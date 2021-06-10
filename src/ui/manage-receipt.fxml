@@ -79,30 +79,46 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets top="25.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="30.0" prefWidth="1019.0">
                <children>
+                  <ImageView fitHeight="49.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/recaudacion-de-fondos.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="30.0" top="5.0" />
+                     </HBox.margin>
+                  </ImageView>
                   <Label text="Gestionar una factura" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="100.0" />
+                        <Insets left="20.0" top="20.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbManageOrder" text="Lista de ordenes creadas">
+                  <ImageView fitHeight="43.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/bolsas-de-compra.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="240.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="lbManageOrder" text="Lista de facturas creadas">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="300.0" />
+                        <Insets left="10.0" top="20.0" />
                      </HBox.margin>
                   </Label>
                </children>
                <VBox.margin>
-                  <Insets top="25.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
          </children>

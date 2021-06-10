@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -50,23 +52,23 @@
             </HBox>
             <HBox prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Label text="Gestionar tipo de producto" textAlignment="CENTER">
-                     <padding>
-                        <Insets left="70.0" top="20.0" />
-                     </padding>
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
+                  <ImageView fitHeight="55.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/control-de-juego.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </ImageView>
                   <Label text="Lista de tipos de productos agregados">
                      <padding>
-                        <Insets left="220.0" top="20.0" />
+                        <Insets top="20.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="430.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -151,14 +153,31 @@
                   </Button>
                </children>
             </VBox>
-            <VBox fx:id="typeOfProdForm" visible="false">
+            <VBox fx:id="typeOfProdForm">
                <children>
+                  <HBox prefHeight="68.0" prefWidth="328.0">
+                     <children>
+                        <Label prefHeight="38.0" prefWidth="235.0" text="Gestionar tipo de producto" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ImageView fitHeight="92.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/reproductor-de-musica.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para actualizar o eliminar un determinado tipo de producto seleccionelo de la lista." textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="35.0" />
                      </padding>
                      <VBox.margin>
-                        <Insets top="55.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
@@ -174,7 +193,7 @@
                         <RowConstraints />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="32.0" minHeight="20.0" prefHeight="32.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -190,7 +209,7 @@
                         </Label>
                         <TextField fx:id="txtTypeOfProductName" prefHeight="25.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets right="10.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="13.0" />
@@ -213,14 +232,14 @@
                            </GridPane.margin></CheckBox>
                         <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <children>
-                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
+                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets top="20.0" />
                                  </HBox.margin></Button>
-                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                                  <HBox.margin>
                                     <Insets left="8.0" top="20.0" />
                                  </HBox.margin>
@@ -248,7 +267,7 @@
                               <Insets left="60.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cmbxCategory" prefWidth="150.0" promptText="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="cmbxCategory" prefHeight="32.0" prefWidth="162.0" promptText="Seleccionar" style="-fx-border-color: #33abf9; -fx-border-width: 3; -fx-background-color: #4FC3F7;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label contentDisplay="CENTER" text="Proveedores:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold" size="14.0" />
@@ -257,17 +276,17 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button fx:id="btAddSupplierToTypeOfProduct" disable="true" mnemonicParsing="false" onAction="#loadAddSupplierToTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Añadir uno nuevo o eliminar alguno existente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Button fx:id="btAddSupplierToTypeOfProduct" disable="true" mnemonicParsing="false" onAction="#loadAddSupplierToTypeOfProduct" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Añadir uno nuevo o eliminar alguno existente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold" size="11.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets right="10.0" />
                            </GridPane.margin>
                         </Button>
                      </children>
                      <VBox.margin>
-                        <Insets top="35.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
                   </GridPane>
                </children>
