@@ -504,7 +504,6 @@ public class Angelaccesorios implements Serializable{
 	*<b>post:</b>  the user has logged in or not . <br>
 	* @param userName Is a String variable that contains the user name of the user. userName!="" and userName!=null.<br>
 	* @param password Is a String variable that contains the password of the user. password!="" and password!=null.<br>
-	* @param enabled Is a boolean variable that indicates if the user is enabled or not. enabled==true or enabled==false<br>
 	*@return a <code>boolean</code> specifying logIn, a variable that indicates if the user logged in or not.
 	*/
 	public boolean logInUser(String userName, String password) {
@@ -593,7 +592,7 @@ public class Angelaccesorios implements Serializable{
 	* <b>name</b>: searchClient <br>
 	* <b>pre</b>: The variable clientId is already initialized. <br>
 	*<b>post:</b> the searched client could have been found. <br>
-	* @param id Is a String variable that contains the id number of the client. clientId!="" and clientId!=null.<br>
+	* @param clientId Is a String variable that contains the id number of the client. clientId!="" and clientId!=null.<br>
 	*@return a <code>Client</code> specifying client, that might correspond to the searched client.
 	*/
 	public Client searchClient(String clientId) {
@@ -988,11 +987,6 @@ public class Angelaccesorios implements Serializable{
 	* @param listQ Is an ArrayList of Integer that contains the list of quantities of products for the receipt. listQ!=null.<br>
 	*@param prod Is a Product object that references the product that wants to be added to the receipt. product!=null<br>
 	* @param quantity Is an integer variable that contains the quantity of the product.<br>
-	* @throws IOException <br>
-	* 		thrown if...
-	* 		1. A local file that was no longer available is being read.<br>
-    *       2. Any process closed the stream while a stream is being used to read data.<br>
-    *       3. The disk space was no longer available while trying to write to a file.<br>
 	* @throws SameProductException <br>
 	* 		thrown if...
 	* 		1. The product is already inn the list of products of the receipt.<br>
@@ -1055,7 +1049,7 @@ public class Angelaccesorios implements Serializable{
 	* <b>pre</b>: The variable receipt, paymentMethod, valuePayment, are already initialized. <br>
 	*<b>post:</b> the separate receipt has been updated. <br>
 	* @param paymentMethod Is a String variable that contains the payment method of the receipt.  paymentMethod equals "Efectivo", paymentMethod equals "Tarjeta de debito", paymentMethod equals "Tarjeta de credito", or paymentMethod equals "Transferencia bancaria"<br>
-	* @param valuePayment Is a double variable that contains the value of the payment.<br>
+	* @param valuePayable Is a double variable that contains the value of the payment.<br>
 	*@param receipt Is a Receipt object that references the receipt that wants to be updated. receipt!=null<br>
 	* @throws IOException <br>
 	* 		thrown if...
@@ -1193,7 +1187,7 @@ public class Angelaccesorios implements Serializable{
 	* This method updates a brand from the system's list of brands.<br>
 	* <b>name</b>: updateBrand <br>
 	* <b>post</b>: The brand was updated successfully or not. <br>
-	* @param brand Is a Brand object that represents a brand of the system. brand!=null.<br>
+	* @param b Is a Brand object that represents a brand of the system. brand!=null.<br>
 	* @param newName Is a String variable that contains the new name of a brand. newName!=null and newName!="".<br>
 	* @param enabled Is a boolean variable that represents the new state of a brand.<br>
 	* @throws IOException <br>
@@ -1314,7 +1308,7 @@ public class Angelaccesorios implements Serializable{
 	* <b>pre</b>: The objects current and newSupplier are already initialized. <br>
 	* <b>post</b>: The supplier was added. <br>
 	* @param current Is a Supplier object that represents the root of the binary tree of winners. current!=null.<br>
-	* @param newWinner Is a Supplier object that represents the new supplier that is going to be added to the binary tree. newSupplier!=null.<br>
+	* @param newSupplier Is a Supplier object that represents the new supplier that is going to be added to the binary tree. newSupplier!=null.<br>
 	*/
 	private void addSupplier(Supplier current, Supplier newSupplier) {
 		if(newSupplier.getName().compareTo(current.getName())<0){
@@ -1409,6 +1403,8 @@ public class Angelaccesorios implements Serializable{
 	* <b>pre</b>: The object current is already initialized. <br>
 	* <b>post</b>: The minimum value of the left child of a node was returned. <br>
 	* @param current Is a Supplier object that represents a node of the binary tree of suppliers. current!=null.<br>
+	* @return a <code> Supplier </code> object specifying current, that might correspond to the minimum value in the left child of a node. 
+
 	*/
 	private Supplier min(Supplier current){
 		if(current.getLeft()!=null){
@@ -1695,6 +1691,7 @@ public class Angelaccesorios implements Serializable{
 	* <b>pre</b>: The object current is already initialized. <br>
 	* <b>post</b>: The minimum value of the left child of a node was returned. <br>
 	* @param current Is a TypeOfProduct object that represents a node of the binary tree of types of products. current!=null.<br>
+	* @return a <code> TypeOfProduct </code> object specifying current, that might correspond to the minimum value in the left child of a node. 
 	*/
 	private TypeOfProduct min(TypeOfProduct current){
 		if(current.getLeft()!=null){
@@ -1786,11 +1783,11 @@ public class Angelaccesorios implements Serializable{
     * @throws NoQuantityException <br>
     *		thrown if units==0. <br> 
     * @throws NegativeQuantityException <br>
-    *		thrown if units<0. <br> 
+    *		thrown if units less than 0. <br> 
     * @throws NoPriceException <br>
     *		thrown if price==0. <br> 
     * @throws NegativePriceException <br>
-    *		thrown if price<0. <br> 
+    *		thrown if price less than 0. <br> 
     * @throws SameProductException <br>
     *		thrown if there is another product in the system with the same type, brand and model entered. <br> 
 	*/
@@ -1885,11 +1882,11 @@ public class Angelaccesorios implements Serializable{
     * @throws NoQuantityException <br>
     *		thrown if units==0. <br> 
     * @throws NegativeQuantityException <br>
-    *		thrown if units<0. <br> 
+    *		thrown if units less than 0. <br> 
     * @throws NoPriceException <br>
     *		thrown if price==0. <br> 
     * @throws NegativePriceException <br>
-    *		thrown if price<0. <br> 
+    *		thrown if price less than 0. <br> 
     * @throws SameProductException <br>
     *		thrown if there is another product in the system with the same type, brand and model entered. <br> 
 	*/
@@ -2153,10 +2150,10 @@ public class Angelaccesorios implements Serializable{
 	* <b>name</b>: exportsUsersReport <br>
 	* <b>pre</b>: The variables initialDate, finalDate and fn are already initialized. <br>
 	* <b>post</b>: A file with the report of users based on their number of receipts has been generated. <br>
-	* @param initialDate Is a String variable that contains the initial date of a report. initiaDate!=null and initialDate!="".<br>
-	* @param finalDate Is a String variable that contains the final date of a report. finalDate!=null and finalDate!="".<br>
+	* @param initialTime Is a String variable that contains the initial date of a report. initiaDate!=null and initialDate!="".<br>
+	* @param finalTime Is a String variable that contains the final date of a report. finalDate!=null and finalDate!="".<br>
 	* @param fn Is a String variable that contains the path file where the report is going to be stored. fn!=null and fn!="".<br>
-	* @throws FileNotFoundException<br>
+	* @throws FileNotFoundException <br>
     *		thrown if an attempt to open the file denoted by a specified pathname has failed. <br> 
 	* @throws ParseException <br>
     *		thrown if an attempt to parse a string that should have a special format has failed. <br> 
@@ -2199,10 +2196,10 @@ public class Angelaccesorios implements Serializable{
 	* <b>name</b>: exportProductsReport <br>
 	* <b>pre</b>: The variables initialDate, finalDate and fn are already initialized. <br>
 	* <b>post</b>: A file with the report of products based on the number of times that were added to a receipt has been generated. <br>
-	* @param initialDate Is a String variable that contains the initial date of a report. initiaDate!=null and initialDate!="".<br>
-	* @param finalDate Is a String variable that contains the final date of a report. finalDate!=null and finalDate!="".<br>
+	* @param initialTime Is a String variable that contains the initial date of a report. initiaDate!=null and initialDate!="".<br>
+	* @param finalTime Is a String variable that contains the final date of a report. finalDate!=null and finalDate!="".<br>
 	* @param fn Is a String variable that contains the path file where the report is going to be stored. fn!=null and fn!="".<br>
-	* @throws FileNotFoundException<br>
+	* @throws FileNotFoundException <br>
     *		thrown if an attempt to open the file denoted by a specified pathname has failed. <br> 
 	* @throws ParseException <br>
     *		thrown if an attempt to parse a string that should have a special format has failed. <br> 
@@ -2257,7 +2254,7 @@ public class Angelaccesorios implements Serializable{
 	* @param txt Is an OutputSream object that contains the path file where the pdf file is going to be saved. txt!=null.<br>
 	* @param r Is a Receipt object that represents the receipt that the user wants to generate. r!=null.<br>
 	* @param type Is a String variable that contains the title of the file. type!=null and type!="".<br>
-	* @throws documentException<br>
+	* @throws DocumentException <br>
 	* 		thrown if...
 	* 		1. A bad PDF format has been used to construct a PdfObject.<br>
     *       2. An unspecified problem happened while a PDF document was being constructed.<br>
@@ -2406,7 +2403,7 @@ public class Angelaccesorios implements Serializable{
 	* @param txt Is an OutputSream object that contains the path file where the pdf file is going to be saved. txt!=null.<br>
 	* @param r Is a Receipt object that represents the receipt that the user wants to generate. r!=null.<br>
 	* @param type Is a String variable that contains the title of the file. type!=null and type!="".<br>
-	* @throws documentException<br>
+	* @throws DocumentException <br>
 	* 		thrown if...
 	* 		1. A bad PDF format has been used to construct a PdfObject.<br>
     *       2. An unspecified problem happened while a PDF document was being constructed.<br>
@@ -2686,6 +2683,7 @@ public class Angelaccesorios implements Serializable{
 	* <b>pre</b>: The variable fileName is already initialized. <br>
 	* <b>post</b>: The number of lines of a file were counted. <br>
 	* @param fileName Is a String variable that represents the path file from the information is going to be imported. fileName!=null and fileName!="".<br>
+	* @return an <code> integer </code> specifying num, the number of lines of the file. <br>
 	* @throws IOException <br>
 	* 		thrown if...
 	* 		1. A local file that was no longer available is being read.<br>

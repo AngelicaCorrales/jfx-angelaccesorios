@@ -144,7 +144,10 @@ public class SeparateReceipt extends Receipt implements PaymentTotal, UnpaidPric
 	/**
 	* This method returns the payment total price of the receipt recursively.<br>
 	* <b>name</b>: calculatePaymentTotal <br>
+	* <b>pre</b>: The variables current, paymentTotal, are already initialized. <br>
 	* <b>post</b>: the payment total price price has been gotten. <br>
+	*@param current Is a Payment object that references the a payment in the linked list of payments<br>
+	* @param paymentTotal Is a double variable that contains the sum of the value of the payments.<br>
 	* @return an <code> double </code> the the payment total price of the receipt.
 	*/
 	private double calculatePaymentTotal(Payment current, double paymentTotal) {
