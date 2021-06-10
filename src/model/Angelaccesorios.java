@@ -2139,7 +2139,15 @@ public class Angelaccesorios implements Serializable{
 							p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+(r.getListOfQuantity().get(j)));
 							p.setTotalPriceAddedOrders((p.getTotalPriceAddedOrders())+(r.getListOfQuantity().get(j)*p.getPrice()));
 						}
-					}	
+					}else {
+						if(((SeparateReceipt)r).getState()==State.ENTREGADO) {
+							for(int j=0;j<r.getListOfProducts().size();j++) {
+								Product p = r.getListOfProducts().get(j);
+								p.setNumTimesAddedOrders((p.getNumTimesAddedOrders())+(r.getListOfQuantity().get(j)));
+								p.setTotalPriceAddedOrders((p.getTotalPriceAddedOrders())+(r.getListOfQuantity().get(j)*p.getPrice()));
+							}
+						}
+					}
 				}
 				selectedReceipts.add(r);
 			}
@@ -2183,7 +2191,7 @@ public class Angelaccesorios implements Serializable{
 				Receipt objR = receiptsS.get(i);
 				objR.getCreator().setCont((objR.getCreator().getCont())+1);
 				if(objR.getCreator().getCont()==1) {
-					pw.println(objR.getCreator().getName()+SEPARATOR+objR.getCreator().getId()+SEPARATOR+objR.getCreator().getNumberReceipts()+SEPARATOR+objR.getCreator().getSumTotalReceipts());
+					pw.println(objR.getCreator().getName()+" "+objR.getCreator().getLastName()+SEPARATOR+objR.getCreator().getId()+SEPARATOR+objR.getCreator().getNumberReceipts()+SEPARATOR+objR.getCreator().getSumTotalReceipts());
 					totalReceipts+=objR.getCreator().getNumberReceipts();
 					totalMoney+=objR.getCreator().getSumTotalReceipts();
 				}

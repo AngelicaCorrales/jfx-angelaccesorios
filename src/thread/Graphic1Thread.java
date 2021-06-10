@@ -42,6 +42,8 @@ public class Graphic1Thread extends Thread {
 			Thread.sleep(1000);
 			angGui.getFirstRectangle().setVisible(false);
 			Thread.sleep(50);
+			angGui.getSecondRectangle().setVisible(false);
+			Thread.sleep(50);
 			one.setxCoordinate(412);
 			Thread.sleep(50);
 			one.setyCoordinate(138);
@@ -66,6 +68,7 @@ public class Graphic1Thread extends Thread {
 			Thread.sleep(50);
 			angGui.getSecondRectangle().setHeight(170);
 			Thread.sleep(1000);
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

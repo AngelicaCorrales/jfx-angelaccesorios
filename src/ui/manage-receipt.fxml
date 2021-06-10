@@ -100,7 +100,7 @@
                         <Insets left="20.0" top="20.0" />
                      </HBox.margin>
                   </Label>
-                  <ImageView fitHeight="43.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivBags" fitHeight="43.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@images/bolsas-de-compra.png" />
                      </image>
@@ -108,7 +108,7 @@
                         <Insets left="240.0" top="10.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label fx:id="lbManageOrder" text="Lista de facturas creadas">
+                  <Label fx:id="lbManageR" text="Lista de facturas creadas" visible="false">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

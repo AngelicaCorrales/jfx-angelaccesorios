@@ -401,7 +401,10 @@ public class AngelaccesoriosGUI {
 	private Label lbWindow;
 
 	@FXML
-	private Label lbManageOrder;
+	private Label lbManageR;
+	
+	@FXML
+	private ImageView ivBags;
 
 	@FXML
 	private VBox createSeparateReceipt;
@@ -735,6 +738,24 @@ public class AngelaccesoriosGUI {
 			list.add(current);
 			if(current.getRight()!=parent) {
 				listTypesPInorder(list, current.getRight(), current);
+			}
+		}else {
+			return;
+		}
+	}
+	
+	private void listTypesPEnabledInorder(ObservableList<TypeOfProduct> list, TypeOfProduct current, TypeOfProduct parent) {
+		if(current!=null) {
+			if(current.getLeft()!=parent) {
+				listTypesPEnabledInorder(list, current.getLeft(), current);
+			}
+			
+			if(current.isEnabled()) {
+				list.add(current);
+			}
+			
+			if(current.getRight()!=parent) {
+				listTypesPEnabledInorder(list, current.getRight(), current);
 			}
 		}else {
 			return;
@@ -1257,7 +1278,7 @@ public class AngelaccesoriosGUI {
 	private void initializeCmbxTypeOfProduct() {
 		ObservableList<TypeOfProduct> typeList = FXCollections.observableArrayList();
 		if(angelaccesorios.getTypePRoot()!=null) {
-			listTypesPInorder(typeList, angelaccesorios.getTypePRoot(), angelaccesorios.getTypePRoot().getParent());	
+			listTypesPEnabledInorder(typeList, angelaccesorios.getTypePRoot(), angelaccesorios.getTypePRoot().getParent());	
 		}
 		cmbxTypeOfProduct.setItems(typeList);
 		cmbxTypeOfProduct.setValue(null);
@@ -1265,7 +1286,7 @@ public class AngelaccesoriosGUI {
 	}
 
 	private void initializeCmbxBrand() {
-		ObservableList<Brand> brandList = FXCollections.observableArrayList(angelaccesorios.getBrands());
+		ObservableList<Brand> brandList = FXCollections.observableArrayList(angelaccesorios.returnEnabledBrands());
 		cmbxBrand.setItems(brandList);
 		cmbxBrand.setValue(null);
 		cmbxBrand.setPromptText("Elija una marca");
@@ -1498,9 +1519,13 @@ public class AngelaccesoriosGUI {
 				alert.setHeaderText(null);
 				alert.setContentText("No se encontró el producto con tipo "+type+" y marca "+brand);
 				alert.showAndWait();
+				
+				
 			}else {
 				initializeTableViewOfProducts(p);
 			}
+			txtTypeOfProduct.clear();
+			txtBrand.clear();
 		}else {
 			showValidationErrorAlert();
 			initializeTableViewOfProducts(angelaccesorios.getProducts());
@@ -1957,6 +1982,9 @@ public class AngelaccesoriosGUI {
 		initializeTableViewOfCountedReceipts();
 		hBoxSearchReceipt.setVisible(true);
 		
+		lbManageR.setVisible(true);
+		ivBags.setVisible(true);
+		
 		animation1.setVisible(false);
 	}
 
@@ -1997,6 +2025,9 @@ public class AngelaccesoriosGUI {
 		initializeTableViewOfSeparateReceipts();
 		hBoxSearchReceipt.setVisible(true);
 		
+		lbManageR.setVisible(true);
+		ivBags.setVisible(true);
+		
 		animation1.setVisible(false);
 	}
 
@@ -2033,6 +2064,9 @@ public class AngelaccesoriosGUI {
 		tvOfReceiptProducts.setVisible(false);
 		vBoxListViewQ.setVisible(false);
 		hBoxSearchReceipt.setVisible(true);
+		
+		lbManageR.setVisible(true);
+		ivBags.setVisible(true);
 
 		if(lbWindow.getText().equals("C")) {
 			manageCountedReceipt(null);
@@ -2048,6 +2082,10 @@ public class AngelaccesoriosGUI {
 
 		tvOfCountedReceipts.getItems().clear();
 		initializeTableViewOfCountedReceipts();
+		
+		txtNewPayment.clear();
+		cbPaymentMethodP.setValue(null);
+		
 
 		addObservationsForm.setVisible(false);
 		addPaymentForm.setVisible(false);
@@ -2061,6 +2099,9 @@ public class AngelaccesoriosGUI {
 		receiptMenu.setVisible(true);
 		angelaccesorios.resetReceiptProductsAndQuantities();
 		hBoxSearchReceipt.setVisible(false);
+		
+		lbManageR.setVisible(false);
+		ivBags.setVisible(false);
 
 		btUpdate.setDisable(true);
 		btGenerateR.setDisable(true);
@@ -2205,6 +2246,9 @@ public class AngelaccesoriosGUI {
 		scrollPaneTableviews.setVisible(false);
 		addPaymentForm.setVisible(true);
 		initializeComboBoxPaymentMethods();
+		
+		lbManageR.setVisible(false);
+		ivBags.setVisible(false);
 		
 		animation2.setVisible(true);
 		ivHeadphones.setLayoutY(280);
@@ -2428,7 +2472,7 @@ public class AngelaccesoriosGUI {
 				Alert alert1 = new Alert(AlertType.INFORMATION);
 				alert1.setTitle("Informacion");
 				alert1.setHeaderText(null);
-				alert1.setContentText("El empleado ha sido actualizado exitosamente!");
+				alert1.setContentText("El cliente ha sido actualizado exitosamente!");
 				alert1.showAndWait();
 
 				txtName.clear();
@@ -2446,7 +2490,7 @@ public class AngelaccesoriosGUI {
 				Alert alert2 = new Alert(AlertType.ERROR);
 				alert2.setTitle("Error de validacion");
 				alert2.setHeaderText(null);
-				alert2.setContentText("No se pudo actualizar el empleado, intentelo nuevamente");
+				alert2.setContentText("No se pudo actualizar el cliente, intentelo nuevamente");
 				alert2.showAndWait();
 
 			}
@@ -2599,7 +2643,7 @@ public class AngelaccesoriosGUI {
 		Alert alert1 = new Alert(AlertType.CONFIRMATION);
 		alert1.setTitle("Confirmacion de proceso");
 		alert1.setHeaderText(null);
-		alert1.setContentText("¿Esta seguro de que quiere eliminar el empleado escogido?");
+		alert1.setContentText("¿Esta seguro de que quiere eliminar el usuario escogido?");
 		Optional<ButtonType> result = alert1.showAndWait();
 		if (result.get() == ButtonType.OK){
 

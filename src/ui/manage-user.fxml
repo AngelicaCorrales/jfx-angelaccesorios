@@ -109,6 +109,7 @@
                         <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="20.0" prefHeight="60.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="40.0" minHeight="20.0" prefHeight="60.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -122,7 +123,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateUser" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Actualizar" GridPane.rowIndex="7">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateUser" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Actualizar" GridPane.rowIndex="8">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="40.0" />
                            </GridPane.margin>
@@ -130,14 +131,14 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <font>
                               <Font size="14.0" />
                            </font>
                            <GridPane.margin>
                               <Insets left="30.0" />
                            </GridPane.margin></CheckBox>
-                        <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <HBox maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <children>
                               <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteUser" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar">
                                  <font>
@@ -159,7 +160,7 @@
                               <Insets bottom="15.0" />
                            </GridPane.margin>
                         </HBox>
-                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -223,6 +224,19 @@
                               <Insets left="35.0" />
                            </GridPane.margin>
                         </Label>
+                        <Label fx:id="lbEmail" text="Correo de recuperación:" textAlignment="CENTER" visible="false" wrapText="true" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="txtEmail" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" />
