@@ -18,13 +18,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox prefHeight="64.0" prefWidth="1019.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="TOP_RIGHT">
                <children>
-                  <Label text="Usuario: " textFill="WHITE">
+                  <Label text="Usuario: ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -32,7 +32,7 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserName" text="-" textFill="WHITE">
+                  <Label fx:id="lbUserName" text="-">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -41,52 +41,67 @@
                      </HBox.margin></Label>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="6.0" />
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#searchClientByNameInClient" prefHeight="30.0" prefWidth="113.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Buscar cliente" textAlignment="CENTER" wrapText="true">
+                     <HBox.margin>
+                        <Insets left="440.0" right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="txtClientSearchedName" promptText="Nombres">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="40.0" top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="txtClientSearchedLastName" promptText="Apellidos">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="40.0" top="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Label text="Gestionar un cliente" textAlignment="CENTER" textFill="WHITE">
+                  <Label text="Gestionar un cliente" textAlignment="CENTER">
                      <padding>
                         <Insets left="120.0" top="10.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
                   </Label>
-                  <Label text="Lista de clientes" textFill="WHITE">
+                  <Label text="Lista de clientes">
                      <padding>
                         <Insets bottom="5.0" left="350.0" top="10.0" />
                      </padding>
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
-                  </Label>
-                  <Button mnemonicParsing="false" onAction="#searchClientByNameInClient" prefHeight="42.0" prefWidth="62.0" text="Buscar cliente" textAlignment="CENTER" wrapText="true">
                      <HBox.margin>
-                        <Insets left="50.0" right="10.0" />
+                        <Insets top="10.0" />
                      </HBox.margin>
-                  </Button>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <TextField fx:id="txtClientSearchedName" promptText="Nombres">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <TextField fx:id="txtClientSearchedLastName" promptText="Apellidos">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </VBox>
+                  </Label>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
          </children>
@@ -107,9 +122,9 @@
          <children>
             <VBox>
                <children>
-                  <Label text="*Para actualizar o eliminar un cliente determinado, seleccionelo de la lista" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label text="*Para actualizar o eliminar un cliente determinado, seleccionelo de la lista" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" top="30.0" />
+                        <Insets bottom="10.0" left="10.0" top="20.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
@@ -132,7 +147,7 @@
                         <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Nombres:" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <Label text="Nombres:" textAlignment="CENTER" wrapText="true">
                            <GridPane.margin>
                               <Insets left="30.0" right="5.0" />
                            </GridPane.margin>
@@ -144,8 +159,11 @@
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
                         </TextField>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateClient" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Actualizar" GridPane.rowIndex="7">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateClient" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Actualizar" GridPane.rowIndex="7">
                            <GridPane.margin>
                               <Insets left="45.0" />
                            </GridPane.margin>
@@ -153,7 +171,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -162,16 +180,16 @@
                            </GridPane.margin></CheckBox>
                         <HBox maxHeight="40.0" minHeight="25.0" prefHeight="40.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <children>
-                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteClient" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
+                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteClient" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets />
+                                    <Insets top="2.0" />
                                  </HBox.margin></Button>
-                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#createClient" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#createClient" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                                  <HBox.margin>
-                                    <Insets left="15.0" />
+                                    <Insets left="8.0" top="2.0" />
                                  </HBox.margin>
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -179,14 +197,14 @@
                               </Button>
                            </children>
                         </HBox>
-                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <Button fx:id="btReturnToMenu" mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets />
+                              <Insets left="10.0" />
                            </GridPane.margin></Button>
-                        <Label text="Apellidos: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="1">
+                        <Label text="Apellidos: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="30.0" />
                            </GridPane.margin>
@@ -198,8 +216,11 @@
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
                         </TextField>
-                        <Label prefHeight="45.0" prefWidth="103.0" text="Número de identificación: " textFill="WHITE" wrapText="true" GridPane.rowIndex="3">
+                        <Label prefHeight="45.0" prefWidth="103.0" text="Número de identificación: " wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -211,8 +232,11 @@
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
                         </TextField>
-                        <Label layoutX="40.0" layoutY="81.0" text="Dirección: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+                        <Label layoutX="40.0" layoutY="81.0" text="Dirección: " textAlignment="CENTER" wrapText="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -220,7 +244,7 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Teléfono: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="5">
+                        <Label text="Teléfono: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -228,7 +252,7 @@
                               <Insets left="30.0" />
                            </padding>
                         </Label>
-                        <Label text="Tipo de identificación: " textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                        <Label text="Tipo de identificación: " wrapText="true" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -240,13 +264,19 @@
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
                         </TextField>
                         <TextField fx:id="txtPhone" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets right="20.0" />
                            </GridPane.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
                         </TextField>
-                        <ComboBox fx:id="cmbxIdType" prefWidth="150.0" promptText="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="cmbxIdType" prefHeight="32.0" prefWidth="150.0" promptText="Seleccionar" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>

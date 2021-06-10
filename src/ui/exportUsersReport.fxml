@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox alignment="CENTER">
          <children>
             <HBox prefHeight="15.0" prefWidth="200.0">
                <children>
-                  <Label text="Usuario:  " textFill="WHITE">
+                  <Label text="Usuario:  ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -27,7 +27,7 @@
                         <Insets left="800.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Pepito Pérez" textFill="WHITE">
+                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Pepito Pérez">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -40,7 +40,7 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </HBox>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de usuarios a partir de las facturas generadas" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Exportar reporte de usuarios a partir de las facturas generadas">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -48,7 +48,7 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="90.0" />
                </VBox.margin>
             </Label>
          </children>
@@ -72,37 +72,37 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Fecha inicial del reporte:" textFill="WHITE">
+                  <Label text="Fecha inicial del reporte:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <Label text="Hora inicial del reporte:" textFill="WHITE" GridPane.rowIndex="1">
+                  <Label text="Hora inicial del reporte:" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <Label text="Fecha final del reporte:" textFill="WHITE" GridPane.rowIndex="2">
+                  <Label text="Fecha final del reporte:" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <Label text="Hora final del reporte:" textFill="WHITE" GridPane.rowIndex="3">
+                  <Label text="Hora final del reporte:" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <DatePicker fx:id="dtPickerInitialDate" editable="false" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" />
-                  <DatePicker fx:id="dtPickerFinalDate" editable="false" layoutX="231.0" layoutY="14.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="dtPickerInitialDate" editable="false" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="dtPickerFinalDate" editable="false" layoutX="231.0" layoutY="14.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <ComboBox fx:id="cmbxInitialHour" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;">
+                        <ComboBox fx:id="cmbxInitialHour" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;">
                            <HBox.margin>
                               <Insets left="18.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Label prefHeight="25.0" text="     :     " textFill="WHITE">
+                        <Label prefHeight="25.0" text="     :     ">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cmbxInitialMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" />
+                        <ComboBox fx:id="cmbxInitialMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" />
                      </children>
                      <GridPane.margin>
                         <Insets top="10.0" />
@@ -110,17 +110,17 @@
                   </HBox>
                   <HBox layoutX="215.0" layoutY="42.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <ComboBox fx:id="cmbxFinalHour" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;">
+                        <ComboBox fx:id="cmbxFinalHour" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;">
                            <HBox.margin>
                               <Insets left="18.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Label prefHeight="25.0" text="     :     " textFill="WHITE">
+                        <Label prefHeight="25.0" text="     :     ">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cmbxFinalMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" />
+                        <ComboBox fx:id="cmbxFinalMinute" layoutX="28.0" layoutY="10.0" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" />
                      </children>
                      <GridPane.margin>
                         <Insets top="10.0" />
@@ -133,11 +133,11 @@
             </GridPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#generateUsersReport" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Generar reporte">
+                  <Button mnemonicParsing="false" onAction="#generateUsersReport" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Generar reporte">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-border-color: #e8c033; -fx-border-width: 2; -fx-background-color: #f8e7a8;" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-border-color: #33abf9; -fx-border-width: 3; -fx-background-color: #4FC3F7;" text="Atrás">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -27,7 +27,7 @@
          <children>
             <HBox prefHeight="15.0" prefWidth="200.0">
                <children>
-                  <Label text="Usuario:  " textFill="WHITE">
+                  <Label text="Usuario:  ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -50,7 +50,7 @@
             </HBox>
             <HBox prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Label text="Gestionar tipo de producto" textAlignment="CENTER" textFill="WHITE">
+                  <Label text="Gestionar tipo de producto" textAlignment="CENTER">
                      <padding>
                         <Insets left="70.0" top="20.0" />
                      </padding>
@@ -58,7 +58,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Lista de tipos de productos agregados" textFill="WHITE">
+                  <Label text="Lista de tipos de productos agregados">
                      <padding>
                         <Insets left="220.0" top="20.0" />
                      </padding>
@@ -86,7 +86,7 @@
          <children>
             <VBox fx:id="supplierForm" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para añadir o eliminar un determinado proveedor de un tipo de producto, seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para añadir o eliminar un determinado proveedor de un tipo de producto, seleccionelo de la lista." textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="35.0" />
                      </padding>
@@ -107,7 +107,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Nombre del proveedor:" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <Label text="Nombre del proveedor:" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -120,7 +120,7 @@
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btDeleteSupplierTP" disable="true" mnemonicParsing="false" onAction="#deleteSupplierFromTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Eliminar" GridPane.rowIndex="1">
+                        <Button fx:id="btDeleteSupplierTP" disable="true" mnemonicParsing="false" onAction="#deleteSupplierFromTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Eliminar" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -128,7 +128,7 @@
                               <Insets left="70.0" top="30.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="btAddSupplierTP" disable="true" mnemonicParsing="false" onAction="#addSupplierToTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Añadir" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button fx:id="btAddSupplierTP" disable="true" mnemonicParsing="false" onAction="#addSupplierToTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Añadir" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -141,7 +141,7 @@
                         <Insets top="50.0" />
                      </VBox.margin>
                   </GridPane>
-                  <Button mnemonicParsing="false" onAction="#returnToManageTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToManageTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Atrás">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -153,7 +153,7 @@
             </VBox>
             <VBox fx:id="typeOfProdForm" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para actualizar o eliminar un determinado tipo de producto seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="309.0" text="*Para actualizar o eliminar un determinado tipo de producto seleccionelo de la lista." textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="35.0" />
                      </padding>
@@ -180,7 +180,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Nombre del tipo de producto:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                        <Label text="Nombre del tipo de producto:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="30.0" right="5.0" />
                            </GridPane.margin>
@@ -196,7 +196,7 @@
                               <Font size="13.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="Actualizar" GridPane.rowIndex="6">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Actualizar" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets left="45.0" top="40.0" />
                            </GridPane.margin>
@@ -204,7 +204,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <CheckBox fx:id="ckbxDisable" disable="true" mnemonicParsing="false" text="Deshabilitar" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -233,14 +233,14 @@
                               <Insets top="20.0" />
                            </GridPane.margin>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <GridPane.margin>
                               <Insets left="10.0" top="40.0" />
                            </GridPane.margin></Button>
-                        <Label text="Categoria: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="3">
+                        <Label text="Categoria: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -249,7 +249,7 @@
                            </GridPane.margin>
                         </Label>
                         <ComboBox fx:id="cmbxCategory" prefWidth="150.0" promptText="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label contentDisplay="CENTER" text="Proveedores:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="4">
+                        <Label contentDisplay="CENTER" text="Proveedores:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -257,7 +257,7 @@
                               <Insets left="40.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button fx:id="btAddSupplierToTypeOfProduct" disable="true" mnemonicParsing="false" onAction="#loadAddSupplierToTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir uno nuevo o eliminar alguno existente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Button fx:id="btAddSupplierToTypeOfProduct" disable="true" mnemonicParsing="false" onAction="#loadAddSupplierToTypeOfProduct" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Añadir uno nuevo o eliminar alguno existente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold" size="11.0" />
                            </font>

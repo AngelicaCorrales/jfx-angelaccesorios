@@ -20,11 +20,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -33,7 +32,7 @@
          <children>
             <HBox>
                <children>
-                  <Label text="Usuario: " textFill="WHITE">
+                  <Label text="Usuario: ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -41,7 +40,7 @@
                         <Insets left="800.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserName" text="Pepito Pérez" textFill="WHITE">
+                  <Label fx:id="lbUserName" text="Pepito Pérez">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -54,7 +53,7 @@
             </HBox>
             <HBox fx:id="hBoxSearchReceipt" prefHeight="30.0" prefWidth="200.0" visible="false">
                <children>
-                  <Label text="Código:" textFill="WHITE">
+                  <Label text="Código:">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -70,7 +69,7 @@
                         <Insets left="15.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#searchReceiptByCode" text="Buscar factura">
+                  <Button mnemonicParsing="false" onAction="#searchReceiptByCode" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Buscar factura">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -85,7 +84,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="1019.0">
                <children>
-                  <Label text="Gestionar una factura" textAlignment="CENTER" textFill="WHITE">
+                  <Label text="Gestionar una factura" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -93,7 +92,7 @@
                         <Insets left="100.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbManageOrder" text="Lista de ordenes creadas" textFill="WHITE">
+                  <Label fx:id="lbManageOrder" text="Lista de ordenes creadas">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -130,7 +129,6 @@
                         <Image url="@images/cristal-pantalla-iphone-7-blanco.jpg" />
                      </image>
                   </ImageView>
-                  <Circle fx:id="circle" fill="DODGERBLUE" layoutX="389.0" layoutY="274.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
                   <Rectangle fx:id="firstRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="170.0" layoutX="409.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="92.0" />
                   <Rectangle fx:id="secondRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="167.0" layoutX="286.0" layoutY="134.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="88.0" />
                   <Rectangle fx:id="fourthRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="171.0" layoutX="412.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="87.0" />
@@ -145,7 +143,7 @@
             </Pane>
             <VBox fx:id="createSeparateReceipt" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="312.0" text="*Para actualizar o eliminar una determinada factura de separado seleccionela de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="304.0" text="*Para actualizar o eliminar una determinada factura de separado seleccionela de la lista." textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
                         <Insets left="20.0" right="10.0" />
                      </VBox.margin>
@@ -168,11 +166,11 @@
                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAReceipt" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAReceipt" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
-                        <Label text="Productos:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                        <Label text="Productos:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="65.0" right="5.0" />
                            </GridPane.margin>
@@ -180,7 +178,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Cliente:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="3">
+                        <Label text="Cliente:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -188,11 +186,11 @@
                               <Insets left="80.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cmbxClientsSR" prefHeight="29.0" prefWidth="163.0" promptText="Seleccionar" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <ComboBox fx:id="cmbxClientsSR" prefHeight="29.0" prefWidth="163.0" promptText="Seleccionar" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin></ComboBox>
-                        <Label layoutX="70.0" layoutY="62.0" prefHeight="40.0" prefWidth="139.0" text="Medio de pago:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="5">
+                        <Label layoutX="70.0" layoutY="62.0" prefHeight="40.0" prefWidth="139.0" text="Medio de pago:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -200,11 +198,11 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cbPaymentMethodSR" prefHeight="29.0" prefWidth="161.0" promptText="Seleccionar" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <ComboBox fx:id="cbPaymentMethodSR" prefHeight="29.0" prefWidth="161.0" promptText="Seleccionar" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets top="5.0" />
                            </GridPane.margin></ComboBox>
-                        <Label layoutX="70.0" layoutY="53.0" text="Valor del abono inicial:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="6">
+                        <Label layoutX="70.0" layoutY="53.0" text="Valor del abono inicial:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="6">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -232,7 +230,7 @@
                               </TextField>
                            </children>
                         </VBox>
-                        <Button mnemonicParsing="false" onAction="#searchClientByName" prefHeight="50.0" prefWidth="58.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Buscar cliente" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
+                        <Button mnemonicParsing="false" onAction="#searchClientByName" prefHeight="50.0" prefWidth="64.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Buscar cliente" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets left="70.0" />
                            </GridPane.margin>
@@ -255,11 +253,11 @@
                   </GridPane>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Actualizar">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Actualizar">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
-                        <Button fx:id="btAddSR" mnemonicParsing="false" onAction="#addSeparateReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                        <Button fx:id="btAddSR" mnemonicParsing="false" onAction="#addSeparateReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -272,7 +270,7 @@
                         <Insets />
                      </VBox.margin>
                   </HBox>
-                  <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás">
                      <VBox.margin>
                         <Insets left="150.0" top="20.0" />
                      </VBox.margin>
@@ -282,7 +280,7 @@
                   </Button>
                </children>
                <GridPane.margin>
-                  <Insets left="20.0" top="30.0" />
+                  <Insets left="20.0" />
                </GridPane.margin>
             </VBox>
             <ScrollPane fx:id="scrollPaneTableviews" maxHeight="-Infinity" maxWidth="650.0" minWidth="614.0" prefHeight="480.0" prefWidth="642.0" visible="false" GridPane.columnIndex="1">
@@ -364,7 +362,7 @@
             </ScrollPane>
             <VBox fx:id="addPaymentForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Agregar un nuevo abono" textAlignment="CENTER" textFill="#fffefe" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Agregar un nuevo abono" textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
@@ -385,7 +383,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Valor del abono:" textAlignment="CENTER" textFill="WHITE">
+                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Valor del abono:" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -398,7 +396,7 @@
                               <Insets right="30.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Método de pago: " textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Método de pago: " textAlignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -406,7 +404,7 @@
                               <Insets left="35.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cbPaymentMethodP" prefHeight="31.0" prefWidth="155.0" promptText="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cbPaymentMethodP" prefHeight="31.0" prefWidth="155.0" promptText="Seleccionar" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" top="30.0" />
@@ -414,14 +412,14 @@
                   </GridPane>
                   <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                        <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="50.0" />
                            </HBox.margin></Button>
-                        <Button mnemonicParsing="false" onAction="#addPaymentToAReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                        <Button mnemonicParsing="false" onAction="#addPaymentToAReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -438,7 +436,7 @@
             </VBox>
             <VBox fx:id="addObservationsForm" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Agregar observaciones" textAlignment="CENTER" textFill="#fffefe" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Agregar observaciones" textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
@@ -456,7 +454,7 @@
                   </TextArea>
                   <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                        <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -464,7 +462,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#addSeparateReceiptObs" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                        <Button mnemonicParsing="false" onAction="#addSeparateReceiptObs" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -484,7 +482,7 @@
             </VBox>
             <VBox fx:id="createCountedReceipt" layoutX="30.0" layoutY="40.0" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="312.0" text="*Para eliminar una determinada factura de contado seleccionela de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="312.0" text="*Para eliminar una determinada factura de contado seleccionela de la lista." textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
                         <Insets left="20.0" right="10.0" />
                      </VBox.margin>
@@ -507,12 +505,12 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAReceipt" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chooseProductsOfAReceipt" prefHeight="34.0" prefWidth="162.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Añadir o eliminar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Label text="Productos:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                        <Label text="Productos:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="65.0" right="5.0" />
                            </GridPane.margin>
@@ -520,7 +518,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Cliente:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="3">
+                        <Label text="Cliente:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -528,12 +526,12 @@
                               <Insets left="80.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cmbxClients" prefHeight="29.0" prefWidth="163.0" promptText="Seleccionar" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <ComboBox fx:id="cmbxClients" prefHeight="29.0" prefWidth="163.0" promptText="Seleccionar" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <Label layoutX="70.0" layoutY="62.0" prefHeight="40.0" prefWidth="139.0" text="Medio de pago:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="5">
+                        <Label layoutX="70.0" layoutY="62.0" prefHeight="40.0" prefWidth="139.0" text="Medio de pago:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -541,12 +539,12 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Label>
-                        <ComboBox fx:id="cbPaymentMethod" prefHeight="29.0" prefWidth="161.0" promptText="Seleccionar" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <ComboBox fx:id="cbPaymentMethod" prefHeight="29.0" prefWidth="161.0" promptText="Seleccionar" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets top="5.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <Label layoutX="70.0" layoutY="53.0" text="Observaciones:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="6">
+                        <Label layoutX="70.0" layoutY="53.0" text="Observaciones:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="6">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -574,7 +572,7 @@
                               </TextField>
                            </children>
                         </VBox>
-                        <Button mnemonicParsing="false" onAction="#searchClientByName" prefHeight="50.0" prefWidth="58.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Buscar cliente" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
+                        <Button mnemonicParsing="false" onAction="#searchClientByName" prefHeight="50.0" prefWidth="58.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Buscar cliente" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets left="70.0" />
                            </GridPane.margin>
@@ -594,12 +592,12 @@
                   </GridPane>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                        <Button mnemonicParsing="false" onAction="#returnToReceiptMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                        <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -619,7 +617,7 @@
             </VBox>
             <VBox fx:id="addProductsToAReceipt" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Agregar productos a una factura" textAlignment="CENTER" textFill="#fffefe" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Agregar productos a una factura" textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
@@ -640,7 +638,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Producto:" textAlignment="CENTER" textFill="WHITE">
+                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Producto:" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -653,7 +651,7 @@
                               <Insets right="20.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Cantidad:" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+                        <Label maxWidth="200.0" minWidth="100.0" prefHeight="40.0" prefWidth="146.0" text="Cantidad:" textAlignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -673,7 +671,7 @@
                   </GridPane>
                   <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btDeleteProductR" disable="true" mnemonicParsing="false" onAction="#deleteProductOfAReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
+                        <Button fx:id="btDeleteProductR" disable="true" mnemonicParsing="false" onAction="#deleteProductOfAReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -681,7 +679,7 @@
                               <Insets left="40.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btAddProductR" disable="true" mnemonicParsing="false" onAction="#addProductToAReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                        <Button fx:id="btAddProductR" disable="true" mnemonicParsing="false" onAction="#addProductToAReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -694,7 +692,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button mnemonicParsing="false" onAction="#returnToReceiptForm" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToReceiptForm" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -704,7 +702,7 @@
                   </Button>
                </children>
             </VBox>
-            <Button fx:id="btGenerateR" mnemonicParsing="false" onAction="#generateReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Generar factura" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="btGenerateR" mnemonicParsing="false" onAction="#generateReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Generar factura" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -712,7 +710,7 @@
                   <Insets bottom="20.0" left="300.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="btDelete" mnemonicParsing="false" onAction="#deleteReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="btDelete" mnemonicParsing="false" onAction="#deleteReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -722,7 +720,7 @@
             </Button>
             <VBox fx:id="receiptMenu" layoutX="10.0" layoutY="10.0" prefHeight="448.0" prefWidth="320.0" visible="false">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Seleccione un tipo de factura:" textAlignment="CENTER" textFill="#fffefe" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="328.0" text="Seleccione un tipo de factura:" textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="5.0" />
                      </padding>
@@ -733,7 +731,7 @@
                         <Insets left="25.0" top="80.0" />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#manageCountedReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Sistema de contado">
+                  <Button mnemonicParsing="false" onAction="#manageCountedReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Sistema de contado">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -741,7 +739,7 @@
                         <Insets left="123.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#manageSeparateReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Sistema de separado">
+                  <Button mnemonicParsing="false" onAction="#manageSeparateReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Sistema de separado">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -749,7 +747,7 @@
                         <Insets left="120.0" top="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás">
+                  <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
