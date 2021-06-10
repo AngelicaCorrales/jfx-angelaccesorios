@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -80,11 +82,16 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox>
+            <VBox alignment="TOP_CENTER">
                <children>
+                  <ImageView fitHeight="76.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/4647472.png" />
+                     </image>
+                  </ImageView>
                   <Label prefHeight="40.0" prefWidth="302.0" text="*Para actualizar o eliminar un usuario determinado, seleccionelo de la lista" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" top="20.0" />
+                        <Insets bottom="20.0" left="20.0" top="10.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
@@ -249,7 +256,7 @@
             <Insets />
          </opaqueInsets>
          <BorderPane.margin>
-            <Insets right="15.0" top="20.0" />
+            <Insets right="15.0" />
          </BorderPane.margin>
       </GridPane>
    </center>
