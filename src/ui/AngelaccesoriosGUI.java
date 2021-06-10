@@ -608,6 +608,75 @@ public class AngelaccesoriosGUI {
 	private TableColumn<Supplier, String> colPhoneSupplier;
 	private Stage window;
 	private boolean runClock;
+	private boolean go;
+
+	public AngelaccesoriosGUI(Angelaccesorios ac) {
+		angelaccesorios=ac;
+		runClock=true;
+	}
+	
+	public ImageView getIvHeadphones() {
+		return ivHeadphones;
+	}
+	
+	public ImageView getIvSpeaker() {
+		return ivSpeaker;
+	}
+	
+	public boolean getGo() {
+		return go;
+	}
+	
+	public void setStage(Stage st) {
+		window=st;
+	}
+
+	public Label getLbClock() {
+		return lbClock;
+	}
+
+	public boolean getRunClock() {
+		return runClock;
+	}
+
+	public ProgressBar getProgressBar() {
+		return progressBar;
+	}
+	
+	public ImageView getAppsImageV() {
+		return appsImageV;
+	}
+	
+	public Rectangle getFirstRectangle() {
+		return firstRectangle;
+	}
+	
+	public Rectangle getSecondRectangle() {
+		return secondRectangle;
+	}
+
+	public Rectangle getFourthRectangle() {
+		return fourthRectangle;
+	}
+
+	public Rectangle getThirdRectangle() {
+		return thirdRectangle;
+	}
+
+	public void initialize() {
+		ClockThread clock=new ClockThread(this);
+		clock.start();
+		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+			@Override
+			public void handle(WindowEvent event) {
+				runClock = false;
+				go=false;
+			}
+		});
+	}
+
+
 	@FXML
 	public void logIn(ActionEvent event) throws IOException {
 
@@ -636,41 +705,7 @@ public class AngelaccesoriosGUI {
 		passwordField.clear();
 
 	}
-
-	public AngelaccesoriosGUI(Angelaccesorios ac) {
-		angelaccesorios=ac;
-		runClock=true;
-	}
-	public void setStage(Stage st) {
-		window=st;
-	}
-
-	public Label getLbClock() {
-		return lbClock;
-	}
-
-	public boolean getRunClock() {
-		return runClock;
-	}
-
-	public ProgressBar getProgressBar() {
-		return progressBar;
-	}
-
-	public void initialize() {
-		ClockThread clock=new ClockThread(this);
-		clock.start();
-		window.setOnCloseRequest(new EventHandler<WindowEvent>() {
-
-			@Override
-			public void handle(WindowEvent event) {
-				runClock = false;
-				go=false;
-			}
-		});
-	}
-
-
+	
 	@FXML
 	public void manageTypeOfProduct(ActionEvent event) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("manage-type-of-product.fxml"));
@@ -1528,27 +1563,6 @@ public class AngelaccesoriosGUI {
 		Graphic1Thread thread1 = new Graphic1Thread(one, two, three, four, this);
 		thread1.start();
 	}
-//????
-	public ImageView getAppsImageV() {
-		return appsImageV;
-	}
-	
-	public Rectangle getFirstRectangle() {
-		return firstRectangle;
-	}
-	
-	public Rectangle getSecondRectangle() {
-		return secondRectangle;
-	}
-
-	public Rectangle getFourthRectangle() {
-		return fourthRectangle;
-	}
-
-	public Rectangle getThirdRectangle() {
-		return thirdRectangle;
-	}
-
 	
 	public void updateGUI1() {
 		firstRectangle.setLayoutX(one.getxCoordinate());
@@ -2234,17 +2248,7 @@ public class AngelaccesoriosGUI {
 		g2.start();
 	}
 	
-	public ImageView getIvHeadphones() {
-		return ivHeadphones;
-	}
-	
-	public ImageView getIvSpeaker() {
-		return ivSpeaker;
-	}
-	private boolean go;
-	public boolean getGo() {
-		return go;
-	}
+
 	@FXML
 	public void showAboutCreators(ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);

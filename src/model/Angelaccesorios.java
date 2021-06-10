@@ -128,6 +128,38 @@ public class Angelaccesorios implements Serializable{
 		this.receiptQuantitiesProducts = receiptQuantitiesProducts;
 	}
 
+	public ArrayList<Receipt> getReceipts() {
+		return receipts;
+	}
+
+	public void setReceipts(ArrayList<Receipt> receipts) {
+		this.receipts = receipts;
+	}
+	
+	public ArrayList<Brand> getBrands() {
+		return brands;
+	}
+
+	public void setBrands(ArrayList<Brand> brands) {
+		this.brands = brands;
+	}
+
+	public Supplier getSupplierRoot() {
+		return supplierRoot;
+	}
+
+	public void setSupplierRoot(Supplier supplierRoot) {
+		this.supplierRoot = supplierRoot;
+	}
+	
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
+	}
+	
 	/**
 	* This method returns a list of products that have their state as "enabled". <br>
 	* <b>name</b>: returnEnabledProducts <br>
@@ -726,6 +758,7 @@ public class Angelaccesorios implements Serializable{
 	*<b>post:</b> the list of clients with the same name has been gotten o not. <br>
 	* @param clientNames Is a String variable that contains the name of the client. clientNames!="" and clientNames!=null.<br>
 	* @param clientLastNames Is a String variable that contains the lastName of the client. clientLastNames!="" and clientLastNames!=null.<br>
+	* @param pane Is an integer variable that contains the reference to the pane that is active in the GUI. pane==0 or pane==1<br>
 	*@return a <code>List</code> of Client specifying clientsByName, that contains the clients with the same given name and last name.
 	*/
 	public List<Client> searchClientByName(String clientNames, String clientLastNames, int pane){
@@ -736,7 +769,7 @@ public class Angelaccesorios implements Serializable{
 		pos=binarySearchClient(clientNames,clientLastNames);
 		int sameUp=1;
 		int sameDown=1;
-		System.out.println(pos);
+		
 		if(pos>=0) {
 			if(pane==1 && clients.get(pos).isEnabled()) {
 				clientsByName.add(clients.get(pos));
@@ -782,13 +815,7 @@ public class Angelaccesorios implements Serializable{
 
 	//All related with Receipt
 
-	public ArrayList<Receipt> getReceipts() {
-		return receipts;
-	}
-
-	public void setReceipts(ArrayList<Receipt> receipts) {
-		this.receipts = receipts;
-	}
+	
 
 	/**
 	* This method returns a list of the cash receipts.<br>
@@ -1113,186 +1140,6 @@ public class Angelaccesorios implements Serializable{
 		return receipt;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//All related with Brand
 
 	/**
@@ -1427,14 +1274,7 @@ public class Angelaccesorios implements Serializable{
 		return list;
 	}
 
-	public ArrayList<Brand> getBrands() {
-		return brands;
-	}
-
-	public void setBrands(ArrayList<Brand> brands) {
-		this.brands = brands;
-	}
-
+	
 	//All related with Supplier
 
 	/**
@@ -1667,13 +1507,7 @@ public class Angelaccesorios implements Serializable{
 		}
 	}
 
-	public Supplier getSupplierRoot() {
-		return supplierRoot;
-	}
-
-	public void setSupplierRoot(Supplier supplierRoot) {
-		this.supplierRoot = supplierRoot;
-	}
+	
 
 	//All related with TypeOfProduct
 
@@ -2114,13 +1948,7 @@ public class Angelaccesorios implements Serializable{
 		return p;
 	}
 
-	public ArrayList<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(ArrayList<Product> products) {
-		this.products = products;
-	}
+	
 
 	/**
 	* This method binary searches a product.<br>

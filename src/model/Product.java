@@ -204,6 +204,13 @@ public class Product implements Serializable, taxIVA, Comparable<Product>{
 		return iva;
 	}
 
+	/**
+	* This method compares the type of product and brand of two products.<br>
+	* <b>name</b>: compareTo <br>
+	* <b>post</b>: the products have been compared. <br>
+	*@param p Is a Product object that references the product that wants to be compared. p!=null<br>
+	* @return an <code> integer </code> a variable that indicates if the type of product and brand of the product is greater than the other, equal, or less.
+	*/
 	@Override
 	public int compareTo(Product p) {
 		int comparing= type.compareTo(p.getType());

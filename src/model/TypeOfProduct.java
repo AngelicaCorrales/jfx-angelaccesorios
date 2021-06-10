@@ -90,6 +90,13 @@ public abstract class TypeOfProduct implements Serializable, Comparable<TypeOfPr
 		this.parent = parent;
 	}
 	
+	/**
+	* This method compares the names of two types of product.<br>
+	* <b>name</b>: compareTo <br>
+	* <b>post</b>: the types of product have been compared. <br>
+	*@param tp Is a TypeOfProduct object that references the type of product that wants to be compared. tp!=null<br>
+	* @return an <code> integer </code> a variable that indicates if the name of the type of product is greater than the other, equal, or less.
+	*/
 	@Override
 	public int compareTo(TypeOfProduct tp) {
 		return name.compareTo(tp.getName());

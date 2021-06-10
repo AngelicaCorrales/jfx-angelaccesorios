@@ -64,6 +64,13 @@ public class Brand implements Serializable,  Comparable<Brand>{
 		return name;
 	}
 
+	/**
+	* This method compares the names of two brands.<br>
+	* <b>name</b>: compareTo <br>
+	* <b>post</b>: the brands have been compared. <br>
+	*@param b Is a Brand object that references the brand that wants to be compared. b!=null<br>
+	* @return an <code> integer </code> a variable that indicates if the name of the brand is greater than the other, equal, or less.
+	*/
 	@Override
 	public int compareTo(Brand b) {
 		
