@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="1019.0">
          <children>
-            <Label text="Usuario: " textFill="WHITE">
+            <Label text="Usuario: ">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -22,47 +22,53 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lbUserName" text="-" textFill="WHITE">
+            <Label fx:id="lbUserName" text="-">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
             </Label>
          </children>
          <VBox.margin>
-            <Insets top="10.0" />
+            <Insets top="20.0" />
          </VBox.margin>
       </HBox>
-      <Label text="Lista de productos" textFill="WHITE">
+      <Label text="Lista de productos">
          <font>
-            <Font name="System Bold" size="22.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="20.0" top="20.0" />
+            <Insets bottom="20.0" top="15.0" />
          </VBox.margin></Label>
       <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="1019.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#searchProductByTypeAndBrand" prefHeight="48.0" prefWidth="78.0" text="Buscar producto" textAlignment="CENTER" wrapText="true">
+            <Button mnemonicParsing="false" onAction="#searchProductByTypeAndBrand" prefHeight="34.0" prefWidth="141.0" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="Buscar producto" textAlignment="CENTER" wrapText="true">
                <HBox.margin>
-                  <Insets left="10.0" right="20.0" />
+                  <Insets left="220.0" />
                </HBox.margin>
                <font>
-                  <Font name="System Bold Italic" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Label text="Tipo de producto: " textFill="WHITE" />
-            <TextField fx:id="txtTypeOfProduct" promptText="Tipo" />
-            <Label text="Marca: " textFill="WHITE">
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </Label>
-            <TextField fx:id="txtBrand" promptText="Marca" />
+            <TextField fx:id="txtTypeOfProduct" promptText="Tipo">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin></TextField>
+            <TextField fx:id="txtBrand" promptText="Marca">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin></TextField>
          </children>
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin>
       </HBox>
-      <TableView fx:id="tvOfProducts" prefHeight="468.0" prefWidth="1019.0">
+      <TableView fx:id="tvOfProducts" prefHeight="454.0" prefWidth="979.0">
         <columns>
           <TableColumn fx:id="colCodeProduct" prefWidth="75.0" text="Codigo" />
           <TableColumn fx:id="colTypeProduct" prefWidth="75.0" text="Tipo de producto" />
@@ -77,22 +83,25 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
          <VBox.margin>
-            <Insets left="10.0" right="10.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
          </VBox.margin>
       </TableView>
       <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1019.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atras">
+            <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atras">
                <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="btSortProductPrices" mnemonicParsing="false" onAction="#sortingPricesOfProducts" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Ordenar precios ascendentemente">
-               <font>
-                  <Font name="System Bold" size="16.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets bottom="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btSortProductPrices" mnemonicParsing="false" onAction="#sortingPricesOfProducts" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Ordenar precios ascendentemente">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" />
                </HBox.margin>
             </Button>
          </children>

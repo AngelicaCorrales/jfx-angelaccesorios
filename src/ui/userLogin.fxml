@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Iniciar sesión" textFill="WHITE">
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Iniciar sesión">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -30,7 +30,7 @@
           <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Nombre de usuario: " textFill="WHITE">
+            <Label text="Nombre de usuario: ">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -38,7 +38,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Contraseña: " textFill="WHITE" GridPane.rowIndex="1">
+            <Label text="Contraseña: " GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -61,7 +61,7 @@
             <Insets right="20.0" />
          </VBox.margin>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#logIn" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Ingresar">
+      <Button mnemonicParsing="false" onAction="#logIn" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Ingresar">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

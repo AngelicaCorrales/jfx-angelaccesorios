@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,11 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="80.0" />
+            <Insets bottom="80.0" top="30.0" />
          </BorderPane.margin>
          <children>
             <GridPane alignment="CENTER" maxHeight="260.0" maxWidth="553.0" minHeight="170.0" minWidth="416.0" prefHeight="260.0" prefWidth="650.0">
@@ -32,54 +34,57 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btManageBrand" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#manageBrand" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="1. Gestionar marca">
+                  <Button fx:id="btManageBrand" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#manageBrand" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="1. Gestionar marca">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btManageTypeProd" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#manageTypeOfProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="2. Gestionar tipo de producto" GridPane.rowIndex="1">
+                  <Button fx:id="btManageTypeProd" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#manageTypeOfProduct" style="-fx-background-color: #4FC3F7 #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="2. Gestionar tipo de producto" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btManageProd" disable="true" mnemonicParsing="false" onAction="#manageProduct" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="3. Gestionar producto" GridPane.rowIndex="2">
+                  <Button fx:id="btManageProd" disable="true" mnemonicParsing="false" onAction="#manageProduct" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="3. Gestionar producto" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#manageClient" style="-fx-background-color: #f8e7a8; -fx-border-width: 2; -fx-border-color: #e8c033;" text="6. Gestionar cliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button mnemonicParsing="false" onAction="#manageClient" style="-fx-background-color: #4FC3F7; -fx-border-width: 3; -fx-border-color: #33abf9;" text="6. Gestionar cliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btManageUser" disable="true" mnemonicParsing="false" onAction="#manageUser" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="4. Gestionar usuario" GridPane.rowIndex="3">
+                  <Button fx:id="btManageUser" disable="true" mnemonicParsing="false" onAction="#manageUser" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="4. Gestionar usuario" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#listProducts" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="5. Lista de productos" textAlignment="CENTER" GridPane.columnIndex="1">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#listProducts" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="5. Lista de productos" textAlignment="CENTER" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#manageReceipt" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="7. Gestionar factura" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Button mnemonicParsing="false" onAction="#manageReceipt" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="7. Gestionar factura" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btManageSupplier" disable="true" mnemonicParsing="false" onAction="#manageSupplier" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="8. Gestionar proveedor" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Button fx:id="btManageSupplier" disable="true" mnemonicParsing="false" onAction="#manageSupplier" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="8. Gestionar proveedor" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </GridPane>
-            <Button mnemonicParsing="false" onAction="#signOutOfSystem" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Cerrar sesión">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#signOutOfSystem" style="-fx-background-color: #4fc3f7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Cerrar sesión" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </Button>
          </children>
@@ -112,7 +117,15 @@
                      </items></Menu>
               </menus>
             </MenuBar>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="¡Bienvenido!" textFill="WHITE">
+            <ImageView fitHeight="175.0" fitWidth="522.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="¡Bienvenido!">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -120,10 +133,10 @@
                   <Insets />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets top="140.0" />
+                  <Insets />
                </VBox.margin>
             </Label>
-            <Label text="Seleccione una opción para continuar: " textFill="WHITE">
+            <Label text="Seleccione una opción para continuar: ">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

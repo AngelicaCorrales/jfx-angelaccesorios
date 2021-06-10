@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -25,7 +25,7 @@
          <children>
             <HBox prefHeight="15.0" prefWidth="200.0">
                <children>
-                  <Label text="Usuario:  " textFill="WHITE">
+                  <Label text="Usuario:  ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -33,7 +33,7 @@
                         <Insets left="800.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Pepito Pérez" textFill="WHITE">
+                  <Label fx:id="lbUserName" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Pepito Pérez">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -48,7 +48,7 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label text="Gestionar proveedor" textAlignment="CENTER" textFill="WHITE">
+                  <Label text="Gestionar proveedor" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -56,7 +56,7 @@
                         <Insets left="70.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="Lista de proveedores agregados" textFill="WHITE">
+                  <Label text="Lista de proveedores agregados">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -84,7 +84,7 @@
          <children>
             <VBox prefHeight="400.0" prefWidth="328.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="312.0" text="*Para actualizar o eliminar un determinado proveedor seleccionelo de la lista." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="312.0" text="*Para actualizar o eliminar un determinado proveedor seleccionelo de la lista." textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="20.0" />
                      </padding>
@@ -109,7 +109,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Nombre del proveedor:" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="2">
+                        <Label text="Nombre del proveedor:" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="30.0" right="5.0" />
                            </GridPane.margin>
@@ -125,7 +125,7 @@
                               <Font size="13.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateSupplier" prefHeight="24.0" prefWidth="90.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Actualizar" GridPane.rowIndex="4">
+                        <Button fx:id="btUpdate" disable="true" mnemonicParsing="false" onAction="#updateSupplier" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Actualizar" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets left="35.0" top="15.0" />
                            </GridPane.margin>
@@ -135,16 +135,16 @@
                         </Button>
                         <HBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteSupplier" prefHeight="35.0" prefWidth="78.0" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Eliminar">
+                              <Button fx:id="btDelete" disable="true" mnemonicParsing="false" onAction="#deleteSupplier" prefHeight="36.0" prefWidth="84.0" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Eliminar">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets />
+                                    <Insets left="5.0" />
                                  </HBox.margin></Button>
-                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addSupplier" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Agregar">
+                              <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addSupplier" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Agregar">
                                  <HBox.margin>
-                                    <Insets left="8.0" />
+                                    <Insets left="6.0" />
                                  </HBox.margin>
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -155,14 +155,14 @@
                               <Insets top="20.0" />
                            </GridPane.margin>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Button mnemonicParsing="false" onAction="#returnToMenu" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Atrás" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets left="15.0" />
                            </GridPane.margin></Button>
-                        <Label text="Teléfono: " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.rowIndex="3">
+                        <Label text="Teléfono: " textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1019.0" style="-fx-background-color: #9acef8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Registrar usuario administrador" textFill="WHITE">
+      <Label text="Registrar usuario administrador">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -22,8 +22,8 @@
          </VBox.margin></Label>
       <GridPane prefHeight="280.0" prefWidth="999.0">
         <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="456.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="714.0" minWidth="10.0" prefWidth="563.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="462.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="714.0" minWidth="10.0" prefWidth="537.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="79.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
@@ -34,7 +34,7 @@
             <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Nombres: " textFill="WHITE">
+            <Label text="Nombres: ">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -42,7 +42,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Contraseña: " textFill="WHITE" GridPane.rowIndex="4">
+            <Label text="Contraseña: " GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -60,22 +60,22 @@
                   <Insets right="350.0" />
                </GridPane.margin>
             </PasswordField>
-            <Label text="Apellidos: " textFill="WHITE" GridPane.rowIndex="1">
+            <Label text="Apellidos: " GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label text="Identificacion: " textFill="WHITE" GridPane.rowIndex="2">
+            <Label text="Identificación: " GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label text="Nombre de usuario: " textFill="WHITE" GridPane.rowIndex="3">
+            <Label text="Nombre de usuario: " GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label text="Correo de recuperacion: " textFill="WHITE" GridPane.rowIndex="5">
+            <Label text="Correo de recuperación: " GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -105,7 +105,7 @@
             <Insets right="20.0" />
          </VBox.margin>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#registerAdmin" style="-fx-background-color: #f8e7a8; -fx-border-color: #e8c033; -fx-border-width: 2;" text="Registrarse">
+      <Button mnemonicParsing="false" onAction="#registerAdmin" style="-fx-background-color: #4FC3F7; -fx-border-color: #33abf9; -fx-border-width: 3;" text="Registrarse">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
