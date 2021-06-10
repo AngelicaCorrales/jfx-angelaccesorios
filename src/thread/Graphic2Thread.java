@@ -18,7 +18,6 @@ public class Graphic2Thread extends Thread{
 		try {
 			sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -28,7 +27,6 @@ public class Graphic2Thread extends Thread{
 				try {
 					sleep(20);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if(up) {
@@ -36,7 +34,6 @@ public class Graphic2Thread extends Thread{
 					try {
 						sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}else {
@@ -44,7 +41,6 @@ public class Graphic2Thread extends Thread{
 					try {
 						sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -60,14 +56,12 @@ public class Graphic2Thread extends Thread{
 					try {
 						sleep(500);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					angGui.getIvSpeaker().setVisible(true);
 					try {
 						sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					//x=263
@@ -81,7 +75,6 @@ public class Graphic2Thread extends Thread{
 					try {
 						sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}else {
@@ -89,7 +82,6 @@ public class Graphic2Thread extends Thread{
 					try {
 						sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -105,14 +97,12 @@ public class Graphic2Thread extends Thread{
 					try {
 						sleep(500);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					angGui.getIvHeadphones().setVisible(true);
 					try {
 						sleep(20);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					//x=287

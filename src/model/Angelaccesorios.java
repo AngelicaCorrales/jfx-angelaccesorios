@@ -2522,7 +2522,6 @@ public class Angelaccesorios implements Serializable{
 		tbl_payments.addCell(createCell("Medio de pago", negrilla, 2, 1, Element.ALIGN_LEFT));
 		tbl_payments.addCell(createCell("Recibido por", negrilla, 2, 1, Element.ALIGN_LEFT));
 		String[][] dataPay = new String[((SeparateReceipt)r).getNumPayments()][4];
-		System.out.println(((SeparateReceipt)r).getNumPayments());
 		Payment py = ((SeparateReceipt)r).getFirstPayment();
 		for (int x=0; x < dataPay.length; x++) {
 			for (int y=0; y < dataPay[x].length && py!=null; y++) {
