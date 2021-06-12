@@ -24,3 +24,7 @@ We use [GitHub](http://github.com/) for versioning. For all available versions s
 ## More information 📖
 You can find more information about this project at 
 [Angelaccesorios system: class diagram, functional and not functional requirements and design of test cases](https://drive.google.com/file/d/1HCKEoG_wKBVDEge8uBdDdP6ytKiGNDnT/view?usp=sharing).
+
+## Explanatory video 
+
+[![Alt text](https://img.youtube.com/vi/eP4MB3q42CU/0.jpg)](https://www.youtube.com/watch?v=eP4MB3q42CU)
